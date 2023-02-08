@@ -1,0 +1,407 @@
+div.noc.sheet.actor {
+    margin: 0;
+
+    form.personnage {
+        max-height: fit-content;
+    }
+
+
+
+
+    .tox {
+        .tox-editor-container {
+            background: var(--color-bg-btn-minor-active);
+        }
+
+        .tox-edit-area {
+            padding: 0 8px;
+        }
+    }
+
+
+
+    section.window-content {
+        padding: 0;
+        position: relative;
+        background: url(../asset/images/fondmain.webp), contain;
+
+        max-height: min-content;
+        line-height: 1rem;
+        font-size: 0.6rem;
+
+        nav.sheet-tabs {
+            margin: 0;
+
+            a.item {
+                background: url(../asset/images/fondmain.webp);
+                background-size: cover;
+                flex: 1;
+                color: rgb(255, 255, 255);
+                box-shadow: 0px 0px 30px black inset;
+                transition: all 0.3s;
+
+                &:hover,
+                &.active {
+
+                    color: white;
+                    text-shadow: 0px 0px 3px black;
+                }
+
+                &:hover {
+                    box-shadow: 0px 0px 15px black inset;
+
+                }
+
+                &.active {
+                    color: white;
+                    font-size: 2em;
+                    text-shadow: 0px 0px 4px black,
+                        0px 0px 12px black;
+                    box-shadow: 0px 0px 0px black inset;
+
+                }
+            }
+        }
+
+        section.sheet-body {
+
+            height: max-content;
+            background: url(../asset/images/fondequipement.webp);
+            filter: grayscale(0.3);
+
+
+
+            input[type="number"] {
+                background-color: white;
+                border-radius: 50%;
+                text-align: center;
+                max-width: 22px;
+            }
+
+            div.tab.principal {
+
+                .stats {
+                    line-height: 0.5em;
+                    display: grid;
+                    grid-template-columns: repeat(11, 10%);
+                    grid-template-rows: repeat(9, 10%);
+                    gap: 3px 0px;
+                    font-family: 'bold';
+                    padding: 5% 2%;
+                    background: url(../asset/images/fondStats.webp)no-repeat;
+                    background-size: 60% auto;
+                    background-position: 50% 50%;
+
+
+
+                    .domaine {
+                        padding: 0px 6px 6px;
+                        transition: 0.2s;
+                        box-shadow: 0px 0px 30px black;
+                        border: 3px solid black;
+                        background: url(../asset/images/fondMain.webp);
+                        background-position: center;
+
+                        z-index: +1;
+
+                        &:hover {
+                            transform: scale(1.2);
+                            z-index: 1
+                        }
+
+
+                        input {
+                            position: relative;
+                            flex: 0.3;
+                            width: 12px;
+                            height: 1.3rem;
+                            max-width: 12px;
+                            top: -8px;
+                            margin-right: 15px;
+                            ;
+                        }
+
+                        h3 {
+                            position: relative;
+                            border: none;
+                            filter: grayscale(1);
+                            width: 120%;
+                            padding-top: 5px;
+                            left: -10%;
+                            top: -5%;
+                            background-size: 200% 200%;
+                        }
+
+                        &.vie {
+                            grid-row: 1/3;
+                            grid-column: 3/5;
+                        }
+
+                        &.erudition {
+                            grid-row: 1/3;
+                            grid-column: 7/9;
+                        }
+
+                        &.technique {
+                            grid-row: 4/6;
+                            grid-column: 9/11;
+                        }
+
+                        &.action {
+                            grid-row: 7/9;
+                            grid-column: 8/10;
+                        }
+
+                        &.statut {
+                            grid-row: 8/10;
+                            grid-column: 5/7;
+                        }
+
+                        &.ame {
+                            grid-row: 7/9;
+                            grid-column: 2/4;
+                        }
+
+                        &.social {
+                            grid-row: 4/6;
+                            grid-column: 1/3;
+                        }
+
+                    }
+
+
+
+                    .reserve {
+                        background: url(../asset/images/fondMain.webp);
+                        background-position: center;
+                        box-shadow: 0px 0px 40px black;
+                        opacity: 0.7;
+                        margin: 3px;
+                        padding: 0px 13px;
+                        border-radius: 10px;
+                        position: relative;
+                        max-width: 70%;
+                        margin-left: 15%;
+
+                        &.perdition {
+                            input.step {
+                                &::after {
+                                    width: 12px;
+                                    height: 12px;
+                                    background-color: rgba(211, 152, 42, 0.479);
+                                    border-radius: 50%;
+                                    box-shadow: 0px 0px 5px rgb(22, 21, 33) inset;
+                                }
+                            }
+                        }
+
+                        h4 {
+                            position: relative;
+                            top: 5px;
+                            text-align: center;
+                            color: black;
+                            text-shadow: 0px 0px 2px white;
+                        }
+
+                        input[type="checkbox"] {
+                            margin: 0;
+                            padding: 0;
+                            max-height: 12px;
+                            max-width: 10px;
+                            border-radius: 50%;
+                            -webkit-appearance: none;
+                            appearance: none;
+                            cursor: pointer;
+
+
+
+                            &::after {
+                                content: "";
+                                display: block;
+                                width: 12px;
+                                height: 12px;
+                                background-color: rgba(255, 255, 255, 0.189);
+                                border-radius: 50%;
+                                box-shadow: 0px 0px 5px black inset;
+                            }
+
+                            &[checked]::after {
+                                content: "";
+                                display: block;
+                                width: 12px;
+                                height: 12px;
+                                box-shadow: 1px -2px 5px 3px black inset;
+                            }
+
+                            &.unavailable {
+                                pointer-events: none;
+                                opacity: 0.4;
+
+                                &::after {
+                                    content: "";
+                                    display: block;
+                                    width: 12px;
+                                    height: 12px;
+                                    box-shadow: 1px -2px 5px 3px rgba(87, 7, 7, 0.759) inset;
+                                }
+                            }
+                        }
+
+                        &.singularite {
+                            grid-row: 4/5;
+                            grid-column: 7/9;
+                            top: -25%
+                        }
+
+                        &.vecu {
+                            grid-row: 3/4;
+                            grid-column: 5/7;
+                            top: -25%;
+                        }
+
+                        &.espoir {
+                            grid-row: 4/5;
+                            grid-column: 3/5;
+                            top: -25%;
+
+
+                        }
+
+                        &.faveurs {
+                            display: none
+                        }
+
+                        &.trauma {
+                            grid-row: 6/7;
+                            grid-column: 2/4;
+                            left: 25%;
+                            top: -15%
+                        }
+
+                        &.noirceur {
+                            grid-row: 7/8;
+                            grid-column: 4/6;
+                            top: -15%;
+                        }
+
+                        &.traque {
+                            grid-row: 7/8;
+                            grid-column: 6/8;
+                            top: -15%;
+                        }
+
+                        &.blessures {
+                            grid-row: 6/7;
+                            grid-column: 8/10;
+                            left: -25%;
+                            top: -15%
+                        }
+
+                    }
+
+                }
+
+                .resume {
+                    flex: 0.3;
+                    padding: 6px;
+                    box-shadow: -30px 0px 100px black;
+                    height: max-content;
+
+                    background: url(../asset/images/fondequipement.webp);
+
+
+
+                    &::before {
+                        content: " ";
+                        width: 100%;
+                        height: 60px;
+                        background: url(../asset/images/separation.webp);
+                        background-size: 100% 100%;
+
+                    }
+
+
+
+                    .profile-img {
+                        width: 90%;
+                        margin-left: 5%;
+                        height: auto;
+                        border: none;
+                        transform: rotate(-5deg);
+
+
+
+                    }
+
+                    .form-group {
+
+                        justify-content: space-between;
+
+
+
+                        div {
+                            flex: 0.6;
+                            vertical-align: middle;
+                        }
+
+                        input[type="text"] {
+                            flex: 1.2;
+                            display: inline;
+                            width: 100%;
+                            border: none;
+
+                            &:hover {
+                                background: rgba(0, 0, 0, 0.107)
+                            }
+                        }
+                    }
+                }
+            }
+
+            div.tab.description {
+                background: url(../asset/images/fondequipement.webp);
+                background-size: cover;
+
+                h2 {
+                    flex: 0.1;
+
+                }
+
+
+                .signalement {
+                    padding: 2%;
+
+                    .form-group {
+                        opacity: 0.8;
+                        background: url(../asset/images/fondidentiteconfidentiel.webp);
+                        background-position: center;
+
+                        h2 {
+                            background: none;
+                            border: none;
+                            box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.311);
+                            ;
+                        }
+
+                        .editor {
+                            button {
+                                width: min-content;
+                                height: min-content;
+                                margin: 2px;
+                                padding: 0;
+                                background: unset;
+                            }
+                        }
+                    }
+                }
+
+                .contacts,
+                .cabale {
+                    padding: 15px;
+                    box-shadow: 0px 0px 80px rgba(0, 0, 0, 0.42);
+                }
+            }
+        }
+    }
+
+}

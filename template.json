@@ -1,0 +1,411 @@
+{
+  "Actor": {
+    "types": [
+      "personnage",
+      "rouage",
+      "autre",
+      "cabale",
+      "creature"
+    ],
+    "templates": {
+      "domaines": {
+        "domaines": {
+          "vie": {
+            "value": 2,
+            "label": "vie"
+          },
+          "erudition": {
+            "value": 2,
+            "label": "érudition"
+          },
+          "technique": {
+            "value": 2,
+            "label": "technique"
+          },
+          "action": {
+            "value": 2,
+            "label": "action"
+          },
+          "statut": {
+            "value": 2,
+            "label": "statut"
+          },
+          "ame": {
+            "value": 2,
+            "label": "âme"
+          },
+          "social": {
+            "value": 2,
+            "label": "social"
+          }
+        }
+      },
+      "talents": {
+        "talents": {
+          "erudition": {
+            "bureau": {
+              "label": "bureau",
+              "niveau": 0
+            },
+            "culture": {
+              "label": "culture",
+              "niveau": 0
+            },
+            "recherche": {
+              "label": "recherche",
+              "niveau": 0
+            },
+            "societe": {
+              "label": "societé",
+              "niveau": 0
+            }
+          },
+          "technique": {
+            "artefact": {
+              "label": "artefact",
+              "niveau": 0
+            },
+            "artisanat": {
+              "label": "artisanat",
+              "niveau": 0
+            },
+            "ingenierie": {
+              "label": "ingénierie",
+              "niveau": 0
+            },
+            "survie": {
+              "label": "survie",
+              "niveau": 0
+            }
+          },
+          "action": {
+            "combat": {
+              "label": "combat",
+              "niveau": 0
+            },
+            "constitution": {
+              "label": "constitution",
+              "niveau": 0
+            },
+            "deplacement": {
+              "label": "déplacement",
+              "niveau": 0
+            },
+            "instinct": {
+              "label": "instinct",
+              "niveau": 0
+            }
+          },
+          "statut": {
+            "contact": {
+              "label": "contact",
+              "niveau": 0
+            },
+            "façade": {
+              "label": "façade",
+              "niveau": 0
+            },
+            "fortune": {
+              "label": "fortune",
+              "niveau": 0
+            },
+            "rang": {
+              "label": "rang",
+              "niveau": 0
+            }
+          },
+          "ame": {
+            "extase": {
+              "label": "extase",
+              "niveau": 0
+            },
+            "folie": {
+              "label": "folie",
+              "niveau": 0
+            },
+            "sensibilite": {
+              "label": "sensibilité",
+              "niveau": 0
+            },
+            "tenebres": {
+              "label": "tenêbres",
+              "niveau": 0
+            }
+          },
+          "social": {
+            "charisme": {
+              "label": "charisme",
+              "niveau": 0
+            },
+            "conviction": {
+              "label": "conviction",
+              "niveau": 0
+            },
+            "psychologie": {
+              "label": "psychologie",
+              "niveau": 0
+            },
+            "tromperie": {
+              "label": "tromperie",
+              "niveau": 0
+            }
+          },
+          "vie": {
+            "apaisement": {
+              "label": "apaisement",
+              "niveau": 0
+            },
+            "ferveur": {
+              "label": "ferveur",
+              "niveau": 0
+            },
+            "lumiere": {
+              "label": "lumière",
+              "niveau": 0
+            },
+            "soins": {
+              "label": "soins",
+              "niveau": 0
+            }
+          }
+        }
+      },
+      "reserves": {
+        "reserves": {
+          "singularite": {
+            "label": "singularité",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "faveurs": {
+            "label": "faveurs",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "espoir": {
+            "label": "espoir",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "vecu": {
+            "label": "vécu",
+            "value": 3,
+            "min": 0,
+            "max": 10
+          }
+        }
+      },
+      "perditions": {
+        "perditions": {
+          "blessures": {
+            "label": "blessures",
+            "value": 3,
+            "min": 0,
+            "max": 10
+          },
+          "traque": {
+            "label": "traque",
+            "value": 3,
+            "min": 0,
+            "max": 10
+          },
+          "noirceur": {
+            "label": "noirceur",
+            "value": 3,
+            "min": 0,
+            "max": 10
+          },
+          "trauma": {
+            "label": "trauma",
+            "value": 3,
+            "min": 0,
+            "max": 10
+          }
+        }
+      }
+    },
+    "personnage": {
+      "templates": [
+        "domaines",
+        "talents",
+        "reserves",
+        "perditions"
+      ],
+      "contacts": [],
+      "description": "",
+      "implication": "",
+      "couverture": "",
+      "signalement": "",
+      "bloc": "",
+      "cabale": {
+        "nom": "",
+        "uuid": ""
+      },
+      "qualites": {
+        "label": "qualités",
+        "liste": []
+      },
+      "defauts": {
+        "label": "défauts",
+        "liste": []
+      },
+      "progression": 0,
+      "regressions": []
+    },
+    "cabale": {
+      "templates": [
+        "domaines",
+        "atouts",
+        "reserves",
+        "perditions"
+      ],
+      "bloc": "",
+      "coordonnes": "",
+      "societeEcran": "",
+      "personnel": [],
+      "reseau": "",
+      "qualites": {
+        "label": "qualités",
+        "liste": []
+      },
+      "defauts": {
+        "label": "défauts",
+        "liste": []
+      },
+      "progression": 0,
+      "regressions": []
+    },
+    "rouage": {
+      "templates": [
+        "domaines",
+        "talents",
+        "reserves",
+        "perditions"
+      ],
+      "description": ""
+    },
+    "autre": {
+      "templates": [
+        "domaines",
+        "talents",
+        "reserves",
+        "perditions"
+      ],
+      "description": "",
+      "classeExo": {
+        "label": "classe exo",
+        "value": 1,
+        "min": 1,
+        "max": 7
+      }
+    },
+    "configuration": {
+      "presentation": "",
+      "context": "",
+      "structure": {
+        "organigramme": {},
+        "description": {}
+      },
+      "enjeux": "",
+      "allies": {},
+      "antagonistes": {},
+      "destine": ""
+    }
+  },
+  "Item": {
+    "types": [
+      "archetype",
+      "thème",
+      "outil",
+      "arme",
+      "document administratif"
+    ],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "archetypes": {
+      "templates": [
+        "base"
+      ],
+      "talentMajeur": "",
+      "talentsMineurs": [],
+      "special": "",
+      "affinite": {
+        "vie": {
+          "active": false,
+          "value": 1
+        },
+        "erudition": {
+          "active": false,
+          "value": 1
+        },
+        "technique": {
+          "active": false,
+          "value": 1
+        },
+        "action": {
+          "active": false,
+          "value": 1
+        },
+        "statut": {
+          "active": false,
+          "value": 1
+        },
+        "ame": {
+          "active": false,
+          "value": 1
+        },
+        "social": {
+          "active": false,
+          "value": 1
+        }
+      }
+    },
+    "thème": {
+      "templates": [
+        "base"
+      ],
+      "talents": []
+    },
+    "outil": {
+      "templates": [
+        "base"
+      ],
+      "quantar": false,
+      "valeur": 0,
+      "limite": 0,
+      "utilisations": 1,
+      "degats": {},
+      "talent": {
+        "label": "",
+        "niveau": 0
+      },
+      "effetSpecial": "",
+      "portee": 0
+    },
+    "arme": {
+      "templates": [
+        "base"
+      ],
+      "quantar": false,
+      "valeur": 0,
+      "limite": 0,
+      "utilisations": 1,
+      "degats": {},
+      "munitions": {
+        "type": "",
+        "quantite": 0
+      }
+    },
+    "document administratif": {
+      "templates": [
+        "base"
+      ]
+    }
+  }
+}

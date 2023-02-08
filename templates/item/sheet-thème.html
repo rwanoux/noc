@@ -1,0 +1,69 @@
+<form class="{{cssClass}}" autocomplete="off">
+
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="description">Description</a>
+    <a class="item" data-tab="details">Détails</a>
+  </nav>
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <input class="item-name" name="name" type="text" value="{{document.name}}"
+      placeholder="Name"/>
+    <img class="item-img" src="{{document.img}}" data-edit="img"
+      title="{{document.name}}" />
+
+
+    <div class="tab description" data-group="primary" data-tab="description">
+      <p>{{{document.system.description}}}</p>
+    </div>
+
+
+    <div class="tab details" data-group="primary" data-tab="details">
+      <div class="form-group">
+        <h4>description</h4>
+        {{editor document.system.description target="system.description"
+        button=true editable=editable
+        engine="prosemirror" collaborate=false}}
+      </div>
+
+      <div class="form-group">
+        <h4>nécessite un quantar</h4>
+        <input name="system.quantar" type="checkbox" data-dtype="Boolean"
+          {{checked document.system.quantar}}>
+      </div>
+      <div class="form-group">
+        <h4>limitée ?</h4>
+        <input name="system.limite" value="{{document.system.limite}}"
+          type="number">
+      </div>
+      <div class="form-group">
+        <h4>utilisations</h4>
+        <input name="system.utilisations"
+          value="{{document.system.utilisations}}"
+          type="number">
+      </div>
+      <div class="form-group">
+        <h4>portée</h4>
+        <input name="system.portee" value="{{document.system.portee}}"
+          type="number">
+      </div>
+      <div class="form-group">
+        <h4>valeur</h4>
+        <input name="system.valeur" value="{{document.system.valeur}}"
+          type="number">
+      </div>
+      <div class="form-group">
+        <h4>dégats</h4>
+        <p>test</p>
+      </div>
+      <div class="form-group">
+        <h4>effet spécial</h4>
+        {{editor document.system.effetSpecial target="system.effetSpecial"
+        button=true editable=editable
+        engine="prosemirror" collaborate=false}}
+      </div>
+    </div>
+
+  </section>
+</form>

@@ -1,0 +1,23 @@
+<form>
+    <h1>ajout d'effets de fiel</h1>
+    <h2>menace actuelle : {{menace}}</h2>
+    {{#each effets as |effet|}}
+    <div id="{{effect.name}}" class="flexrow">
+        <div>
+            <h4>{{effet.name}} <input type="checkbox"
+                    data-effect-name="{{effet.name}}"></h4>
+            <p>{{effet.description}}</p>
+        </div>
+
+        <div>
+            <h5>notes pour la Loi</h5>
+            <textarea class="gmNotes" data-effect-name="{{effet.name}}"
+                cols="30" rows="6"></textarea>
+        </div>
+    </div>
+    {{/each}}
+    <footer class="flexrow">
+        <a class="button" id="validEffects">ajouter les effets cochés</a>
+        <a class="button" id="cancelEffects">annuller</a>
+    </footer>
+</form>

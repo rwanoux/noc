@@ -1,0 +1,102 @@
+<form class="{{cssClass}}" autocomplete="off">
+  {{log this}}
+
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+    <input class="item-name" name="name" type="text" value="{{document.name}}"
+      placeholder="Name"/>
+
+
+    <div class="tab description" data-group="primary" data-tab="description">
+      <p>{{{document.system.description}}}</p>
+    </div>
+
+
+    <div class="form-group">
+      <div class="flexrow">
+        <div class="arch-stats">
+          <h4>description</h4>
+          {{editor document.system.description target="system.description"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+          <div>
+            <h4>Talent Majeur (niv 2)</h4>
+            <select name="system.talentMajeur">
+              {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+              domaineId|}}
+              <optgroup label="{{domaineId}}">
+                {{#each domaine as |talent talentId|}}
+
+                <option value="{{talentId}}"
+                  {{#ifequal @root.item.system.talentMajeur talentId}}
+                  selected
+                  {{/ifequal}}>
+                  {{talent.label}}
+                </option>
+                {{/each}}
+              </optgroup>
+              {{/each}}
+            </select>
+          </div>
+          <div class="flexcol">
+
+            <h4>affinités</h4>
+            <div class="flexcol">
+
+              {{#each item.system.affinite as |domaine domaineId|}}
+              <div class="flexrow">
+                <input name="system.affinite.{{domaineId}}.active"
+                  class="affinite-check"
+                  type="checkbox"
+                  {{#if domaine.active}}
+                  checked
+                  {{/if}}>
+                <input type="number" name="system.affinite.{{domaineId}}.value"
+                  value="{{domaine.value}}"
+                  class="affinite-value">
+                {{#each @root.systemTemplate.Actor.templates.domaines.domaines
+                as |actorDomaine actorDomaineId|}}
+                {{#ifequal domaineId actorDomaineId}}
+                <span>{{actorDomaine.label}}</span>
+                {{/ifequal}}
+                {{/each}}
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <img class="item-img" src="{{document.img}}" data-edit="img"
+            title="{{document.name}}" />
+        </div>
+      </div>
+    </div>
+    <div class="flexcol">
+
+      <div class="talents-mineurs">
+        <h4>talents mineurs (niv 1)</h4>
+        <div class="flexrow">
+          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+          domaineId|}}
+          <div class="flexcol">
+            <h5>{{domaineId}}</h5>
+            {{#each domaine as |talent talentId|}}
+            <div class="flexrow">
+              <input value="true"
+                class="talent-mineur" type="checkbox"
+                data-talent="{{talentId}}">
+
+              {{talent.label}}
+            </div>
+            {{/each}}
+          </div>
+          {{/each}}
+        </div>
+      </div>
+
+
+
+    </section>
+  </form>

@@ -1,0 +1,66 @@
+$c-white: #fff;
+$c-black: #000;
+
+$c-dark: #191813;
+$c-faint: #c9c7b8;
+$c-beige: #b5b3a4;
+$c-tan: #444;
+
+:root {
+    --color-noc-title: #52191e;
+    --color-text-light-highlight: #f0f0e0;
+    --color-text-light-heading: #c9c7b8;
+    --color-text-light-primary: #b5b3a4;
+    --color-text-dark-primary: #191813;
+    --color-text-dark-secondary: #4b4a44;
+    --color-text-dark-header: #23221d;
+    --color-text-dark-inactive: #7a7971;
+    --color-text-hyperlink: #003375;
+    --color-text-light-0: #fff;
+    --color-text-light-1: #eee;
+    --color-text-light-2: #ddd;
+    --color-text-light-3: #ccc;
+    --color-text-light-4: #bbb;
+    --color-text-light-5: #aaa;
+    --color-text-light-6: #999;
+    --color-text-light-7: #888;
+    --color-text-dark-1: #111;
+    --color-text-dark-2: #222;
+    --color-text-dark-3: #444;
+    --color-text-dark-4: #555;
+    --color-text-dark-5: #666;
+    --color-text-dark-6: #777;
+    --color-border-light-1: #ddd;
+    --color-border-light-2: #999;
+    --color-border-dark-1: #111;
+    --color-border-dark-2: #222;
+    --color-border-dark-3: #333;
+    --color-border-dark-4: #444;
+    --color-border-dark-5: #666;
+    --color-shadow-primary: #b5b3a4;
+    --color-shadow-highlight: #394260;
+    --color-shadow-dark: #000;
+    --color-underline-inactive: #7a7971;
+    --color-underline-active: #4d055c;
+    --color-underline-header: #003102;
+    --color-border-light-highlight: #f0f0e0;
+    --color-border-light-primary: #b5b3a4;
+    --color-border-light-secondary: #c9c7b8;
+    --color-border-light-tertiary: #7a7971;
+    --color-border-dark: #000;
+    --color-border-dark-primary: #191813;
+    --color-border-dark-secondary: #23221d;
+    --color-border-dark-tertiary: #4b4a44;
+    --color-border-highlight: #394260;
+
+    --color-border-highlight-alt: #394260;
+    --color-bg-btn-minor-inactive: #c9c7b8;
+    --color-bg-btn-minor-active: #b5b3a4;
+    --color-bg-option: #dad8cc;
+    --color-ownership-none: #ff0080;
+    --color-ownership-observer: #7a7971;
+    --color-ownership-owner: #b5b3a4;
+    --color-level-info: #5c87b9;
+    --color-level-warning: #b18404;
+    --color-level-error: #750003;
+}

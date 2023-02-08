@@ -1,0 +1,194 @@
+@keyframes objetShadows {
+    0% {
+        box-shadow: 0px 0px 300px rgba(0, 0, 0, 0.578) inset;
+
+    }
+
+    20% {
+        box-shadow: 0px 100px 150px rgba(0, 0, 0, 0.578) inset;
+    }
+
+    30% {
+        box-shadow: 0px 0px 60px rgba(0, 0, 0, 0) inset;
+    }
+
+    60% {
+        box-shadow: 0px -300px 500px rgba(0, 0, 0, 0.578) inset;
+    }
+
+    80% {
+        box-shadow: 0px 50px 60px rgba(0, 0, 0, 0.578) inset;
+    }
+
+    100% {
+        box-shadow: 0px 0px 300px rgb(0, 0, 0) inset;
+    }
+}
+
+@keyframes blur {
+    0% {
+        filter: blur(0px)
+    }
+
+    10% {
+        filter: blur(1px)
+    }
+
+    12% {
+        filter: blur(6px)
+    }
+
+    13% {
+        filter: blur(0px)
+    }
+
+    100% {
+        filter: blur(0px)
+    }
+
+
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0%
+    }
+
+    80% {
+        opacity: 0%
+    }
+
+    100% {
+        opacity: 100%
+    }
+
+}
+
+::-webkit-scrollbar-thumb {
+    outline: none;
+    border-radius: 3px;
+    background: #392278;
+    border: 1px solid var(--color-border-highlight);
+
+}
+
+aside#tooltip {
+    font-size: 12px;
+}
+
+
+:root {
+    --objetDieuColumns: 8;
+    --objetDieuRows: 6;
+}
+
+body {
+    animation: 2s appear;
+}
+
+#objetDieu {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 10000;
+    display: grid;
+    grid-template-columns: repeat(var(--objetDieuColumns), 1fr);
+    grid-template-rows: repeat(var(--objetDieuRows), 1fr);
+    filter: contrast(60%) brightness(36%);
+    opacity: 1;
+
+    .plaque {
+        box-shadow: 0px 0px 60px 15px black;
+        filter: grayscale(0.8);
+        border-radius: 5%;
+    }
+}
+
+@import 'apps/window-app.scss';
+
+figure#pause {
+    bottom: 50vh;
+    font-family: 'bold';
+    background: none;
+    animation: 6s linear 6s infinite alternate blur;
+
+
+
+}
+
+#interface {
+
+    #logo {
+        width: 80px;
+        height: 80px
+    }
+
+    #ui-bottom {
+        @import 'apps/compteur';
+        max-height: var(--hotbar-height);
+        display: flex;
+        flex-direction: row;
+
+
+
+    }
+
+    #sidebar {
+        background: url('../asset/images/fondidentiteconfidentiel.webp');
+        background-position: center;
+        color: black;
+        background-size: 300%;
+
+        &.collapsed {
+            background-size: auto 200%;
+
+        }
+
+        h1,
+        h2,
+        h3,
+        h4 {
+            border: none
+        }
+
+        nav#sidebar-tabs {
+            box-shadow: 0px 0px 15px black inset;
+
+            a[data-tab],
+            a.collapse {
+                i {
+                    color: black;
+
+                }
+
+                border-radius: 0px;
+                margin: 0;
+                padding: 0;
+                border: none;
+
+                &.active,
+                &:hover {
+                    box-shadow: 0px 0px 22px black;
+                    text-shadow: 0px 0px 10px white;
+
+                    i {
+                        color: white;
+
+                    }
+                }
+            }
+        }
+
+
+        .chat-message {
+            box-shadow: 0px 0px 15px black;
+            border: none;
+            background: url('../asset/images/fondNotes.webp');
+            background-position: 100% auto;
+            background-size: cover;
+            padding-left: 30px;
+        }
+
+    }
+}

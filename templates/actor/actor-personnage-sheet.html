@@ -1,0 +1,289 @@
+{{log this}}
+<form class="{{cssClass}} {{actor.type}}" autocomplete="off">
+  <nav class="sheet-tabs tabs" data-group="primary">
+    {{!-- Default tab is specified in actor-sheet.mjs --}}
+    <a class="item" data-tab="principal">Domaines et Talents</a>
+    <a class="item" data-tab="description">Fiche de signalement</a>
+    <a class="item" data-tab="items">Inventaire</a>
+  </nav>
+  <!--
+  {{!-- Sheet Header --}}
+  <header class="sheet-header">
+    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+    <div class="header-fields">
+      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
+      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
+      use both the "grid" and "grid-Ncol" class where "N" can be any number
+      from 1 to 12 and will create that number of columns.  --}}
+      <div class="resources grid grid-3col">
+
+        {{!-- "flex-group-center" is also defined in the _grid.scss file
+        and it will add a small amount of padding, a border, and will
+        center all of its child elements content and text. --}}
+        <div class="resource flex-group-center">
+          <label for="data.health.value" class="resource-label">Espoir</label>
+          <div class="resource-content">
+            <button type="button" class="minus-btn" data-pmbut="minusHealth"><i class="fas fa-minus-square fa-xs" title="Minus"></i></button>
+            <input type="text" class="maxboxsize minHealth" name="data.header.health.value" value="{{data.header.health.value}}" data-dtype="Number" />
+            <button type="button" class="plus-btn" data-pmbut="plusHealth"><i class="fas fa-plus-square fa-xs" title="Plus"></i></button>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="data.vécu.value" class="resource-label">Vécu</label>
+          <div class="dots experience" style="width: 150px; display: inline-flex;margin-bottom: 10px;">
+            <input type="hidden" name="data.vécu.value" data-max="10" value="3" data-dtype="Number">
+               <span class="click-stat-level" title="Click gauche pour ajouter. Click droit pour retirer">{{{data.general.xp.icon}}} 
+              </span>
+          </div>
+        </div>
+
+        <div class="resource flex-group-center">
+          <label for="data.attributes.level.value" class="resource-label">Level</label>
+          <div class="resource-content flexrow flex-center flex-between">
+          <input type="text" name="data.attributes.level.value" value="{{data.attributes.level.value}}" data-dtype="Number"/>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </header>
+  -->
+  {{!-- Sheet Tab Navigation --}}
+
+
+  {{!-- Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Owned Features Tab --}}
+    <div class="tab principal flexrow" data-group="primary"
+      data-tab="principal">
+      <div class="stats">
+
+        <!-- DOMAINES ET TALENTS -->
+        {{#each actor.system.domaines as |domaine domaineId|}}
+        <div class="domaine {{domaineId}}">
+          <h3 class="flexrow">
+            <input type="number"
+              name="system.domaines.{{domaineId}}.value"
+              value="{{domaine.value}}"/>
+            <span>{{domaine.label}}</span>
+          </h3>
+          {{#each ../actor.system.talents as |groupTalent
+          talentGroupName|}}
+          {{#ifequal talentGroupName domaineId}}
+          {{#each groupTalent as |talent talentId|}}
+          <div class="flexrow">
+            <input
+              name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
+              value="{{talent.niveau}}" type="number">
+            <label for="{{talent.label}}">{{talent.label}}</label>
+          </div>
+          {{/each}}
+          {{/ifequal}}
+          {{/each}}
+        </div>
+        {{/each}}
+        <!-- RESERVES-->
+        {{#each actor.system.reserves as |reserve reserveId|}}
+        <div class="reserve {{reserveId}}">
+          <h4>{{reserve.label}}
+            <a class="setMax"
+              data-tooltip="ajuster le max"
+              data-reserve-name="{{reserve.label}}"
+              data-reserve-property="system.reserves.{{reserveId}}.max">
+              <i class="fas fa-cog"></i>
+            </a>
+          </h4>
+
+          {{#repeat 10}}
+          <input type="checkbox"
+            data-reserve-value="{{@index}}"
+            data-reserve-property="system.reserves.{{reserveId}}.value"
+            class="
+            {{#ifequal @index 4}}step{{/ifequal}}
+            {{#ifequal @index 7}}step{{/ifequal}}
+            {{#ifequal @index 9}}step{{/ifequal}}
+            {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
+            "
+            {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
+          {{/repeat}}
+
+        </div>
+        {{/each}}
+        <!-- PERDITIONS-->
+        {{#each actor.system.perditions as |perdition perditionId|}}
+        <div class="reserve perdition {{perditionId}}">
+          <h4>{{perdition.label}}
+            <a class="setMax"
+              data-tooltip="ajuster le max"
+              data-reserve-name="{{perdition.label}}"
+              data-reserve-property="system.perditions.{{perditionId}}.max">
+              <i class="fas fa-cog"></i>
+            </a>
+          </h4>
+
+          {{#repeat 10}}
+          <input type="checkbox"
+            data-reserve-value="{{@index}}"
+            data-reserve-property="system.perditions.{{perditionId}}.value"
+            class="
+            {{#ifequal @index 4}}step{{/ifequal}}
+            {{#ifequal @index 7}}step{{/ifequal}}
+            {{#ifequal @index 9}}step{{/ifequal}}
+            {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
+            "
+            {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
+          {{/repeat}}
+
+        </div>
+        {{/each}}
+
+      </div>
+      <div class="resume flexcol">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img"
+          title="{{actor.name}}" height="100" width="100"/>
+
+        <div class="form-group">
+          <div>nom :</div>
+          <input type="text" name="name" value="{{actor.name}}">
+        </div>
+        <div class="form-group">
+          <div>archetype :</div>
+          <input type="text">
+        </div>
+        <div class="form-group">
+          <div>thème :</div>
+          <input type="text">
+        </div>
+        <div class="form-group">
+          <div>qualité :</div>
+          <input type="text">
+        </div>
+        <div class="form-group">
+          <div>défaut :</div>
+          <input type="text">
+        </div>
+        <div class="form-group">
+          <div>cabale :</div>
+          <input type="text">
+        </div>
+
+      </div>
+    </div>
+
+
+
+    {{!-- signalement+cabale+contacts --}}
+    <div class="tab description flexrow" data-group="primary"
+      data-tab="description">
+      <div class="signalement flexcol">
+        <div class="form-group">
+          <h2>signalement</h2>
+          {{editor actor.system.signalement
+          target="system.signalement"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+        </div>
+        <div class="form-group">
+          <h2>description</h2>
+          {{editor actor.system.description
+          target="system.description"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+        </div>
+        <div class="form-group">
+          <h2>implication</h2>
+          {{editor actor.system.implication
+          target="system.implication"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+        </div>
+        <div class="form-group">
+          <h2>couverture</h2>
+          {{editor actor.system.couverture target="system.couverture"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+        </div>
+
+
+
+
+      </div>
+      <div class=" flexcol">
+
+        <div class="contacts">
+          <h2>Contacts</h2>
+          <div class="form-group">
+            <label>faveurs totales</label>
+            <input type="number" name="system.reserves.faveurs.max"
+              value="{{actor.system.reserves.faveurs.max}}"
+              disabled>
+            <label>faveurs utilisées</label>
+            <input type="number"
+              name="system.reserves.faveurs.value"
+              value="{{actor.system.reserves.faveurs.value}}"
+              disabled>
+          </div>
+          <!-- SI pas de contacts -->
+          {{#unless actor.system.contacts.[0]}}
+          <h4>Aucuns contacts</h4>
+          <p>faites glisser des acteurs "personnages" ou "rouages"
+            pour
+            ajouter des contacts</p>
+          {{/unless}}
+
+          <!-- pour chaque contact-->>
+          {{#if actor.system.contacts.[0]}}
+          {{#each actor.system.contacts as |contact contactIndex|}}
+          <div class="contact">
+
+          </div>
+          <h3 class="flexrow">
+            <input type="text" name="system.contacts">{{contact.nom}}
+            <div class="cabaleControls">
+
+              <a data-tooltip="supprimer ce contact"
+                data-cabale-id="{{contact.uuid}}"
+                class="unassignContact">
+                <i class="fa-solid fa-close"></i>
+              </a>
+            </div>
+          </h3>
+          {{/each}}
+          {{/if}}
+
+        </div>
+        <div class="cabale ">
+          <h2>Cabale</h2>
+          {{#unless actor.system.cabale.uuid}}
+          <h4>Aucune Cabale</h4>
+          <p>faites glisser un acteur de type "cabale" pour affecter
+            ce
+            personnage à une cabale
+          </p>
+          {{/unless}}
+          {{#if actor.system.cabale.uuid}}
+          <h3 class="flexrow">{{actor.system.cabale.nom}} <div
+              class="cabaleControls">
+              <a class="openCabale"
+                data-cabale-id="{{actor.system.cabale.uuid}}"
+                data-tooltip="ouvrir la fiche de
+                cabale"><i class="fa-solid fa-magnifying-glass"></i></a>
+              <a data-tooltip="quitter cette cabale"
+                data-cabale-id="{{actor.system.cabale.uuid}}"
+                class="unassignCabale"><i class="fa-solid
+                  fa-right-from-bracket"></i></a>
+            </div>
+          </h3>
+
+          {{/if}}
+
+        </div>
+      </div>
+
+      {{!-- Owned Items Tab --}}
+
+
+    </section>
+  </form>

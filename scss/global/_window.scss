@@ -1,0 +1,26 @@
+.window-app {
+  font-family: $font-primary;
+}
+
+.rollable {
+
+  &:hover,
+  &:focus {
+    color: #000;
+    text-shadow: 0 0 10px red;
+    cursor: pointer;
+  }
+}
+
+.editor {
+  position: relative;
+  max-height: 100%;
+  max-width: 100%;
+  overflow: auto;
+  min-height: 80px;
+  min-width: 100%;
+
+  .editor-container {
+    min-height: 80px;
+  }
+}

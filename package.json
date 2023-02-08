@@ -1,0 +1,22 @@
+{
+  "name": "noc",
+  "version": "1.0.0",
+  "description": "CSS compiler for the NOC system",
+  "scripts": {
+    "watch": "gulp watch"
+  },
+  "browserslist": [
+    "last 3 versions"
+  ],
+  "author": "YanK",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.55.0"
+  },
+  "dependencies": {
+    "handlebars-helper-repeat": "^2.0.0"
+  }
+}

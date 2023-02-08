@@ -1,0 +1,119 @@
+@keyframes up {
+    from {
+        top: -12vw;
+    }
+
+    to {
+        top: 0%
+    }
+
+}
+
+form#compteurs {
+
+
+    pointer-events: all;
+    position: relative;
+    transition: 0.3s;
+    max-height: 15vw;
+
+    overflow: visible;
+    top: -12vw;
+
+    &.hide {
+        top: 2vw;
+        max-height: unset;
+
+        a#gouttePlus,
+        a#goutteMoins {
+            display: none;
+
+        }
+    }
+
+    div#fiel {
+        position: relative;
+        max-width: 15vw;
+        height: 15vw;
+        // animation: up 1s 1;
+        background: url('../asset/images/fielcompteur2.webp');
+        background-size: 100% 100%;
+
+        .goutteControls {
+            position: relative;
+
+            top: -15px;
+
+            a {
+                position: relative;
+                background: url('../asset/images/fondmain.webp');
+                background-size: 300% 100%;
+                padding: 10px;
+                cursor: pointer;
+                text-align: center;
+                border-radius: 20%;
+                max-width: 32px;
+
+                top: 20px;
+
+                i {
+                    pointer-events: none;
+                }
+
+                &:hover,
+                &#toggle {
+                    display: flex
+                }
+
+                &#toggle {
+                    top: -10px
+                }
+            }
+
+            justify-content: space-around;
+
+
+        }
+
+        span#menace {
+            position: absolute;
+            bottom: 22%;
+            left: 45%;
+            font-size: 42px;
+            font-family: 'bold';
+            text-shadow: 0px 0px 15px white, 0px 0px 5px red;
+        }
+
+        #aiguille {
+            pointer-events: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -0%;
+
+            img {
+                transition: all cubic-bezier(0.37, -0.43, 0.76, 1.73) .6s;
+                border: none;
+            }
+
+        }
+    }
+
+    div#effets {
+        margin-top: 5vh;
+        width: 30vw;
+        max-height: 10vw;
+        background: url('../asset/images/fondequipement.webp');
+        background-size: 100% 200%;
+        overflow-y: scroll;
+        line-height: 1.5em;
+        padding: 5px;
+
+        .effetName {
+            border: 1px black solid;
+            width: fit-content;
+            padding: 1px 5px;
+            box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.429) inset;
+        }
+    }
+}

@@ -1,0 +1,44 @@
+<form id="compteurs" class="flexrow">
+      <div id="fiel">
+        <div class="flexrow goutteControls">
+            {{#if isGM}}
+            <a id="gouttePlus" data-tooltip="ajouter une goutte"><i class="fas fa-add"></i></a>
+            
+            {{/if}}
+             <a id="toggle" data-tooltip="afficher/masquer le compteur de fiel"><i class="fa-solid fa-chevrons-down"></i></i></a>
+
+            {{#if isGM}}
+            <a id="goutteMoins" data-tooltip="enlever une goutte"><i class="fas fa-minus"></i></a>
+             {{/if}}
+        </div>
+        <div id="aiguille">
+            <img src="systems/noc/asset/images/aiguille.webp">
+        </div>
+        <span id="menace">{{object.menace}}</span>
+
+    </div>
+    <div id="effets">
+
+        <h2>Effets de Fiels 
+            {{#if isGM}}
+            <a  id="addEffect" data-tooltip="ajouter un effet de fiel"><i class="fas fa-add"></i></a>
+            {{/if}}</h2>
+
+            {{#each object.effetActif as |effect|}}
+            <div class="effect" data-effect-id="{{effect.id}}">
+                <p class="effetName" > 
+                    <span data-tooltip="{{effect.description}}">{{effect.name}}</span> 
+                    {{#if ../isGM}}<a class="deleteEffect" data-tooltip="supprimer cet effet"><i class="fas fa-minus"></i></a>{{/if}}
+                </p>
+            {{#if ../isGM}}
+                <p class="gmNotes">
+                    {{effect.gmNotes}}
+                </p>
+            {{/if}}
+            </div>
+
+            {{/each}}
+    </div>
+
+
+</form>
