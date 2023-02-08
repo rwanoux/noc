@@ -36,29 +36,20 @@ export class nocItemSheetArchetype extends ItemSheet {
     let checks = html.find('input[type="checkbox"].talent-mineur');
     for (let check of checks) {
       this.checkingTalentsMineurs(check);
-      check.addEventListener('change', this.updateTalentsMineurs.bind(this))
     }
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
+    console.log(this.item)
 
     // Roll handlers, click handlers, etc. would go here.
   }
 
-  checkingTalentsMineurs(checkbox) {
-    if (this.item.system.talentsMineurs.indexOf(check.dataset.talent) > -1) {
-      check.setAttributes("checked", true)
+  checkingTalentsMineurs(check) {
+    console.log(check)
+    let talentLabel = check.dataset.talent
+    if (this.item.system.talentsMineurs[talentLabel].value) {
+      check.setAttribute("checked", true)
     }
-  }
-  async updateTalentsMineurs(ev) {
-
-    let check = ev.currentTarget;
-    let talent = check.dataset.talent;
-    let actualList = this.item.system.talentsMineurs
-
-    if (actualList.indexOf(talent) > -1) {
-      console.log(talent)
-    }
-
   }
 
 }

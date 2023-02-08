@@ -32,6 +32,7 @@ Hooks.once('init', async function () {
   registerNocSettings();
   //handlebar custom helpers
   registerHelpers();
+  CONFIG.debug.hooks = true
 
   //manage socket messages
   game.socket.on("system.noc", async (sockmsg) => {
@@ -144,7 +145,12 @@ Hooks.on("renderPause", () => {
   pauseImg.style.width = "20vw";
   pauseImg.style.height = "20vw";
   pauseImg.style.left = "40vw";
+  pauseImg.style.top = "-10vw";
+
   pauseImg.style.opacity = "1";
+
+  TweenMax.to(pauseImg, 10, { rotation: 360, repeat: -1, ease: Quad.easeInOut });
+
 });
 
 

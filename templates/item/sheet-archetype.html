@@ -17,7 +17,7 @@
       <div class="flexrow">
         <div class="arch-stats">
           <h4>description</h4>
-          {{editor document.system.description target="system.description"
+          {{editor item.system.description target="system.description"
           button=true editable=editable
           engine="prosemirror" collaborate=false}}
           <div>
@@ -49,18 +49,12 @@
                 <input name="system.affinite.{{domaineId}}.active"
                   class="affinite-check"
                   type="checkbox"
-                  {{#if domaine.active}}
-                  checked
-                  {{/if}}>
+                  {{checked domaine.active }}>
+                <span>{{domaineId}}</span>
                 <input type="number" name="system.affinite.{{domaineId}}.value"
                   value="{{domaine.value}}"
                   class="affinite-value">
-                {{#each @root.systemTemplate.Actor.templates.domaines.domaines
-                as |actorDomaine actorDomaineId|}}
-                {{#ifequal domaineId actorDomaineId}}
-                <span>{{actorDomaine.label}}</span>
-                {{/ifequal}}
-                {{/each}}
+
               </div>
               {{/each}}
             </div>
@@ -86,9 +80,9 @@
             <div class="flexrow">
               <input value="true"
                 class="talent-mineur" type="checkbox"
-                data-talent="{{talentId}}">
-
-              {{talent.label}}
+                name="system.talentsMineurs.{{talentId}}.value"
+                data-talent="{{talentId}}"/>
+              <label for="system.talentsMineurs.{{talentId}}">{{talent.label}}</label>
             </div>
             {{/each}}
           </div>

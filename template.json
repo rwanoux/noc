@@ -328,12 +328,97 @@
         "description": ""
       }
     },
-    "archetypes": {
+    "archetype": {
       "templates": [
         "base"
       ],
       "talentMajeur": "",
-      "talentsMineurs": [],
+      "talentsMineurs": {
+        "bureau": {
+          "value": false
+        },
+        "culture": {
+          "value": false
+        },
+        "recherche": {
+          "value": false
+        },
+        "societe": {
+          "value": false
+        },
+        "artefact": {
+          "value": false
+        },
+        "artisanat": {
+          "value": false
+        },
+        "ingenierie": {
+          "value": false
+        },
+        "survie": {
+          "value": false
+        },
+        "combat": {
+          "value": false
+        },
+        "constitution": {
+          "value": false
+        },
+        "deplacement": {
+          "value": false
+        },
+        "instinct": {
+          "value": false
+        },
+        "contact": {
+          "value": false
+        },
+        "façade": {
+          "value": false
+        },
+        "fortune": {
+          "value": false
+        },
+        "rang": {
+          "value": false
+        },
+        "extase": {
+          "value": false
+        },
+        "folie": {
+          "value": false
+        },
+        "sensibilite": {
+          "value": false
+        },
+        "tenebres": {
+          "value": false
+        },
+        "charisme": {
+          "value": false
+        },
+        "conviction": {
+          "value": false
+        },
+        "psychologie": {
+          "value": false
+        },
+        "tromperie": {
+          "value": false
+        },
+        "apaisement": {
+          "value": false
+        },
+        "ferveur": {
+          "value": false
+        },
+        "lumiere": {
+          "value": false
+        },
+        "soins": {
+          "value": false
+        }
+      },
       "special": "",
       "affinite": {
         "vie": {
