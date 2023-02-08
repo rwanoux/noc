@@ -72,17 +72,15 @@
       <div class="talents-mineurs">
         <h4>talents mineurs (niv 1)</h4>
         <div class="flexrow">
-          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
-          domaineId|}}
+          {{#each item.system.talentsMineurs as |domaine domaineId|}}
           <div class="flexcol">
             <h5>{{domaineId}}</h5>
             {{#each domaine as |talent talentId|}}
             <div class="flexrow">
               <input value="true"
-                class="talent-mineur" type="checkbox"
-                name="system.talentsMineurs.{{talentId}}.value"
-                data-talent="{{talentId}}"/>
-              <label for="system.talentsMineurs.{{talentId}}">{{talent.label}}</label>
+                class="talent-mineur" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}" {{checked talent.checked}}>
+
+              {{talent.label}}
             </div>
             {{/each}}
           </div>

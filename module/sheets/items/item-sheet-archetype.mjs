@@ -24,6 +24,11 @@ export class nocItemSheetArchetype extends ItemSheet {
     // Retrieve base data structure.
     const context = super.getData();
     context.systemTemplate = game.system.template;
+    // Opportunistic init
+    if ( !this.item.system.talentsMineurs["erudition"]) {
+      this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.templates.talents.talents)
+    }
+    console.log("ITEM", this.item.system)
     return context;
   }
 
@@ -35,7 +40,7 @@ export class nocItemSheetArchetype extends ItemSheet {
 
     let checks = html.find('input[type="checkbox"].talent-mineur');
     for (let check of checks) {
-      this.checkingTalentsMineurs(check);
+      check.addEventListener('change', this.updateTalentsMineurs.bind(this))
     }
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
@@ -45,11 +50,18 @@ export class nocItemSheetArchetype extends ItemSheet {
   }
 
   checkingTalentsMineurs(check) {
-    console.log(check)
-    let talentLabel = check.dataset.talent
-    if (this.item.system.talentsMineurs[talentLabel].value) {
-      check.setAttribute("checked", true)
-    }
+    console.log("CHECL", this.item.system.talentsMineurs, check, check.dataset)
+    this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent] = true
+    /*if (this.item.system.talentsMineurs.indexOf(check.dataset.talent) > -1) {
+      check.setAttributes("checked", true)
+    }*/
+  }
+  async updateTalentsMineurs(ev) {
+    let check = ev.currentTarget;
+    console.log("Toggle", check.checked)
+    let domain =  duplicate(this.item.system.talentsMineurs)
+    domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
+    this.item.update( {'system.talentsMineurs': domain})
   }
 
 }

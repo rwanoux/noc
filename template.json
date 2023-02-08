@@ -45,126 +45,154 @@
           "erudition": {
             "bureau": {
               "label": "bureau",
+              "checked": false,
               "niveau": 0
             },
             "culture": {
               "label": "culture",
+              "checked": false,
               "niveau": 0
             },
             "recherche": {
               "label": "recherche",
+              "checked": false,
               "niveau": 0
             },
             "societe": {
               "label": "societé",
+              "checked": false,
               "niveau": 0
             }
           },
           "technique": {
             "artefact": {
               "label": "artefact",
+              "checked": false,
               "niveau": 0
             },
             "artisanat": {
               "label": "artisanat",
+              "checked": false,
               "niveau": 0
             },
             "ingenierie": {
               "label": "ingénierie",
+              "checked": false,
               "niveau": 0
             },
             "survie": {
               "label": "survie",
+              "checked": false,
               "niveau": 0
             }
           },
           "action": {
             "combat": {
               "label": "combat",
+              "checked": false,
               "niveau": 0
             },
             "constitution": {
               "label": "constitution",
+              "checked": false,
               "niveau": 0
             },
             "deplacement": {
               "label": "déplacement",
+              "checked": false,
               "niveau": 0
             },
             "instinct": {
               "label": "instinct",
+              "checked": false,
               "niveau": 0
             }
           },
           "statut": {
             "contact": {
               "label": "contact",
+              "checked": false,
               "niveau": 0
             },
             "façade": {
               "label": "façade",
+              "checked": false,
               "niveau": 0
             },
             "fortune": {
               "label": "fortune",
+              "checked": false,
               "niveau": 0
             },
             "rang": {
               "label": "rang",
+              "checked": false,
               "niveau": 0
             }
           },
           "ame": {
             "extase": {
               "label": "extase",
+              "checked": false,
               "niveau": 0
             },
             "folie": {
               "label": "folie",
+              "checked": false,
               "niveau": 0
             },
             "sensibilite": {
               "label": "sensibilité",
+              "checked": false,
               "niveau": 0
             },
             "tenebres": {
               "label": "tenêbres",
+              "checked": false,
               "niveau": 0
             }
           },
           "social": {
             "charisme": {
               "label": "charisme",
+              "checked": false,
               "niveau": 0
             },
             "conviction": {
               "label": "conviction",
+              "checked": false,
               "niveau": 0
             },
             "psychologie": {
               "label": "psychologie",
+              "checked": false,
               "niveau": 0
             },
             "tromperie": {
               "label": "tromperie",
+              "checked": false,
               "niveau": 0
             }
           },
           "vie": {
             "apaisement": {
               "label": "apaisement",
+              "checked": false,
               "niveau": 0
             },
             "ferveur": {
               "label": "ferveur",
+              "checked": false,
               "niveau": 0
             },
             "lumiere": {
               "label": "lumière",
+              "checked": false,
               "niveau": 0
             },
             "soins": {
               "label": "soins",
+              "checked": false,
               "niveau": 0
             }
           }
@@ -333,92 +361,7 @@
         "base"
       ],
       "talentMajeur": "",
-      "talentsMineurs": {
-        "bureau": {
-          "value": false
-        },
-        "culture": {
-          "value": false
-        },
-        "recherche": {
-          "value": false
-        },
-        "societe": {
-          "value": false
-        },
-        "artefact": {
-          "value": false
-        },
-        "artisanat": {
-          "value": false
-        },
-        "ingenierie": {
-          "value": false
-        },
-        "survie": {
-          "value": false
-        },
-        "combat": {
-          "value": false
-        },
-        "constitution": {
-          "value": false
-        },
-        "deplacement": {
-          "value": false
-        },
-        "instinct": {
-          "value": false
-        },
-        "contact": {
-          "value": false
-        },
-        "façade": {
-          "value": false
-        },
-        "fortune": {
-          "value": false
-        },
-        "rang": {
-          "value": false
-        },
-        "extase": {
-          "value": false
-        },
-        "folie": {
-          "value": false
-        },
-        "sensibilite": {
-          "value": false
-        },
-        "tenebres": {
-          "value": false
-        },
-        "charisme": {
-          "value": false
-        },
-        "conviction": {
-          "value": false
-        },
-        "psychologie": {
-          "value": false
-        },
-        "tromperie": {
-          "value": false
-        },
-        "apaisement": {
-          "value": false
-        },
-        "ferveur": {
-          "value": false
-        },
-        "lumiere": {
-          "value": false
-        },
-        "soins": {
-          "value": false
-        }
-      },
+      "talentsMineurs": {},
       "special": "",
       "affinite": {
         "vie": {
