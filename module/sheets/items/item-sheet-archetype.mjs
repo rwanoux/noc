@@ -50,7 +50,7 @@ export class nocItemSheetArchetype extends ItemSheet {
   }
 
   checkingTalentsMineurs(check) {
-    console.log("CHECL", this.item.system.talentsMineurs, check, check.dataset)
+    //console.log("CHECL", this.item.system.talentsMineurs, check, check.dataset)
     this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent] = true
     /*if (this.item.system.talentsMineurs.indexOf(check.dataset.talent) > -1) {
       check.setAttributes("checked", true)
