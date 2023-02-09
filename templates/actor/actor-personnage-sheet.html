@@ -77,7 +77,9 @@
             <input
               name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
               value="{{talent.niveau}}" type="number">
-            <label for="{{talent.label}}">{{talent.label}}</label>
+            <a class="rollTalent" data-talent-name="{{talent.label}}"
+              data-domaine-name="{{domaine.label}}"
+              data-dices="{{domaine.value}}">{{talent.label}}</a>
           </div>
           {{/each}}
           {{/ifequal}}

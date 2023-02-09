@@ -39,13 +39,11 @@ export class nocItemSheetArchetype extends ItemSheet {
     }
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
-    console.log(this.item)
 
     // Roll handlers, click handlers, etc. would go here.
   }
 
   checkingTalentsMineurs(check) {
-    console.log(check)
     let talentLabel = check.dataset.talent
     if (this.item.system.talentsMineurs[talentLabel].value) {
       check.setAttribute("checked", true)

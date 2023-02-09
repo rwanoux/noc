@@ -1,3 +1,4 @@
+import NocRoll from '../../NocRoll.js';
 
 
 /**
@@ -146,15 +147,29 @@ export class nocActorSheetPersonnage extends ActorSheet {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
     html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this))
-
+    let talents = html.find('a.rollTalent')
+    for (let el of talents) {
+      el.addEventListener('click', this.onclickTalent.bind(this))
+    }
   }
-
+  async onclickTalent(ev) {
+    console.log(ev.currentTarget);
+    let talent = ev.currentTarget.dataset.talentName;
+    let domaine = ev.currentTarget.dataset.domaineName;
+    let dices = ev.currentTarget.dataset.dices;
+    let label = `${this.actor.name} tente le destin, jet de ${ev.currentTarget.dataset.talentName}`
+    let roll = new NocRoll(dices, { talent: this.actor.system.talents[domaine][talent], domaine: this.actor.system.domaines[domaine] });
+    roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+      flavor: label,
+      rollMode: game.settings.get('core', 'rollMode'),
+    });
+  }
   async onClickMaxReserve(ev) {
     let reserveName = ev.currentTarget.dataset.reserveName;
     let reserveProp = ev.currentTarget.dataset.reserveProperty;
 
 
-    console.log(reserveName, reserveProp)
     new Dialog({
       title: `Ajustement de reserve`,
       content: `

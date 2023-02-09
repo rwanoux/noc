@@ -1,0 +1,15 @@
+{{log this}}
+<h4>les dés :</h4>
+<div class="flexrow">
+    {{#each dice.0.results as |result ind|}}
+
+    <span class="rollResult">
+        {{result.result}}
+    </span>
+
+    {{/each}}
+
+</div>
+
+<h4>resultat</h4>
+{{add data.talent.niveau this.result}}
