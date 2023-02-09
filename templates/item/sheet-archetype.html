@@ -14,58 +14,15 @@
     </div>
 
         <div class="flexrow">
-          <div>
-            <img class="item-img" src="{{document.img}}" data-edit="img"
-          title="{{document.name}}" />
-          </div>
+          {{#each item.system.talentsMineurs as |domaine domaineId|}}
+          <div class="flexcol">
+            <h5>{{domaineId}}</h5>
+            {{#each domaine as |talent talentId|}}
+            <div class="flexrow">
+              <input value="true"
+                class="talent-mineur" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}" {{checked talent.checked}}>
 
-          <div class="description">
-            <h4>description</h4>
-                {{editor item.system.description target="system.description"
-                button=true editable=editable
-                engine="prosemirror" collaborate=false}}
-         </div>
-         <div class="stat">
-              <h4>Talent Majeur (niv 2)</h4>
-              <select name="system.talentMajeur">
-                {{#each systemTemplate.Actor.templates.talents.talents as
-                |domaine
-                domaineId|}}
-                <optgroup label="{{domaineId}}">
-                  {{#each domaine as |talent talentId|}}
-
-                  <option value="{{talentId}}"
-                    {{#ifequal @root.item.system.talentMajeur talentId}}
-                    selected
-                    {{/ifequal}}>
-                    {{talent.label}}
-                  </option>
-                  {{/each}}
-                </optgroup>
-                {{/each}}
-              </select>
-         
-          <div class="flexcol affinites">
-
-              <h4>affinités</h4>
-              <div class="flexcol">
-
-                {{#each item.system.affinite as |domaine domaineId|}}
-                <div class="flexrow">
-                  <input name="system.affinite.{{domaineId}}.active"
-                    class="affinite-check"
-                    type="checkbox"
-                    {{checked domaine.active }}>
-                  <span>{{domaineId}}</span>
-                  <input type="number"
-                    name="system.affinite.{{domaineId}}.value"
-                    value="{{domaine.value}}"
-                    class="affinite-value">
-
-                </div>
-                {{/each}}
-              </div> 
-           
+              {{talent.label}}
             </div>
          </div>
 
