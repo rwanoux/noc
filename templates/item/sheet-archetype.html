@@ -1,5 +1,4 @@
 <form class="{{cssClass}}" autocomplete="off">
-  {{log this}}
 
 
   {{!-- Sheet Body --}}
@@ -13,72 +12,67 @@
     </div>
 
 
-    <div class="form-group">
-      <div class="flexrow">
-        <div class="arch-stats">
-          <h4>description</h4>
-          {{editor item.system.description target="system.description"
-          button=true editable=editable
-          engine="prosemirror" collaborate=false}}
-          <div>
-            <h4>Talent Majeur (niv 2)</h4>
-            <select name="system.talentMajeur">
-              {{#each systemTemplate.Actor.templates.talents.talents as |domaine
-              domaineId|}}
-              <optgroup label="{{domaineId}}">
-                {{#each domaine as |talent talentId|}}
+    <div class="flexrow">
 
-                <option value="{{talentId}}"
-                  {{#ifequal @root.item.system.talentMajeur talentId}}
-                  selected
-                  {{/ifequal}}>
-                  {{talent.label}}
-                </option>
-                {{/each}}
-              </optgroup>
-              {{/each}}
-            </select>
+
+      <div class="img-container">
+        <img class="item-img" src="{{document.img}}" data-edit="img"
+          title="{{document.name}}" />
+        <h4>description</h4>
+        {{editor item.system.description target="system.description"
+        button=true editable=editable
+        engine="prosemirror" collaborate=false}}
+      </div>
+      <div class="arch-stats">
+
+        <h4>Talent Majeur (niv 2)</h4>
+        <select name="system.talentMajeur">
+          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+          domaineId|}}
+          <optgroup label="{{domaineId}}">
+            {{#each domaine as |talent talentId|}}
+
+            <option value="{{talentId}}"
+              {{#ifequal @root.item.system.talentMajeur talentId}}
+              selected
+              {{/ifequal}}>
+              {{talent.label}}
+            </option>
+            {{/each}}
+          </optgroup>
+          {{/each}}
+        </select>
+
+        <h4>affinités</h4>
+        <div class="flexcol">
+
+          {{#each item.system.affinite as |domaine domaineId|}}
+          <div class="flexrow">
+            <input name="system.affinite.{{domaineId}}.active"
+              class="affinite-check"
+              type="checkbox"
+              {{checked domaine.active }}>
+            <span>{{domaineId}}</span>
+            <input type="number" name="system.affinite.{{domaineId}}.value"
+              value="{{domaine.value}}"
+              class="affinite-value">
+
           </div>
-          <div class="flexcol">
-
-            <h4>affinités</h4>
-            <div class="flexcol">
-
-              {{#each item.system.affinite as |domaine domaineId|}}
-              <div class="flexrow">
-                <input name="system.affinite.{{domaineId}}.active"
-                  class="affinite-check"
-                  type="checkbox"
-                  {{checked domaine.active }}>
-                <span>{{domaineId}}</span>
-                <input type="number" name="system.affinite.{{domaineId}}.value"
-                  value="{{domaine.value}}"
-                  class="affinite-value">
-
-              </div>
-              {{/each}}
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <img class="item-img" src="{{document.img}}" data-edit="img"
-            title="{{document.name}}" />
+          {{/each}}
         </div>
       </div>
-    </div>
-    <div class="flexcol">
-
       <div class="talents-mineurs">
         <h4>talents mineurs (niv 1)</h4>
-        <div class="flexrow">
+        <div class="talents-mineurs-grid">
           {{#each item.system.talentsMineurs as |domaine domaineId|}}
-          <div class="flexcol">
+          <div class="flexcol domaine-container">
             <h5>{{domaineId}}</h5>
             {{#each domaine as |talent talentId|}}
             <div class="flexrow">
               <input value="true"
-                class="talent-mineur" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}" {{checked talent.checked}}>
+                class="talent-mineur" type="checkbox"
+                data-domaine="{{domaineId}}" data-talent="{{talentId}}"
+                {{checked talent.checked}}>
 
               {{talent.label}}
             </div>
@@ -87,8 +81,11 @@
           {{/each}}
         </div>
       </div>
+    </div>
 
 
 
-    </section>
-  </form>
+
+
+  </section>
+</form>

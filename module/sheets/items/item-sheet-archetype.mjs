@@ -6,7 +6,11 @@ export class nocItemSheetArchetype extends ItemSheet {
       classes: ["noc", "sheet", "item"],
       width: 750,
       height: 500,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
+      dragdrop: [{
+        dragSelector: ".item-list .item",
+        dropSelector: ".dop-area"
+      }]
     });
   }
 
@@ -25,7 +29,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     const context = super.getData();
     context.systemTemplate = game.system.template;
     // Opportunistic init
-    if ( !this.item.system.talentsMineurs["erudition"]) {
+    if (!this.item.system.talentsMineurs["erudition"]) {
       this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.templates.talents.talents)
     }
     console.log("ITEM", this.item.system)
@@ -59,9 +63,20 @@ export class nocItemSheetArchetype extends ItemSheet {
   async updateTalentsMineurs(ev) {
     let check = ev.currentTarget;
     console.log("Toggle", check.checked)
-    let domain =  duplicate(this.item.system.talentsMineurs)
+    let domain = duplicate(this.item.system.talentsMineurs)
     domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
-    this.item.update( {'system.talentsMineurs': domain})
+    this.item.update({ 'system.talentsMineurs': domain })
   }
+  async _onDrop(event) {
+    event.preventDefault();
+    let data;
+    try {
+      data = JSON.parse(event.dataTransfer.getData('text/plain'));
+    } catch (err) { return false; }
+    if (!data) return false;
+    if (data.type === "Item") return alert("dropped item");
+    if (data.type === "Actor") return false;
+  }
+
 
 }
