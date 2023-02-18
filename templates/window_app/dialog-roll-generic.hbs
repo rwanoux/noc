@@ -1,0 +1,44 @@
+<form class="skill-roll-dialog">
+  <header class="roll-dialog-header">
+    {{#if img}}
+    <img class="actor-icon" src="{{img}}" data-edit="img" title="{{name}}" />
+    {{/if}}
+    <h1 class="dialog-roll-title roll-dialog-header">Provoquer le destin - {{title}}</h1>
+  </header>
+
+    <div class="flexcol">
+
+      {{#if (eq mode "talent")}}
+        <div class="flexrow">
+            <span class="">Talent : </span>
+            <span class="">{{talent.label}} ({{talent.niveau}})</span>
+        </div>
+        <div class="flexrow">
+            <span class="">Domaine : </span>
+            <span class="">{{domaine.label}} ({{domaine.value}})</span>
+        </div>
+        <div class="flexrow">
+            <span class="">Dés de domaine : </span>
+            <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
+              {{#select nbDesDomaine}}
+                {{#repeat domaine.value}}
+                  <option value="{{add @index 1}}">{{add @index 1}}</option>
+                {{/repeat}}
+              {{/select}}
+            </select>
+        </div>
+
+      {{/if}}
+
+      <div class="flexrow">
+          <span class="item-field-label-vlong">Utiliser 1 Point d'Espoir ? (+3 dés)? </span>
+        <span class="item-field-label-medium"><input type="checkbox" id="useEspoir" name="useEspoir" {{checked useEspoir}}/></span>          
+      </div>
+      <div class="flexrow">
+          <span class="item-field-label-vlong">Utiliser 1 Point de Vécu ? (+1 niveau de Talent)? </span>
+        <span class="item-field-label-medium"><input type="checkbox" id="useVecu" name="useVecu" {{checked useVecu}}/></span>          
+      </div>
+
+    </div>
+
+</form>

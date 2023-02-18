@@ -1,0 +1,31 @@
+<div class="chat-message-header">
+  {{#if actorImg}}
+  <img class="actor-icon" src="{{actorImg}}" alt="{{alias}}" />
+  {{/if}}
+  <h4 class=chat-actor-name>{{alias}}</h4>
+</div>
+
+  <hr>
+  
+  {{#if img}}
+  <div >
+    <img class="chat-icon" src="{{img}}" alt="{{name}}" />
+  </div>
+  {{/if}}
+
+  <div>
+    <ul>
+      <li>Talent :  {{talent.name}} ({{talent.niveau}}</li>
+      <li>Dés de domaine utilisés :  {{nbDesDomaine}}</li>
+      {{#if useEspoirt}}
+      <li>Un point d'Espoir utilisé</li>
+      {{/if}}
+      {{#if useEspoirt}}
+      <li>Un point de vécu a été utilisé</li>
+      {{/if}}
+      <li>Nombre de succès :  {{nbSuccess}}</li>
+      <li>Niveau final :  {{niveauFinal}}</li>
+    </ul>  
+  </div>
+
+  </div>

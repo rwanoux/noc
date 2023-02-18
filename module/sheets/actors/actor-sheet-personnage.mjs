@@ -128,7 +128,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
-
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -136,6 +135,13 @@ export class nocActorSheetPersonnage extends ActorSheet {
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
+
+    // Talent manegement
+    html.find('.roll-talent').click(ev => {
+      let domaineId = $(ev.currentTarget).data("domaine-id");
+      let talentId = $(ev.currentTarget).data("talent-id");
+      this.actor.rollTalent(domaineId, talentId);
+    })
 
     let checksReserve = html.find('.reserve input');
     for (let ch of checksReserve) {
