@@ -12,7 +12,9 @@ function buildStyles() {
 
 
 };
-
+function reloadTemplates() {
+    return browserSync.reload("templates/**/*.html")
+}
 exports.buildStyles = buildStyles;
 exports.watch = function () {
     browserSync.init(
@@ -25,7 +27,7 @@ exports.watch = function () {
 
         }
     );
-    gulp.watch("./templates/**/*.html").on('change', browserSync.reload);
+    gulp.watch("./templates/**/*.html").on('change', reloadTemplates);
 
     gulp.watch(['./scss/**/*.scss', './scss/*.scss'], buildStyles);
 

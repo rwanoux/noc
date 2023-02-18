@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "CSS compiler for the NOC system",
   "scripts": {
+    "launch Foundry": "cd C:/Program Files/Foundry Virtual Tabletop_10/resources/app && node main.js",
     "watch": "gulp watch"
   },
   "browserslist": [

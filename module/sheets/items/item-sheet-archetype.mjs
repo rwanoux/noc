@@ -1,4 +1,5 @@
 
+import { nocItem } from "../../documents/item.mjs";
 export class nocItemSheetArchetype extends ItemSheet {
 
   static get defaultOptions() {
@@ -21,10 +22,12 @@ export class nocItemSheetArchetype extends ItemSheet {
   }
 
   /* -------------------------------------------- */
+  _canDragDrop(selector) {
+    return this.isEditable;
+  }
 
   /** @override */
   getData() {
-    console.log(this)
     // Retrieve base data structure.
     const context = super.getData();
     context.systemTemplate = game.system.template;
@@ -48,7 +51,32 @@ export class nocItemSheetArchetype extends ItemSheet {
     }
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
-    console.log(this.item)
+    this.form.ondrop = ev => this._onDrop(ev);
+    let checksTheme = html.find('[data-action="addTheme"]');
+    if (checksTheme) {
+      for (let ch of checksTheme) {
+        ch.addEventListener("click", this.changeThemes.bind(this))
+      }
+
+    }
+    let deleteThemes = html.find('[data-action="delete-theme"]');
+    if (deleteThemes) {
+      for (let but of deleteThemes) {
+        but.addEventListener("click", this.deleteThemes.bind(this))
+      }
+    }
+    let openThemes = html.find('[data-action="open-theme"]');
+    if (openThemes) {
+      for (let but of openThemes) {
+        but.addEventListener("click", this.openThemes.bind(this))
+      }
+    }
+    let chooseThemes = html.find('[data-action="choose-theme"]');
+    if (chooseThemes) {
+      for (let ck of chooseThemes) {
+        ck.addEventListener("click", this.chooseThemes.bind(this))
+      }
+    }
 
     // Roll handlers, click handlers, etc. would go here.
   }
@@ -60,23 +88,74 @@ export class nocItemSheetArchetype extends ItemSheet {
       check.setAttributes("checked", true)
     }*/
   }
+  async chooseThemes(ev) {
+    let themes = await this.item.getFlag("noc", "linkedThemes");
+    let targetThemeId = ev.target.dataset.themeId;
+    if (  ev.currentTarget.checked){
+      for (let th of themes) {
+      th.choosed = false
+    }
+    }
+    
+    let targetTheme = themes.find(th => th.id == targetThemeId);
+    targetTheme.choosed = ev.currentTarget.checked
+    await this.item.setFlag("noc", "linkedThemes", themes)
+  }
+  async openThemes(ev) {
+    let id = ev.currentTarget.dataset.themeId;
+    let item = await Item.get(id);
+    item.sheet.render(true)
+  }
+  async deleteThemes(ev) {
+    let themes = await this.item.getFlag("noc", "linkedThemes");
+    let targetThemeId = ev.target.dataset.themeId;
+    let targetTheme = themes.find(th => th.id == targetThemeId);
+    themes.splice(themes.indexOf(targetTheme), 1);
+    await this.item.setFlag("noc", "linkedThemes", themes)
+  }
+
+  async changeThemes(ev) {
+    let themes = await this.item.getFlag("noc", "linkedThemes");
+    let targetThemeId = ev.target.dataset.themeId;
+    let targetTheme = themes.find(th => th.id == targetThemeId);
+    targetTheme.choosed = true;
+    this.item.setFlag("noc", "linkedThemes", themes)
+
+  }
   async updateTalentsMineurs(ev) {
     let check = ev.currentTarget;
-    console.log("Toggle", check.checked)
     let domain = duplicate(this.item.system.talentsMineurs)
     domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
     this.item.update({ 'system.talentsMineurs': domain })
   }
   async _onDrop(event) {
-    event.preventDefault();
     let data;
     try {
       data = JSON.parse(event.dataTransfer.getData('text/plain'));
     } catch (err) { return false; }
     if (!data) return false;
-    if (data.type === "Item") return alert("dropped item");
+    if (data.type === "Item") return this.onDropItem(data.uuid);
     if (data.type === "Actor") return false;
   }
 
+  async onDropItem(id) {
+    let droppedItem = await fromUuid(id);
+    if (droppedItem.type != "thème") {
+      return false
+    }
+    else { this.addTheme(droppedItem) }
+  }
 
+  async addTheme(item) {
+    let linkedThemes = await this.item.getFlag("noc", "linkedThemes") || [];
+    linkedThemes.push(
+      {
+        id: item._id,
+        name: item.name,
+        talents: item.system.talents,
+        choosed: false
+      }
+    );
+    await this.item.setFlag("noc", "linkedThemes", linkedThemes)
+  }
 }

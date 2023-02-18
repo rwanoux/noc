@@ -3,6 +3,17 @@
  * @extends {Item}
  */
 export class nocItem extends Item {
+  constructor(...args) {
+    let data = args[0];
+
+    if (!data.img) {
+
+      data.img = `systems/noc/asset/default_icons/${data.type}.webp`
+
+    }
+    super(...args);
+  }
+
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -22,8 +33,6 @@ export class nocItem extends Item {
     const rollData = {
       value: 1
     };
-
-
     return rollData;
   }
 
