@@ -1,5 +1,5 @@
 import NOCContact from "../ContactClass.js";
-
+import { nocRollDialog} from "../dialogs/roll-dialog.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -104,9 +104,38 @@ export class nocActor extends Actor {
     };
 
 
-
 */
   }
 
+  /* -------------------------------------------- */
+  buildGenericRollData() {
+    return {
+      actorId: this.id,
+      img: this.img,
+      name: this.name,
+      useEspoir: false,
+      useVecu: false,
+      nbDesDomaine: 0,
+    }
+  }
+
+  /* -------------------------------------------- */
+  rollTalent( domaineId, talentId) {
+    let rollData = this.buildGenericRollData()
+
+    // Specific stuff
+    rollData.mode = "talent"
+    rollData.domaine =  duplicate(this.system.domaines[domaineId]),
+    rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
+    console.log("rollTalent", rollData)
+    this.startRoll(rollData)
+  }
+
+
+  /* -------------------------------------------- */
+  async startRoll(rollData) {
+    let rollDialog = await nocRollDialog.create(this, rollData)
+    rollDialog.render(true)
+  }
 
 }
