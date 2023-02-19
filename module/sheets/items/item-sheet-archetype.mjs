@@ -91,12 +91,12 @@ export class nocItemSheetArchetype extends ItemSheet {
   async chooseThemes(ev) {
     let themes = await this.item.getFlag("noc", "linkedThemes");
     let targetThemeId = ev.target.dataset.themeId;
-    if (  ev.currentTarget.checked){
+    if (ev.currentTarget.checked) {
       for (let th of themes) {
-      th.choosed = false
+        th.choosed = false
+      }
     }
-    }
-    
+
     let targetTheme = themes.find(th => th.id == targetThemeId);
     targetTheme.choosed = ev.currentTarget.checked
     await this.item.setFlag("noc", "linkedThemes", themes)
