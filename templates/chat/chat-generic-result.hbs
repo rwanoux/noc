@@ -31,7 +31,7 @@
         </div>
         {{/each}}
         {{/each}}
-        
+
         {{#each rollBonus.terms as |term index|}}
           {{#each term.results as |dice index|}}
           <div class="dice
@@ -44,6 +44,9 @@
         {{/each}}
         {{/each}}
       </li>
+      {{#if nbBonusCollaboratif}}
+      <li>Bonus collaboratif : {{nbBonusCollaboratif}}</li>
+      {{/if}}
       {{#if useEspoir}}
       <li>Un point d'Espoir utilisé</li>
       {{/if}}
