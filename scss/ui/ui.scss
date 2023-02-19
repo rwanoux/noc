@@ -188,6 +188,33 @@ figure#pause {
             background-position: 100% auto;
             background-size: cover;
             padding-left: 30px;
+
+            .nocRoll {
+                .dice {
+                    box-shadow: 0px 0px 15px rgba(128, 128, 128, 0.427) inset;
+                    text-align: center;
+                    margin: 3px;
+                    padding: 6px;
+                    word-break: keep-all;
+                    flex: 0.05;
+
+
+                    &.success {
+                        box-shadow: 0px 0px 15px rgb(64, 131, 64) inset;
+
+                        &.relance {
+                            box-shadow: 0px 0px 15px rgb(64, 131, 64) inset,
+                                0px 0px 5px rgb(196, 187, 0);
+
+                        }
+                    }
+
+                    &.fiel {
+                        box-shadow: 0px 0px 15px black inset;
+                        color: white
+                    }
+                }
+            }
         }
 
     }

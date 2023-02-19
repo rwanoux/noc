@@ -1,32 +1,47 @@
-<div class="chat-message-header">
-  {{#if actorImg}}
-  <img class="actor-icon" src="{{actorImg}}" alt="{{alias}}" />
-  {{/if}}
-  <h4 class=chat-actor-name>{{alias}}</h4>
-</div>
+<div class="nocRoll">
+  <div class="chat-message-header">
+    {{log this}}
+    {{#if actorImg}}
+    <img class="actor-icon" src="{{actorImg}}" alt="{{alias}}" />
+    {{/if}}
+    <h4 class=chat-actor-name>{{alias}}</h4>
+  </div>
 
   <hr>
-  
+
   {{#if img}}
-  <div >
+  <div>
     <img class="chat-icon" src="{{img}}" alt="{{name}}" />
   </div>
   {{/if}}
 
   <div>
     <ul>
-      <li>Talent :  {{talent.label}} ({{talent.niveau}})</li>
-      <li>Dés de domaine utilisés :  {{nbDesDomaine}}</li>
+      <li>Talent : {{talent.label}} ({{talent.niveau}})</li>
+      <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
+      <li class="dicesResults flexrow">
+        {{#each roll.terms as |term index|}}
+        {{#each term.results as |dice index|}}
+        <div class="dice
+          {{#if dice.success}} success {{/if}}
+          {{#ifequal dice.result 1}} fiel{{/ifequal}}
+          {{#ifequal dice.result 10}} relance{{/ifequal}}
+          ">
+          {{dice.result}}
+        </div>
+        {{/each}}
+        {{/each}}
+      </li>
       {{#if useEspoir}}
       <li>Un point d'Espoir utilisé</li>
       {{/if}}
       {{#if useVecu}}
       <li>Un point de vécu a été utilisé</li>
       {{/if}}
-      <li>Gouttes de Fiel ajoutées :  {{nbFiel}}</li>
-      <li>Nombre de succès :  {{nbSuccess}}</li>
-      <li>Niveau final :  {{niveauFinal}}</li>
-    </ul>  
+      <li>Gouttes de Fiel ajoutées : {{nbFiel}}</li>
+      <li>Nombre de succès : {{nbSuccess}}</li>
+      <li class="rollResult">Niveau final : {{niveauFinal}}</li>
+    </ul>
   </div>
 
-  </div>
+</div>
