@@ -22,6 +22,7 @@ import { registerNocSettings } from "./registerSettings.mjs";
 import { socketManager } from "./socketManager.mjs";
 import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
+import { nocUtility } from './noc-utility.js';
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -172,7 +173,7 @@ Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 
-
+  nocUtility.init()
 
   objetDieu.productMecanisme();
 })
