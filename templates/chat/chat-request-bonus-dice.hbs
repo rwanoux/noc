@@ -1,0 +1,26 @@
+<div class="chat-message-header">
+  {{#if actorImg}}
+  <img class="actor-icon" src="{{actorImg}}" alt="{{alias}}" />
+  {{/if}}
+  <h4 class=chat-actor-name>{{alias}}</h4>
+</div>
+
+  <hr>
+  
+  {{#if img}}
+  <div >
+    <img class="chat-icon" src="{{img}}" alt="{{name}}" />
+  </div>
+  {{/if}}
+
+  <div>
+    <ul>
+      <li>Vous pouvez bénéficier de {{nbAddDice}} dés. Combien voulez vous en lancer ?</li>
+      <button class="roll-dice-bonus" data-nb-dice="0">Aucun dé</button>
+      {{#repeat nbAddDice}}
+        <button class="roll-dice-bonus" data-nb-dice="{{add @index 1}}">{{add @index 1}} Dé(s)</button>
+      {{/repeat}}
+    </ul>  
+  </div>
+
+  </div>
