@@ -13,7 +13,17 @@ export class nocActor extends Actor {
       switch (data.type) {
         case "personnage":
         case "rouage":
-          data.img = 'systems/noc/asset/default_icons/personnage.webp'
+          data.img = 'systems/noc/asset/default_icons/personnage.webp';
+          break;
+        case "cabale":
+          data.img = 'systems/noc/asset/default_icons/cabale.webp';
+        case "autre":
+          data.img = 'systems/noc/asset/default_icons/autre.webp';
+          break;
+        default:
+          data.img = 'systems/noc/asset/default_icons/question_mark.webp';
+          break;
+
       }
     };
     super(...args);

@@ -1,0 +1,9 @@
+lancer les suppressions des thèmes dans les archetypes depuis Hooks.on("deleteItem")
+
+créer les contacts
+lancer les suppressions des contacts dans les personnages depuis Hooks.on("deleteActor")
+
+continuer les fiches items
+continuer les fiches actors
+
+méchaniques d'aura (talent lumière)

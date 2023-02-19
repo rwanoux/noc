@@ -14,7 +14,8 @@
   <section class="sheet-body">
 
     {{!-- Owned Features Tab --}}
-    <div class="tab principal" data-group="primary" data-tab="description">
+    <div class="tab principal flexrow" data-group="primary"
+      data-tab="description">
       <div class="resume flexcol">
         <img class="profile-img" src="{{actor.img}}" data-edit="img"
           title="{{actor.name}}" height="100" width="100"/>
@@ -24,30 +25,44 @@
           <input type="text" name="name" value="{{actor.name}}">
         </div>
         <div class="form-group">
-          <div>archetype :</div>
-          <input type="text">
+          <div>bloc :</div>
+          <input type="text" name="system.bloc" value="{{actor.system.bloc}}">
         </div>
         <div class="form-group">
-          <div>thème :</div>
-          <input type="text">
+          <div>coordonnées :</div>
+          <input type="text" name="system.coordonnes"
+            value="{{actor.system.coordonnes}}">
         </div>
         <div class="form-group">
-          <div>qualité :</div>
-          <input type="text">
+          <div>societée écran :</div>
+          <input type="text" name="system.societeEcran"
+            value="{{actor.system.societeEcran}}">
         </div>
         <div class="form-group">
-          <div>défaut :</div>
-          <input type="text">
+          <div>réseau :</div>
+          <input type="text" name="system.reseau"
+            value="{{actor.system.reseau}}">
         </div>
-        <div class="form-group flexrow">
-          <div>cabale :</div>
-          <div>{{actor.system.cabale.nom}}</div>
+        <div class="form-group">
+          <div class="flexcol">
+            <div>qualités : <i class="fas fa-add" data-action="add-qualite"></i>
+            </div>
+            {{#each actor.system.qualites.liste as |qualite index|}}
+            {{qualite}}
+            {{/each}}
+          </div>
         </div>
 
+        <div class="form-group">
+          <div>progression :</div>
+          <input type="number" name="system.progression"
+            value="{{actor.system.progression}}">
+        </div>
+
+
       </div>
-    </div>
       <div class="stats">
-        
+
         <!-- DOMAINES ET TALENTS -->
         {{#each actor.system.domaines as |domaine domaineId|}}
         <div class="domaine {{domaineId}}">

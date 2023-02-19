@@ -5,10 +5,19 @@
 export class nocItem extends Item {
   constructor(...args) {
     let data = args[0];
-
-    if (!data.img) {
-
-      data.img = `systems/noc/asset/default_icons/${data.type}.webp`
+    switch (data.type) {
+      case "arme":
+        data.img = 'systems/noc/asset/default_icons/arme.webp';
+        break;
+      case "document administratif":
+        data.img = 'systems/noc/asset/default_icons/document_administratif.webp';
+        break;
+      case "outil":
+        data.img = 'systems/noc/asset/default_icons/outil.webp';
+        break;
+      default:
+        data.img = 'systems/noc/asset/default_icons/question_mark.webp';
+        break;
 
     }
     super(...args);

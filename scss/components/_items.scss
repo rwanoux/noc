@@ -6,7 +6,40 @@ div.noc.item.sheet {
     font-size: 12px;
 
 
+    nav.sheet-tabs {
+      margin: 0;
+      max-height: 3em;
 
+      a.item {
+        background: url(../asset/images/fondmain.webp);
+        background-size: cover;
+        flex: 1;
+        color: rgb(255, 255, 255);
+        box-shadow: 0px 0px 30px black inset;
+        transition: all 0.3s;
+
+        &:hover,
+        &.active {
+
+          color: white;
+          text-shadow: 0px 0px 3px black;
+        }
+
+        &:hover {
+          box-shadow: 0px 0px 15px black inset;
+
+        }
+
+        &.active {
+          color: white;
+          font-size: 2em;
+          text-shadow: 0px 0px 4px black,
+            0px 0px 12px black;
+          box-shadow: 0px 0px 0px black inset;
+
+        }
+      }
+    }
 
 
     input.item-name {

@@ -1,7 +1,7 @@
 export default class NOCContact {
     constructor(id) {
         this.nom = "";
-        this.uuid = id;
+        this.id = id;
         this.description = "";
         this.faveurs = 1;
         this.usedFaveurs = 0;
@@ -16,5 +16,9 @@ export default class NOCContact {
             this.description = act.system.signalement;
             this.uuid = act._id;
         }
+    }
+
+    async getActor() {
+        return await Actor.get(this.id)
     }
 }
