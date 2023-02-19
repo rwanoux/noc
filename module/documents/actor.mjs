@@ -108,11 +108,20 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  incDecReserve(reserveKey, value) {
+    let reserve = duplicate(this.system.reserves[reserveKey])
+    reserve.value += value
+    this.update({ [`this.system.reserves.${reserveKey}`]: reserve})
+  }
+
+  /* -------------------------------------------- */
   buildGenericRollData() {
     return {
       actorId: this.id,
       img: this.img,
       name: this.name,
+      espoir: this.system.reserves.espoir.value,
+      vecu: this.system.reserves.vecu.value,
       useEspoir: false,
       useVecu: false,
       nbDesDomaine: 0,

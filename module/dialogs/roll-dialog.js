@@ -133,6 +133,13 @@ export class nocRollDialog extends Dialog {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)
     })
     msg.setFlag("world", "rolldata", rollData)
+
+    if (rollData.useEspoir) {
+      actor.incDecReserve("espoir", -1)
+    }
+    if (rollData.useVecu) {
+      actor.incDecReserve("vecu", -1)
+    }
   }
 
   /* -------------------------------------------- */
