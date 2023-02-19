@@ -76,10 +76,15 @@ export class nocActorSheetPersonnage extends ActorSheet {
       case "cabale":
         this.setCabale(dropActor)
         break;
+      case "personnage", "rouage":
+        this.setContact(dropActor);
+        break;
+      default:
+        return false
     }
-
   }
   _onDropItem(ev, data) {
+    super._onDropItem()
     console.log(ev, data)
   }
   /* -------------------------------------------- */
@@ -152,6 +157,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
     html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this))
+    html.find('a.openCabale')[0]?.addEventListener('click', this.openCabale.bind(this))
 
   }
 
@@ -261,13 +267,19 @@ export class nocActorSheetPersonnage extends ActorSheet {
     if (this.actor.system.cabale.uuid) { return ui.notifications.warn("Ce personnage est déjà affecté à une cabale") };
     let update = {
       nom: cabale.name,
-      uuid: cabale._id
+      uuid: cabale._id,
+      bloc: cabale.system.bloc,
+      coordonnes: cabale.system.coordonnes,
+      societe: cabale.system.societeEcran
     };
     await this.actor.update({
       "system.cabale": update
     })
   }
-
+  async openCabale(ev) {
+    let cabale = await Actor.get(ev.currentTarget.dataset.cabaleId)
+    return await cabale.sheet.render(true)
+  }
   async leaveCabale(ev) {
     let cabaleId = ev.currentTarget.dataset.cabaleId;
     let cabale = await game.actors.get(cabaleId);

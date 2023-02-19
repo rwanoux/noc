@@ -290,6 +290,162 @@
         "reserves",
         "perditions"
       ],
+      "talents": {
+        "erudition": {
+          "bibliotheque": {
+            "label": "bibliothèque",
+            "checked": false,
+            "niveau": 0
+          },
+          "fichier": {
+            "label": "fichier",
+            "checked": false,
+            "niveau": 0
+          },
+          "laboratoire": {
+            "label": "laboratoire",
+            "checked": false,
+            "niveau": 0
+          },
+          "informateurs": {
+            "label": "informateurs",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "technique": {
+          "passages": {
+            "label": "passages",
+            "checked": false,
+            "niveau": 0
+          },
+          "atelier": {
+            "label": "atelier",
+            "checked": false,
+            "niveau": 0
+          },
+          "salleBlanche": {
+            "label": "salle blanche",
+            "checked": false,
+            "niveau": 0
+          },
+          "observatoire": {
+            "label": "observatoire",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "action": {
+          "armurerie": {
+            "label": "armurerie",
+            "checked": false,
+            "niveau": 0
+          },
+          "vehicules": {
+            "label": "véhicules",
+            "checked": false,
+            "niveau": 0
+          },
+          "niveauAcces": {
+            "label": "niveau d'accès",
+            "checked": false,
+            "niveau": 0
+          },
+          "fortifications": {
+            "label": "fortifications",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "statut": {
+          "capital": {
+            "label": "capital",
+            "checked": false,
+            "niveau": 0
+          },
+          "standing": {
+            "label": "standing",
+            "checked": false,
+            "niveau": 0
+          },
+          "reseau": {
+            "label": "réseau",
+            "checked": false,
+            "niveau": 0
+          },
+          "societesEcrans": {
+            "label": "sociétés écrans",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "ame": {
+          "musee": {
+            "label": "musée",
+            "checked": false,
+            "niveau": 0
+          },
+          "chambreInterrogatoire": {
+            "label": "chambre d'interrogatoire",
+            "checked": false,
+            "niveau": 0
+          },
+          "fragmentsVerite": {
+            "label": "fragments de vérité",
+            "checked": false,
+            "niveau": 0
+          },
+          "refuge": {
+            "label": "refuge",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "social": {
+          "faussesIdentites": {
+            "label": "fausses identités",
+            "checked": false,
+            "niveau": 0
+          },
+          "personnel": {
+            "label": "personnel",
+            "checked": false,
+            "niveau": 0
+          },
+          "expert": {
+            "label": "expert",
+            "checked": false,
+            "niveau": 0
+          },
+          "unite": {
+            "label": "unité",
+            "checked": false,
+            "niveau": 0
+          }
+        },
+        "vie": {
+          "asile": {
+            "label": "asile",
+            "checked": false,
+            "niveau": 0
+          },
+          "infirmerie": {
+            "label": "infirmerie",
+            "checked": false,
+            "niveau": 0
+          },
+          "credo": {
+            "label": "credo",
+            "checked": false,
+            "niveau": 0
+          },
+          "legendes": {
+            "label": "légendes",
+            "checked": false,
+            "niveau": 0
+          }
+        }
+      },
       "bloc": "",
       "coordonnes": "",
       "societeEcran": "",

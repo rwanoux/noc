@@ -1,5 +1,5 @@
 import NOCContact from "../ContactClass.js";
-import { nocRollDialog} from "../dialogs/roll-dialog.js";
+import { nocRollDialog } from "../dialogs/roll-dialog.js";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -15,8 +15,41 @@ export class nocActor extends Actor {
         case "rouage":
           data.img = 'systems/noc/asset/default_icons/personnage.webp'
       }
-    }
+    };
     super(...args);
+    if (data.type == "cabale") { this.initCabale() }
+
+  }
+
+  initCabale() {
+    this.update({
+      "system.perditions": {
+        "blessures": {
+          "label": "dégradation",
+          "value": 3,
+          "min": 0,
+          "max": 10
+        },
+        "traque": {
+          "label": "traque",
+          "value": 3,
+          "min": 0,
+          "max": 10
+        },
+        "noirceur": {
+          "label": "noirceur",
+          "value": 3,
+          "min": 0,
+          "max": 10
+        },
+        "trauma": {
+          "label": "division",
+          "value": 3,
+          "min": 0,
+          "max": 10
+        }
+      }
+    })
   }
   /** @override */
   prepareData() {
@@ -70,41 +103,41 @@ export class nocActor extends Actor {
     if (this.type !== 'rouage') return;
   }
   async prepareContacts() {
-/*
-    let contacts, faveur;
-    switch (this.system.talents.statut.contact.niveau) {
-      case 1:
-        contacts = new Array(2);
-        faveur = 2
-        break;
-      case 2:
-        contacts = new Array(3);
-        faveur = 4
-        break;
-      case 3:
-        contacts = new Array(4);
-        faveur = 6
-        break;
-      case 4:
-        contacts = new Array(5)
-        faveur = 8
-        break;
-      case 5:
-        contacts = new Array(5);
-        faveur = 10
-        break;
-
-      default:
-        break;
-    }
-
-    for (let i = 0; i < contacts.length; i++) {
-      contacts[i] = new NOCContact(randomID());
-      console.log(contacts[i])
-    };
-
-
-*/
+    /*
+        let contacts, faveur;
+        switch (this.system.talents.statut.contact.niveau) {
+          case 1:
+            contacts = new Array(2);
+            faveur = 2
+            break;
+          case 2:
+            contacts = new Array(3);
+            faveur = 4
+            break;
+          case 3:
+            contacts = new Array(4);
+            faveur = 6
+            break;
+          case 4:
+            contacts = new Array(5)
+            faveur = 8
+            break;
+          case 5:
+            contacts = new Array(5);
+            faveur = 10
+            break;
+    
+          default:
+            break;
+        }
+    
+        for (let i = 0; i < contacts.length; i++) {
+          contacts[i] = new NOCContact(randomID());
+          console.log(contacts[i])
+        };
+    
+    
+    */
   }
 
   /* -------------------------------------------- */
@@ -120,14 +153,14 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
-  rollTalent( domaineId, talentId) {
+  rollTalent(domaineId, talentId) {
     let rollData = this.buildGenericRollData()
 
     // Specific stuff
     rollData.mode = "talent"
-    rollData.domaine =  duplicate(this.system.domaines[domaineId]),
-    rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
-    console.log("rollTalent", rollData)
+    rollData.domaine = duplicate(this.system.domaines[domaineId]),
+      rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
+      console.log("rollTalent", rollData)
     this.startRoll(rollData)
   }
 

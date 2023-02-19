@@ -77,9 +77,10 @@
             <input
               name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
               value="{{talent.niveau}}" type="number">
-              <a class="rollable roll-talent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
-                <label for="{{talent.label}}">{{talent.label}}</label>
-              </a>
+            <a class="rollable roll-talent" data-talent-id="{{talentId}}"
+              data-domaine-id="{{domaineId}}">
+              <label for="{{talent.label}}">{{talent.label}}</label>
+            </a>
           </div>
           {{/each}}
           {{/ifequal}}
@@ -166,9 +167,9 @@
           <div>défaut :</div>
           <input type="text">
         </div>
-        <div class="form-group">
+        <div class="form-group flexrow">
           <div>cabale :</div>
-          <input type="text">
+          <div>{{actor.system.cabale.nom}}</div>
         </div>
 
       </div>
@@ -266,18 +267,28 @@
           </p>
           {{/unless}}
           {{#if actor.system.cabale.uuid}}
-          <h3 class="flexrow">{{actor.system.cabale.nom}} <div
+          <div class="flexrow">
+            <h4>
+              {{actor.system.cabale.nom}}
+            </h4>
+            <div
               class="cabaleControls">
               <a class="openCabale"
                 data-cabale-id="{{actor.system.cabale.uuid}}"
                 data-tooltip="ouvrir la fiche de
-                cabale"><i class="fa-solid fa-magnifying-glass"></i></a>
+                cabale"><i class="fa-solid fa-solid fa-window-maximize"></i></a>
               <a data-tooltip="quitter cette cabale"
                 data-cabale-id="{{actor.system.cabale.uuid}}"
                 class="unassignCabale"><i class="fa-solid
                   fa-right-from-bracket"></i></a>
             </div>
-          </h3>
+          </div>
+          <div class="flexcol">
+            <h5>{{cabale.bloc}}</h5>
+            <p>{{cabale.coordonnes}}</p>
+            <h5>société écran</h5>
+            <p>{{cabale.societeEcran}}</p>
+          </div>
 
           {{/if}}
 
