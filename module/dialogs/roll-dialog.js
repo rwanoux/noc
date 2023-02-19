@@ -130,27 +130,27 @@ export class nocRollDialog extends Dialog {
     // Dés additionnels
     let nbAddDice = 0
     let nbFiel = 0
-    for(let result of myRoll.terms[0].results) {
+    for (let result of myRoll.terms[0].results) {
       if (result.result == 10) {
         nbAddDice++
       }
-      if ( result.result == 1) {
-        // TODO INC FIEL CONFIG.ui.compteur.gouttePlus(1)
+      if (result.result == 1) {
+        ui.compteur.gouttePlus(1)
         nbFiel++
       }
     }
     let myRollBonus
-    if ( nbAddDice) {
+    if (nbAddDice) {
       rollData.formulaBonus = `${nbAddDice}d10cs>=8`
       myRollBonus = new Roll(rollData.formulaBonus, actor.system).roll({ async: false })
       await this.showDiceSoNice(myRollBonus, game.settings.get("core", "rollMode"))
-      for(let result of myRollBonus.terms[0].results) {
-        if ( result.result == 1) {
-          // TODO INC FIEL CONFIG.ui.compteur.gouttePlus(1)
+      for (let result of myRollBonus.terms[0].results) {
+        if (result.result == 1) {
+          ui.compteur.gouttePlus(1)
           nbFiel++
         }
       }
-      }
+    }
     // Stockage résultats
     rollData.roll = myRoll
     rollData.rollBonus = myRollBonus
