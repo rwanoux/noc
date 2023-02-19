@@ -141,11 +141,21 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
+  incDecReserve(reserveKey, value) {
+    let reserve = duplicate(this.system.reserves[reserveKey])
+    reserve.value += value
+    console.log("Updating: ", reserve)
+    this.update({ [`system.reserves.${reserveKey}`]: reserve })
+  }
+
+  /* -------------------------------------------- */
   buildGenericRollData() {
     return {
       actorId: this.id,
       img: this.img,
       name: this.name,
+      espoir: this.system.reserves.espoir.value,
+      vecu: this.system.reserves.vecu.value,
       useEspoir: false,
       useVecu: false,
       nbDesDomaine: 0,
@@ -160,8 +170,7 @@ export class nocActor extends Actor {
     rollData.mode = "talent"
     rollData.domaine = duplicate(this.system.domaines[domaineId]),
       rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
-      console.log("rollTalent", rollData)
-    this.startRoll(rollData)
+      this.startRoll(rollData)
   }
 
 

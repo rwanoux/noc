@@ -21,6 +21,7 @@
             <span class="">Dés de domaine : </span>
             <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
               {{#select nbDesDomaine}}
+                <option value="0">0</option>
                 {{#repeat domaine.value}}
                   <option value="{{add @index 1}}">{{add @index 1}}</option>
                 {{/repeat}}
@@ -30,14 +31,18 @@
 
       {{/if}}
 
+      {{#if espoir}}
       <div class="flexrow">
           <span class="item-field-label-vlong">Utiliser 1 Point d'Espoir ? (+3 dés)? </span>
         <span class="item-field-label-medium"><input type="checkbox" id="useEspoir" name="useEspoir" {{checked useEspoir}}/></span>          
       </div>
+      {{/if}}
+      {{#if vecu}}
       <div class="flexrow">
           <span class="item-field-label-vlong">Utiliser 1 Point de Vécu ? (+1 niveau de Talent)? </span>
         <span class="item-field-label-medium"><input type="checkbox" id="useVecu" name="useVecu" {{checked useVecu}}/></span>          
       </div>
+      {{/if}}
 
     </div>
 
