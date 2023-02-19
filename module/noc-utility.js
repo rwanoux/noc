@@ -162,7 +162,7 @@ export class nocUtility {
   static async computeFinalResult(rollData) {
     let actor = game.actors.get(rollData.actorId)
 
-    rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0)
+    rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
     
     let msg = await this.createChatWithRollMode(rollData.alias, {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)

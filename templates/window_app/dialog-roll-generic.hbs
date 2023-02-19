@@ -29,6 +29,18 @@
             </select>
         </div>
 
+        <div class="flexrow">
+            <span class="">Bonus collaboratif : </span>
+            <select class="" type="text" id="nbBonusCollaboratif" value="{{nbBonusCollaboratif}}">
+              {{#select nbBonusCollaboratif}}
+                <option value="0">0</option>
+                {{#repeat 10}}
+                  <option value="{{add @index 1}}">{{add @index 1}}</option>
+                {{/repeat}}
+              {{/select}}
+            </select>
+        </div>
+
       {{/if}}
 
       {{#if espoir}}

@@ -168,6 +168,7 @@ export class nocActor extends Actor {
       vecu: this.system.reserves.vecu.value,
       useEspoir: false,
       useVecu: false,
+      nbBonusCollaboratif: 0,
       nbDesDomaine: 0,
     }
   }
