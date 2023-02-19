@@ -169,10 +169,12 @@ export class nocUtility {
     })
     msg.setFlag("world", "rolldata", rollData)
 
-    if (rollData.useEspoir) {
+    if (rollData.useEspoir && !rollData.espoirApplied) {
+      rollData.espoirApplied = true 
       actor.incDecReserve("espoir", -1)
     }
-    if (rollData.useVecu) {
+    if (rollData.useVecu && !rollData.vecuApplied) {
+      rollData.vecuApplied = true
       actor.incDecReserve("vecu", -1)
     }
 
@@ -196,7 +198,7 @@ export class nocUtility {
     rollData.rollBonus = myRollBonus
     // Update du nombre de réussites
     rollData.nbSuccess += rollData.rollBonus.total 
-           
+    rollData.nbAddDice = 0 // To disable buttons
     await this.computeFinalResult(rollData)
   }
 
@@ -224,14 +226,7 @@ export class nocUtility {
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
 
-    if (rollData.nbAddDice > 0) {
-      let msg = await this.createChatWithRollMode(rollData.alias, {
-        content: await renderTemplate(`systems/noc/templates/chat/chat-request-bonus-dice.hbs`, rollData)
-      })
-      msg.setFlag("world", "rolldata", rollData)
-    } else {
-      await this.computeFinalResult(rollData)
-    }
+    await this.computeFinalResult(rollData)
   }
 
   /* -------------------------------------------- */
