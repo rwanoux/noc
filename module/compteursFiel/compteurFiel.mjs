@@ -24,7 +24,7 @@ export default class CompteurFiel extends FormApplication {
         data.isGM = game.user.isGM;
         data.effets = CONFIG.NOC.effetsFiel;
 
-        this.object=data.object;
+        this.object = data.object;
 
         return data
     }
@@ -69,7 +69,9 @@ export default class CompteurFiel extends FormApplication {
     async updateFiel(fiel) {
         await game.settings.set('noc', 'compteurFiel', fiel);
         this.render(true)
-        socketManager.launchSocket("renderCompteur", {})
+        socketManager.launchSocket("renderCompteur", {});
+        Hooks.callAll("updatedFiel", this, fiel)
+
     }
     toggleExpand(ev) {
         let icone = ev.currentTarget.getElementsByClassName('fa-solid')[0];
@@ -96,7 +98,7 @@ export default class CompteurFiel extends FormApplication {
     async goutteMoins(qt) {
         this.object.gouttes = this.object.gouttes - qt;
         this.caclculMenace(this.object.gouttes);
-        this.updateFiel(this.object)
+        this.updateFiel(this.object);
 
 
     }
