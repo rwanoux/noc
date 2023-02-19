@@ -32,7 +32,7 @@ Hooks.once('init', async function () {
   registerNocSettings();
   //handlebar custom helpers
   registerHelpers();
-  CONFIG.debug.hooks = true
+  //CONFIG.debug.hooks = true
 
   //manage socket messages
   game.socket.on("system.noc", async (sockmsg) => {
@@ -128,7 +128,7 @@ Hooks.once('init', async function () {
   // Preload Handlebars templates.
   preloadHandlebarsTemplates();
 
-  CONFIG.ui.compteur = CompteurFiel;
+  CONFIG.ui.compteur = CompteurFiel
 
   //  objetDieu.init();
 

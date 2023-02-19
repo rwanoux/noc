@@ -1,3 +1,4 @@
+import CompteurFiel from "../compteursFiel/compteurFiel.mjs";
 
 export class nocRollDialog extends Dialog {
 
@@ -121,13 +122,41 @@ export class nocRollDialog extends Dialog {
     let rollData = this.rollData
     let actor = game.actors.get(rollData.actorId)
 
+    // Jetde base
     rollData.nbDesTotal = rollData.nbDesDomaine + ((rollData.useEspoir) ? 3 : 0);
-    rollData.formula = `${rollData.nbDesDomaine}d10cs>=8`
+    rollData.formula = `${rollData.nbDesTotal}d10cs>=8`
     let myRoll = new Roll(rollData.formula, actor.system).roll({ async: false })
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
+    // Dés additionnels
+    let nbAddDice = 0
+    let nbFiel = 0
+    for(let result of myRoll.terms[0].results) {
+      if (result.result == 10) {
+        nbAddDice++
+      }
+      if ( result.result == 1) {
+        // TODO INC FIEL CONFIG.ui.compteur.gouttePlus(1)
+        nbFiel++
+      }
+    }
+    let myRollBonus
+    if ( nbAddDice) {
+      rollData.formulaBonus = `${nbAddDice}d10cs>=8`
+      myRollBonus = new Roll(rollData.formulaBonus, actor.system).roll({ async: false })
+      await this.showDiceSoNice(myRollBonus, game.settings.get("core", "rollMode"))
+      for(let result of myRollBonus.terms[0].results) {
+        if ( result.result == 1) {
+          // TODO INC FIEL CONFIG.ui.compteur.gouttePlus(1)
+          nbFiel++
+        }
+      }
+      }
+    // Stockage résultats
     rollData.roll = myRoll
-    rollData.nbSuccess = myRoll.total
+    rollData.rollBonus = myRollBonus
+    rollData.nbSuccess = myRoll.total + (myRollBonus?.total ?? 0)
     rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0)
+    rollData.nbFiel = nbFiel
 
     let msg = await this.createChatWithRollMode(rollData.alias, {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)
@@ -140,6 +169,8 @@ export class nocRollDialog extends Dialog {
     if (rollData.useVecu) {
       actor.incDecReserve("vecu", -1)
     }
+
+    console.log("rollTalent", rollData)
   }
 
   /* -------------------------------------------- */

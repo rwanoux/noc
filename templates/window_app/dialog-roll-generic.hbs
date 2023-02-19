@@ -21,6 +21,7 @@
             <span class="">Dés de domaine : </span>
             <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
               {{#select nbDesDomaine}}
+                <option value="0">0</option>
                 {{#repeat domaine.value}}
                   <option value="{{add @index 1}}">{{add @index 1}}</option>
                 {{/repeat}}

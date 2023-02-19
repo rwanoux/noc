@@ -111,7 +111,8 @@ export class nocActor extends Actor {
   incDecReserve(reserveKey, value) {
     let reserve = duplicate(this.system.reserves[reserveKey])
     reserve.value += value
-    this.update({ [`this.system.reserves.${reserveKey}`]: reserve})
+    console.log("Updating: ", reserve)
+    this.update({ [`system.reserves.${reserveKey}`]: reserve})
   }
 
   /* -------------------------------------------- */
@@ -136,7 +137,6 @@ export class nocActor extends Actor {
     rollData.mode = "talent"
     rollData.domaine =  duplicate(this.system.domaines[domaineId]),
     rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
-    console.log("rollTalent", rollData)
     this.startRoll(rollData)
   }
 

@@ -15,14 +15,15 @@
 
   <div>
     <ul>
-      <li>Talent :  {{talent.name}} ({{talent.niveau}}</li>
+      <li>Talent :  {{talent.label}} ({{talent.niveau}})</li>
       <li>Dés de domaine utilisés :  {{nbDesDomaine}}</li>
-      {{#if useEspoirt}}
+      {{#if useEspoir}}
       <li>Un point d'Espoir utilisé</li>
       {{/if}}
-      {{#if useEspoirt}}
+      {{#if useVecu}}
       <li>Un point de vécu a été utilisé</li>
       {{/if}}
+      <li>Gouttes de Fiel ajoutées :  {{nbFiel}}</li>
       <li>Nombre de succès :  {{nbSuccess}}</li>
       <li>Niveau final :  {{niveauFinal}}</li>
     </ul>  
