@@ -1,5 +1,6 @@
 import NOCContact from "../ContactClass.js";
 import { nocRollDialog } from "../dialogs/roll-dialog.js";
+import { Quality } from "../qualite_default.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -61,6 +62,7 @@ export class nocActor extends Actor {
       }
     })
   }
+
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -94,7 +96,12 @@ export class nocActor extends Actor {
     this._prepareRouageData();
 
   }
-
+  getQuality() {
+    return Quality.create(this.system.qualites)
+  }
+  getDefault() {
+    return Quality.create(this.system.defauts)
+  }
   /**
    * Prepare Character type specific data
    */

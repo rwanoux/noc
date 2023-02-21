@@ -4,6 +4,8 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
+import { Quality } from "../../qualite_default.mjs";
+
 export class nocActorSheetPersonnage extends ActorSheet {
 
   /** @override */
@@ -156,11 +158,28 @@ export class nocActorSheetPersonnage extends ActorSheet {
     for (let but of reserveSettingButtons) {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
-    html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this))
-    html.find('a.openCabale')[0]?.addEventListener('click', this.openCabale.bind(this))
+    html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this));
+    html.find('a.openCabale')[0]?.addEventListener('click', this.openCabale.bind(this));
+
+    html.find(".addQuality").click(this.addQuality.bind(this))
+    html.find(".deleteQuality").click(this.deleteQuality.bind(this))
 
   }
+  async deleteQuality(ev) {
+    let type = ev.currentTarget.dataset.type;
+    let prop = this.actor.system.qualites
+    if (type === "defaut") {
+      prop = this.actor.system.defauts
+    }
+    let qual = await Quality.create(prop)
+    await qual.reset()
 
+  }
+  async addQuality(ev) {
+    let quality = new Quality(this.actor.id, ev.currentTarget.dataset.type);
+    await quality.creationDialog();
+
+  }
   async onClickMaxReserve(ev) {
     let reserveName = ev.currentTarget.dataset.reserveName;
     let reserveProp = ev.currentTarget.dataset.reserveProperty;

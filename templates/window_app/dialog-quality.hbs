@@ -1,6 +1,29 @@
-<div class="quality-default">
+<form class="quality-default">
   {{log this}}
-  <h2>choisissez votre </h2>
+  <h2>choisissez votre {{type}} pour {{actor.name}}</h2>
+  <div class="form-group">
+    <label>nom de la qualité</label>
+    <input type="text" id="qualityLabel">
+
+  </div>
+  <div class="form-group">
+    <label>talent lié</label>
+    <select id="talentPath">
+      {{#each talents as |domaine
+      domaineId|}}
+      <optgroup label="{{domaineId}}">
+        {{#each domaine as |talent talentId|}}
+
+        <option value="system.talents.{{domaineId}}.{{talentId}}">
+          {{talent.label}}
+        </option>
+        {{/each}}
+      </optgroup>
+      {{/each}}
+    </select>
+
+  </div>
 
 
-</div>
+
+</form>

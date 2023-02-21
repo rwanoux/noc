@@ -273,15 +273,26 @@
         "uuid": ""
       },
       "qualites": {
-        "label": "qualités",
-        "liste": []
+        "targetTalent": "",
+        "talentPath": "",
+        "label": "",
+        "actorId": "",
+        "isDefault": false,
+        "effectData": {},
+        "effectId": ""
       },
       "defauts": {
-        "label": "défauts",
-        "liste": []
+        "targetTalent": "",
+        "talentPath": "",
+        "label": "",
+        "actorId": "",
+        "isDefault": true,
+        "effectData": {},
+        "effectId": ""
       },
       "progression": 0,
-      "regressions": []
+      "regressions": [],
+      "quantars": 0
     },
     "cabale": {
       "templates": [
@@ -452,12 +463,22 @@
       "personnel": [],
       "reseau": "",
       "qualites": {
-        "label": "qualités",
-        "liste": []
+        "targetTalent": "",
+        "talentPath": "",
+        "label": "",
+        "actorId": "",
+        "isDefault": false,
+        "effectData": {},
+        "effectId": ""
       },
       "defauts": {
-        "label": "défauts",
-        "liste": []
+        "targetTalent": "",
+        "talentPath": "",
+        "label": "",
+        "actorId": "",
+        "isDefault": false,
+        "effectData": {},
+        "effectId": ""
       },
       "progression": 0,
       "regressions": []
@@ -561,6 +582,7 @@
         "base"
       ],
       "quantar": false,
+      "needQuantar": false,
       "valeur": 0,
       "limite": 0,
       "utilisations": 1,
@@ -577,6 +599,7 @@
         "base"
       ],
       "quantar": false,
+      "needQuantar": false,
       "valeur": 0,
       "limite": 0,
       "utilisations": 1,

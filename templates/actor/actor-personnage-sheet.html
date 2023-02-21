@@ -77,7 +77,8 @@
             <input
               name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
               value="{{talent.niveau}}" type="number">
-            <a class="rollable roll-talent" data-talent-id="{{talentId}}"
+            <a class="rollable roll-talent"
+              data-talent-id="{{talentId}}"
               data-domaine-id="{{domaineId}}">
               <label for="{{talent.label}}">{{talent.label}}</label>
             </a>
@@ -160,8 +161,24 @@
           <input type="text">
         </div>
         <div class="form-group">
-          <div>qualité :</div>
-          <input type="text">
+          <div>qualité : <i class="fas fa-add addQuality"
+              data-type="qualite"></i>
+            <i class="fas fa-minus deleteQuality" data-tooltip="supprimer lla
+              qualité"
+              data-type="qualite"></i>
+          </div>
+          <div>{{actor.system.qualites.label}}
+            /{{actor.system.qualites.targetTalent}} +1</div>
+        </div>
+        <div class="form-group">
+          <div>défaut : <i class="fas fa-add addQuality"
+              data-type="defaut"></i>
+            <i class="fas fa-minus deleteQuality" data-tooltip="supprimer le
+              défaut"
+              data-type="defaut"></i>
+          </div>
+          <div>{{actor.system.defauts.label}}
+            /{{actor.system.defauts.targetTalent}}-1</div>
         </div>
         <div class="form-group">
           <div>défaut :</div>
@@ -276,7 +293,8 @@
               <a class="openCabale"
                 data-cabale-id="{{actor.system.cabale.uuid}}"
                 data-tooltip="ouvrir la fiche de
-                cabale"><i class="fa-solid fa-solid fa-window-maximize"></i></a>
+                cabale"><i class="fa-solid fa-solid
+                  fa-window-maximize"></i></a>
               <a data-tooltip="quitter cette cabale"
                 data-cabale-id="{{actor.system.cabale.uuid}}"
                 class="unassignCabale"><i class="fa-solid
