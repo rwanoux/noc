@@ -7,7 +7,9 @@ div.noc.sheet.actor {
     }
 
 
-
+    a:hover {
+        text-shadow: unset;
+    }
 
     .tox {
         .tox-editor-container {
@@ -70,6 +72,10 @@ div.noc.sheet.actor {
             height: max-content;
             background: url(../asset/images/fondequipement.webp);
             filter: grayscale(0.3);
+
+            img {
+                border: none
+            }
 
 
 
@@ -195,7 +201,7 @@ div.noc.sheet.actor {
                                 &::after {
                                     width: 12px;
                                     height: 12px;
-                                    background-color: rgba(211, 152, 42, 0.479);
+                                    background-color: rgba(255, 166, 0, 0.479);
                                     border-radius: 50%;
                                     box-shadow: 0px 0px 5px rgb(22, 21, 33) inset;
                                 }
@@ -219,6 +225,7 @@ div.noc.sheet.actor {
                             -webkit-appearance: none;
                             appearance: none;
                             cursor: pointer;
+                            z-index: -1;
 
 
 
@@ -312,7 +319,8 @@ div.noc.sheet.actor {
                     flex: 0.3;
                     padding: 6px;
                     box-shadow: -30px 0px 100px black;
-                    height: max-content;
+                    height: 100%;
+                    overflow: scroll;
 
                     background: url(../asset/images/fondequipement.webp);
 
@@ -340,6 +348,8 @@ div.noc.sheet.actor {
 
                     }
 
+
+
                     .form-group {
 
                         justify-content: space-between;
@@ -363,11 +373,19 @@ div.noc.sheet.actor {
                         }
                     }
                 }
+
+
             }
 
             div.tab.description {
-                background: url(../asset/images/fondequipement.webp);
-                background-size: cover;
+                background: url('../asset/images/fondidentite.webp');
+                background-size: 200%;
+                background-position: 50% 50%;
+
+                padding-top: 10%;
+                padding-bottom: 10%;
+
+                height: 100%;
 
                 h2 {
                     flex: 0.1;
@@ -407,6 +425,94 @@ div.noc.sheet.actor {
                     padding: 15px;
                     box-shadow: 0px 0px 80px rgba(0, 0, 0, 0.42);
                 }
+            }
+
+            div.tab.items {
+                .quantarQty {
+                    position: relative;
+                    top: -5px;
+
+                    img {
+                        margin: 0 3px;
+                        max-height: 4em;
+                        max-width: 4em;
+
+                        &.unavalaible {
+                            filter: grayscale(1)
+                        }
+                    }
+                }
+
+                div.img img {
+                    max-height: 2em;
+                }
+
+                ul {
+
+                    padding: 0;
+                }
+
+                ul.item-list {
+                    h3 {
+                        text-align: center;
+                    }
+
+                    padding: 10px;
+                    box-shadow: 0px 0px 30px black;
+
+
+                    li.item {
+                        background: url('../asset/images/fondidentite.webp');
+                        background-size: 300% auto;
+                        background-repeat: no-repeat;
+                        background-position: 75% 50%;
+                        margin-bottom: 4px;
+                        padding-left: 5%;
+
+
+                        &.unavalaible {
+                            box-shadow: 0px 0px 70px rgba(84, 0, 0, 0.374) inset;
+
+                        }
+
+                        div.img img {
+
+                            max-height: 4em;
+                        }
+
+
+                        div.item-details {
+                            max-height: 1px;
+                            overflow: hidden;
+
+
+                        }
+
+                        &.expanded div.item-details {
+                            max-height: 100px;
+                        }
+
+                        div.item-control {
+                            align-self: flex-start;
+                            text-align: right;
+                        }
+
+                        img.needQuantar {
+                            max-height: 1.5em;
+                            box-shadow: 0px 0px 8px rgb(83, 0, 0);
+                            filter: grayscale(0.7);
+                            border-radius: 30%;
+
+                            &.quantarUsed {
+                                filter: grayscale(0);
+                                box-shadow: 0px 0px 5px rgb(210, 206, 1);
+                            }
+                        }
+
+
+                    }
+                }
+
             }
         }
     }

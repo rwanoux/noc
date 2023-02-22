@@ -18,6 +18,7 @@ export class nocActor extends Actor {
           break;
         case "cabale":
           data.img = 'systems/noc/asset/default_icons/cabale.webp';
+          break;
         case "autre":
           data.img = 'systems/noc/asset/default_icons/autre.webp';
           break;
@@ -69,6 +70,7 @@ export class nocActor extends Actor {
     // the following, in order: data reset (to clear active effects),
     // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
     // prepareDerivedData().
+
     super.prepareData();
   }
 
@@ -108,6 +110,62 @@ export class nocActor extends Actor {
   async _preparePersonnageData() {
     if (this.type !== 'personnage') return;
 
+    switch (this.system.talents.technique.artefact.niveau) {
+      case -1:
+      case 0:
+        this.system.reserves.singularite.max = 0;
+        break;
+      case 1:
+        this.system.reserves.singularite.max = 2;
+        break;
+      case 2:
+        this.system.reserves.singularite.max = 3;
+        break;
+      case 3:
+        this.system.reserves.singularite.max = 4;
+        break;
+      case 4:
+        this.system.reserves.singularite.max = 5;
+        break;
+    }
+    switch (this.system.talents.statut.contact.niveau) {
+      case -1:
+      case 0:
+        this.system.reserves.faveurs.max = 0;
+        break;
+      case 1:
+        this.system.reserves.faveurs.max = 2;
+        break;
+      case 2:
+        this.system.reserves.faveurs.max = 4;
+        break;
+      case 3:
+        this.system.reserves.faveurs.max = 6;
+        break;
+      case 4:
+        this.system.reserves.faveurs.max = 8;
+        break;
+    }
+    switch (this.system.talents.vie.ferveur.niveau) {
+      case -1:
+        this.system.reserves.espoir.max = 1;
+        break;
+      case 0:
+        this.system.reserves.espoir.max = 3;
+        break;
+      case 1:
+        this.system.reserves.espoir.max = 5;
+        break;
+      case 2:
+        this.system.reserves.espoir.max = 7;
+        break;
+      case 3:
+        this.system.reserves.espoir.max = 9;
+        break;
+      case 4:
+        this.system.reserves.espoir.max = 10;
+        break;
+    }
     // preparing contacts
     this.prepareContacts();
 

@@ -1,10 +1,11 @@
+import { nocActorSheetPersonnage } from "./actor-sheet-personnage.mjs";
 
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
-export class nocActorSheetCabale extends ActorSheet {
+export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
   /** @override */
   static get defaultOptions() {

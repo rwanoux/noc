@@ -104,7 +104,8 @@ export class nocItemSheetArchetype extends ItemSheet {
   async openThemes(ev) {
     let id = ev.currentTarget.dataset.themeId;
     let item = await Item.get(id);
-    item.sheet.render(true)
+    if (!item) return ui.notifications.error(`l'item "thème" recherché n'existe pas !`)
+    return item.sheet.render(true)
   }
   async deleteThemes(ev) {
     let themes = await this.item.getFlag("noc", "linkedThemes");

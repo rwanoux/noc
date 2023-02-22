@@ -16,6 +16,9 @@ export class nocActorSheetPersonnage extends ActorSheet {
       height: 710,
       dragDrop: [
         { dragSelector: ".item-list .item", dropSelector: null },
+        { dragSelector: "img.quantarQty", dropSelector: "li.item" },
+        { dragSelector: "img.quantarUsed", dropSelector: null },
+
       ],
 
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "principal" }]
@@ -44,6 +47,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
     const actor = this.actor;
+    console.log(data)
+
 
     /**
      * A hook event that fires when some useful data is dropped onto an ActorSheet.
@@ -63,6 +68,10 @@ export class nocActorSheetPersonnage extends ActorSheet {
         return this._onDropActor(event, data);
       case "Item":
         return this._onDropItem(event, data);
+      case "affectQuantar":
+        return this._onDropQuantar(event, data)
+      case "unaffectQuantar":
+        return this._onUnaffectQuantar(event, data)
 
     }
   }
@@ -86,11 +95,41 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }
   }
   _onDropItem(ev, data) {
-    super._onDropItem()
+    super._onDropItem(ev, data);
+
     console.log(ev, data)
   }
+  async _onDropQuantar(ev, data) {
+    let item = await this.actor.getEmbeddedDocument('Item', ev.currentTarget.dataset.itemId);
+    if (!item) { return false };
+    await item.update({
+      "system.quantar": true
+    })
+  } async _onUnaffectQuantar(ev, data) {
+    let item = await this.actor.getEmbeddedDocument('Item', data.sourceItem);
+    await item.update({
+      "system.quantar": false
+    })
+  }
   /* -------------------------------------------- */
+  _onDragStart(ev) {
+    console.log(ev);
+    if (ev.currentTarget.classList.contains('quantarQty')) {
+      let dragData = {
+        type: "affectQuantar"
+      };
+      ev.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    }
+    if (ev.currentTarget.classList.contains('quantarUsed')) {
+      let dragData = {
+        type: "unaffectQuantar",
+        sourceItem: ev.currentTarget.closest('li.item').dataset.itemId
+      };
+      ev.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    }
+    super._onDragStart(ev)
 
+  }
   /** @override */
   getData() {
     // Retrieve the data structure from the base sheet. You can inspect or log
@@ -114,6 +153,12 @@ export class nocActorSheetPersonnage extends ActorSheet {
   _preparePersonnageData(context) {
   }
   _preparePersonnageItems(context) {
+    console.log("prepareItems...............................", context);
+    this.checkArchetype();
+    this.checkTheme();
+    this.listQuantar()
+
+
   }
 
   /* -------------------------------------------- */
@@ -136,13 +181,18 @@ export class nocActorSheetPersonnage extends ActorSheet {
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
     // Delete Inventory Item
-    html.find('.item-delete').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
+    html.find('.item-delete').click(async ev => {
+      const item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       item.delete();
-      li.slideUp(200, () => this.render(false));
     });
-
+    html.find('.item-open').click(async ev => {
+      const item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
+      ev.preventDefault();
+      item.sheet.render(true);
+    });
+    html.find('li.item').click(ev => {
+      ev.currentTarget.classList.toggle('expanded')
+    })
     // Talent manegement
     html.find('.roll-talent').click(ev => {
       let domaineId = $(ev.currentTarget).data("domaine-id");
@@ -174,6 +224,21 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let qual = await Quality.create(prop)
     await qual.reset()
 
+  }
+
+  checkArchetype() {
+    if (this.actor.itemTypes.archetype.length > 1) {
+      return ui.notifications.warn(`
+      le personnage ${this.actor.name.toUpperCase()} possède plusieurs archetypes.... veuillez en supprimer
+      `)
+    }
+  }
+  checkTheme() {
+    if (this.actor.itemTypes.thème.length > 1) {
+      return ui.notifications.warn(`
+      le personnage ${this.actor.name.toUpperCase()}} possède plusieurs thème.... veuillez en supprimer
+      `)
+    }
   }
   async addQuality(ev) {
     let quality = new Quality(this.actor.id, ev.currentTarget.dataset.type);
@@ -217,8 +282,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let value = parseInt(ev.currentTarget.dataset.reserveValue) + 1;
     let property = ev.currentTarget.dataset.reserveProperty;
     let lastProp = property.split('.')[2];
-    console.log(lastProp)
-    if ((this.actor.system.reserves[lastProp]?.value == 1 || this.actor.system.perditions[lastProp]?.value == 1) && value == 1) { value = 0 };
+    console.log([lastProp])
+    if ((this.actor.system.reserves[lastProp]?.value == value || this.actor.system.perditions[lastProp]?.value == value)) { value -= 1 };
     let updating = {};
     updating[property] = value;
     this.actor.update(updating)
@@ -232,7 +297,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     event.preventDefault();
     const header = event.currentTarget;
     // Get the type of item to create.
-    const type = header.dataset.type;
+    const type = header.dataset.itemType;
     // Grab any data associated with this control.
     const data = duplicate(header.dataset);
     // Initialize a default name.
@@ -247,7 +312,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
     delete itemData.data["type"];
 
     // Finally, create the item!
-    return await Item.create(itemData, { parent: this.actor });
+    let newItem = await Item.create(itemData, { parent: this.actor });
+    await newItem.sheet.render(true)
   }
 
   /**
@@ -330,6 +396,17 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }, {
 
     }).render(true);
+  }
+  async listQuantar() {
+    let quantarUsage = this.actor.collections.items.toObject().filter(it => it.system.quantar);
+    let unused = this.actor.system.quantars - quantarUsage.length;
+    if (unused < 0) { ui.notifications.error('vous ne possédez pas assez de quantar pour vos items') }
+    for (let i = 0; i < unused; i++) {
+      quantarUsage.splice(quantarUsage.length, 0, { unused: true });
+      console.log(quantarUsage)
+    }
+    console.log(quantarUsage)
+    await this.actor.setFlag("noc", "quantarUsage", quantarUsage)
   }
 
 }
