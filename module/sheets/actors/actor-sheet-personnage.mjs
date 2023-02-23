@@ -153,10 +153,10 @@ export class nocActorSheetPersonnage extends ActorSheet {
   _preparePersonnageData(context) {
   }
   _preparePersonnageItems(context) {
-    console.log("prepareItems...............................", context);
     this.checkArchetype();
     this.checkTheme();
-    this.listQuantar()
+    this.listQuantar();
+    this.prepareFavItems()
 
 
   }
@@ -167,32 +167,35 @@ export class nocActorSheetPersonnage extends ActorSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Render the item sheet for viewing/editing prior to the editable check.
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.sheet.render(true);
-    });
-
     // -------------------------------------------------------------
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
     // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
+    html.find(' .item-create').click(this._onItemCreate.bind(this));
     // Delete Inventory Item
-    html.find('.item-delete').click(async ev => {
-      const item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
+    html.find('li.item .item-delete').click(async ev => {
+      let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       item.delete();
     });
-    html.find('.item-open').click(async ev => {
-      const item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
+    html.find('li.item .item-open').click(async ev => {
+      let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       ev.preventDefault();
       item.sheet.render(true);
     });
-    html.find('li.item').click(ev => {
-      ev.currentTarget.classList.toggle('expanded')
+    html.find('li.item .item-fav').click(async ev => {
+
+      let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
+      ev.preventDefault();
+      let isFav = await item.getFlag("noc", "favItem");
+      await item.setFlag("noc", "favItem", !isFav);
+      console.log(this.actor.items)
     })
+    html.find('li.item .item-name').click(ev => {
+      ev.currentTarget.closest('li.item').classList.toggle('expanded');
+      ev.stopPropagation()
+    })
+
     // Talent manegement
     html.find('.roll-talent').click(ev => {
       let domaineId = $(ev.currentTarget).data("domaine-id");
@@ -403,10 +406,13 @@ export class nocActorSheetPersonnage extends ActorSheet {
     if (unused < 0) { ui.notifications.error('vous ne possédez pas assez de quantar pour vos items') }
     for (let i = 0; i < unused; i++) {
       quantarUsage.splice(quantarUsage.length, 0, { unused: true });
-      console.log(quantarUsage)
     }
-    console.log(quantarUsage)
     await this.actor.setFlag("noc", "quantarUsage", quantarUsage)
+  }
+  async prepareFavItems() {
+    console.log("preparing fav")
+    let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
+    await this.actor.setFlag("noc", "favItemList", favItems)
   }
 
 }

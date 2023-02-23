@@ -182,6 +182,56 @@
                     {{/if}}
 
                 </div>
+                <div class="favItems">
+                    <h4>Objets Favoris</h4>
+                    <ul class="item-list">
+                        {{#each actor.flags.noc.favItemList as |item index|}}
+                        <li class="item
+                            {{#if item.system.needQuantar}}
+                            {{#unless item.system.quantar}}
+                            unavalaible
+                            {{/unless}}
+                            {{/if}}"
+                            data-item-id="{{item._id}}">
+                            <div class="item-summary flexrow">
+                                <div class="img">
+                                    <img src="{{item.img}}" alt="image de
+                                        {{item.name}}">
+                                </div>
+                                <h4 class="item-name">
+                                    <span>{{item.name}}</span>
+
+                                </h4>
+                                <div class="item-control">
+
+                                    <a class="fas fa-edit item-open"
+                                        data-item-id="{{item._id}}"></a>
+                                    <a class="fas fa-trash item-delete"
+                                        data-item-id="{{item._id}}"></a>
+                                    <a class="fas fa-star item-fav
+                                        {{#if item.flags.noc.favItem}}
+                                        itemIsFav
+                                        {{/if}}
+                                        "
+                                        data-item-id="{{item._id}}"></a>
+                                </div>
+
+                            </div>
+                            <div class="item-details">
+                                <p>{{{item.system.description}}}</p>
+                                {{#ifequal item.type "outil"}}
+
+                                {{/ifequal}}
+
+                            </div>
+
+
+
+                        </li>
+                        {{/each}}
+
+                    </ul>
+                </div>
 
 
             </div>
@@ -362,8 +412,6 @@
                             </div>
                             <h4 class="item-name">
                                 <span>{{item.name}}</span>
-                            </h4>
-                            <div class="item-control">
                                 {{#if item.system.needQuantar}}
                                 <img
                                     src="systems/noc/asset/default_icons/quantar.webp"
@@ -372,9 +420,18 @@
                                     item.system.quantar}}
                                     quantarUsed{{/if}}">
                                 {{/if}}
+                            </h4>
+                            <div class="item-control">
+
                                 <a class="fas fa-edit item-open"
                                     data-item-id="{{item.id}}"></a>
                                 <a class="fas fa-trash item-delete"
+                                    data-item-id="{{item.id}}"></a>
+                                <a class="fas fa-star item-fav
+                                    {{#if item.flags.noc.favItem}}
+                                    itemIsFav
+                                    {{/if}}
+                                    "
                                     data-item-id="{{item.id}}"></a>
                             </div>
 
