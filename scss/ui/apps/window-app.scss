@@ -14,5 +14,21 @@ div.app.window-app {
 
     }
 
+    &.nocDialog {
+        .roll-dialog-header {
+            background: url('../asset/images/fond_titre3.webp');
+            background-size: 130% auto;
+            background-position: center;
 
+            img {
+                margin-right: 10%;
+                flex: 0.2;
+                max-height: 4em;
+                max-width: 4em;
+                border: none;
+                transform: rotate(-5deg);
+                filter: drop-shadow(-5px 6px 4px #704e05a3);
+            }
+        }
+    }
 }

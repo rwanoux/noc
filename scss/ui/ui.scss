@@ -266,3 +266,40 @@ figure#pause {
         }
     }
 }
+
+input[type=range].noc-slider {
+    height: 2em;
+    color: #FFF;
+    background: transparent;
+    background-image: linear-gradient(to bottom, #FFF, #272727, #FFF);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100% 25%;
+
+    &::-webkit-slider-thumb {
+        width: 2em;
+        height: 2em;
+        padding: 0.25em;
+        margin-top: 0.1em;
+        /* largeur du bord */
+        border: 1px solid #000000;
+        border-radius: 50%;
+        box-shadow: 0 0 .5em #2a1010 inset;
+        background: linear-gradient(#303603, #d0cfcb) content-box,
+            /* le centre */
+            linear-gradient(-90deg, #141411, #fefefe) border-box;
+        /* le bord */
+    }
+
+    &::-webkit-slider-runnable-track {
+        height: 100%;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        background-color: rgba(0, 0, 0, 0);
+        /* supprimé définie sur l'input */
+    }
+
+
+
+}
