@@ -65,6 +65,6 @@
   "socket": true,
   "url": "",
   "manifest": "https://raw.githubusercontent.com/rwanoux/noc/master/system.json",
-  "download": "",
+  "download": "https://github.com/rwanoux/noc/archive/refs/tags/0.0.5.zip",
   "license": "LICENSE.txt"
 }
