@@ -1,29 +1,39 @@
 <div class="nocRoll">
-  <div class="chat-message-header">
+  <div class="chat-message-header flexrow">
     {{log this}}
     {{#if actorImg}}
     <img class="actor-icon" src="{{actorImg}}" alt="{{alias}}" />
-    {{/if}}
-    <h4 class=chat-actor-name>{{alias}}</h4>
+       <h4 class="chat-actor-name">{{alias}}</h4> 
+
+     {{#if (eq mode "talent")}}
+      <h4>Talent : {{talent.label}} ({{talent.niveau}})</h4>
+      {{/if}}
+      {{#if (eq mode "arme")}}
+      <h4>Arme : {{arme.name}} </h4>
+      {{/if}}
+     {{/if}}
   </div>
 
   <hr>
 
   {{#if img}}
-  <div>
+  <div class="chat-message-header flexrow">
     <img class="chat-icon" src="{{img}}" alt="{{name}}" />
+    <h4 class="chat-actor-name">{{name}}</h4>
+
+    {{#if (eq mode "talent")}}
+    <h4>Talent : {{talent.label}} ({{talent.niveau}})</h4>
+    {{/if}}
+    {{#if (eq mode "arme")}}
+    <h4>Arme : {{arme.name}} </h4>
+    {{/if}}
+
   </div>
   {{/if}}
 
   <div>
     <ul>
-      {{#if (eq mode "talent")}}
-      <li>Talent : {{talent.label}} ({{talent.niveau}})</li>
-      {{/if}}
-
-      {{#if (eq mode "arme")}}
-      <li>Arme : {{arme.name}} </li>
-      {{/if}}
+     
 
       <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
       <li class="dicesResults flexrow">
