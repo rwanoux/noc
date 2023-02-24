@@ -132,7 +132,7 @@ async _onUpdatetalentsTheme(update, effectId) {
     let key = "system.talents."
   for (let talent of this.system.talents){
     updatedChanges.push({
-      key: key+talent,
+      key: key+talent+".niveau",
       mode: 2,
       value: 1
     })
@@ -140,7 +140,7 @@ async _onUpdatetalentsTheme(update, effectId) {
   }
      
 
-    console.log(updatedChanges)
+    console.log(updatedChanges, effectId)
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
