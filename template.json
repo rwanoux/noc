@@ -607,12 +607,9 @@
       "templates": [
         "base"
       ],
-      "quantar": false,
-<<<<<<< HEAD
       "needQuantar": false,
-=======
+      "quantar": false,
       "adistance": false,
->>>>>>> bc8ffc7 (Ajout armes)
       "valeur": 0,
       "limite": 0,
       "degats": "",
