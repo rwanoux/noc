@@ -17,7 +17,14 @@
 
   <div>
     <ul>
+      {{#if (eq mode "talent")}}
       <li>Talent : {{talent.label}} ({{talent.niveau}})</li>
+      {{/if}}
+
+      {{#if (eq mode "arme")}}
+      <li>Arme : {{arme.name}} </li>
+      {{/if}}
+
       <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
       <li class="dicesResults flexrow">
         {{#each roll.terms as |term index|}}
@@ -56,7 +63,20 @@
       {{/if}}
       <li>Gouttes de Fiel ajoutées : {{nbFiel}}</li>
       <li>Nombre de succès : {{nbSuccess}}</li>
-      <li class="rollResult">Niveau final : {{niveauFinal}}</li>
+      <li class="rollResult">Niveau final obtenu : {{niveauFinal}}</li>
+
+      {{#if niveauFinalRequis}}
+        <li>Niveau final requis : {{niveauFinalRequis}} </li>
+        {{#if isReussite}}
+          <li class="rollResult">Réussite !! (Marge {{margin}})</li>
+          {{#if (eq mode "arme")}}
+          <li class="rollResult">Traits de l'arme : {{arme.system.traits}}</li>
+          <li class="rollResult">Dégats : {{arme.system.degats}} - Constitution - Armure</li>
+          {{/if}}
+        {{else}} 
+          <li class="rollResult">Echec!! (Marge {{margin}})</li>
+        {{/if}}
+      {{/if}}
     </ul>
 
     {{#if nbAddDice}}

@@ -21,10 +21,16 @@
 
     <div class="tab details" data-group="primary" data-tab="details">
       <div class="form-group">
-        <h4>description</h4>
+        <h4>Description</h4>
         {{editor document.system.description target="system.description"
         button=true editable=editable
         engine="prosemirror" collaborate=false}}
+      </div>
+
+      <div class="form-group">
+        <h4>Arme maitrisée ?</h4>
+        <input name="system.maitrise" type="checkbox" data-dtype="Boolean"
+          {{checked document.system.maitrise}}>
       </div>
 
       <div class="form-group">
@@ -32,6 +38,8 @@
         <input name="system.needQuantar" type="checkbox" data-dtype="Boolean"
           {{checked document.system.needQuantar}}>
       </div>
+      {{/if}}
+
       <div class="form-group">
         <h4>A distance ?</h4>
         <input name="system.adistance" type="checkbox" data-dtype="Boolean"

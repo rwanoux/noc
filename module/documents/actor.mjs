@@ -199,7 +199,7 @@ export class nocActor extends Actor {
             break;
           case 5:
             contacts = new Array(5);
-            faveur = 10
+          faveur = 10
             break;
     
           default:
@@ -243,12 +243,34 @@ export class nocActor extends Actor {
     let rollData = this.buildGenericRollData()
 
     // Specific stuff
+    rollData.title = "Talent"
     rollData.mode = "talent"
-    rollData.domaine = duplicate(this.system.domaines[domaineId]),
-      rollData.talent = duplicate(this.system.talents[domaineId][talentId]),
-      this.startRoll(rollData)
+    rollData.domaine = duplicate(this.system.domaines[domaineId])
+    rollData.talent = duplicate(this.system.talents[domaineId][talentId])
+    this.startRoll(rollData)
   }
 
+  /* -------------------------------------------- */
+  rollItem(itemId) {
+    let item = this.items.get(itemId)
+    if (item && item.type == "arme") {
+      let rollData = this.buildGenericRollData()
+      // Specific stuff
+      rollData.title = "Arme"
+      rollData.mode = "arme"
+      rollData.arme = duplicate(item)
+      rollData.domaine = duplicate(this.system.domaines['action'])
+      rollData.talent = duplicate(this.system.talents['action']['combat'])
+      rollData.niveauRequis = (item.system.adistance) ? 0 : 1
+      rollData.niveauFinalRequis = rollData.niveauRequis
+      rollData.modCouvert = 0
+      rollData.cibleAuSol = false
+      rollData.modSupplement = 0
+      this.startRoll(rollData)
+    } else {
+      ui.notifications.warn("Cet item n'a pas de jet associé.")
+    }
+  }
 
   /* -------------------------------------------- */
   async startRoll(rollData) {
