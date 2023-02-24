@@ -11,31 +11,31 @@
       "domaines": {
         "domaines": {
           "vie": {
-            "value": 2,
+            "value": 0,
             "label": "vie"
           },
           "erudition": {
-            "value": 2,
+            "value": 0,
             "label": "érudition"
           },
           "technique": {
-            "value": 2,
+            "value": 0,
             "label": "technique"
           },
           "action": {
-            "value": 2,
+            "value": 0,
             "label": "action"
           },
           "statut": {
-            "value": 2,
+            "value": 0,
             "label": "statut"
           },
           "ame": {
-            "value": 2,
+            "value": 0,
             "label": "âme"
           },
           "social": {
-            "value": 2,
+            "value": 0,
             "label": "social"
           }
         }

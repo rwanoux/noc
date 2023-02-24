@@ -89,9 +89,16 @@ export class nocItem extends Item {
           mode: 2,
           value: value
         })
+      } else {
+        domaineName = "system.domaines." + dom;
+        updatedChanges.push({
+          key: domaineName + ".value",
+          mode: 2,
+          value: 2
+        })
       }
     }
-
+    console.log(updatedChanges)
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }

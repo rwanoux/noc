@@ -57,9 +57,11 @@
               type="checkbox"
               {{checked domaine.active }}>
             <span>{{domaineId}}</span>
+            {{#if domaine.active}}
             <input type="number" name="system.affinite.{{domaineId}}.value"
               value="{{domaine.value}}"
               class="affinite-value">
+            {{/if}}
 
           </div>
           {{/each}}
