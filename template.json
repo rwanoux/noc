@@ -526,6 +526,7 @@
       "thème",
       "outil",
       "arme",
+      "armure",
       "document administratif"
     ],
     "templates": {
@@ -594,16 +595,29 @@
       "effetSpecial": "",
       "portee": 0
     },
+    "armure": {
+      "templates": [
+        "base"
+      ],
+      "armure": 0,
+      "traits": "",
+      "valeur": 0
+    },
     "arme": {
       "templates": [
         "base"
       ],
       "quantar": false,
+<<<<<<< HEAD
       "needQuantar": false,
+=======
+      "adistance": false,
+>>>>>>> bc8ffc7 (Ajout armes)
       "valeur": 0,
       "limite": 0,
-      "utilisations": 1,
-      "degats": {},
+      "degats": "",
+      "matrise": false,
+      "traits": "",
       "munitions": {
         "type": "",
         "quantite": 0
