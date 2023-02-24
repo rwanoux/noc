@@ -36,6 +36,14 @@
       "entity": "Item"
     },
     {
+      "name": "armes",
+      "label": "Armes",
+      "system": "noc",
+      "module": "noc",
+      "path": "packs/item-armes.db",
+      "entity": "Item"
+    },
+    {
       "name": "noc-ost-by-kwark",
       "label": "NOC - OST by KwarK",
       "system": "noc",
