@@ -107,11 +107,7 @@ export function registerHelpers() {
         return list.length;
     });
 
-    Handlebars.registerHelper('isEnabled', function (configKey) {
-        const value = game.settings.get("cof", configKey);
-        if (value === false || value === "none") return false;
-        return true;
-    });
+
 
     Handlebars.registerHelper('split', function (str, separator, keep) {
         return str.split(separator)[keep];

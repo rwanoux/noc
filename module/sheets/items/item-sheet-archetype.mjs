@@ -62,6 +62,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     let deleteThemes = html.find('[data-action="delete-theme"]');
     if (deleteThemes) {
       for (let but of deleteThemes) {
+        
         but.addEventListener("click", this.deleteThemes.bind(this))
       }
     }
@@ -74,6 +75,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     let chooseThemes = html.find('[data-action="choose-theme"]');
     if (chooseThemes) {
       for (let ck of chooseThemes) {
+        
         ck.addEventListener("click", this.chooseThemes.bind(this))
       }
     }
@@ -99,7 +101,8 @@ export class nocItemSheetArchetype extends ItemSheet {
 
     let targetTheme = themes.find(th => th.id == targetThemeId);
     targetTheme.choosed = ev.currentTarget.checked
-    await this.item.setFlag("noc", "linkedThemes", themes)
+    await this.item.setFlag("noc", "linkedThemes", themes);
+    this.render(true)
   }
   async openThemes(ev) {
     let id = ev.currentTarget.dataset.themeId;
@@ -112,7 +115,8 @@ export class nocItemSheetArchetype extends ItemSheet {
     let targetThemeId = ev.target.dataset.themeId;
     let targetTheme = themes.find(th => th.id == targetThemeId);
     themes.splice(themes.indexOf(targetTheme), 1);
-    await this.item.setFlag("noc", "linkedThemes", themes)
+    await this.item.setFlag("noc", "linkedThemes", themes);
+    this.render(true)
   }
 
   async changeThemes(ev) {
@@ -120,14 +124,16 @@ export class nocItemSheetArchetype extends ItemSheet {
     let targetThemeId = ev.target.dataset.themeId;
     let targetTheme = themes.find(th => th.id == targetThemeId);
     targetTheme.choosed = true;
-    this.item.setFlag("noc", "linkedThemes", themes)
+    await this.item.setFlag("noc", "linkedThemes", themes)
 
   }
   async updateTalentsMineurs(ev) {
     let check = ev.currentTarget;
-    let domain = duplicate(this.item.system.talentsMineurs)
+    let domain = duplicate(this.item.system.talentsMineurs);
     domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
-    this.item.update({ 'system.talentsMineurs': domain })
+    await this.item.update({ 'system.talentsMineurs': domain });
+    console.log(domain)
+    
   }
   async _onDrop(event) {
     let data;
@@ -157,6 +163,7 @@ export class nocItemSheetArchetype extends ItemSheet {
         choosed: false
       }
     );
-    await this.item.setFlag("noc", "linkedThemes", linkedThemes)
+    await this.item.setFlag("noc", "linkedThemes", linkedThemes);
+    this.render(true)
   }
 }

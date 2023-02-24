@@ -1,6 +1,11 @@
 <form class="{{cssClass}}" autocomplete="off">
   {{!-- Sheet Body --}}
   <section class="sheet-body">
+    {{#if item.actor}}
+    <h2>Attention ! cet archetype est déjà dans un acteur, les modifications ne
+      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
+      Foundry</h2>
+    {{/if}}
     <input class="item-name" name="name" type="text" value="{{document.name}}"
       placeholder="Name"/>
 
@@ -30,8 +35,9 @@
           <optgroup label="{{domaineId}}">
             {{#each domaine as |talent talentId|}}
 
-            <option value="{{talentId}}"
-              {{#ifequal @root.item.system.talentMajeur talentId}}
+            <option value="{{domaineId}}.{{talentId}}"
+              {{#ifequal @root.item.system.talentMajeur (concat domaineId "."
+              talentId)}}
               selected
               {{/ifequal}}>
               {{talent.label}}

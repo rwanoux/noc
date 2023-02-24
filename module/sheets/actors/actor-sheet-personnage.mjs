@@ -94,10 +94,12 @@ export class nocActorSheetPersonnage extends ActorSheet {
         return false
     }
   }
-  _onDropItem(ev, data) {
+  async _onDropItem(ev, data) {
+    let dropItem = await Item.implementation.fromDropData(data);
+    if (dropItem.type == "thème") { return ui.notifications.warn("Les items THEMES doivent être glisser sur les fiches d'items ARCHETYPES") }
+
     super._onDropItem(ev, data);
 
-    console.log(ev, data)
   }
   async _onDropQuantar(ev, data) {
     let item = await this.actor.getEmbeddedDocument('Item', ev.currentTarget.dataset.itemId);
@@ -174,16 +176,16 @@ export class nocActorSheetPersonnage extends ActorSheet {
     // Add Inventory Item
     html.find(' .item-create').click(this._onItemCreate.bind(this));
     // Delete Inventory Item
-    html.find('li.item .item-delete').click(async ev => {
+    html.find('.item-delete').click(async ev => {
       let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       item.delete();
     });
-    html.find('li.item .item-open').click(async ev => {
+    html.find('.item-open').click(async ev => {
       let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       ev.preventDefault();
       item.sheet.render(true);
     });
-    html.find('li.item .item-fav').click(async ev => {
+    html.find('.item-fav').click(async ev => {
 
       let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
       ev.preventDefault();
