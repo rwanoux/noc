@@ -42,14 +42,6 @@
       "module": "noc",
       "path": "packs/item-armes.db",
       "entity": "Item"
-    },
-    {
-      "name": "noc-ost-by-kwark",
-      "label": "NOC - OST by KwarK",
-      "system": "noc",
-      "module": "noc",
-      "path": "packs/noc-ost-by-kwark.db",
-      "entity": "Playlist"
     }
   ],
   "background": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp",
