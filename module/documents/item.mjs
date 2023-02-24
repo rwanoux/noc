@@ -15,6 +15,9 @@ export class nocItem extends Item {
       case "outil":
         data.img = 'systems/noc/asset/default_icons/outil.webp';
         break;
+      case "armure":
+        data.img = 'systems/noc/asset/default_icons/armure.webp';
+        break;
       default:
         data.img = 'systems/noc/asset/default_icons/question_mark.webp';
         break;
@@ -65,7 +68,7 @@ export class nocItem extends Item {
         break;
       case "talentsMineurs":
         this._onUpdatetalentsMineurs(update, effect.id);
-        break; 
+        break;
       case "talents":
         this._onUpdatetalentsTheme(update, effect.id);
         break;
@@ -110,35 +113,35 @@ export class nocItem extends Item {
     console.log(this.system.talentsMineurs)
     let updatedChanges = []
     for (let dom in this.system.talentsMineurs) {
-      let key = "system.talents."+dom;
-      for (let tal in this.system.talentsMineurs[dom]){
+      let key = "system.talents." + dom;
+      for (let tal in this.system.talentsMineurs[dom]) {
         if (this.system.talentsMineurs[dom][tal].checked) {
-         
-        updatedChanges.push({
-          key: key + "."+tal+".niveau",
-          mode: 2,
-          value: 1
-        })
+
+          updatedChanges.push({
+            key: key + "." + tal + ".niveau",
+            mode: 2,
+            value: 1
+          })
+        }
       }
-      }
-      
+
     }
 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
-async _onUpdatetalentsTheme(update, effectId) {
-    let updatedChanges=[]
+  async _onUpdatetalentsTheme(update, effectId) {
+    let updatedChanges = []
     let key = "system.talents."
-  for (let talent of this.system.talents){
-    updatedChanges.push({
-      key: key+talent+".niveau",
-      mode: 2,
-      value: 1
-    })
+    for (let talent of this.system.talents) {
+      updatedChanges.push({
+        key: key + talent + ".niveau",
+        mode: 2,
+        value: 1
+      })
 
-  }
-     
+    }
+
 
     console.log(updatedChanges, effectId)
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
