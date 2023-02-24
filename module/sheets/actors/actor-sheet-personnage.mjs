@@ -97,8 +97,21 @@ export class nocActorSheetPersonnage extends ActorSheet {
   async _onDropItem(ev, data) {
     let dropItem = await Item.implementation.fromDropData(data);
     if (dropItem.type == "thème") { return ui.notifications.warn("Les items THEMES doivent être glisser sur les fiches d'items ARCHETYPES") }
+    if (dropItem.type == "archetype") { this._onDropArchetype(ev, dropItem) }
 
     super._onDropItem(ev, data);
+
+  }
+  async _onDropArchetype(ev, item) {
+    console.log(item);
+    let linkedThemes = await item.getFlag("noc", "linkedThemes");
+    if (linkedThemes) {
+      let choosedThemeId = linkedThemes.find(th => th.choosed).id;
+      let themeItem = await Item.get(choosedThemeId);
+      if (themeItem) {
+        this.actor.createEmbeddedDocuments("Item", [themeItem])
+      }
+    }
 
   }
   async _onDropQuantar(ev, data) {
