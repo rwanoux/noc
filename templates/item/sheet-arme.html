@@ -29,8 +29,8 @@
 
       <div class="form-group">
         <h4>Nécessite un quantar ?</h4>
-        <input name="system.quantar" type="checkbox" data-dtype="Boolean"
-          {{checked document.system.quantar}}>
+        <input name="system.needQuantar" type="checkbox" data-dtype="Boolean"
+          {{checked document.system.needQuantar}}>
       </div>
       <div class="form-group">
         <h4>A distance ?</h4>
@@ -54,12 +54,14 @@
       </div>
       <div class="form-group">
         <h4>Type de munitions</h4>
-        <input name="system.munitions.type" value="{{document.system.munitions.type}}"
+        <input name="system.munitions.type"
+          value="{{document.system.munitions.type}}"
           type="String">
       </div>
       <div class="form-group">
         <h4>Quantité de munition</h4>
-        <input name="system.munitions.quantite" value="{{document.system.munitions.quantite}}"
+        <input name="system.munitions.quantite"
+          value="{{document.system.munitions.quantite}}"
           type="Number">
       </div>
     </div>
