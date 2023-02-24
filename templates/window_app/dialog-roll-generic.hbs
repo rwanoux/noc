@@ -8,40 +8,102 @@
 
     <div class="flexcol">
 
+      {{#if (eq mode "arme")}}
+        <div class="flexrow">
+            <span class="">Arme : </span>
+            <span class="">{{arme.name}}
+              {{#if arme.system.matrise}}
+              (Maitrisée)
+              {{else}}
+              (Non-maitrisée, +1)
+              {{/if}}
+            </span>
+        </div>
+        <div class="flexrow">
+            <span class="">Combat : </span>
+            <span class="">{{talent.niveau}}</span>
+        </div>
+          {{#if arme.system.adistance}}
+          <div class="flexrow">
+            <span class="">Niveau requis : </span>
+            <select class="" type="text" id="niveauRequis" value="{{niveauRequis}}">
+              {{#select niveauRequis}}
+                <option value="-1">Bout portant : -1</option>
+                <option value="0">Portée courte (5m) : 0</option>
+                <option value="1">Portée moyenne (10m) : 1</option>
+                <option value="2">Portée longue (20m) : 2 </option>
+              {{/select}}
+            </select>
+          </div>
+          <div class="flexrow">
+            <span class="">Couvert : </span>
+            <select class="" type="text" id="modCouvert" value="{{modCouvert}}">
+              {{#select modCouvert}}
+                <option value="0">Aucun couvert (+0)</option>
+                <option value="1">Couvert léger (+1)</option>
+                <option value="2">Couvert important (+2)</option>
+              {{/select}}
+            </select>
+          </div>
+          {{else}}
+          <div class="flexrow">
+              <span class="">Niveau requis : </span>
+              <span class="">{{niveauRequis}}</span>
+          </div>
+          {{/if}}
+          <div class="flexrow">
+            <span class="item-field-label-vlong">Cible au sol ?  </span>
+            <span class="item-field-label-medium"><input type="checkbox" id="cibleAuSol" name="cibleAuSol" {{checked cibleAuSol}}/></span>          
+          </div>
+          <div class="flexrow">
+            <span class="">Modificateurs supplémentaires : </span>
+            <select class="" type="text" id="modSupplement" value="{{modSupplement}}">
+              {{#select modSupplement}}
+                <option value="0">0</option>
+                <option value="1">+1</option>
+                <option value="2">+2</option>
+              {{/select}}
+            </select>
+          </div>
+          <div class="flexrow">
+              <span class="">Niveau final requis : </span>
+              <span class=""><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
+          </div>
+      {{/if}}
+
       {{#if (eq mode "talent")}}
         <div class="flexrow">
             <span class="">Talent : </span>
             <span class="">{{talent.label}} ({{talent.niveau}})</span>
         </div>
         <div class="flexrow">
-            <span class="">Domaine : </span>
-            <span class="">{{domaine.label}} ({{domaine.value}})</span>
+          <span class="">Bonus collaboratif : </span>
+          <select class="" type="text" id="nbBonusCollaboratif" value="{{nbBonusCollaboratif}}">
+            {{#select nbBonusCollaboratif}}
+              <option value="0">0</option>
+              {{#repeat 10}}
+                <option value="{{add @index 1}}">{{add @index 1}}</option>
+              {{/repeat}}
+            {{/select}}
+          </select>
         </div>
-        <div class="flexrow">
-            <span class="">Dés de domaine : </span>
-            <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
-              {{#select nbDesDomaine}}
-                <option value="0">0</option>
-                {{#repeat domaine.value}}
-                  <option value="{{add @index 1}}">{{add @index 1}}</option>
-                {{/repeat}}
-              {{/select}}
-            </select>
-        </div>
-
-        <div class="flexrow">
-            <span class="">Bonus collaboratif : </span>
-            <select class="" type="text" id="nbBonusCollaboratif" value="{{nbBonusCollaboratif}}">
-              {{#select nbBonusCollaboratif}}
-                <option value="0">0</option>
-                {{#repeat 10}}
-                  <option value="{{add @index 1}}">{{add @index 1}}</option>
-                {{/repeat}}
-              {{/select}}
-            </select>
-        </div>
-
       {{/if}}
+
+      <div class="flexrow">
+          <span class="">Domaine : </span>
+          <span class="">{{domaine.label}} ({{domaine.value}})</span>
+      </div>
+      <div class="flexrow">
+        <span class="">Dés de domaine : </span>
+        <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
+          {{#select nbDesDomaine}}
+            <option value="0">0</option>
+            {{#repeat domaine.value}}
+              <option value="{{add @index 1}}">{{add @index 1}}</option>
+            {{/repeat}}
+          {{/select}}
+        </select>
+      </div>
 
       {{#if espoir}}
       <div class="flexrow">

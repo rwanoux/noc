@@ -217,7 +217,12 @@ export class nocActorSheetPersonnage extends ActorSheet {
       let talentId = $(ev.currentTarget).data("talent-id");
       this.actor.rollTalent(domaineId, talentId);
     })
-
+    // ROll d'item
+    html.find('.roll-item').click(ev => {
+      let itemId = $(ev.currentTarget).data("item-id");
+      this.actor.rollItem(itemId);
+    })    
+    
     let checksReserve = html.find('.reserve input');
     for (let ch of checksReserve) {
       ch.addEventListener('click', this.changeReserve.bind(this))

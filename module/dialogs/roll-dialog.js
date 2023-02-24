@@ -51,11 +51,30 @@ export class nocRollDialog extends Dialog {
   }
 
   /* -------------------------------------------- */
+  updateNiveauFinal() {
+    this.rollData.niveauFinalRequis = this.rollData.niveauRequis + this.rollData.modCouvert + this.rollData.modSupplement
+    if ( this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
+      this.rollData.niveauFinalRequis += 2  
+    }else {
+      this.rollData.niveauFinalRequis += (this.rollData.arme.system.maitrise) ? 0 : 1
+    }
+
+    if ( this.rollData.arme && this.rollData.cibleAuSol) {
+      if ( this.rollData.arme.system.adistance) {
+        this.rollData.niveauFinalRequis += 1
+      } else {
+        this.rollData.niveauFinalRequis -= 1
+      }
+    }
+    $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis)
+  }
+  /* -------------------------------------------- */
   activateListeners(html) {
     super.activateListeners(html);
 
     var dialog = this;
     function onLoad() {
+      dialog.updateNiveauFinal()
     }
     $(function () { onLoad(); });
 
@@ -65,11 +84,27 @@ export class nocRollDialog extends Dialog {
     html.find('#useVecu').change((event) => {
       this.rollData.useVecu = event.currentTarget.checked
     })
+    html.find('#cibleAuSol').change((event) => {
+      this.rollData.cibleAuSol = event.currentTarget.checked
+      this.updateNiveauFinal()
+    })
     html.find('#nbDesDomaine').change((event) => {
       this.rollData.nbDesDomaine = Number(event.currentTarget.value)
     })
     html.find('#nbBonusCollaboratif').change((event) => {
       this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
+    })
+    html.find('#niveauRequis').change((event) => {
+      this.rollData.niveauRequis = Number(event.currentTarget.value)
+      this.updateNiveauFinal()
+    })
+    html.find('#modCouvert').change((event) => {
+      this.rollData.modCouvert = Number(event.currentTarget.value)
+      this.updateNiveauFinal()
+    })
+    html.find('#modSupplement').change((event) => {
+      this.rollData.modSupplement = Number(event.currentTarget.value)
+      this.updateNiveauFinal()
     })
     
 

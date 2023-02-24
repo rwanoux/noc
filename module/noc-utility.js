@@ -163,6 +163,10 @@ export class nocUtility {
     let actor = game.actors.get(rollData.actorId)
 
     rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
+    if ( rollData.niveauFinalRequis ) {
+      rollData.margin = Number(rollData.niveauFinal) - Number(rollData.niveauFinalRequis)
+      rollData.isReussite = (rollData.margin>=0)
+    }
     
     let msg = await this.createChatWithRollMode(rollData.alias, {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)
@@ -211,6 +215,7 @@ export class nocUtility {
     rollData.formula = `${rollData.nbDesTotal}d10cs>=8`
     let myRoll = new Roll(rollData.formula, actor.system).roll({ async: false })
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
+
     // Dés additionnels
     rollData.nbAddDice = 0
     rollData.nbFiel = 0
@@ -225,7 +230,7 @@ export class nocUtility {
     }
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
-
+    
     await this.computeFinalResult(rollData)
   }
 
