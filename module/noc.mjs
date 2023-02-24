@@ -14,6 +14,8 @@ import { nocItemSheetTheme } from "./sheets/items/item-sheet-theme.mjs";
 import { nocItemSheetArme } from "./sheets/items/item-sheet-arme.mjs";
 import { nocItemSheetOutil } from "./sheets/items/item-sheet-outil.mjs";
 import { nocItemSheetDocumentAdministratif } from "./sheets/items/item-sheet-documentAdministratif.mjs";
+import { nocItemSheetArmure } from "./sheets/items/item-sheet-armure.mjs";
+
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { NOC } from "./helpers/config.mjs";
@@ -125,12 +127,17 @@ Hooks.once('init', async function () {
     makeDefault: true,
     label: "fiche de theme"
   });
+  Items.registerSheet("noc", nocItemSheetArmure, {
+    types: ["armure"],
+    makeDefault: true,
+    label: "fiche d'armure'"
+  });
 
   // Preload Handlebars templates.
   preloadHandlebarsTemplates();
 
   CONFIG.ui.compteur = CompteurFiel
-  
+
   nocUtility.init()
   //  objetDieu.init();
 
