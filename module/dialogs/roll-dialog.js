@@ -53,17 +53,18 @@ export class nocRollDialog extends Dialog {
   /* -------------------------------------------- */
   updateNiveauFinal() {
     this.rollData.niveauFinalRequis = this.rollData.niveauRequis + this.rollData.modCouvert + this.rollData.modSupplement
-    if ( this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
-      this.rollData.niveauFinalRequis += 2  
-    }else {
-      this.rollData.niveauFinalRequis += (this.rollData.arme.system.maitrise) ? 0 : 1
-    }
-
-    if ( this.rollData.arme && this.rollData.cibleAuSol) {
-      if ( this.rollData.arme.system.adistance) {
-        this.rollData.niveauFinalRequis += 1
+    if (this.rollData.arme) {
+      if (this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
+        this.rollData.niveauFinalRequis += 2
       } else {
-        this.rollData.niveauFinalRequis -= 1
+        this.rollData.niveauFinalRequis += (this.rollData.arme.system.maitrise) ? 0 : 1
+      }
+      if (this.rollData.cibleAuSol) {
+        if (this.rollData.arme.system.adistance) {
+          this.rollData.niveauFinalRequis += 1
+        } else {
+          this.rollData.niveauFinalRequis -= 1
+        }
       }
     }
     $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis)
@@ -106,7 +107,7 @@ export class nocRollDialog extends Dialog {
       this.rollData.modSupplement = Number(event.currentTarget.value)
       this.updateNiveauFinal()
     })
-    
+
 
   }
 }
