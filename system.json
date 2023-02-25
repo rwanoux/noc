@@ -1,16 +1,24 @@
 {
-  "name": "noc",
   "id": "noc",
   "title": "NOC",
   "description": "The Earth has been locked inside an object from the depths of space, called the Artifact, which isolates it from the light of the Sun. If its purpose remains unknown, protection according to some prisons according to others, it has led humans to regress and to regroup in separate cities, the Blocks. The game proposes to play citizens who, beyond the Administration's propaganda, doubt what surrounds them and what they are told as truth, in a dystopian world where they will have to try to rebuild a future for humanity.",
-  "version": "0.0.4",
-  "minimumCoreVersion": "0.8.6",
-  "compatibleCoreVersion": "9",
+  "version": "0.0.5",
   "compatibility": {
-    "minimum": "9",
-    "verified": "10.291"
+    "minimum": "10",
+    "verified": "10",
+    "maximum" : 10
   },
   "authors": [
+    {
+      "name": "rwanoux",
+      "discord": "rwanoux#3031",
+      "flags": {}
+    },
+    {
+      "name": "LeRatierBretonnien",
+      "discord": "LeRatierBretonnien#2065",
+      "flags": {}
+    },
     {
       "name": "YanK",
       "discord": "YanK#8683",
@@ -28,28 +36,12 @@
   ],
   "packs": [
     {
-      "name": "domaines",
-      "label": "Domaines",
-      "system": "noc",
-      "module": "noc",
-      "path": "packs/domaines.db",
-      "entity": "Item"
-    },
-    {
       "name": "armes",
       "label": "Armes",
       "system": "noc",
       "module": "noc",
       "path": "packs/item-armes.db",
       "entity": "Item"
-    },
-    {
-      "name": "noc-ost-by-kwark",
-      "label": "NOC - OST by KwarK",
-      "system": "noc",
-      "module": "noc",
-      "path": "packs/noc-ost-by-kwark.db",
-      "entity": "Playlist"
     }
   ],
   "background": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp",
@@ -64,7 +56,7 @@
   "gridUnits": "m",
   "socket": true,
   "url": "",
-  "manifest": "",
-  "download": "",
+  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/master/system.json",
+  "download": "https://github.com/rwanoux/noc/archive/refs/tags/0.0.5.zip",
   "license": "LICENSE.txt"
 }
