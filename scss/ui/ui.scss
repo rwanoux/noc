@@ -271,24 +271,25 @@ input[type=range].noc-slider {
     height: 2em;
     color: #FFF;
     background: transparent;
-    background-image: linear-gradient(to bottom, #FFF, #272727, #FFF);
+    background-image: linear-gradient(to bottom, #ffffff00, #272727, #ffffff00);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 100% 25%;
+    background-size: 80% 20%;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.642) inset;
+    padding: 0px;
+    border-radius: 1em;
 
     &::-webkit-slider-thumb {
         width: 2em;
         height: 2em;
-        padding: 0.25em;
-        margin-top: 0.1em;
+        margin-top: -0em;
         /* largeur du bord */
-        border: 1px solid #000000;
-        border-radius: 50%;
-        box-shadow: 0 0 .5em #2a1010 inset;
-        background: linear-gradient(#303603, #d0cfcb) content-box,
-            /* le centre */
-            linear-gradient(-90deg, #141411, #fefefe) border-box;
-        /* le bord */
+        border: none;
+        box-shadow: none;
+        background: url("../asset/images/jauge1.webp") no-repeat;
+        background-size: 80% 80%;
+        background-position: center;
+
     }
 
     &::-webkit-slider-runnable-track {
@@ -296,7 +297,7 @@ input[type=range].noc-slider {
         border: none;
         border-radius: 0;
         box-shadow: none;
-        background-color: rgba(0, 0, 0, 0);
+        background-color: rgba(116, 60, 60, 0);
         /* supprimé définie sur l'input */
     }
 

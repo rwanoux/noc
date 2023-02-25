@@ -52,6 +52,15 @@ export class nocRollDialog extends Dialog {
 
   /* -------------------------------------------- */
   updateNiveauFinal() {
+    let inputs = this._element.find('input');
+    for (let input of inputs) {
+      if (input.type === "range") {
+        this.rollData[input.id] = Number(input.value)
+      } if (input.type === "checkbox") {
+        this.rollData[input.id] = input.checked
+
+      }
+    }
     this.rollData.niveauFinalRequis = this.rollData.niveauRequis + this.rollData.modCouvert + this.rollData.modSupplement
     if (this.rollData.arme) {
       if (this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
@@ -67,7 +76,8 @@ export class nocRollDialog extends Dialog {
         }
       }
     }
-    $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis)
+    $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
+    console.log(this.rollData)
   }
   /* -------------------------------------------- */
   activateListeners(html) {
@@ -107,7 +117,14 @@ export class nocRollDialog extends Dialog {
       this.rollData.modSupplement = Number(event.currentTarget.value)
       this.updateNiveauFinal()
     })
+    html.find('input[type="range"]').change((ev) => {
+      this.displayRange(ev)
+    })
 
-
+  }
+  displayRange(ev) {
+    let displayTarget = this._element.find(`[data-display-range=${ev.currentTarget.id}]`)[0];
+    let option = this._element.find(`#${ev.currentTarget.list.id} option[value="${ev.currentTarget.value}"]`)[0];
+    displayTarget.innerHTML = option.innerHTML
   }
 }

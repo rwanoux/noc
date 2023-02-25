@@ -3,121 +3,162 @@
     {{#if img}}
     <img class="actor-icon" src="{{img}}" data-edit="img" title="{{name}}" />
     {{/if}}
-    <h1 class="dialog-roll-title roll-dialog-header">Provoquer le destin - {{title}}</h1>
+    <h1 class="dialog-roll-title roll-dialog-header">Provoquer le destin -
+      {{title}}</h1>
   </header>
 
-    <div class="flexcol">
+  <div class="flexcol">
 
-      {{#if (eq mode "arme")}}
-        <div class="flexrow">
-            <span class="">Arme : </span>
-            <span class="">{{arme.name}}
-              {{#if arme.system.matrise}}
-              (Maitrisée)
-              {{else}}
-              (Non-maitrisée, +1)
-              {{/if}}
-            </span>
-        </div>
-        <div class="flexrow">
-            <span class="">Combat : </span>
-            <span class="">{{talent.niveau}}</span>
-        </div>
-          {{#if arme.system.adistance}}
-          <div class="flexrow">
-            <span class="">Niveau requis : </span>
-            <select class="" type="text" id="niveauRequis" value="{{niveauRequis}}">
-              {{#select niveauRequis}}
-                <option value="-1">Bout portant : -1</option>
-                <option value="0">Portée courte (5m) : 0</option>
-                <option value="1">Portée moyenne (10m) : 1</option>
-                <option value="2">Portée longue (20m) : 2 </option>
-              {{/select}}
-            </select>
-          </div>
-          <div class="flexrow">
-            <span class="">Couvert : </span>
-            <select class="" type="text" id="modCouvert" value="{{modCouvert}}">
-              {{#select modCouvert}}
-                <option value="0">Aucun couvert (+0)</option>
-                <option value="1">Couvert léger (+1)</option>
-                <option value="2">Couvert important (+2)</option>
-              {{/select}}
-            </select>
-          </div>
+    {{#if (eq mode "arme")}}
+    <h3>
+      <div>
+        <span class="">Arme : </span>
+        <span class="">{{arme.name}}
+          {{#if arme.system.maitrise}}
+          (Maitrisée)
           {{else}}
-          <div class="flexrow">
-              <span class="">Niveau requis : </span>
-              <span class="">{{niveauRequis}}</span>
-          </div>
+          (Non-maitrisée, +1)
           {{/if}}
-          <div class="flexrow">
-            <span class="item-field-label-vlong">Cible au sol ?  </span>
-            <span class="item-field-label-medium"><input type="checkbox" id="cibleAuSol" name="cibleAuSol" {{checked cibleAuSol}}/></span>          
-          </div>
-          <div class="flexrow">
-            <span class="">Modificateurs supplémentaires : </span>
-            <select class="" type="text" id="modSupplement" value="{{modSupplement}}">
-              {{#select modSupplement}}
-                <option value="0">0</option>
-                <option value="1">+1</option>
-                <option value="2">+2</option>
-              {{/select}}
-            </select>
-          </div>
-          <div class="flexrow">
-              <span class="">Niveau final requis : </span>
-              <span class=""><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
-          </div>
-      {{/if}}
-
-      {{#if (eq mode "talent")}}
-        <div class="flexrow">
-            <span class="">Talent : </span>
-            <span class="">{{talent.label}} ({{talent.niveau}})</span>
-        </div>
-        <div class="flexrow">
-          <span class="">Bonus collaboratif : </span>
-          <select class="" type="text" id="nbBonusCollaboratif" value="{{nbBonusCollaboratif}}">
-            {{#select nbBonusCollaboratif}}
-              <option value="0">0</option>
-              {{#repeat 10}}
-                <option value="{{add @index 1}}">{{add @index 1}}</option>
-              {{/repeat}}
-            {{/select}}
-          </select>
-        </div>
-      {{/if}}
-
-      <div class="flexrow">
-          <span class="">Domaine : </span>
-          <span class="">{{domaine.label}} ({{domaine.value}})</span>
+        </span>
       </div>
-      <div class="flexrow">
-        <span class="">Dés de domaine : </span>
-        <select class="" type="text" id="nbDesDomaine" value="{{nbDesDomaine}}">
-          {{#select nbDesDomaine}}
-            <option value="0">0</option>
-            {{#repeat domaine.value}}
-              <option value="{{add @index 1}}">{{add @index 1}}</option>
-            {{/repeat}}
-          {{/select}}
-        </select>
+      <div>
+        <span class="">Combat : </span>
+        <span class="">{{talent.niveau}}</span>
       </div>
 
-      {{#if espoir}}
-      <div class="flexrow">
-          <span class="item-field-label-vlong">Utiliser 1 Point d'Espoir ? (+3 dés)? </span>
-        <span class="item-field-label-medium"><input type="checkbox" id="useEspoir" name="useEspoir" {{checked useEspoir}}/></span>          
-      </div>
-      {{/if}}
-      {{#if vecu}}
-      <div class="flexrow">
-          <span class="item-field-label-vlong">Utiliser 1 Point de Vécu ? (+1 niveau de Talent)? </span>
-        <span class="item-field-label-medium"><input type="checkbox" id="useVecu" name="useVecu" {{checked useVecu}}/></span>          
-      </div>
-      {{/if}}
+    </h3>
+
+    {{#if arme.system.adistance}}
+    <h3>Modificateurs à distance</h3>
+    <h4>distance</h4>
+    <div class="fexrow form-group">
+      <span data-display-range="niveauRequis">Portée courte (5m) : 0</span>
+      <input class="noc-slider" id="niveauRequis"
+        value="{{niveauRequis}}"
+        type="range" step="1"
+        min="-1" max="2" list="distanceList">
+      <datalist id="distanceList">
+        <option value="-1">Bout portant : -1</option>
+        <option value="0">Portée courte (5m) : 0</option>
+        <option value="1">Portée moyenne (10m) : 1</option>
+        <option value="2">Portée longue (20m) : 2</option>
+      </datalist>
+    </div>
+    <h4>couvert</h4>
+    <div class="fexrow form-group">
+      <span data-display-range="modCouvert">Aucun couvert (+0)</span>
+      <input class="noc-slider" id="modCouvert"
+        value="{{modCouvert}}"
+        type="range" step="1"
+        min="0" max="2" list="modCouvertList">
+      <datalist id="modCouvertList">
+        <option value="0">Aucun couvert (+0)</option>
+        <option value="1">Couvert léger (+1)</option>
+        <option value="2">Couvert important (+2)</option>
+      </datalist>
+    </div>
+    {{else}}
+    <div class="fexrow form-group">
+      <span class="">Niveau requis : </span>
+      <span class="">{{niveauRequis}}</span>
+    </div>
+    {{/if}}
+    <h3>autres modificateurs</h3>
+    <div class="fexrow form-group">
+      <span class="item-field-label-vlong">Cible au sol ? </span>
+      <span class="item-field-label-medium"><input type="checkbox"
+          id="cibleAuSol" name="cibleAuSol" {{checked cibleAuSol}}/></span>
+    </div>
+    <div class="fexrow form-group">
+      <span class="">Modificateurs supplémentaires : </span>
+      <span data-display-range="modSupplement">0</span>
+      <input class="noc-slider" id="modSupplement"
+        value="{{modSupplement}}"
+        type="range" step="1"
+        min="0" max="2" list="modSupplementList">
+      <datalist id="modSupplementList">
+        <option value="0">0</option>
+        <option value="1">+1</option>
+        <option value="2">+2</option>
+      </datalist>
 
     </div>
+    <h4 class="fexrow form-group niveauFinalRequis">
+      <span class="">Niveau final requis : </span>
+      <span class=""><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
+    </h4>
+    {{/if}}
+
+    {{#if (eq mode "talent")}}
+    <h3>
+      <span class="">Talent : </span>
+      <span class="">{{talent.label}} ({{talent.niveau}})</span>
+    </h3>
+
+    <div class="fexrow form-group">
+      <span class="">Bonus collaboratif : </span>
+      <span data-display-range="nbBonusCollaboratif">0</span>
+      <input class="noc-slider" id="nbBonusCollaboratif"
+        value="{{nbBonusCollaboratif}}"
+        type="range" step="1"
+        min="0" max="10" list="nbBonusCollaboratifList">
+      <datalist id="nbBonusCollaboratifList">
+        <option value="0">0</option>
+        {{#repeat 10}}
+        <option value="{{add @index 1}}">{{add @index 1}}</option>
+        {{/repeat}}
+      </datalist>
+    </div>
+    {{/if}}
+
+
+    <div class="fexrow form-group">
+      <h4>
+        <div class="nbrDes">
+          <span class="">Dés de domaine : </span>
+          <span data-display-range="nbDesDomaine">
+            {{domaine.value}}
+          </span>
+          <i class="fa-light fa-dice-d10"></i>
+        </div>
+        <div>
+          <span class="">Domaine : </span>
+          <span class="">{{domaine.label}} ({{domaine.value}})</span>
+        </div>
+
+      </h4>
+
+      <input class="noc-slider" id="nbDesDomaine"
+        value="{{domaine.value}}"
+        type="range" step="1"
+        min="0" max="{{domaine.value}}" list="nbDesDomaineList">
+      <datalist id="nbDesDomaineList">
+        <option value="0">0</option>
+        {{#repeat domaine.value}}
+        <option value="{{add @index 1}}">{{add @index 1}}</option>
+        {{/repeat}}
+      </datalist>
+
+    </div>
+    <div class="flexrow">
+      {{#if espoir}}
+      <h5 class="flexrow">
+        <span> Utiliser 1 Point d'Espoir ? (+3
+          dés)?</span>
+
+        <input type="checkbox"
+          id="useEspoir" name="useEspoir" {{checked useEspoir}}/></h5>
+      {{/if}}
+      {{#if vecu}}
+      <h5 class="flexrow">
+        <span> Utiliser 1 Point de Vécu ? (+1
+          niveau
+          de Talent)?</span>
+        <input type="checkbox"
+          id="useVecu"
+          name="useVecu" {{checked useVecu}}/></h5>
+      {{/if}}
+    </div>
+  </div>
 
 </form>
