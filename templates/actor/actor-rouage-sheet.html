@@ -1,70 +1,188 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
-
-  {{!-- Sheet Header --}}
-  <header class="sheet-header">
-    <img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
-    <div class="header-fields">
-      <h1 class="charname"><input name="name" type="text" value="{{actor.name}}" placeholder="Name"/></h1>
-      {{!-- The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns.  --}}
-      <div class="resources grid grid-3col">
-
-        {{!-- "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. --}}
-        <div class="resource flex-group-center">
-          <label for="data.health.value" class="resource-label">Health</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.health.value" value="{{data.health.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="data.health.max" value="{{data.health.max}}" data-dtype="Number"/>
-          </div>
+  <section class="sheet-body">
+    <header>
+      <h1 class="form-group">
+        <input type="text" name="name" value="{{actor.name}}">
+      </h1>
+      <div class="flexrow">
+        <img class="profile-img" src="{{actor.img}}" data-edit="img"
+          title="{{actor.name}}" />
+        <div>
+          <h2>description</h2>
+          {{editor actor.system.description
+          target="system.description"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
         </div>
+      </div>
 
-        <div class="resource flex-group-center">
-          <label for="data.power.value" class="resource-label">Power</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.power.value" value="{{data.power.value}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" name="data.power.max" value="{{data.power.max}}" data-dtype="Number"/>
-          </div>
-        </div>
 
-        <div class="resource flex-group-center">
-          <label for="data.cr" class="resource-label">CR / XP</label>
-          <div class="resource-content flexrow flex-center flex-between">
-            <input type="text" name="data.cr" value="{{data.cr}}" data-dtype="Number"/>
-            <span> / </span>
-            <input type="text" disabled="true" name="data.xp" value="{{data.xp}}" data-dtype="Number"/>
+
+    </header>
+    <div class="tab principal ">
+      <div class="stats rouage">
+
+        <!-- DOMAINES ET TALENTS -->
+        {{#each actor.system.domaines as |domaine domaineId|}}
+        <div class="domaine {{domaineId}}">
+          <h3 class="flexrow">
+            <input type="number"
+              name="system.domaines.{{domaineId}}.value"
+              value="{{domaine.value}}"/>
+            <span>{{domaine.label}}</span>
+          </h3>
+          {{#each ../actor.system.talents as |groupTalent
+          talentGroupName|}}
+          {{#ifequal talentGroupName domaineId}}
+          {{#each groupTalent as |talent talentId|}}
+          <div class="flexrow">
+            <input
+              name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
+              value="{{talent.niveau}}" type="number">
+            <a class="rollable roll-talent"
+              data-talent-id="{{talentId}}"
+              data-domaine-id="{{domaineId}}">
+              <label for="{{talent.label}}">{{talent.label}}</label>
+            </a>
           </div>
+          {{/each}}
+          {{/ifequal}}
+          {{/each}}
         </div>
+        {{/each}}
+
 
       </div>
+      <div class="flexrow">
+        <div class="rouage-reserves">
+          {{#each actor.system.reserves as |reserve reserveId|}}
+          {{#ifnotequal reserveId "singularite"}}
+          {{#ifnotequal reserveId "faveurs"}}
+          <div class="reserve {{reserveId}}">
+            <h4>{{reserve.label}}
+
+              <a class="setMax"
+                data-tooltip="ajuster le max"
+                data-reserve-name="{{reserve.label}}"
+                data-reserve-property="system.reserves.{{reserveId}}.max">
+                <i class="fas fa-cog"></i>
+              </a>
+            </h4>
+
+            {{#repeat reserve.max}}
+            <input type="checkbox"
+              data-reserve-value="{{@index}}"
+              data-reserve-property="system.reserves.{{reserveId}}.value"
+              class="
+              {{#ifequal @index 4}}step{{/ifequal}}
+              {{#ifequal @index 7}}step{{/ifequal}}
+              {{#ifequal @index 9}}step{{/ifequal}}
+              {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
+              "
+              {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
+            {{/repeat}}
+
+          </div>
+          {{/ifnotequal}}
+          {{/ifnotequal}}
+          {{/each}}
+          <!-- PERDITIONS-->
+          {{#each actor.system.perditions as |perdition perditionId|}}
+          <div class="reserve perdition {{perditionId}}">
+            <h4>{{perdition.label}}
+
+            </h4>
+
+            {{#repeat 5}}
+            <input type="checkbox"
+              data-reserve-value="{{@index}}"
+              data-reserve-property="system.perditions.{{perditionId}}.value"
+              class="
+              {{#ifequal @index 4}}step{{/ifequal}}
+              {{#ifequal @index 7}}step{{/ifequal}}
+              {{#ifequal @index 9}}step{{/ifequal}}
+              {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
+              "
+              {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
+            {{/repeat}}
+
+          </div>
+          {{/each}}
+        </div>
+        <div class="items">
+          <ul class="item-types">
+            <h3>inventaire</h3>
+
+            {{#each actor.itemTypes as |group groupIndex|}}
+            {{#ifnotequal groupIndex "archetype"}}
+            {{#ifnotequal groupIndex "thème"}}
+
+            <ul class="item-list">
+              <h3>{{groupIndex}}
+                <a class="fas fa-add item-create" data-tooltip="créer un
+                  item
+                  :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
+              </h3>
+              {{#each group as |item index|}}
+              <li class="flexrow item flexcol ability
+                {{#if item.system.needQuantar}}
+                {{#unless item.system.quantar}}
+                unavalaible
+                {{/unless}}
+                {{/if}}"
+                data-item-id="{{item.id}}">
+                <div class="item-summary flexrow">
+                  <div class="img">
+                    <img src="{{item.img}}" alt="image de
+                      {{item.name}}">
+                  </div>
+                  <h4 class="item-name">
+                    <span>{{item.name}}</span>
+                    {{#if item.system.needQuantar}}
+                    <img
+                      src="systems/noc/asset/default_icons/quantar.webp"
+                      alt=""
+                      class="needQuantar {{#if
+                      item.system.quantar}}
+                      quantarUsed{{/if}}">
+                    {{/if}}
+                  </h4>
+                  <div class="item-control">
+
+                    <a class="fas fa-edit item-open"
+                      data-item-id="{{item.id}}"></a>
+                    <a class="fas fa-trash item-delete"
+                      data-item-id="{{item.id}}"></a>
+                    <a class="fas fa-star item-fav
+                      {{#if item.flags.noc.favItem}}
+                      itemIsFav
+                      {{/if}}
+                      "
+                      data-item-id="{{item.id}}"></a>
+                  </div>
+
+                </div>
+                <div class="item-details">
+                  <p>{{{item.system.description}}}</p>
+                  {{#ifequal item.type "outil"}}
+
+                  {{/ifequal}}
+
+                </div>
+
+              </li>
+              {{/each}}
+            </ul>
+
+            {{/ifnotequal}}
+            {{/ifnotequal}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
     </div>
-  </header>
-
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="items">Items</a>
-  </nav>
-
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-
-    {{!-- Biography Tab --}}
-    <div class="tab biography" data-group="primary" data-tab="description">
-      {{!-- If you want TinyMCE editors to output inline rolls when rendered, you need to pass the actor's roll data to the rollData property. --}}
-      {{editor content=data.biography target="data.biography" rollData=rollData button=true owner=owner editable=editable}}
-    </div>
-
-    {{!-- Owned Items Tab --}}
-    <div class="tab items" data-group="primary" data-tab="items">
-       {{> "systems/noc/templates/actor/parts/actor-items.html"}}
-    </div>
-
   </section>
-</form>
 
+
+
+</form>

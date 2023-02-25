@@ -490,6 +490,7 @@
         "reserves",
         "perditions"
       ],
+      "isMineur": true,
       "description": ""
     },
     "autre": {

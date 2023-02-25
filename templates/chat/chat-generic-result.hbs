@@ -52,12 +52,14 @@
 
         {{#each rollBonus.terms as |term index|}}
           {{#each term.results as |dice index|}}
-          <div class="dice
+          <div class="dice relance
             {{#if dice.success}} success {{/if}}
             {{#ifequal dice.result 1}} fiel{{/ifequal}}
             {{#ifequal dice.result 10}} relance{{/ifequal}}
             ">
             {{dice.result}}
+            <i class="fa-light fa-dice-d10"></i>
+
         </div>
         {{/each}}
         {{/each}}

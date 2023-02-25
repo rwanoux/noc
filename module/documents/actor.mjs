@@ -30,9 +30,20 @@ export class nocActor extends Actor {
     };
     super(...args);
     if (data.type == "cabale") { this.initCabale() }
+    if (data.type == "rouage") { this.initRouage() }
 
   }
-
+  initRouage() {
+    if (this.type !== 'rouage') return;
+      for (let perd in this.system.perditions) {
+        this.system.perditions[perd].max = 5;
+        this.system.perditions[perd].value=0;
+      }
+      this.system.reserves.vecu.max = 1;
+      this.system.reserves.espoir.max = 1;
+     
+    
+  }
   initCabale() {
     this.update({
       "system.perditions": {
@@ -175,7 +186,8 @@ export class nocActor extends Actor {
    * Prepare NPC type specific data.
    */
   _prepareRouageData(actorData) {
-    if (this.type !== 'rouage') return;
+
+
   }
   async prepareContacts() {
     /*

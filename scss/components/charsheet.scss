@@ -100,8 +100,6 @@ div.noc.sheet.actor {
                     background-size: 60% auto;
                     background-position: 50% 50%;
 
-
-
                     .domaine {
                         padding: 0px 6px 6px;
                         transition: 0.2s;
@@ -313,7 +311,79 @@ div.noc.sheet.actor {
 
                     }
 
+                    &.rouage {
+                        display: grid;
+                        flex-direction: row;
+                        grid-template-columns: repeat(4, 1fr);
+                        grid-template-rows: repeat(2, 1fr);
+
+                        .domaine {
+                            min-width: 30%;
+                            grid-row: unset;
+                            grid-column: unset;
+                            position: relative;
+                            top: unset;
+                            left: unset;
+
+                            &:hover {
+                                z-index: +100;
+                                transform: unset
+                            }
+                        }
+
+                    }
                 }
+
+                .rouage-reserves {
+                    flex: 0.4;
+
+                    input[type="checkbox"] {
+                        margin: 0;
+                        padding: 0;
+                        max-height: 12px;
+                        max-width: 10px;
+                        border-radius: 50%;
+                        -webkit-appearance: none;
+                        appearance: none;
+                        cursor: pointer;
+                        z-index: -1;
+
+
+
+                        &::after {
+                            content: "";
+                            display: block;
+                            width: 12px;
+                            height: 12px;
+                            background-color: rgba(255, 255, 255, 0.189);
+                            border-radius: 50%;
+                            box-shadow: 0px 0px 5px black inset;
+                        }
+
+                        &[checked]::after {
+                            content: "";
+                            display: block;
+                            width: 12px;
+                            height: 12px;
+                            box-shadow: 1px -2px 5px 3px black inset;
+                        }
+
+                        &.unavailable {
+                            pointer-events: none;
+                            opacity: 0.4;
+
+                            &::after {
+                                content: "";
+                                display: block;
+                                width: 12px;
+                                height: 12px;
+                                box-shadow: 1px -2px 5px 3px rgba(87, 7, 7, 0.759) inset;
+                            }
+
+                        }
+                    }
+                }
+
 
                 .resume {
                     flex: 0.3;
@@ -522,4 +592,22 @@ div.noc.sheet.actor {
         }
     }
 
+    &.rouage {
+        header {
+            background: none;
+
+            h1 {
+                input {
+                    color: white;
+                    text-align: center;
+                    font-size: x-large;
+                }
+
+            }
+
+            img {
+                max-width: 30%;
+            }
+        }
+    }
 }
