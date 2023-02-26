@@ -506,6 +506,12 @@
         "value": 1,
         "min": 1,
         "max": 7
+      },
+      "energieNoire": {
+        "label": " énergie noire",
+        "value": 1,
+        "min": 1,
+        "max": 7
       }
     },
     "configuration": {

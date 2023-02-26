@@ -1,0 +1,25 @@
+<form class="quality-default">
+  {{log this}}
+  <h2>choisissez talent surchargé pour {{actor.name}}</h2>
+
+  <div class="form-group">
+    <label>talent lié</label>
+    <select id="talentPath">
+      {{#each talents as |domaine
+      domaineId|}}
+      <optgroup label="{{domaineId}}">
+        {{#each domaine as |talent talentId|}}
+
+        <option value="system.talents.{{domaineId}}.{{talentId}}">
+          {{talent.label}}
+        </option>
+        {{/each}}
+      </optgroup>
+      {{/each}}
+    </select>
+
+  </div>
+
+
+
+</form>

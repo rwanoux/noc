@@ -259,7 +259,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
   checkTheme() {
     if (this.actor.itemTypes.thème.length > 1) {
       return ui.notifications.warn(`
-      le personnage ${this.actor.name.toUpperCase()}} possède plusieurs thème.... veuillez en supprimer
+      le personnage ${this.actor.name.toUpperCase()} possède plusieurs thème.... veuillez en supprimer
       `)
     }
   }

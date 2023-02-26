@@ -10,6 +10,7 @@ export class nocActor extends Actor {
   constructor(...args) {
     let data = args[0];
 
+
     if (!data.img) {
       switch (data.type) {
         case "personnage":
@@ -28,24 +29,34 @@ export class nocActor extends Actor {
 
       }
     };
+
     super(...args);
-    if (data.type == "cabale") { this.initCabale() }
-    if (data.type == "rouage") { this.initRouage() }
+
+    if (data.type == "cabale") { this.initCabale(data) }
+    if (data.type == "rouage") { this.initRouage(data) }
+
+
 
   }
-  initRouage() {
-    if (this.type !== 'rouage') return;
-      for (let perd in this.system.perditions) {
-        this.system.perditions[perd].max = 5;
-        this.system.perditions[perd].value=0;
-      }
-      this.system.reserves.vecu.max = 1;
-      this.system.reserves.espoir.max = 1;
-     
-    
+  async initRouage(data) {
+    let system = this.system
+    for (let perd in system.perditions) {
+      system.perditions[perd].max = 5;
+      system.perditions[perd].value = 0;
+    }
+    system.reserves.vecu.max = 5;
+    system.reserves.vecu.value = 1;
+    system.reserves.espoir.max = 5;
+    system.reserves.espoir.value = 1;
+    await this.update({
+      _id: this.id,
+      system: system
+    });
+
+
   }
-  initCabale() {
-    this.update({
+  async initCabale() {
+    await this.update({
       "system.perditions": {
         "blessures": {
           "label": "dégradation",
@@ -89,6 +100,9 @@ export class nocActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+     this._preparePersonnageData();
+    this._prepareRouageData();
+    this._prepareAutreData();
   }
 
   /**
@@ -105,8 +119,7 @@ export class nocActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-    this._preparePersonnageData();
-    this._prepareRouageData();
+   
 
   }
   getQuality() {
@@ -188,6 +201,19 @@ export class nocActor extends Actor {
   _prepareRouageData(actorData) {
 
 
+  }
+  _prepareAutreData() {
+    if (this.type !== 'autre') return;
+
+    this.system.energieNoire.max = 8 - this.system.classeExo.value;
+    for (let dom in this.system.domaines) {
+      this.system.domaines[dom].value = 2 + this.system.energieNoire.max
+    }
+    for (let dom in this.system.talents) {
+      for (let tal in this.system.talents[dom]) {
+        this.system.talents[dom][tal].niveau = 0 + this.system.energieNoire.max
+      }
+    }
   }
   async prepareContacts() {
     /*

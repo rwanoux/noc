@@ -592,22 +592,77 @@ div.noc.sheet.actor {
         }
     }
 
-    &.rouage {
-        header {
-            background: none;
+    &.rouage,
+    &.autre {
+        .window-content {
+            header {
+                background: none;
 
-            h1 {
-                input {
-                    color: white;
-                    text-align: center;
-                    font-size: x-large;
+                h1 {
+                    input {
+                        color: white;
+                        text-align: center;
+                        font-size: x-large;
+                    }
+
                 }
 
-            }
-
-            img {
-                max-width: 30%;
+                img {
+                    max-width: 30%;
+                }
             }
         }
+
+    }
+
+    &.autre {
+        .window-content {
+            filter: contrast(180%) invert(80%) grayscale(1);
+
+            img {
+                margin: 5px;
+                filter: contrast(100%) invert(80%) grayscale(0);
+            }
+
+            h4 {
+                color: black;
+                text-shadow: none
+            }
+
+            .energie-noire {
+                width: 100%;
+                justify-content: space-around;
+                background: url(../asset/images/fondequipement.webp);
+
+                h3 {
+                    background: none;
+                    flex: 0.3
+                }
+
+                .reserve {
+                    padding: 0 5%;
+                    width: 150%
+                }
+
+
+
+                a#surcharge {
+                    border-radius: 3em;
+                    height: 80%;
+                    padding: 8%;
+                    justify-content: center;
+                    display: block;
+                    border: 1px solid black;
+                    max-width: max-content;
+
+                    &.active {
+                        box-shadow: 0px 0px 20px black inset
+                    }
+                }
+
+
+            }
+        }
+
     }
 }
