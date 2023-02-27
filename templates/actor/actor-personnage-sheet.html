@@ -301,23 +301,35 @@
                     <div class="form-group">
                         <h4>faveurs </h4>
                         <div class="faveurs-totales flexrow">
-                        {{#repeat actor.system.reserves.faveurs.max}}
-                            <div class="faveur">
+                            {{#repeat actor.system.reserves.faveurs.max}}
+                            <div class="faveur
+                                {{#ifgt actor.system.reserves.faveurs.value
+                                @index}}
+                                faveur-used
+                                {{/ifgt}}">
                             </div>
-                        {{/repeat}}
+                            {{/repeat}}
                         </div>
+                        <a class="fa-solid fa-arrows-rotate" id="resetFaveurs"
+                            data-tooltip="ré-initialiser les faveurs des
+                            contacts"></a>
                     </div>
                     <!-- pour chaque contact-->
-                    
+
                     {{#each actor.system.contacts as |contact contactIndex|}}
                     <div class="contact" data-contact-index="{{contactIndex}}"
-                    dataset-contact-id="{{contact.id}}">
-                    {{#if contact.nom }}
+                        dataset-contact-id="{{contact.id}}">
+                        {{#if contact.nom }}
                         <h3 class="flexrow">
                             <span>{{contact.nom}}</span>
                             <div class="faveurList flexrow">
                                 {{#repeat contact.faveurs}}
-                                <div class="faveurContact">
+                                <div class="faveurContact
+                                    {{#ifgt contact.usedFaveurs
+                                    @index}}
+                                    faveur-used
+                                    {{/ifgt}}
+                                    ">
                                 </div>
                                 {{/repeat}}
                             </div>
@@ -334,9 +346,13 @@
                         </div>
 
 
-                    {{else}}
-                    <h3 data-tooltip="faites glisser un personnage ou un rouage pour affecter ce contact"class="empty-contact" data-contact-index="{{contactIndex}}">Vide : faites glisser un contact</h3>
-                    {{/if}}
+                        {{else}}
+                        <h3 data-tooltip="faites glisser un personnage ou un
+                            rouage pour affecter ce contact"
+                            class="empty-contact"
+                            data-contact-index="{{contactIndex}}">Vide : faites
+                            glisser un contact</h3>
+                        {{/if}}
                     </div>
                     {{/each}}
                     {{/ifgt}}
@@ -351,23 +367,23 @@
                     </p>
                     {{/unless}}
                     {{#if actor.system.cabale.uuid}}
-                     <h3 class="flexrow">
-                     <div>
-                         {{actor.system.cabale.nom}}
-                     </div>
-                         <div
-                             class="cabaleControls">
-                             <a class="openCabale"
-                                 data-cabale-id="{{actor.system.cabale.uuid}}"
-                                 data-tooltip="ouvrir la fiche de
-                                 cabale"><i class="fa-solid 
-                                     fa-edit"></i></a>
-                             <a data-tooltip="quitter cette cabale"
-                                 data-cabale-id="{{actor.system.cabale.uuid}}"
-                                 class="unassignCabale"><i class="fa-solid
-                                     fa-right-from-bracket"></i></a>
-                         </div>
-                     </h3>
+                    <h3 class="flexrow">
+                        <div>
+                            {{actor.system.cabale.nom}}
+                        </div>
+                        <div
+                            class="cabaleControls">
+                            <a class="openCabale"
+                                data-cabale-id="{{actor.system.cabale.uuid}}"
+                                data-tooltip="ouvrir la fiche de
+                                cabale"><i class="fa-solid
+                                    fa-edit"></i></a>
+                            <a data-tooltip="quitter cette cabale"
+                                data-cabale-id="{{actor.system.cabale.uuid}}"
+                                class="unassignCabale"><i class="fa-solid
+                                    fa-right-from-bracket"></i></a>
+                        </div>
+                    </h3>
                     <div class="flexcol">
                         <div class="flexrow">
                             <h4>bloc : </h4>
@@ -380,7 +396,7 @@
                         <div class="flexrow">
                             <h4>société écran</h4>
                             <p>{{actor.system.cabale.societe}}</p>
-                        </div>  
+                        </div>
                     </div>
 
                     {{/if}}
@@ -393,25 +409,28 @@
         <div class="tab items flexcol" data-group="primary"
             data-tab="items">
             <!--inventaire-->
-            <h3>Quantars possédés :<input type="number"
+            <h3 class="flexrow quantarQty">
+                Quantars possédés :
+                <input type="number"
                     name="system.quantars"
                     value="{{actor.system.quantars}}"/>
+                <div class="flexrow " data-tooltip="faites glisser les
+                    quantars sur les objets qui en ont besoin">
+
+                    {{#each actor.flags.noc.quantarUsage as |item index| }}
+                    <img
+                        src="systems/noc/asset/default_icons/quantar.webp"
+                        class="quantarQty {{#unless
+                        item.unused}}unavalaible{{/unless}}"
+                        {{#if item.name}}
+                        data-tooltip="utilisé dans : {{item.name}}"
+                        {{/if}}
+
+                        />
+                    {{/each}}
+                </div>
             </h3>
-            <div class="flexrow quantarQty" data-tooltip="faites glisser les
-                quantars sur les objets qui en ont besoin">
 
-                {{#each actor.flags.noc.quantarUsage as |item index| }}
-                <img
-                    src="systems/noc/asset/default_icons/quantar.webp"
-                    class="quantarQty {{#unless
-                    item.unused}}unavalaible{{/unless}}"
-                    {{#if item.name}}
-                    data-tooltip="utilisé dans : {{item.name}}"
-                    {{/if}}
-
-                    />
-                {{/each}}
-            </div>
             <ul class="item-types flexrow">
 
 

@@ -4,6 +4,7 @@ div.noc.sheet.actor {
     form.personnage,
     form.cabale {
         max-height: fit-content;
+        filter: grayscale(0.5)
     }
 
 
@@ -496,6 +497,14 @@ div.noc.sheet.actor {
                         text-align: center;
                     }
 
+                    #resetFaveurs {
+
+                        justify-self: flex-end;
+                        font-size: 2em;
+                        text-align: right;
+                        text-shadow: 0px 0px 5px red
+                    }
+
                     .contact {
                         .empty-contact {
                             padding: 5%
@@ -508,6 +517,14 @@ div.noc.sheet.actor {
                             min-height: 2em;
                             background: url('../asset/default_icons/contact.webp');
                             background-size: 100% 100%;
+                            cursor: pointer;
+
+
+                            &.faveur-used {
+                                filter: grayscale(0.8) contrast(50%);
+                                pointer-events: none;
+                                transform: scale(0.7);
+                            }
                         }
 
                         img {
@@ -531,19 +548,27 @@ div.noc.sheet.actor {
                     min-height: 3em;
                     background: url('../asset/default_icons/contact.webp');
                     background-size: 100% 100%;
+                    cursor: pointer;
+
+                    &.faveur-used {
+                        filter: grayscale(0.8) contrast(60%);
+                        pointer-events: none;
+                        transform: scale(0.7);
+                    }
                 }
             }
 
             div.tab.items,
             div.tab.principal {
                 .quantarQty {
+                    margin-top: 2%;
                     position: relative;
-                    top: -5px;
+                    align-items: center;
 
                     img {
                         margin: 0 3px;
-                        max-height: 4em;
-                        max-width: 4em;
+                        max-height: 3em;
+                        max-width: 3em;
 
                         &.unavalaible {
                             filter: grayscale(1)

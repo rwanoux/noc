@@ -220,7 +220,7 @@
           },
           "vecu": {
             "label": "vécu",
-            "value": 3,
+            "value": 0,
             "min": 0,
             "max": 10
           }
@@ -230,25 +230,25 @@
         "perditions": {
           "blessures": {
             "label": "blessures",
-            "value": 3,
+            "value": 0,
             "min": 0,
             "max": 10
           },
           "traque": {
             "label": "traque",
-            "value": 3,
+            "value": 0,
             "min": 0,
             "max": 10
           },
           "noirceur": {
             "label": "noirceur",
-            "value": 3,
+            "value": 0,
             "min": 0,
             "max": 10
           },
           "trauma": {
             "label": "trauma",
-            "value": 3,
+            "value": 0,
             "min": 0,
             "max": 10
           }

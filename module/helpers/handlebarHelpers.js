@@ -126,6 +126,9 @@ export function registerHelpers() {
     Handlebars.registerHelper('add', function (a, b) {
         return parseInt(a) + parseInt(b);
     });
+    Handlebars.registerHelper('substract', function (a, b) {
+        return parseInt(a) - parseInt(b);
+    });
 
     Handlebars.registerHelper('valueAtIndex', function (arr, idx) {
         return arr[idx];

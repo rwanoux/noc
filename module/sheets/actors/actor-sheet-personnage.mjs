@@ -138,13 +138,24 @@ export class nocActorSheetPersonnage extends ActorSheet {
     })
   }
   async affectFaveur(ev, data) {
-    console.log(...arguments);
+    if (!ev.currentTarget.classList.contains("contact")) { return }
     let contactIndex = ev.currentTarget.dataset.contactIndex;
     let contactList = this.actor.system.contacts;
-    if (contactList[contactIndex == "vide"]) { return }
+    if (contactList[contactIndex] == "vide") { return };
+    let sumFav = (acc, contact) => {
+      let tot = acc + (contact.faveurs || 0);
+      return tot;
+    }
+
+    let totalFaveursContact = contactList.reduce(sumFav, 0);
+    if (totalFaveursContact >= this.actor.system.reserves.faveurs.max) {
+      return ui.notifications.warn(`${this.actor.name} n'a plus de faveur disponibles`)
+    }
+    let newFav = this.actor.system.reserves.faveurs.value + 1
     contactList[contactIndex].faveurs++;
     await this.actor.update({
-      "system.contacts": contactList
+      "system.contacts": contactList,
+      "system.reserves.faveurs.value": newFav
     })
   }
   /* -------------------------------------------- */
@@ -268,7 +279,86 @@ export class nocActorSheetPersonnage extends ActorSheet {
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
 
     html.find(".unassignContact").click(this.unassignContact.bind(this))
+    html.find(".faveurContact").click(this._onClickFaveur.bind(this))
+    html.find('#resetFaveurs').click(this._onResetFaveurs.bind(this))
 
+  }
+  _onResetFaveurs(ev) {
+    new Dialog({
+      title: `ré-initialiser les faveurs`,
+      content: "Etes-vous sûr de vouloir ré-initialiser les faveurs ?",
+      buttons: {
+        valid: {
+          icon: '<i class="fas fa-check"></i>',
+          label: "Valider",
+          callback: html => {
+            this.actor.resetContactFaveurs()
+
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: "Annuler"
+        }
+      },
+      default: "cancel"
+    }, {
+      classes: ["nocDialog"]
+    }).render(true);
+  }
+  async _onClickFaveur(ev) {
+    //rendering dialog for faveur use
+    let contactList = this.actor.system.contacts;
+    let contactIndex = ev.currentTarget.closest('.contact').dataset.contactIndex;
+    let contact = contactList[contactIndex];
+
+    new Dialog({
+      title: `demander une faveur à ${contact.nom}`,
+      content: await renderTemplate(`systems/noc/templates/window_app/dialog-faveur.hbs`, contact),
+      buttons: {
+        valid: {
+          icon: '<i class="fas fa-check"></i>',
+          label: "Valider",
+          callback: html => {
+            console.log(this)
+            let usedFaveurs = html.find(('input#faveursInUse'))[0].value;
+            this.useContactFaveurs(contact, usedFaveurs);
+            this.applyFaveurs(contactIndex, usedFaveurs)
+
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: "Annuler"
+        }
+      },
+      default: "valid"
+    }, {
+      classes: ["nocDialog"]
+    }).render(true);
+
+
+  }
+  async useContactFaveurs(contact, value) {
+    let chatData = {
+      user: game.user._id,
+      speaker: ChatMessage.getSpeaker(),
+      content: `
+      <h2>${this.actor.name} utilise des faveurs</h2>
+      <p>${value} points dépensés auprès de ${contact.nom}</p>
+      `
+    };
+    return ChatMessage.create(chatData);
+  }
+  async applyFaveurs(contactIndex, value) {
+    let contactList = this.actor.system.contacts;
+    let contact = contactList[contactIndex];
+
+    contact.usedFaveurs += value;
+
+    await this.actor.update({
+      "system.contacts": contactList,
+    })
   }
   async deleteQuality(ev) {
     let type = ev.currentTarget.dataset.type;
@@ -469,6 +559,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }
     await this.actor.setFlag("noc", "quantarUsage", quantarUsage)
   }
+
   async prepareFavItems() {
     console.log("preparing fav")
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
@@ -477,9 +568,11 @@ export class nocActorSheetPersonnage extends ActorSheet {
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
     let contactList = this.actor.system.contacts;
+    let newFav = this.actor.system.reserves.faveurs.value - contactList[contactIndex].faveurs
     contactList[contactIndex] = "vide";
     await this.actor.update({
-      "system.contacts": contactList
+      "system.contacts": contactList,
+      "system.reserves.faveurs.value": newFav
     })
   }
 }

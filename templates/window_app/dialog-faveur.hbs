@@ -1,0 +1,13 @@
+<form class="faveur" id="faveurDialog">
+  {{log this}}
+  <h2>demander une faveur à {{nom}}</h2>
+  <div class="form-group">
+    <label>points de faveurs disponibles </label>
+    <span>{{substract faveurs usedFaveurs}}</span>
+    <label>points à dépenser </label>
+    <input id="faveursInUse"
+      min="0" max="{{substract faveurs usedFaveurs}}">
+
+  </div>
+
+</form>

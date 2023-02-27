@@ -60,25 +60,25 @@ export class nocActor extends Actor {
       "system.perditions": {
         "blessures": {
           "label": "dégradation",
-          "value": 3,
+          "value": 0,
           "min": 0,
           "max": 10
         },
         "traque": {
           "label": "traque",
-          "value": 3,
+          "value": 0,
           "min": 0,
           "max": 10
         },
         "noirceur": {
           "label": "noirceur",
-          "value": 3,
+          "value": 0,
           "min": 0,
           "max": 10
         },
         "trauma": {
           "label": "division",
-          "value": 3,
+          "value": 0,
           "min": 0,
           "max": 10
         }
@@ -255,16 +255,30 @@ export class nocActor extends Actor {
         contacts[i] = "vide";
       };
     } else {
-      contacts.splice(length , contacts.length - length+1)
+      contacts.splice(length, contacts.length - length + 1)
     }
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    await this.update({'system.contacts':contacts})
+    await this.update({ 'system.contacts': contacts })
     console.log(this.system.contacts)
 
   }
+  resetContactFaveurs() {
+    if (this.type != "personnage") { return false }
+    let contactList = this.system.contacts;
+    for (let contact of contactList) {
+      if (contact != "vide") {
+        contact.faveurs = 0;
+        contact.usedFaveurs = 0;
+      }
+    }
+    return this.update({
+      "system.reserves.faveurs.value": 0,
+      "system.contacts": contactList
 
+    })
+  }
   /* -------------------------------------------- */
   incDecReserve(reserveKey, value) {
     let reserve = duplicate(this.system.reserves[reserveKey])
