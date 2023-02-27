@@ -1,9 +1,8 @@
 lancer les suppressions des thèmes dans les archetypes depuis Hooks.on("deleteItem")
 
-créer les contacts
-lancer les suppressions des contacts dans les personnages depuis Hooks.on("deleteActor")
+gérer des membres dans les Cabales;
 
-continuer les fiches items
-continuer les fiches actors
+méchaniques d'aura sur canvas (talent lumière)
 
-méchaniques d'aura (talent lumière)
+gérer les états (nouvelle classe Trait), en fonctions des niveaux des perditions :
+    blessures folies traques noirceur etc...
