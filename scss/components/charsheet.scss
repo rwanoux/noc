@@ -492,8 +492,45 @@ div.noc.sheet.actor {
 
                 .contacts,
                 .cabale {
-                    padding: 15px;
-                    box-shadow: 0px 0px 80px rgba(0, 0, 0, 0.42);
+                    h2 {
+                        text-align: center;
+                    }
+
+                    .contact {
+                        .empty-contact {
+                            padding: 5%
+                        }
+
+                        .faveurContact {
+                            max-width: 2em;
+                            max-height: 2em;
+                            min-width: 2em;
+                            min-height: 2em;
+                            background: url('../asset/default_icons/contact.webp');
+                            background-size: 100% 100%;
+                        }
+
+                        img {
+                            max-width: 20%;
+                            flex: 0.2;
+                        }
+
+                        font-size: smaller;
+                        box-shadow: 0px 5px 8px black;
+                    }
+
+                    padding:8px;
+                    margin:5%;
+                    box-shadow: 0px 15px 18px rgba(0, 0, 0, 0.42);
+                }
+
+                .faveur {
+                    max-width: 3em;
+                    max-height: 3em;
+                    min-width: 3em;
+                    min-height: 3em;
+                    background: url('../asset/default_icons/contact.webp');
+                    background-size: 100% 100%;
                 }
             }
 

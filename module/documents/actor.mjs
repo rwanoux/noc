@@ -100,7 +100,7 @@ export class nocActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
-     this._preparePersonnageData();
+    this._preparePersonnageData();
     this._prepareRouageData();
     this._prepareAutreData();
   }
@@ -119,7 +119,7 @@ export class nocActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-   
+
 
   }
   getQuality() {
@@ -216,41 +216,53 @@ export class nocActor extends Actor {
     }
   }
   async prepareContacts() {
-    /*
-        let contacts, faveur;
-        switch (this.system.talents.statut.contact.niveau) {
-          case 1:
-            contacts = new Array(2);
-            faveur = 2
-            break;
-          case 2:
-            contacts = new Array(3);
-            faveur = 4
-            break;
-          case 3:
-            contacts = new Array(4);
-            faveur = 6
-            break;
-          case 4:
-            contacts = new Array(5)
-            faveur = 8
-            break;
-          case 5:
-            contacts = new Array(5);
-          faveur = 10
-            break;
-    
-          default:
-            break;
-        }
-    
-        for (let i = 0; i < contacts.length; i++) {
-          contacts[i] = new NOCContact(randomID());
-          console.log(contacts[i])
-        };
-    
-    
-    */
+    let length = 0;
+    let faveur = 0;
+    let contacts = this.system.contacts || [];
+    switch (this.system.talents.statut.contact.niveau) {
+      case 0:
+      case -1:
+        length = 0;
+        faveur = 0
+        break;
+
+      case 1:
+        length = 2;
+        faveur = 2
+        break;
+      case 2:
+        length = 3;
+        faveur = 4
+        break;
+      case 3:
+        length = 4
+        faveur = 6
+        break;
+      case 4:
+        length = 5
+        faveur = 8
+        break;
+      case 5:
+        length = 5
+        faveur = 10
+        break;
+
+      default:
+        break;
+    }
+    if (length > contacts.length) {
+      for (let i = contacts.length; i < length; i++) {
+        contacts[i] = "vide";
+      };
+    } else {
+      contacts.splice(length , contacts.length - length+1)
+    }
+
+    this.system.contacts = contacts;
+    this.system.reserves.faveurs.max = faveur;
+    await this.update({'system.contacts':contacts})
+    console.log(this.system.contacts)
+
   }
 
   /* -------------------------------------------- */

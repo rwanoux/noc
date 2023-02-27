@@ -290,47 +290,56 @@
 
                 <div class="contacts">
                     <h2>Contacts</h2>
+
+                    {{#ifequal actor.system.talents.statut.contact.niveau -1}}
+                    <h4>Ce personnage a un ennemi.</h4>
+                    {{/ifequal}}
+                    {{#ifequal actor.system.talents.statut.contact.niveau 0}}
+                    <h4>Ce personnage ne possède aucun contacts</h4>
+                    {{/ifequal}}
+                    {{#ifgt actor.system.contacts.length 0}}
                     <div class="form-group">
-                        <label>faveurs totales</label>
-                        <input type="number" name="system.reserves.faveurs.max"
-                            value="{{actor.system.reserves.faveurs.max}}"
-                            disabled>
-                        <label>faveurs utilisées</label>
-                        <input type="number"
-                            name="system.reserves.faveurs.value"
-                            value="{{actor.system.reserves.faveurs.value}}"
-                            disabled>
-                    </div>
-                    <!-- SI pas de contacts -->
-                    {{#unless actor.system.contacts.[0]}}
-                    <h4>Aucuns contacts</h4>
-
-                    <p>faites glisser des acteurs "personnages" ou "rouages"
-                        pour
-                        ajouter des contacts
-                    </p>
-                    {{/unless}}
-
-                    <!-- pour chaque contact-->
-                    {{#if actor.system.contacts.[0]}}
-                    {{#each actor.system.contacts as |contact contactIndex|}}
-                    <div class="contact">
-
-                    </div>
-                    <h3 class="flexrow">
-                        <input type="text" name="system.contacts">{{contact.nom}}
-                        <div class="cabaleControls">
-
-                            <a data-tooltip="supprimer ce contact"
-                                data-cabale-id="{{contact.uuid}}"
-                                class="unassignContact">
-                                <i class="fa-solid fa-close"></i>
-                            </a>
+                        <h4>faveurs </h4>
+                        <div class="faveurs-totales flexrow">
+                        {{#repeat actor.system.reserves.faveurs.max}}
+                            <div class="faveur">
+                            </div>
+                        {{/repeat}}
                         </div>
-                    </h3>
-                    {{/each}}
-                    {{/if}}
+                    </div>
+                    <!-- pour chaque contact-->
+                    
+                    {{#each actor.system.contacts as |contact contactIndex|}}
+                    <div class="contact" data-contact-index="{{contactIndex}}"
+                    dataset-contact-id="{{contact.id}}">
+                    {{#if contact.nom }}
+                        <h3 class="flexrow">
+                            <span>{{contact.nom}}</span>
+                            <div class="faveurList flexrow">
+                                {{#repeat contact.faveurs}}
+                                <div class="faveurContact">
+                                </div>
+                                {{/repeat}}
+                            </div>
+                            <div class="contactControls">
+                                <a data-tooltip="supprimer ce contact"
+                                    class="unassignContact">
+                                    <i class="fa-solid fa-close"></i>
+                                </a>
+                            </div>
+                        </h3>
+                        <div class="flexrow">
+                            <img src="{{contact.img}}" />
+                            <p>{{{contact.description}}}</p>
+                        </div>
 
+
+                    {{else}}
+                    <h3 data-tooltip="faites glisser un personnage ou un rouage pour affecter ce contact"class="empty-contact" data-contact-index="{{contactIndex}}">Vide : faites glisser un contact</h3>
+                    {{/if}}
+                    </div>
+                    {{/each}}
+                    {{/ifgt}}
                 </div>
                 <div class="cabale ">
                     <h2>Cabale</h2>
@@ -342,28 +351,36 @@
                     </p>
                     {{/unless}}
                     {{#if actor.system.cabale.uuid}}
-                    <div class="flexrow">
-                        <h4>
-                            {{actor.system.cabale.nom}}
-                        </h4>
-                        <div
-                            class="cabaleControls">
-                            <a class="openCabale"
-                                data-cabale-id="{{actor.system.cabale.uuid}}"
-                                data-tooltip="ouvrir la fiche de
-                                cabale"><i class="fa-solid fa-solid
-                                    fa-window-maximize"></i></a>
-                            <a data-tooltip="quitter cette cabale"
-                                data-cabale-id="{{actor.system.cabale.uuid}}"
-                                class="unassignCabale"><i class="fa-solid
-                                    fa-right-from-bracket"></i></a>
-                        </div>
-                    </div>
+                     <h3 class="flexrow">
+                     <div>
+                         {{actor.system.cabale.nom}}
+                     </div>
+                         <div
+                             class="cabaleControls">
+                             <a class="openCabale"
+                                 data-cabale-id="{{actor.system.cabale.uuid}}"
+                                 data-tooltip="ouvrir la fiche de
+                                 cabale"><i class="fa-solid 
+                                     fa-edit"></i></a>
+                             <a data-tooltip="quitter cette cabale"
+                                 data-cabale-id="{{actor.system.cabale.uuid}}"
+                                 class="unassignCabale"><i class="fa-solid
+                                     fa-right-from-bracket"></i></a>
+                         </div>
+                     </h3>
                     <div class="flexcol">
-                        <h5>{{cabale.bloc}}</h5>
-                        <p>{{cabale.coordonnes}}</p>
-                        <h5>société écran</h5>
-                        <p>{{cabale.societeEcran}}</p>
+                        <div class="flexrow">
+                            <h4>bloc : </h4>
+                            <p>{{actor.system.cabale.bloc}}</p>
+                        </div>
+                        <div class="flexrow">
+                            <h4>coordonnées :</h4>
+                            <p>{{actor.system.cabale.coordonnes}}</p>
+                        </div>
+                        <div class="flexrow">
+                            <h4>société écran</h4>
+                            <p>{{actor.system.cabale.societe}}</p>
+                        </div>  
                     </div>
 
                     {{/if}}

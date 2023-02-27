@@ -3,18 +3,19 @@ export default class NOCContact {
         this.nom = "";
         this.id = id;
         this.description = "";
-        this.faveurs = 1;
+        this.faveurs = 0;
         this.usedFaveurs = 0;
 
         this.checkExistingActor(id)
     }
 
     async checkExistingActor(id) {
-        let act = await game.actors.get(id);
+        let act = await Actor.get(id);
         if (act && (act.type == "personnage" || act.type == "rouage")) {
             this.nom = act.name;
-            this.description = act.system.signalement;
-            this.uuid = act._id;
+            this.description = act.system.description;
+            this.id = act._id;
+            this.img = act.img;
         }
     }
 

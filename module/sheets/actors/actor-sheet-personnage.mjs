@@ -4,6 +4,7 @@
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheet}
  */
+import NOCContact from "../../ContactClass.js";
 import { Quality } from "../../qualite_default.mjs";
 
 export class nocActorSheetPersonnage extends ActorSheet {
@@ -18,6 +19,9 @@ export class nocActorSheetPersonnage extends ActorSheet {
         { dragSelector: ".item-list .item", dropSelector: null },
         { dragSelector: "img.quantarQty", dropSelector: "li.item" },
         { dragSelector: "img.quantarUsed", dropSelector: null },
+        { dragSelector: ".actor", dropSelector: ".cabale" },
+        { dragSelector: ".actor", dropSelector: ".contact" },
+        { dragSelector: ".faveur", dropSelector: ".contact" },
 
       ],
 
@@ -47,7 +51,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
     const actor = this.actor;
-    console.log(data)
 
 
     /**
@@ -68,32 +71,40 @@ export class nocActorSheetPersonnage extends ActorSheet {
         return this._onDropActor(event, data);
       case "Item":
         return this._onDropItem(event, data);
+
       case "affectQuantar":
         return this._onDropQuantar(event, data)
       case "unaffectQuantar":
-        return this._onUnaffectQuantar(event, data)
+        return this._onUnaffectQuantar(event, data);
+      case "affectFaveur":
+        return this.affectFaveur(event, data);
+      default:
+        return;
 
     }
   }
   async _onDropActor(ev, data) {
-    console.log(ev, data);
     let dropActor = await Actor.implementation.fromDropData(data);
     if (!this.actor.isOwner || !dropActor.isOwner) return () => {
       ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
       return false
     };
-    console.log(dropActor);
+    console.log(dropActor, ev);
     switch (dropActor.type) {
       case "cabale":
+        if (!ev.target.classList.contains("cabale")) { return }
         this.setCabale(dropActor)
         break;
       case "personnage", "rouage":
-        this.setContact(dropActor);
+        if (!ev.target.classList.contains("empty-contact")) { return };
+        this.setContact(dropActor, ev.target.dataset.contactIndex);
         break;
       default:
         return false
     }
   }
+
+
   async _onDropItem(ev, data) {
     let dropItem = await Item.implementation.fromDropData(data);
     if (dropItem.type == "thème") { return ui.notifications.warn("Les items THEMES doivent être glisser sur les fiches d'items ARCHETYPES") }
@@ -126,6 +137,16 @@ export class nocActorSheetPersonnage extends ActorSheet {
       "system.quantar": false
     })
   }
+  async affectFaveur(ev, data) {
+    console.log(...arguments);
+    let contactIndex = ev.currentTarget.dataset.contactIndex;
+    let contactList = this.actor.system.contacts;
+    if (contactList[contactIndex == "vide"]) { return }
+    contactList[contactIndex].faveurs++;
+    await this.actor.update({
+      "system.contacts": contactList
+    })
+  }
   /* -------------------------------------------- */
   _onDragStart(ev) {
     console.log(ev);
@@ -135,6 +156,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
       };
       ev.dataTransfer.setData('text/plain', JSON.stringify(dragData));
     }
+
+
     if (ev.currentTarget.classList.contains('quantarUsed')) {
       let dragData = {
         type: "unaffectQuantar",
@@ -142,18 +165,23 @@ export class nocActorSheetPersonnage extends ActorSheet {
       };
       ev.dataTransfer.setData('text/plain', JSON.stringify(dragData));
     }
+    if (ev.currentTarget.classList.contains('faveur')) {
+      let dragData = {
+        type: "affectFaveur",
+      };
+      ev.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    }
+
+
     super._onDragStart(ev)
 
   }
+
+
   /** @override */
   getData() {
-    // Retrieve the data structure from the base sheet. You can inspect or log
-    // the context variable to see the structure, but some key properties for
-    // sheets are the actor object, the data object, whether or not it's
-    // editable, the items array, and the effects array.
+
     const context = super.getData();
-
-
 
     // Prepare character data and items.
     this._preparePersonnageItems(context);
@@ -176,6 +204,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
   }
 
+  /* -------------------------------------------- */
+  /* --------LISTENERS--------------------------- */
   /* -------------------------------------------- */
 
   /** @override */
@@ -221,8 +251,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
     html.find('.roll-item').click(ev => {
       let itemId = $(ev.currentTarget).data("item-id");
       this.actor.rollItem(itemId);
-    })    
-    
+    })
+
     let checksReserve = html.find('.reserve input');
     for (let ch of checksReserve) {
       ch.addEventListener('click', this.changeReserve.bind(this))
@@ -236,6 +266,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
     html.find(".addQuality").click(this.addQuality.bind(this))
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
+
+    html.find(".unassignContact").click(this.unassignContact.bind(this))
 
   }
   async deleteQuality(ev) {
@@ -306,7 +338,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let property = ev.currentTarget.dataset.reserveProperty;
     let lastProp = property.split('.')[2];
     console.log([lastProp])
-    if ((this.actor.system.reserves[lastProp]?.value == value || this.actor.system.perditions[lastProp]?.value == value)) { value -= 1 };
+    if ((this.actor.system.energieNoire?.value == value || this.actor.system.reserves[lastProp]?.value == value || this.actor.system.perditions[lastProp]?.value == value)) { value -= 1 };
     let updating = {};
     updating[property] = value;
     this.actor.update(updating)
@@ -324,7 +356,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     // Grab any data associated with this control.
     const data = duplicate(header.dataset);
     // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
+    const name = `${type.capitalize()} (indéfini)`;
     // Prepare the item object.
     const itemData = {
       name: name,
@@ -419,6 +451,14 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }, {
 
     }).render(true);
+  };
+  async setContact(actor, index) {
+    let contactList = this.actor.system.contacts;
+    contactList[index] = new NOCContact(actor.id);
+    await this.actor.update({
+      "system.contacts": contactList
+    })
+
   }
   async listQuantar() {
     let quantarUsage = this.actor.collections.items.toObject().filter(it => it.system.quantar);
@@ -434,5 +474,12 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
     await this.actor.setFlag("noc", "favItemList", favItems)
   }
-
+  async unassignContact(ev) {
+    let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
+    let contactList = this.actor.system.contacts;
+    contactList[contactIndex] = "vide";
+    await this.actor.update({
+      "system.contacts": contactList
+    })
+  }
 }
