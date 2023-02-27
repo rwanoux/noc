@@ -23,32 +23,33 @@
       <div class="energie-noire flexrow">
         <h3 class="flexrow">
           <span>{{actor.system.classeExo.label}}</span>
-            <input type="number"
-                name="system.classeExo.value"
-                value="{{actor.system.classeExo.value}}"/>
+          <input type="number"
+            name="system.classeExo.value"
+            value="{{actor.system.classeExo.value}}"/>
         </h3>
-        <div class="rouage-reserves">
+        <div class="rouage-reserves autre">
           <div class="reserve energie-noire">
             <h4>energie noire</h4>
             {{#repeat actor.system.energieNoire.max}}
             <input type="checkbox"
               data-reserve-value="{{@index}}"
               data-reserve-property="system.energieNoire.value"
-            {{#ifgt actor.system.energieNoire.value @index}}checked{{/ifgt}}/>
+              {{#ifgt actor.system.energieNoire.value @index}}checked{{/ifgt}}/>
             {{/repeat}}
           </div>
         </div>
-        <div class="surcharge">
-        <a id="surcharge" class=" {{#if actor.flags.noc.surcharge}}active{{/if}}">
+        <h4 class="surcharge">
+          <a id="surcharge" class=" {{#if
+            actor.flags.noc.surcharge}}active{{/if}}">
 
-          {{#if actor.flags.noc.surcharge}}
-           annuler la surcharge :
-           {{actor.flags.noc.surcharge}}
-          {{else}}
-           surcharger d'énergie noire
-        {{/if}}
-        </a>
-        </div>
+            {{#if actor.flags.noc.surcharge}}
+            annuler la surcharge :
+            {{actor.flags.noc.surcharge}}
+            {{else}}
+            surcharger d'énergie noire
+            {{/if}}
+          </a>
+        </h4>
       </div>
       <div class="stats rouage">
 

@@ -336,7 +336,9 @@ div.noc.sheet.actor {
                 }
 
                 .rouage-reserves {
-                    flex: 0.4;
+                    &:not(.autre) {
+                        flex: 0.4;
+                    }
 
                     input[type="checkbox"] {
                         margin: 0;
@@ -691,34 +693,32 @@ div.noc.sheet.actor {
                 text-shadow: none
             }
 
-            .energie-noire {
-                width: 100%;
-                justify-content: space-around;
+            div.energie-noire {
+
+
                 background: url(../asset/images/fondequipement.webp);
 
                 h3 {
                     background: none;
-                    flex: 0.3
                 }
 
-                .reserve {
-                    padding: 0 5%;
-                    width: 150%
+                div.rouage-reserves.autre {
+                    text-align: center;
                 }
 
 
 
-                a#surcharge {
+                #surcharge {
                     border-radius: 3em;
-                    height: 80%;
-                    padding: 8%;
                     justify-content: center;
                     display: block;
                     border: 1px solid black;
                     max-width: max-content;
+                    padding: 0 1em;
+                    text-shadow: none;
 
                     &.active {
-                        box-shadow: 0px 0px 20px black inset
+                        box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.752) inset
                     }
                 }
 

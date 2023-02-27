@@ -234,3 +234,25 @@ function rollItemMacro(itemName) {
   return item.roll();
 }
 
+// creations de boutons lien dans l'onglet settings
+
+Hooks.on("renderSidebarTab", (app, html) => {
+  let content = `
+<h2> Liens Utiles</h2>
+<button>
+<a  target="_blank" href="https://sethmes-editions.com/noc/">
+le site de l'éditeur</a>
+</button>
+
+<button>
+<a  target="_blank" href="https://discord.gg/pPSDNJk">
+<i class="fa-brands fa-discord"></i>
+le discord francophone de foundry</a>
+</button>
+
+`
+  html.find("#settings-documentation").append(content);
+
+
+
+})
