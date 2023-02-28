@@ -534,7 +534,8 @@
       "outil",
       "arme",
       "armure",
-      "document administratif"
+      "document administratif",
+      "objetusuel"
     ],
     "templates": {
       "base": {
@@ -578,6 +579,11 @@
           "value": 1
         }
       }
+    },
+    "objetusuel": {
+      "templates": [
+        "base"
+      ]
     },
     "thème": {
       "templates": [

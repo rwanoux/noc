@@ -1,4 +1,19 @@
 {
-
+  "ACTOR": {
+    "TypePersonnage": "Personnage",
+    "TypeRouage": "Rouage",
+    "TypeAutre": "Autre",
+    "TypeCabale": "Cabale",
+    "TypeCreature": "Créature"
+  },
+  "ITEM": {
+    "TypeArme": "Arme",
+    "TypeOutil": "Outil",
+    "TypeThème": "Thème",
+    "TypeArchetype": "Archetype",
+    "TypeDocumentadministratif": "Document administratif",
+    "TypeObjetusuel": "Objet usuel",
+    "TypeArmure": "Armure"
+  },
   "NOC.Add": "Ajouter"
 }
