@@ -13,6 +13,7 @@ import { nocItemSheetArchetype } from "./sheets/items/item-sheet-archetype.mjs";
 import { nocItemSheetTheme } from "./sheets/items/item-sheet-theme.mjs";
 import { nocItemSheetArme } from "./sheets/items/item-sheet-arme.mjs";
 import { nocItemSheetOutil } from "./sheets/items/item-sheet-outil.mjs";
+import { nocItemSheetObjetUsuel } from "./sheets/items/item-sheet-objetusuel.mjs";
 import { nocItemSheetDocumentAdministratif } from "./sheets/items/item-sheet-documentAdministratif.mjs";
 import { nocItemSheetArmure } from "./sheets/items/item-sheet-armure.mjs";
 
@@ -106,6 +107,11 @@ Hooks.once('init', async function () {
     types: ["outil"],
     makeDefault: true,
     label: "fiche d'outil"
+  });
+  Items.registerSheet("noc", nocItemSheetObjetUsuel, {
+    types: ["objetusuel"],
+    makeDefault: true,
+    label: "fiche d'objet usuel"
   });
   Items.registerSheet("noc", nocItemSheetArchetype, {
     types: ["archetype"],
