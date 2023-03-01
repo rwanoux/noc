@@ -681,7 +681,7 @@ div.noc.sheet.actor {
 
     &.autre {
         .window-content {
-            filter: contrast(180%) invert(80%) grayscale(1);
+            filter: invert(90%) grayscale(1);
 
             img {
                 margin: 5px;
