@@ -255,32 +255,38 @@
             data-tab="description">
             <div class="signalement flexcol">
                 <div class="form-group">
-                    <h2>signalement</h2>
+                    <h2>Signalement</h2>
                     {{editor actor.system.signalement
                     target="system.signalement"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
                 </div>
                 <div class="form-group">
-                    <h2>description</h2>
+                    <h2>Description</h2>
                     {{editor actor.system.description
                     target="system.description"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
                 </div>
                 <div class="form-group">
-                    <h2>implication</h2>
+                    <h2>Implication</h2>
                     {{editor actor.system.implication
                     target="system.implication"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
                 </div>
                 <div class="form-group">
-                    <h2>couverture</h2>
+                    <h2>Couverture</h2>
                     {{editor actor.system.couverture target="system.couverture"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
                 </div>
+                <div class="form-group">
+                  <h2>Notes</h2>
+                  {{editor actor.system.notes target="system.notes"
+                  button=true editable=editable
+                  engine="prosemirror" collaborate=false}}
+              </div>
 
             </div>
 
