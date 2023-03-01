@@ -508,7 +508,7 @@
         "max": 7
       },
       "energieNoire": {
-        "label": " énergie noire",
+        "label": "énergie noire",
         "value": 1,
         "min": 1,
         "max": 7
@@ -525,6 +525,19 @@
       "allies": {},
       "antagonistes": {},
       "destine": ""
+    },
+    "creature": {
+      "templates": [
+        "domaines",
+        "talents",
+        "reserves",
+        "perditions"
+      ],
+      "attaque": {
+        "label": "",
+        "degats": ""
+      },
+      "specials": []
     }
   },
   "Item": {
