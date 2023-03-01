@@ -72,8 +72,9 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
       ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
       return false
     };
+    // Activer la cabale chez cet acteur
+    dropActor.setCabale( duplicate(this.object) )
     console.log(dropActor)
-
   }
   _onDropItem(ev, data) {
     console.log(ev, data)
@@ -88,21 +89,19 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
     // editable, the items array, and the effects array.
     const context = super.getData();
 
-
-
     // Prepare character data and items.
-    if (this.actor.type == 'personnage' || this.actor.type == 'rouage') {
-      this._preparePersonnageItems(context);
-      this._preparePersonnageData(context);
-    }
-
+    this._preparePersonnageItems(context);
+    this._preparePersonnageData(context);
 
     return context;
   }
 
-
+  /* -------------------------------------------- */
   _preparePersonnageData(context) {
+    context.members = game.actors.filter( act => act.type == "personnage" && act.system.cabale && act.system.cabale.uuid == this.actor.id)
+    console.log("Found members", context.members, this.actor.id)
   }
+  /* -------------------------------------------- */
   _preparePersonnageItems(context) {
   }
 
@@ -125,6 +124,12 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
     // Add Inventory Item
     html.find('.item-create').click(this._onItemCreate.bind(this));
+    
+    html.find('.display-actor').click(ev => {
+      const actorId = $(ev.currentTarget).data("actor-id")
+      let actor = game.actors.get(actorId);
+      actor.sheet.render(true);
+    } )
 
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {

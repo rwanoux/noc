@@ -147,9 +147,22 @@
 
       </div>
     </div>
-    <div class="tab members flexrow" data-group="primary"
-      data-tab="members">
+    <div class="tab members flexrow" data-group="primary" data-tab="members">
 
+      <ul class="item-list">
+        {{#each members as |member key|}}
+          <li class="item" data-actor-id="{{member._id}}">
+          <div class="item-summary flexrow">
+            <div class="img">
+              <img src="{{member.img}}" alt="image de {{member.name}}">
+            </div>
+            <h4 class="item-name">
+                <span><a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a></span>
+            </h4>
+          </div>
+          </li>
+        {{/each}}
+      </ul>
 
     </div>
 

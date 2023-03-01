@@ -92,8 +92,9 @@ export class nocActorSheetPersonnage extends ActorSheet {
     console.log(dropActor, ev);
     switch (dropActor.type) {
       case "cabale":
+        console.log("DROPPED TO CABALE!:!!!")
         if (!ev.target.classList.contains("cabale")) { return }
-        this.setCabale(dropActor)
+        this.actor.setCabale(dropActor)
         break;
       case "personnage", "rouage":
         if (!ev.target.classList.contains("empty-contact")) { return };
@@ -493,19 +494,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }
   }
 
-  async setCabale(cabale) {
-    if (this.actor.system.cabale.uuid) { return ui.notifications.warn("Ce personnage est déjà affecté à une cabale") };
-    let update = {
-      nom: cabale.name,
-      uuid: cabale._id,
-      bloc: cabale.system.bloc,
-      coordonnes: cabale.system.coordonnes,
-      societe: cabale.system.societeEcran
-    };
-    await this.actor.update({
-      "system.cabale": update
-    })
-  }
   async openCabale(ev) {
     let cabale = await Actor.get(ev.currentTarget.dataset.cabaleId)
     return await cabale.sheet.render(true)

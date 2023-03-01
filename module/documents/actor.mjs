@@ -280,6 +280,25 @@ export class nocActor extends Actor {
 
     })
   }
+
+  /* -------------------------------------------- */
+  async setCabale(cabale) {
+    if (this.system.cabale.uuid) {
+      return ui.notifications.warn("Ce personnage est déjà affecté à une cabale")
+    }
+    console.log("Adding cabale", cabale)
+    let update = {
+      nom: cabale.name,
+      uuid: cabale._id,
+      bloc: cabale.system.bloc,
+      coordonnes: cabale.system.coordonnes,
+      societe: cabale.system.societeEcran
+    };
+    await this.update({
+      "system.cabale": update
+    })
+  }
+
   /* -------------------------------------------- */
   incDecReserve(reserveKey, value) {
     let reserve = duplicate(this.system.reserves[reserveKey])
