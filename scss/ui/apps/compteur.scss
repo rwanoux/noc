@@ -33,7 +33,7 @@ form#compteurs {
 
     div#fiel {
         position: relative;
-        max-width: 15vw;
+        width: 18vw;
         height: 15vw;
         // animation: up 1s 1;
         background: url('../asset/images/fielcompteur2.webp');
@@ -100,8 +100,9 @@ form#compteurs {
     }
 
     div#effets {
+        font-size: smaller;
         margin-top: 5vh;
-        width: 30vw;
+        width: max-content;
         max-height: 10vw;
         background: url('../asset/images/fondequipement.webp');
         background-size: 100% 200%;
