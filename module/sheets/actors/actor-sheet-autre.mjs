@@ -57,8 +57,10 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
           let select = html.find('#talentPath')[0];
           let talentPath = select.options[select.selectedIndex].value;
 
-         await  this.actor.setFlag("noc", "surcharge", talentPath.split(".")[ talentPath.split(".").length - 1]);
-
+          await this.actor.setFlag("noc", "surcharge", talentPath.split(".")[talentPath.split(".").length - 1]);
+          await this.actor.update({
+            "system.energieNoire.value": this.actor.system.energieNoire.value - 1
+          })
           await this.createSurchargeEffect(talentPath)
         }
       },
@@ -76,7 +78,7 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
     });
     d.render(true);
   }
-  createSurchargeEffect(talentPath) {
+  async createSurchargeEffect(talentPath) {
     console.log(talentPath);
     let effectData = {
       label: `surcharge`,
@@ -87,12 +89,10 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
       }],
       disabled: false
     };
-    this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
-    console.log(this.actor)
-
+    await this.actor.createEmbeddedDocuments("ActiveEffect", [effectData]);
   }
   async deleteSurchargeEffect() {
     let effect = this.actor.effects.find(ef => ef.label == "surcharge");
-     this.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id])
+    this.actor.deleteEmbeddedDocuments('ActiveEffect', [effect.id])
   }
 }

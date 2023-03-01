@@ -35,8 +35,10 @@ export class nocActor extends Actor {
     if (data.type == "cabale") { this.initCabale(data) }
     if (data.type == "rouage") { this.initRouage(data) }
 
+  }
 
-
+  _preUpdate(...args) {
+    console.log("preupdate..........", ...args)
   }
   async initRouage(data) {
     let system = this.system
@@ -261,7 +263,6 @@ export class nocActor extends Actor {
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
     await this.update({ 'system.contacts': contacts })
-    console.log(this.system.contacts)
 
   }
   resetContactFaveurs() {
