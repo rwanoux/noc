@@ -65,10 +65,12 @@
         <h3>spécial <a title="ajouter une règle special" class="fas fa-add
             add-special"></a></h3>
         {{#each specials as |special id|}}
-        {{editor actor.system.specials.id
-        target="system.specials.{{index}}"
-        button=true editable=editable
-        engine="prosemirror" collaborate=false}}
+        <textarea name="system.specials.{{id}}" cols="30" rows="10">
+
+          {{special}}
+        </textarea>
+
+        {{/each}}
       </div>
       <div class="flexrow">
         <div class="rouage-reserves">
