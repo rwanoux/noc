@@ -262,7 +262,9 @@ export class nocActor extends Actor {
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    await this.update({ 'system.contacts': contacts })
+    await this.update({ 
+      'system.contacts': contacts 
+    })
 
   }
   resetContactFaveurs() {
@@ -296,7 +298,24 @@ export class nocActor extends Actor {
     };
     await this.update({
       "system.cabale": update
+    });
+    let cabaleActor = await Actor.get(cabale._id)
+    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
+  }
+  async leaveCabale() {
+    let oldCabale = this.system.cabale;
+    let cabaleActor = await Actor.get(oldCabale._id);
+    await this.update({
+      "system.cabale": {
+        nom: "",
+        uuid: "",
+        bloc: "",
+        coordonnes: "",
+        societe: ""
+      }
     })
+    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
+
   }
 
   /* -------------------------------------------- */
