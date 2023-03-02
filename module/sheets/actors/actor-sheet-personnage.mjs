@@ -12,7 +12,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["noc", "sheet", "actor"],
+      classes: ["noc", "sheet", "actor", "personnage"],
       width: 850,
       height: 710,
       dragDrop: [
@@ -206,13 +206,14 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
 
   _preparePersonnageData(context) {
+    this.listQuantar(context);
+
   }
+
   _preparePersonnageItems(context) {
     this.checkArchetype();
     this.checkTheme();
-    this.listQuantar();
-    this.prepareFavItems()
-
+    this.prepareFavItems(context)
 
   }
 
@@ -274,7 +275,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
     html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this));
-    html.find('a.openCabale')[0]?.addEventListener('click', this.openCabale.bind(this));
+    html.find('a.openCabale')?.click(this.openCabale.bind(this));
 
     html.find(".addQuality").click(this.addQuality.bind(this))
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
@@ -323,7 +324,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
           callback: html => {
             console.log(this)
             let usedFaveurs = html.find(('input#faveursInUse'))[0].value;
-            this.useContactFaveurs(contact, usedFaveurs);
+            this.faveurToChat(contact, usedFaveurs);
             this.applyFaveurs(contactIndex, usedFaveurs)
 
           }
@@ -340,7 +341,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
 
   }
-  async useContactFaveurs(contact, value) {
+  async faveurToChat(contact, value) {
     let chatData = {
       user: game.user._id,
       speaker: ChatMessage.getSpeaker(),
@@ -510,14 +511,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
           icon: '<i class="fas fa-check"></i>',
           label: "quitter",
           callback: async (html) => {
-
-            await this.actor.update({
-              "system.cabale": {
-                nom: null,
-                uuid: null
-              }
-            });
-
+            await this.actor.leaveCabale()
           }
         },
         no: {
@@ -538,20 +532,20 @@ export class nocActorSheetPersonnage extends ActorSheet {
     })
 
   }
-  async listQuantar() {
+  async listQuantar(context) {
     let quantarUsage = this.actor.collections.items.toObject().filter(it => it.system.quantar);
     let unused = this.actor.system.quantars - quantarUsage.length;
     if (unused < 0) { ui.notifications.error('vous ne possédez pas assez de quantar pour vos items') }
     for (let i = 0; i < unused; i++) {
       quantarUsage.splice(quantarUsage.length, 0, { unused: true });
     }
-    await this.actor.setFlag("noc", "quantarUsage", quantarUsage)
+    context.quantarUsage = quantarUsage;
   }
 
-  async prepareFavItems() {
+  async prepareFavItems(context) {
     console.log("preparing fav")
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
-    await this.actor.setFlag("noc", "favItemList", favItems)
+    context.favItems = favItems;
   }
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;

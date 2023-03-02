@@ -196,7 +196,7 @@
                 <div class="favItems">
                     <h4>Objets Favoris</h4>
                     <ul class="item-list">
-                        {{#each actor.flags.noc.favItemList as |item index|}}
+                        {{#each favItems as |item index|}}
                         <li class="item
                             {{#if item.system.needQuantar}}
                             {{#unless item.system.quantar}}
@@ -282,11 +282,11 @@
                     engine="prosemirror" collaborate=false}}
                 </div>
                 <div class="form-group">
-                  <h2>Notes</h2>
-                  {{editor actor.system.notes target="system.notes"
-                  button=true editable=editable
-                  engine="prosemirror" collaborate=false}}
-              </div>
+                    <h2>Notes</h2>
+                    {{editor actor.system.notes target="system.notes"
+                    button=true editable=editable
+                    engine="prosemirror" collaborate=false}}
+                </div>
 
             </div>
 
@@ -423,7 +423,7 @@
                 <div class="flexrow " data-tooltip="faites glisser les
                     quantars sur les objets qui en ont besoin">
 
-                    {{#each actor.flags.noc.quantarUsage as |item index| }}
+                    {{#each quantarUsage as |item index| }}
                     <img
                         src="systems/noc/asset/default_icons/quantar.webp"
                         class="quantarQty {{#unless
