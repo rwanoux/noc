@@ -657,7 +657,8 @@ div.noc.sheet.actor {
     }
 
     &.rouage,
-    &.autre {
+    &.autre,
+    &.creature {
         .window-content {
             header {
                 background: none;
@@ -678,6 +679,9 @@ div.noc.sheet.actor {
         }
 
     }
+
+    ;
+
 
     &.autre {
         .window-content {
@@ -726,5 +730,47 @@ div.noc.sheet.actor {
             }
         }
 
+    }
+
+    &.cabale {
+        .members {
+            ul.item-list {
+                display: grid;
+                grid-gap: 1rem;
+                grid-template-columns: repeat(4, 1fr);
+
+                li {
+                    position: relative;
+                    background: url(../asset/default_icons/cabale.webp);
+                    background-position: center;
+                    background-size: cover;
+                    text-align: center;
+                    margin-top: 5px;
+                    justify-content: center;
+                    min-height: 30%;
+
+
+                    div.img {
+                        position: relative;
+                        flex: 1.5;
+                        max-width: 80%;
+                        left: 10%;
+                    }
+
+                    h4.item-name {
+                        position: absolute;
+                        transform-origin: 50% 100%;
+                        bottom: 5px;
+                        font-size: larger;
+                        background: url(../asset/images/fondmain.webp);
+                        background-size: 100% auto;
+                        box-shadow: 0px 8px 15px black;
+
+                        width: 100%
+                    }
+                }
+            }
+
+        }
     }
 }

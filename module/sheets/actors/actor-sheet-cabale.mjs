@@ -10,7 +10,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
   /** @override */
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
-      classes: ["noc", "sheet", "actor"],
+      classes: ["noc", "sheet", "actor", "cabale"],
       width: 900,
       height: 700,
       dragDrop: [
@@ -73,7 +73,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
       return false
     };
     // Activer la cabale chez cet acteur
-    dropActor.setCabale( duplicate(this.object) )
+    dropActor.setCabale(duplicate(this.object))
     console.log(dropActor)
   }
   _onDropItem(ev, data) {
@@ -90,7 +90,6 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
     const context = super.getData();
 
     // Prepare character data and items.
-    this._preparePersonnageItems(context);
     this._preparePersonnageData(context);
 
     return context;
@@ -98,12 +97,10 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
   /* -------------------------------------------- */
   _preparePersonnageData(context) {
-    context.members = game.actors.filter( act => act.type == "personnage" && act.system.cabale && act.system.cabale.uuid == this.actor.id)
+    context.members = game.actors.filter(act => act.type == "personnage" && act.system.cabale && act.system.cabale.uuid == this.actor.id)
     console.log("Found members", context.members, this.actor.id)
   }
   /* -------------------------------------------- */
-  _preparePersonnageItems(context) {
-  }
 
   /* -------------------------------------------- */
 
@@ -111,26 +108,13 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
   activateListeners(html) {
     super.activateListeners(html);
 
-    // Render the item sheet for viewing/editing prior to the editable check.
-    html.find('.item-edit').click(ev => {
-      const li = $(ev.currentTarget).parents(".item");
-      const item = this.actor.items.get(li.data("itemId"));
-      item.sheet.render(true);
-    });
-
-    // -------------------------------------------------------------
-    // Everything below here is only needed if the sheet is editable
-    if (!this.isEditable) return;
-
-    // Add Inventory Item
-    html.find('.item-create').click(this._onItemCreate.bind(this));
-    
     html.find('.display-actor').click(ev => {
       const actorId = $(ev.currentTarget).data("actor-id")
       let actor = game.actors.get(actorId);
       actor.sheet.render(true);
-    } )
-
+    })
+    let membersImages = html.find('div.img');
+    for (let el of membersImages) { this.randomRotate(el) }
     // Delete Inventory Item
     html.find('.item-delete').click(ev => {
       const li = $(ev.currentTarget).parents(".item");
@@ -139,117 +123,13 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
       li.slideUp(200, () => this.render(false));
     });
 
-    let checksReserve = html.find('.reserve input');
-    for (let ch of checksReserve) {
-      ch.addEventListener('click', this.changeReserve.bind(this))
-    }
-    let reserveSettingButtons = html.find(".reserve a.setMax");
-    for (let but of reserveSettingButtons) {
-      but.addEventListener('click', this.onClickMaxReserve.bind(this))
-    }
+  }
+  randomRotate(element) {
+    console.log(element)
+    let rdm = () => { return Math.floor(Math.random() * 10) - 5 };
+    element.style.transform = `rotate(${rdm()}deg)`;
+    element.style.top = `${rdm() * 2}%`;
+    element.style.right = `${rdm() * 2}%`
 
   }
-
-  async onClickMaxReserve(ev) {
-    let reserveName = ev.currentTarget.dataset.reserveName;
-    let reserveProp = ev.currentTarget.dataset.reserveProperty;
-
-
-    console.log(reserveName, reserveProp)
-    new Dialog({
-      title: `Ajustement de reserve`,
-      content: `
-        <h2>Ajuster la valeur max de : ${reserveName}</h2>
-        <input type="number" id="newVal">
-      `,
-      buttons: {
-        import: {
-          icon: '<i class="fas fa-check"></i>',
-          label: "Modifier",
-          callback: html => {
-            let updating = {};
-            updating[reserveProp] = html.find('#newVal')[0].value;
-            this.actor.update(updating)
-
-          }
-        },
-        no: {
-          icon: '<i class="fas fa-times"></i>',
-          label: "Cancel"
-        }
-      },
-      default: "import"
-    }, {
-
-    }).render(true);
-  }
-  changeReserve(ev) {
-    let value = parseInt(ev.currentTarget.dataset.reserveValue) + 1;
-    let property = ev.currentTarget.dataset.reserveProperty;
-    let lastProp = property.split('.')[2];
-    console.log(lastProp)
-    if ((this.actor.system.reserves[lastProp]?.value == 1 || this.actor.system.perditions[lastProp]?.value == 1) && value == 1) { value = 0 };
-    let updating = {};
-    updating[property] = value;
-    this.actor.update(updating)
-  }
-  /**
-   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  async _onItemCreate(event) {
-    event.preventDefault();
-    const header = event.currentTarget;
-    // Get the type of item to create.
-    const type = header.dataset.type;
-    // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
-    // Initialize a default name.
-    const name = `New ${type.capitalize()}`;
-    // Prepare the item object.
-    const itemData = {
-      name: name,
-      type: type,
-      data: data
-    };
-    // Remove the type from the dataset since it's in the itemData.type prop.
-    delete itemData.data["type"];
-
-    // Finally, create the item!
-    return await Item.create(itemData, { parent: this.actor });
-  }
-
-  /**
-   * Handle clickable rolls.
-   * @param {Event} event   The originating click event
-   * @private
-   */
-  _onRoll(event) {
-    event.preventDefault();
-    const element = event.currentTarget;
-    const dataset = element.dataset;
-
-    // Handle item rolls.
-    if (dataset.rollType) {
-      if (dataset.rollType == 'item') {
-        const itemId = element.closest('.item').dataset.itemId;
-        const item = this.actor.items.get(itemId);
-        if (item) return item.roll();
-      }
-    }
-
-    // Handle rolls that supply the formula directly.
-    if (dataset.roll) {
-      let label = dataset.label ? `[roll] ${dataset.label}` : '';
-      let roll = new Roll(dataset.roll, this.actor.getRollData());
-      roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        flavor: label,
-        rollMode: game.settings.get('core', 'rollMode'),
-      });
-      return roll;
-    }
-  }
-
 }
