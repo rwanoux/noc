@@ -216,6 +216,10 @@ figure#pause {
             }
 
             .nocRoll {
+                ul {
+                    list-style: none;
+                }
+
                 .dice {
                     box-shadow: 0px 0px 15px rgba(128, 128, 128, 0.427) inset;
                     text-align: center;
@@ -240,10 +244,42 @@ figure#pause {
                         color: white
                     }
                 }
+
+                .reussite,
+                .arme,
+                .echec {
+                    appearance: none;
+                    min-height: 15px;
+                    background: url(../asset/images/separation.webp) no-repeat 50% 20%;
+                    background-size: 81% 60%;
+                    padding-top: 2em;
+                    text-align: center;
+
+                }
+            }
+
+            .reussite {
+                color: green
+            }
+
+            .echec {
+                color: red
+            }
+
+            .arme {
+                color: #935e4b
+            }
+
+            .inline-roll {
+                i {
+                    display: none
+                }
             }
         }
 
     }
+
+
 
 
 }

@@ -317,6 +317,7 @@ div.noc.sheet.actor {
                         flex-direction: row;
                         grid-template-columns: repeat(4, 1fr);
                         grid-template-rows: repeat(2, 1fr);
+                        grid-gap: 1rem;
 
                         .domaine {
                             min-width: 30%;
@@ -325,6 +326,8 @@ div.noc.sheet.actor {
                             position: relative;
                             top: unset;
                             left: unset;
+                            border: unset;
+
 
                             &:hover {
                                 z-index: +100;
@@ -676,11 +679,34 @@ div.noc.sheet.actor {
                     max-width: 30%;
                 }
             }
+
+            section.sheet-body div.tab.principal .stats.rouage .domaine {
+
+                &.statut,
+                &.ame,
+                &.social {
+                    left: 50%
+                }
+            }
+
+
         }
+
+
 
     }
 
-    ;
+    &.creature {
+        div.creature-specials {
+            background: url(../asset/images/fondequipement.webp);
+
+            h3 {
+                background: none;
+            }
+
+        }
+
+    }
 
 
     &.autre {
