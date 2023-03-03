@@ -11,7 +11,7 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "autre"],
-      width: 450,
+      width: 500,
       height: 870,
       dragDrop: [
         { dragSelector: ".item-list .item", dropSelector: null },
@@ -36,6 +36,7 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
   async _onClickSurcharge() {
     let surcharge = await this.actor.getFlag("noc", "surcharge")
     if (!surcharge) {
+
       this.createEffectDial()
     } else {
       await this.actor.setFlag("noc", "surcharge", false);

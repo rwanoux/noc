@@ -11,8 +11,8 @@ export class nocActorSheetCreature extends nocActorSheetRouage {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "creature"],
-      width: 900,
-      height: 700,
+      width: 500,
+      height: 870,
       dragDrop: [
         { dragSelector: ".item-list .item", dropSelector: null },
       ],
@@ -20,5 +20,11 @@ export class nocActorSheetCreature extends nocActorSheetRouage {
       tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "principal" }]
     });
   }
-
+  activateListeners(html) {
+    super.activateListeners(html);
+    html.find('a#roll-creature-attaque').click(this.rollAttaque.bind(this))
+  }
+  async rollAttaque(ev) {
+    this.actor.creatureAttaque()
+  }
 }
