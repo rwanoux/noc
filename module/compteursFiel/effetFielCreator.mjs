@@ -42,7 +42,17 @@ export default class effetFielCreator extends FormApplication {
         let choosedEffects = {};
         allChecks.forEach(c => {
             if (c.checked) {
-                let effect = CONFIG.NOC.effetsFiel.find(ef => ef.name == c.dataset.effectName);
+                let effect
+                if (c.dataset.effectName == "custom") {
+                    effect = {
+                        name: form.querySelector("#custom-name").value,
+                        description: form.querySelector("#custom-description").value
+                    }
+                }
+                else {
+                    effect = CONFIG.NOC.effetsFiel.find(ef => ef.name == c.dataset.effectName);
+
+                }
                 let notes = c.closest('.flexrow').getElementsByClassName('gmNotes')[0].value
                 effect.gmNotes = notes;
                 effect.id = randomID();

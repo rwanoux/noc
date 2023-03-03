@@ -16,6 +16,25 @@
         </div>
     </div>
     {{/each}}
+    <h3>créer un effet personnalisé</h3>
+    <div id="custom-effect" class="flexrow">
+
+        <div>
+            <h4><input style="width:80%" type="text" id="custom-name"
+                    placeholder="nom"> <input
+                    type="checkbox"
+                    data-effect-name="custom"></h4>
+            <p> <textarea id="custom-description"
+                    cols="30" rows="6">description</textarea>
+            </p>
+        </div>
+
+        <div>
+            <h5>notes pour la Loi</h5>
+            <textarea class="gmNotes"
+                cols="30" rows="6"></textarea>
+        </div>
+    </div>
     <footer class="flexrow">
         <a class="button" id="validEffects">ajouter les effets cochés</a>
         <a class="button" id="cancelEffects">Annuler</a>
