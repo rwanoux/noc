@@ -21,7 +21,7 @@
     </header>
     <div class="tab principal ">
       <div class="energie-noire flexrow">
-        <h3 class="flexrow">
+        <h3>
           <span>{{actor.system.classeExo.label}}</span>
           <input type="number"
             name="system.classeExo.value"
@@ -39,6 +39,7 @@
           </div>
         </div>
         <h4 class="surcharge">
+          {{#ifgt actor.system.energieNoire.value 0}}
           <a id="surcharge" class=" {{#if
             actor.flags.noc.surcharge}}active{{/if}}">
 
@@ -48,7 +49,11 @@
             {{else}}
             surcharger d'énergie noire
             {{/if}}
+
           </a>
+          {{/ifgt}}
+
+
         </h4>
       </div>
       <div class="stats rouage">

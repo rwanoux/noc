@@ -19,6 +19,26 @@
 
 
     </header>
+    <div class="flexrow creature-specials">
+      <div class="attaque">
+        <h3>Attaque <a class="fa-light fa-dice-d10" id="roll-creature-attaque"></a>
+        </h3>
+        <h4>nom</h4>
+        <input type="text" name="system.attaque.label"
+          value="{{actor.system.attaque.label}}">
+        <h4>degats</h4>
+        <input type="text" name="system.attaque.degats"
+          value="{{actor.system.attaque.degats}}">
+      </div>
+      <div class="special">
+        <h3>spécial</h3>
+        {{editor actor.system.special
+        target="system.special"
+        button=true editable=editable
+        engine="prosemirror" collaborate=false}}
+
+      </div>
+    </div>
     <div class="tab principal ">
       <div class="stats rouage">
 
@@ -51,27 +71,7 @@
         </div>
         {{/each}}
       </div>
-      <div class="flexrow creature-specials">
-        <div class="attaque">
-          <h3>Attaque</h3>
-          <h4>nom</h4>
-          <input type="text" name="system.attaque.label"
-            value="{{actor.system.attaque.label}}">
-          <h4>degats</h4>
-          <input type="text" name="system.attaque.degets"
-            value="{{actor.system.attaque.degats}}">
-        </div>
-        <div class="special"></div>
-        <h3>spécial <a title="ajouter une règle special" class="fas fa-add
-            add-special"></a></h3>
-        {{#each specials as |special id|}}
-        <textarea name="system.specials.{{id}}" cols="30" rows="10">
 
-          {{special}}
-        </textarea>
-
-        {{/each}}
-      </div>
       <div class="flexrow">
         <div class="rouage-reserves">
           {{#each actor.system.reserves as |reserve reserveId|}}
