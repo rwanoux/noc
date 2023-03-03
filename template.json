@@ -263,11 +263,11 @@
         "perditions"
       ],
       "contacts": [],
-      "description": "",      
+      "description": "",
       "implication": "",
       "couverture": "",
       "signalement": "",
-      "notes":"",
+      "notes": "",
       "bloc": "",
       "cabale": {
         "nom": "",
@@ -538,7 +538,7 @@
         "label": "",
         "degats": ""
       },
-      "specials": []
+      "special": ""
     }
   },
   "Item": {
