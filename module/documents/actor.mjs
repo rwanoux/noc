@@ -262,8 +262,8 @@ export class nocActor extends Actor {
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    await this.update({ 
-      'system.contacts': contacts 
+    await this.update({
+      'system.contacts': contacts
     })
 
   }
@@ -379,6 +379,21 @@ export class nocActor extends Actor {
   async startRoll(rollData) {
     let rollDialog = await nocRollDialog.create(this, rollData)
     rollDialog.render(true)
+  }
+  async creatureAttaque() {
+    if (this.type != "creature") { return }
+    // Initialize chat data.
+    const speaker = ChatMessage.getSpeaker({ actor: this });
+    const rollMode = game.settings.get('core', 'rollMode');
+    // a simple chat message for now
+    ChatMessage.create({
+      speaker: speaker,
+      rollMode: rollMode,
+      content: `
+      <h3>${this.name} attaque !  ${this.system.attaque.label}</h3>
+      <p>[[${this.system.attaque.degats}]] dégats</p>
+      `
+    });
   }
 
 }
