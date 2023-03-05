@@ -566,31 +566,31 @@
       "affinite": {
         "vie": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "erudition": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "technique": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "action": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "statut": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "ame": {
           "active": false,
-          "value": 1
+          "value": 3
         },
         "social": {
           "active": false,
-          "value": 1
+          "value": 3
         }
       }
     },
