@@ -30,6 +30,7 @@
 
         <h4>Talent Majeur (niv 2)</h4>
         <select name="system.talentMajeur">
+          <option value="null">Aucun</option>
           {{#each systemTemplate.Actor.templates.talents.talents as |domaine
           domaineId|}}
           <optgroup label="{{domaineId}}">

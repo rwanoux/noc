@@ -98,21 +98,22 @@ export class nocItem extends Item {
         })
       }
     }
-    console.log(updatedChanges)
+
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
   async _onUpdateTalentMajeur(update, effectId) {
-
     let key = "system.talents." + this.system.talentMajeur + ".niveau"
     let updatedChanges = [{
       key: key,
       mode: 2,
       value: 2
-    }]
+    }];
+    if (this.system.talentMajeur == "null") { updatedChanges.value = 0 }
 
 
-    console.log(updatedChanges)
+
+
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
