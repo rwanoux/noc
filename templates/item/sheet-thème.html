@@ -18,11 +18,10 @@
           <h5>{{domaineId}}</h5>
           {{#each domaine as |talent talentId|}}
           <div class="flexrow">
-            <input value="true"
+            <a data-value="0"
               class="talent-check" type="checkbox"
-              data-domaine="{{domaineId}}" data-talent="{{talentId}}"
-              {{checked talent.checked}}>
-
+              data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
+                class="fa-solid fa-square"></i></a>
             {{talent.label}}
           </div>
           {{/each}}

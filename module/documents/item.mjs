@@ -39,7 +39,9 @@ export class nocItem extends Item {
   _onUpdate(update, options, userId) {
     super._onUpdate(update, options, userId)
 
-    if (this.type == "archetype" || this.type == "thème") { this.prepareEffect(update) }
+    if ((this.type == "archetype") ||  (this.type =="thème")) { 
+      this.prepareEffect(update) 
+    }
   }
   async prepareEffect(update) {
     if (!update.system) { return }
@@ -143,9 +145,9 @@ export class nocItem extends Item {
     let key = "system.talents."
     for (let talent of this.system.talents) {
       updatedChanges.push({
-        key: key + talent + ".niveau",
+        key: key + talent.talent + ".niveau",
         mode: 2,
-        value: 1
+        value: talent.value
       })
 
     }

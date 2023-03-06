@@ -23,7 +23,6 @@ export class nocItemSheetTheme extends ItemSheet {
     // Retrieve base data structure.
     const context = super.getData();
     context.systemTemplate = game.system.template;
-    console.log(context)
     return context;
   }
 
@@ -33,39 +32,57 @@ export class nocItemSheetTheme extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    let checks = html.find('input[type="checkbox"].talent-check');
+    let checks = html.find('a.talent-check');
     for (let check of checks) {
       let talent = check.dataset.domaine + "." + check.dataset.talent;
-      if (this.item.system.talents.indexOf(talent) > -1) { check.checked = true }
-      check.addEventListener('change', this.updateTalents.bind(this))
+      let talObject = this.item.system.talents.find(t => t.talent == talent)
+      if (talObject) {
+        check.dataset.value = talObject.value;
+        switch (talObject.value) {
+          case -1:
+            check.innerHTML = `<i class="fa-regular fa-square-minus"></i>`;
+            check.dataset.tooltip = "-1"
+            break;
+          case 0:
+            check.innerHTML = `<i class="fa-solid fa-square"></i>`;
+            break;
+          case 1:
+            check.innerHTML = `<i class="fa-regular fa-square-plus"></i>`;
+            check.dataset.tooltip = "+1"
+
+            break;
+
+
+        }
+
+      }
     }
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
-    this.form.ondrop = ev => this._onDrop(ev);
-    // Roll handlers, click handlers, etc. would go here.
+    checks.click(this.cycleTalent.bind(this));
+
+
   }
 
   checkingTalentsMineurs(check) {
     console.log(this.item.system)
   }
-  async updateTalents(ev) {
-    let check = ev.currentTarget;
-    let talent = ev.currentTarget.dataset.domaine + "." + ev.currentTarget.dataset.talent;
-    let talentList = this.item.system.talents;
-    if (check.checked) {
-      talentList.push(talent)
-    } else {
-      if (talentList.indexOf(talent) >= 0) {
-        talentList.splice(talentList.indexOf(talent), 1)
-      }
+  async cycleTalent(ev) {
+    let val = ev.currentTarget.dataset.value;
+    val++;
+    if (val > 1) { val = -1 };
+    ev.currentTarget.dataset.value = val;
+    let tal = ev.currentTarget.dataset.domaine + "." + ev.currentTarget.dataset.talent;
+    let talArray = this.item.system.talents;
 
-    }
+    let obj = talArray.find(t => t.talent == tal)
+    obj ? obj.value = val : talArray.push({ talent: tal, value: val })
+    console.log(talArray);
     await this.item.update({
-      system: {
-        talents: talentList
-      }
-    })
-
+      _id:this.item.id,
+      "system.talents":talArray});
+    this.render(true);
 
   }
+
 }

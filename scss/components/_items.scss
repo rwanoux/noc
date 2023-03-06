@@ -83,9 +83,17 @@ div.noc.item.sheet {
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
 
+      h5 {
+        font-size: large;
+      }
+
       .domaine-container {
         box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.307);
-        padding: 0
+        padding: 0;
+
+        div.flexrow {
+          border-bottom: 1px solid;
+        }
       }
 
     }
