@@ -41,19 +41,16 @@ export class nocActor extends Actor {
     console.log("preupdate..........", ...args)
   }
   async initRouage(data) {
-    let system = this.system
-    for (let perd in system.perditions) {
-      system.perditions[perd].max = 5;
-      system.perditions[perd].value = 0;
+    
+    for (let perd in this.system.perditions) {
+      this.system.perditions[perd].max = 5;
+      this.system.perditions[perd].value = 0;
     }
-    system.reserves.vecu.max = 5;
-    system.reserves.vecu.value = 1;
-    system.reserves.espoir.max = 5;
-    system.reserves.espoir.value = 1;
-    await this.update({
-      _id: this.id,
-      system: system
-    });
+    this.system.reserves.vecu.max = 5;
+    this.system.reserves.vecu.value = 1;
+    this.system.reserves.espoir.max = 5;
+    this.system.reserves.espoir.value = 1;
+   
 
 
   }
