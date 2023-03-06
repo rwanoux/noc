@@ -1,10 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
 
-  <nav class="sheet-tabs tabs" data-group="primary">
-    {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="details">Détails</a>
-  </nav>
+
 
   {{!-- Sheet Body --}}
   <section class="sheet-body">
@@ -12,12 +8,6 @@
       placeholder="Name"/>
     <img class="item-img" src="{{document.img}}" data-edit="img"
       title="{{document.name}}" />
-
-
-    <div class="tab description" data-group="primary" data-tab="description">
-      <p>{{{document.system.description}}}</p>
-    </div>
-
 
     <div class="tab details" data-group="primary" data-tab="details">
       <div class="form-group">
@@ -28,7 +18,7 @@
       </div>
 
       <div class="form-group">
-    </div>
+      </div>
 
-  </section>
-</form>
+    </section>
+  </form>

@@ -6,13 +6,7 @@
       seront pas répercutés sur l'acteur. Ceci est du à une limitation de
       Foundry</h2>
     {{/if}}
-    <input class="item-name" name="name" type="text" value="{{document.name}}"
-      placeholder="Name"/>
 
-    <div class="tab description" data-group="primary" data-tab="description">
-      <p>{{{document.system.description}}}</p>
-
-    </div>
 
 
     <div class="flexrow">
@@ -90,24 +84,26 @@
         </div>
       </div>
       <div class="talents-mineurs">
-        <h4>talents mineurs (niv 1)</h4>
+
+        <h4>talents</h4>
         <div class="talents-mineurs-grid">
-          {{#each item.system.talentsMineurs as |domaine domaineId|}}
+          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+          domaineId|}}
           <div class="flexcol domaine-container">
             <h5>{{domaineId}}</h5>
             {{#each domaine as |talent talentId|}}
             <div class="flexrow">
-              <input value="true"
-                class="talent-mineur" type="checkbox"
-                data-domaine="{{domaineId}}" data-talent="{{talentId}}"
-                {{checked talent.checked}}>
-
+              <a data-value="0"
+                class="talent-check" type="checkbox"
+                data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
+                  class="fa-solid fa-square"></i></a>
               {{talent.label}}
             </div>
             {{/each}}
           </div>
           {{/each}}
         </div>
+
       </div>
     </div>
 
