@@ -36,12 +36,13 @@ export class nocItem extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  _onUpdate(update, options, userId) {
-    super._onUpdate(update, options, userId)
+  async _preUpdate(update, options, userId) {
 
-    if ((this.type == "archetype") ||  (this.type =="thème")) { 
-      this.prepareEffect(update) 
+    if ((this.type == "archetype") || (this.type == "thème")) {
+      await this.prepareEffect(update)
     }
+    super._preUpdate(update, options, userId)
+
   }
   async prepareEffect(update) {
     if (!update.system) { return }
@@ -120,19 +121,17 @@ export class nocItem extends Item {
 
   }
   async _onUpdatetalentsMineurs(update, effectId) {
-    console.log(this.system.talentsMineurs)
     let updatedChanges = []
     for (let dom in this.system.talentsMineurs) {
       let key = "system.talents." + dom;
       for (let tal in this.system.talentsMineurs[dom]) {
-        if (this.system.talentsMineurs[dom][tal].checked) {
 
-          updatedChanges.push({
-            key: key + "." + tal + ".niveau",
-            mode: 2,
-            value: 1
-          })
-        }
+        updatedChanges.push({
+          key: key + "." + tal + ".niveau",
+          mode: 2,
+          value: this.system.talentsMineurs[dom][tal]
+        })
+
       }
 
     }

@@ -76,7 +76,7 @@ export class nocItemSheetTheme extends ItemSheet {
     let obj = talArray.find(t => t.talent == tal)
     obj ? obj.value = val : talArray.push({ talent: tal, value: val })
     console.log(talArray);
-    await this.item.update({
+    await this.item._preUpdate({
       _id: this.item.id,
       "system.talents": talArray
     });
