@@ -45,12 +45,36 @@ export class nocItemSheetArchetype extends ItemSheet {
   activateListeners(html) {
     super.activateListeners(html);
 
-    let checks = html.find('input[type="checkbox"].talent-mineur');
+    let checks = html.find('a.talent-check');
     for (let check of checks) {
-      check.addEventListener('change', this.updateTalentsMineurs.bind(this))
+      let talObject = this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent]
+      check.dataset.value = talObject.niveau;
+      console.log(talObject)
+      switch (talObject.niveau) {
+        case -1:
+          check.innerHTML = `<i class="fa-regular fa-square-minus"></i>`;
+          check.dataset.tooltip = "-1"
+          break;
+        case 0:
+          check.innerHTML = `<i class="fa-solid fa-square"></i>`;
+          break;
+        case 1:
+          check.innerHTML = `<i class="fa-regular fa-square-plus"></i>`;
+          check.dataset.tooltip = "+1"
+
+          break;
+
+
+
+
+      }
     }
+
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
+
+    checks.click(this.cycleTalent.bind(this));
+
     this.form.ondrop = ev => this._onDrop(ev);
     let checksTheme = html.find('[data-action="addTheme"]');
     if (checksTheme) {
@@ -62,7 +86,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     let deleteThemes = html.find('[data-action="delete-theme"]');
     if (deleteThemes) {
       for (let but of deleteThemes) {
-        
+
         but.addEventListener("click", this.deleteThemes.bind(this))
       }
     }
@@ -75,13 +99,33 @@ export class nocItemSheetArchetype extends ItemSheet {
     let chooseThemes = html.find('[data-action="choose-theme"]');
     if (chooseThemes) {
       for (let ck of chooseThemes) {
-        
+
         ck.addEventListener("click", this.chooseThemes.bind(this))
       }
     }
 
     // Roll handlers, click handlers, etc. would go here.
   }
+  async cycleTalent(ev) {
+    let val = ev.currentTarget.dataset.value;
+    val++;
+    if (val > 1) { val = -1 };
+    ev.currentTarget.dataset.value = val;
+
+    let talentsMineurs = this.item.system.talentsMineurs
+    let dom = ev.currentTarget.dataset.domaine
+    let tal = ev.currentTarget.dataset.talent
+
+    talentsMineurs[dom][tal].niveau = val
+
+
+    await this.item.update([{
+      "system.talentsMineurs": talentsMineurs
+    }]);
+    this.render(true);
+
+  }
+
 
   checkingTalentsMineurs(check) {
     //console.log("CHECL", this.item.system.talentsMineurs, check, check.dataset)
@@ -133,7 +177,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
     await this.item.update({ 'system.talentsMineurs': domain });
     console.log(domain)
-    
+
   }
   async _onDrop(event) {
     let data;
