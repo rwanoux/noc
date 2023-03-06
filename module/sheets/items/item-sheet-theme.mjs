@@ -64,9 +64,7 @@ export class nocItemSheetTheme extends ItemSheet {
 
   }
 
-  checkingTalentsMineurs(check) {
-    console.log(this.item.system)
-  }
+
   async cycleTalent(ev) {
     let val = ev.currentTarget.dataset.value;
     val++;
@@ -79,8 +77,9 @@ export class nocItemSheetTheme extends ItemSheet {
     obj ? obj.value = val : talArray.push({ talent: tal, value: val })
     console.log(talArray);
     await this.item.update({
-      _id:this.item.id,
-      "system.talents":talArray});
+      _id: this.item.id,
+      "system.talents": talArray
+    });
     this.render(true);
 
   }
