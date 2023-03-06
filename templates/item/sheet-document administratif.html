@@ -28,42 +28,25 @@
       </div>
 
       <div class="form-group">
-        <h4>nécessite un quantar</h4>
-        <input name="system.quantar" type="checkbox" data-dtype="Boolean"
-          {{checked document.system.quantar}}>
-      </div>
-      <div class="form-group">
-        <h4>limitée ?</h4>
-        <input name="system.limite" value="{{document.system.limite}}"
-          type="number">
-      </div>
-      <div class="form-group">
-        <h4>utilisations</h4>
-        <input name="system.utilisations"
-          value="{{document.system.utilisations}}"
-          type="number">
-      </div>
-      <div class="form-group">
-        <h4>portée</h4>
-        <input name="system.portee" value="{{document.system.portee}}"
-          type="number">
-      </div>
-      <div class="form-group">
-        <h4>valeur</h4>
-        <input name="system.valeur" value="{{document.system.valeur}}"
-          type="number">
-      </div>
-      <div class="form-group">
-        <h4>dégats</h4>
-        <p>test</p>
-      </div>
-      <div class="form-group">
-        <h4>effet spécial</h4>
-        {{editor document.system.effetSpecial target="system.effetSpecial"
+        <h4>effets de bureau</h4>
+        {{editor document.system.effetsDeBureau
+        target="system.effetsDeBureau"
         button=true editable=editable
         engine="prosemirror" collaborate=false}}
       </div>
-    </div>
+      <div class="form-group">
+        <h4>bénéficiaires</h4>
+        <input name="system.beneficiaires"
+          value="{{document.system.beneficiaires}}"
+          type="text">
+      </div>
+      <div class="form-group">
+        <h4>rang necessaire</h4>
+        <input name="system.utilisations"
+          value="{{document.system.rangNecessaire}}"
+          type="number">
+      </div>
 
-  </section>
-</form>
+
+    </section>
+  </form>

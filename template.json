@@ -650,7 +650,11 @@
     "document administratif": {
       "templates": [
         "base"
-      ]
+      ],
+      "tempsObtention": 3,
+      "beneficiaires": "",
+      "effetsDeBureau": "",
+      "rangNecessaire": 1
     }
   }
 }
