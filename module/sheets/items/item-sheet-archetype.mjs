@@ -49,8 +49,8 @@ export class nocItemSheetArchetype extends ItemSheet {
     for (let check of checks) {
       let talObject = this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent]
       check.dataset.value = talObject.niveau;
-      console.log(talObject)
-      switch (talObject.niveau) {
+      console.log("TALENT", talObject)
+      switch (Number(talObject.niveau)) {
         case -1:
           check.innerHTML = `<i class="fa-regular fa-square-minus"></i>`;
           check.dataset.tooltip = "-1"
@@ -61,12 +61,7 @@ export class nocItemSheetArchetype extends ItemSheet {
         case 1:
           check.innerHTML = `<i class="fa-regular fa-square-plus"></i>`;
           check.dataset.tooltip = "+1"
-
           break;
-
-
-
-
       }
     }
 
@@ -118,10 +113,10 @@ export class nocItemSheetArchetype extends ItemSheet {
 
     talentsMineurs[dom][tal].niveau = val
 
-
-    await this.item.update([{
-      "system.talentsMineurs": talentsMineurs
-    }]);
+    console.log("Talent update", talentsMineurs)
+    await this.item.update({
+      "system.talentsMineurs": duplicate(talentsMineurs)
+    });
     this.render(true);
 
   }

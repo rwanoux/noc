@@ -49,10 +49,7 @@ export class nocItemSheetTheme extends ItemSheet {
           case 1:
             check.innerHTML = `<i class="fa-regular fa-square-plus"></i>`;
             check.dataset.tooltip = "+1"
-
             break;
-
-
         }
 
       }
@@ -60,8 +57,6 @@ export class nocItemSheetTheme extends ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
     checks.click(this.cycleTalent.bind(this));
-
-
   }
 
 
@@ -75,11 +70,11 @@ export class nocItemSheetTheme extends ItemSheet {
 
     let obj = talArray.find(t => t.talent == tal)
     obj ? obj.value = val : talArray.push({ talent: tal, value: val })
+    
     console.log(talArray);
-    await this.item._preUpdate({
-      _id: this.item.id,
-      "system.talents": talArray
-    });
+
+    await this.item.update({"system.talents": talArray });
+
     this.render(true);
 
   }

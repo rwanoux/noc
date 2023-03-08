@@ -13,6 +13,9 @@
 
 
       <div class="img-container">
+        <input class="item-name" name="name" type="text" value="{{document.name}}"
+        placeholder="Name"/>
+  
         <img class="item-img" src="{{document.img}}" data-edit="img"
           title="{{document.name}}" />
         <h4>description</h4>
@@ -87,17 +90,14 @@
 
         <h4>talents</h4>
         <div class="talents-mineurs-grid">
-          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
-          domaineId|}}
+          {{#each systemTemplate.Actor.templates.talents.talents as |domaine domaineId|}}
           <div class="flexcol domaine-container">
             <h5>{{domaineId}}</h5>
             {{#each domaine as |talent talentId|}}
             <div class="flexrow">
               <a data-value="0"
-                class="talent-check" type="checkbox"
-                data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
-                  class="fa-solid fa-square"></i></a>
-              {{talent.label}}
+                class="talent-check" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
+                  class="fa-solid fa-square"></i></a>{{talent.label}}
             </div>
             {{/each}}
           </div>
