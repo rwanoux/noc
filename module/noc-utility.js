@@ -289,7 +289,6 @@ export class nocUtility {
     game.socket.emit("system.fvtt-warhero", { msg: "msg_gm_chat_message", data: chatGM });
   }
 
-
   /* -------------------------------------------- */
   static async searchItem(dataItem) {
     let item

@@ -1,5 +1,7 @@
 
 import { nocItem } from "../../documents/item.mjs";
+import { nocItemSheetTheme } from "./item-sheet-theme.mjs";
+
 export class nocItemSheetArchetype extends ItemSheet {
 
   static get defaultOptions() {
@@ -35,7 +37,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     if (!this.item.system.talentsMineurs["erudition"]) {
       this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.templates.talents.talents)
     }
-    console.log("ITEM", this.item.system)
+    this.options.editable = (context.document.parent) ? false : true
     return context;
   }
 
@@ -49,7 +51,7 @@ export class nocItemSheetArchetype extends ItemSheet {
     for (let check of checks) {
       let talObject = this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent]
       check.dataset.value = talObject.niveau;
-      console.log("TALENT", talObject)
+      //console.log("TALENT", talObject)
       switch (Number(talObject.niveau)) {
         case -1:
           check.innerHTML = `<i class="fa-regular fa-square-minus"></i>`;
@@ -113,7 +115,7 @@ export class nocItemSheetArchetype extends ItemSheet {
 
     talentsMineurs[dom][tal].niveau = val
 
-    console.log("Talent update", talentsMineurs)
+    //console.log("Talent update", talentsMineurs)
     await this.item.update({
       "system.talentsMineurs": duplicate(talentsMineurs)
     });
@@ -144,10 +146,13 @@ export class nocItemSheetArchetype extends ItemSheet {
     this.render(true)
   }
   async openThemes(ev) {
-    let id = ev.currentTarget.dataset.themeId;
-    let item = await Item.get(id);
-    if (!item) return ui.notifications.error(`l'item "thème" recherché n'existe pas !`)
-    return item.sheet.render(true)
+    let themes = await this.item.getFlag("noc", "linkedThemes");
+    let targetThemeId = ev.target.dataset.themeId;
+    let targetTheme = themes.find(th => th.id == targetThemeId);
+    let theme = await Item.create(targetTheme.itemData, { temporary: true });
+    theme.system.origin = "embeddedItem";
+    let themeForm = await new nocItemSheetTheme(theme).render(true);
+    return themeForm;
   }
   async deleteThemes(ev) {
     let themes = await this.item.getFlag("noc", "linkedThemes");
@@ -198,11 +203,12 @@ export class nocItemSheetArchetype extends ItemSheet {
       {
         id: item._id,
         name: item.name,
-        talents: item.system.talents,
+        itemData: duplicate(item),
+        //talents: item.system.talents,
         choosed: false
       }
     );
-    await this.item.setFlag("noc", "linkedThemes", linkedThemes);
+    await this.item.setFlag("noc", "linkedThemes", duplicate(linkedThemes));
     this.render(true)
   }
 }

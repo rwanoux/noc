@@ -36,7 +36,7 @@ export class nocItem extends Item {
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
   }
-  async _preUpdate(update, options, userId) {
+  async _onUpdate(update, options, userId) {
 
     if ((this.type == "archetype") || (this.type == "thème")) {
       await this.prepareEffect(update)
@@ -102,6 +102,7 @@ export class nocItem extends Item {
       }
     }
 
+    console.log(">>>>>>", this.system.affinite, updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -114,9 +115,7 @@ export class nocItem extends Item {
     }];
     if (this.system.talentMajeur == "null") { updatedChanges.value = 0 }
 
-
-
-
+    console.log(">>>>>>", updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -129,13 +128,13 @@ export class nocItem extends Item {
         updatedChanges.push({
           key: key + "." + tal + ".niveau",
           mode: 2,
-          value: this.system.talentsMineurs[dom][tal]
+          value: this.system.talentsMineurs[dom][tal].niveau
         })
 
       }
 
     }
-
+    console.log(">>>>>>", updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -150,9 +149,7 @@ export class nocItem extends Item {
       })
 
     }
-
-
-    console.log(updatedChanges, effectId)
+    console.log(">>>>>>", updatedChanges, effectId)
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }

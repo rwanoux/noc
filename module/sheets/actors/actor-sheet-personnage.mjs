@@ -118,10 +118,15 @@ export class nocActorSheetPersonnage extends ActorSheet {
     console.log(item);
     let linkedThemes = await item.getFlag("noc", "linkedThemes");
     if (linkedThemes) {
-      let choosedThemeId = linkedThemes.find(th => th.choosed).id;
-      let themeItem = await Item.get(choosedThemeId);
-      if (themeItem) {
-        this.actor.createEmbeddedDocuments("Item", [themeItem])
+      let theme = linkedThemes.find(th => th.choosed)
+      if (theme) {
+        let choosedThemeId = theme.id;
+        let themeItem = await Item.get(choosedThemeId);
+        if (themeItem) {
+          this.actor.createEmbeddedDocuments("Item", [themeItem])
+        }
+      } else {
+        ui.notifications.warn("Thème non trouvé")
       }
     }
 
@@ -543,10 +548,11 @@ export class nocActorSheetPersonnage extends ActorSheet {
   }
 
   async prepareFavItems(context) {
-    console.log("preparing fav")
+    //console.log("preparing fav")
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
     context.favItems = favItems;
   }
+  
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
     let contactList = this.actor.system.contacts;
