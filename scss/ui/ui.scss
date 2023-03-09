@@ -124,14 +124,8 @@ figure#pause {
         height: 80px
     }
 
-    #ui-bottom {
+    #ui-left {
         @import 'apps/compteur';
-        max-height: var(--hotbar-height);
-        display: flex;
-        flex-direction: row;
-
-
-
     }
 
     #sidebar {

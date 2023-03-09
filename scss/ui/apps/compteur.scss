@@ -10,19 +10,16 @@
 }
 
 form#compteurs {
-
+    margin-left: 14px;
 
     pointer-events: all;
     position: relative;
     transition: 0.3s;
-    max-height: 15vw;
 
     overflow: visible;
-    top: -12vw;
 
     &.hide {
-        top: 2vw;
-        max-height: unset;
+        left: -22vw;
 
         a#gouttePlus,
         a#goutteMoins {
@@ -33,84 +30,73 @@ form#compteurs {
 
     div#fiel {
         position: relative;
-        width: 21vw;
-        height: 15vw;
+        max-width: var(--players-width);
+        min-height: var(--players-width);
         // animation: up 1s 1;
         background: url('../asset/images/fielcompteur2.webp');
         background-size: 100% 100%;
 
         .goutteControls {
             position: relative;
-
-            top: -15px;
+            justify-content: space-between;
+            top: 15px;
 
             a {
                 position: relative;
                 background: url('../asset/images/fondmain.webp');
-                background-size: 300% 100%;
-                padding: 10px;
+                background-size: 100% 200%;
                 cursor: pointer;
                 text-align: center;
-                border-radius: 20%;
-                max-width: 32px;
+                border-radius: 10%;
+                max-width: 20px;
 
-                top: 20px;
+                padding: 4px;
 
                 i {
                     pointer-events: none;
+                    font-size: 12px;
+
                 }
 
-                &:hover,
-                &#toggle {
-                    display: flex
-                }
 
-                &#toggle {
-                    top: -10px
-                }
             }
 
-            justify-content: space-around;
 
 
         }
 
         span#menace {
             position: absolute;
-            bottom: 22%;
-            left: 45%;
+            bottom: 20%;
+            left: 43%;
             font-size: 42px;
             font-family: 'bold';
             text-shadow: 0px 0px 15px white, 0px 0px 5px red;
         }
 
         #aiguille {
+            width: var(--players-width);
+            height: var(--players-width);
+            top: 0;
             pointer-events: none;
             position: absolute;
-            width: 100%;
-            height: 100%;
-            top: -0%;
-
-            img {
-                transition: all cubic-bezier(0.37, -0.43, 0.76, 1.73) .6s;
-                border: none;
-            }
-
+            background: url(../asset/images/aiguille.webp);
+            background-position: center;
+            background-size: cover
         }
     }
 
     div#effets {
+        max-width: var(--players-width);
+
         font-size: smaller;
-        margin-top: 5vh;
         width: max-content;
-        max-height: 10vw;
-        background: url('../asset/images/fondequipement.webp');
         background-size: 100% 200%;
         overflow-y: scroll;
-        line-height: 1.5em;
-        padding: 5px;
 
         .effetName {
+            background: url('../asset/images/fondequipement.webp');
+
             border: 1px black solid;
             width: fit-content;
             padding: 1px 5px;

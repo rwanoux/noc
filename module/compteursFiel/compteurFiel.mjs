@@ -12,7 +12,6 @@ export default class CompteurFiel extends FormApplication {
         options.submitOnChange = true;
         options.closeOnSubmit = false;
         options.editable = true;
-        options.width = 100;
         options.id = "CompteurFiel";
         options.popOut = false;
         return options;
@@ -31,7 +30,7 @@ export default class CompteurFiel extends FormApplication {
 
     async activateListeners(html) {
         let rotate = (this.object.gouttes) * (-10.285);
-        let aiguilleEl = html.find('#aiguille img')[0];
+        let aiguilleEl = html.find('#aiguille')[0];
         aiguilleEl.style.transform = `rotate(${rotate}deg)`;
 
         if (game.user.isGM) {
@@ -43,10 +42,6 @@ export default class CompteurFiel extends FormApplication {
             }
 
         }
-
-
-        html.find('#toggle')[0].addEventListener('click', this.toggleExpand.bind(this))
-
         super.activateListeners(html);
 
 
@@ -73,16 +68,8 @@ export default class CompteurFiel extends FormApplication {
         Hooks.callAll("updatedFiel", this, fiel)
 
     }
-    toggleExpand(ev) {
-        let icone = ev.currentTarget.getElementsByClassName('fa-solid')[0];
-        icone.classList.toggle('fa-chevrons-up');
-        icone.classList.toggle('fa-chevrons-down')
-
-        let compteurEl = ev.currentTarget.closest('form#compteurs');
-        compteurEl.classList.toggle('hide')
-    }
     _injectHTML(html) {
-        $("#ui-bottom").append(html);
+        html.insertBefore('#players');
         this._element = html;
         html.hide().fadeIn(200);
     }
