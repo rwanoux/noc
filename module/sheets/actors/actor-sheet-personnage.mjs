@@ -123,8 +123,10 @@ export class nocActorSheetPersonnage extends ActorSheet {
         let choosedThemeId = theme.id;
         let themeItem = await Item.get(choosedThemeId);
         if (themeItem) {
-          this.actor.createEmbeddedDocuments("Item", [themeItem])
-        }
+         await  this.actor.createEmbeddedDocuments("Item", [themeItem])
+        }else {
+        await  this.actor.createEmbeddedDocuments("Item", [theme.itemData])
+      }
       } else {
         ui.notifications.warn("Thème non trouvé")
       }
