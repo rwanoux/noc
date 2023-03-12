@@ -41,7 +41,10 @@ export function registerHelpers() {
         if (a <= b) { return options.fn(this); }
         return options.inverse(this);
     });
-
+    Handlebars.registerHelper('upperFirst', function (text) {
+      if (typeof text !== 'string') return text
+      return text.charAt(0).toUpperCase() + text.slice(1)
+    })
 
     Handlebars.registerHelper('isNull', function (val) {
         return val == null;

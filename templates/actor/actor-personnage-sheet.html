@@ -445,7 +445,7 @@
                 {{#ifnotequal groupIndex "thème"}}
 
                 <ul class="item-list">
-                    <h3>{{groupIndex}}
+                    <h3>{{localize (concat "ITEM.Type" (upperFirst groupIndex))}}
                         <a class="fas fa-add item-create" data-tooltip="créer un
                             item
                             :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>

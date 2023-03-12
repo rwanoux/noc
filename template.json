@@ -110,7 +110,7 @@
           },
           "statut": {
             "contact": {
-              "label": "contact",
+              "label": "contacts",
               "checked": false,
               "niveau": 0
             },
