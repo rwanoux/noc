@@ -117,166 +117,250 @@ figure#pause {
 
 }
 
-#interface {
-
-    #logo {
-        width: 80px;
-        height: 80px
-    }
-
-    #ui-left {
-        @import 'apps/compteur';
-    }
-
-    #sidebar {
-        background: url('../asset/images/fondidentiteconfidentiel.webp');
-        background-position: center;
-        color: black;
-        background-size: 300%;
-
-        &.collapsed {
-            background-size: auto 200%;
-
-        }
-
-        h1,
-        h2,
-        h3,
-        h4 {
-            border: none
-        }
-
-        nav#sidebar-tabs {
-            box-shadow: 0px 0px 15px black inset;
-
-            a[data-tab],
-            a.collapse {
-                i {
-                    color: black;
-
-                }
-
-                border-radius: 0px;
-                margin: 0;
-                padding: 0;
-                border: none;
-
-                &.active,
-                &:hover {
-                    box-shadow: 0px 0px 22px black;
-                    text-shadow: 0px 0px 10px white;
-
-                    i {
-                        color: white;
-
-                    }
-                }
-            }
-        }
-
-        #scenes {
-            h3 {
-                background: unset;
-            }
-        }
-
-        .chat-message {
-            box-shadow: 0px 0px 15px black;
-            border: none;
-            background: url('../asset/images/fondNotes.webp');
-            background-position: 100% auto;
-            background-size: cover;
-            padding-left: 30px;
-
-            .chat-message-header {
-                justify-content: space-between;
-                background: url(../asset/images/fond_titre1.webp);
-                background-size: 116% 200%;
-                background-position: center;
-
-                img {
-                    flex: 0.2;
-                    max-height: 4em;
-                    max-width: 4em;
-                    border: none;
-                    transform: rotate(-5deg);
-                    filter: drop-shadow(-5px 6px 4px #704e05a3);
-                }
-
-                h4 {
-                    text-align: center;
-                    padding-top: 5%
-                }
-            }
-
-            .nocRoll {
-                ul {
-                    list-style: none;
-                }
-
-                .dice {
-                    box-shadow: 0px 0px 15px rgba(128, 128, 128, 0.427) inset;
-                    text-align: center;
-                    margin: 3px;
-                    padding: 6px;
-                    word-break: keep-all;
-                    flex: 0.05;
-
-
-                    &.success {
-                        box-shadow: 0px 0px 15px rgb(64, 131, 64) inset;
-
-                        &.relance {
-                            box-shadow: 0px 0px 15px rgb(64, 131, 64) inset,
-                                0px 0px 5px rgb(196, 187, 0);
-
-                        }
-                    }
-
-                    &.fiel {
-                        box-shadow: 0px 0px 15px black inset;
-                        color: white
-                    }
-                }
-
-                .reussite,
-                .arme,
-                .echec {
-                    appearance: none;
-                    min-height: 15px;
-                    background: url(../asset/images/separation.webp) no-repeat 50% 20%;
-                    background-size: 81% 60%;
-                    padding-top: 2em;
-                    text-align: center;
-
-                }
-            }
-
-            .reussite {
-                color: green
-            }
-
-            .echec {
-                color: red
-            }
-
-            .arme {
-                color: #935e4b
-            }
-
-            .inline-roll {
-                i {
-                    display: none
-                }
-            }
-        }
-
-    }
-
-
-
-
+div.window-app.sidebar-popout {
+    background: url('../asset/images/fondidentiteconfidentiel.webp');
+    background-position: center;
+    color: black;
+    background-size: 300%;
 }
+
+
+#logo {
+    width: 80px;
+    height: 80px
+}
+
+#ui-left {
+    @import 'apps/compteur';
+
+    nav#controls {
+
+        .scene-control,
+        .control-tool {
+            transition: 0.2s;
+            margin-left: 3px;
+            margin-bottom: 3px;
+            box-shadow: 0px 0px 15px gray,
+                1px -3px 30px black inset,
+                1px 3px 18px white inset;
+            border-radius: 50%;
+            vertical-align: middle;
+            max-height: 2rem;
+            font-size: medium;
+            background: url('../asset/images/background.webp') center 100%;
+            color: black;
+            text-shadow: 0px 0px 3px white;
+            transform: scale(0.8);
+
+            &.active,
+            &:hover {
+                transform: scale(1);
+                box-shadow: 0px 0px 15px gray,
+                    1px -3px 10px black inset,
+                    1px 3px 18px white inset;
+            }
+
+        }
+    }
+}
+
+#sidebar,
+div.sidebar-popout {
+    background: url('../asset/images/fondidentiteconfidentiel.webp');
+    background-position: center;
+    color: black;
+    background-size: 300%;
+
+    &.collapsed {
+        background-size: auto 200%;
+
+    }
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        border: none
+    }
+
+
+    box-shadow: 0px 0px 15px black inset;
+
+    a[data-tab],
+    a.collapse {
+        i {
+            color: black;
+
+        }
+
+        border-radius: 0px;
+        margin: 0;
+        padding: 0;
+        border: none;
+
+        &.active,
+        &:hover {
+            box-shadow: 0px 0px 22px black;
+            text-shadow: 0px 0px 10px white;
+
+            i {
+                color: white;
+
+            }
+        }
+    }
+}
+
+#scenes {
+    h3 {
+        background: unset;
+    }
+}
+
+#compendium {
+    .compendium-footer {
+        color: rgb(63, 63, 63);
+    }
+
+    .status-icons {
+        text-shadow: none;
+        color: black;
+        top: 3px;
+    }
+}
+
+#combat,
+#combat-popout {
+    * {
+        background: none;
+    }
+
+    header.combat-tracker-header {
+        vertical-align: middle;
+        align-items: center;
+
+        a.combat-button {
+            color: black;
+            box-shadow: 0px 0px 15px gray, 1px -3px 10px black inset;
+            border-radius: 50%;
+            vertical-align: middle;
+            max-height: 2rem;
+        }
+
+    }
+
+    ol#combat-tracker {
+        li {
+
+
+            span,
+            a {
+                color: black;
+                text-shadow: 0px 0px 3px white;
+
+                &.active {
+                    color: white;
+                    text-shadow: 0px 0px 3px black;
+                }
+            }
+
+
+        }
+    }
+}
+
+.chat-message {
+    box-shadow: 0px 0px 15px black;
+    border: none;
+    background: url('../asset/images/fondNotes.webp');
+    background-position: 100% auto;
+    background-size: cover;
+    padding-left: 30px;
+
+    .chat-message-header {
+        justify-content: space-between;
+        background: url(../asset/images/fond_titre1.webp);
+        background-size: 116% 200%;
+        background-position: center;
+
+        img {
+            flex: 0.2;
+            max-height: 4em;
+            max-width: 4em;
+            border: none;
+            transform: rotate(-5deg);
+            filter: drop-shadow(-5px 6px 4px #704e05a3);
+        }
+
+        h4 {
+            text-align: center;
+            padding-top: 5%
+        }
+    }
+
+
+    .nocRoll {
+        ul {
+            list-style: none;
+        }
+
+        .dice {
+            box-shadow: 0px 0px 15px rgba(128, 128, 128, 0.427) inset;
+            text-align: center;
+            margin: 3px;
+            padding: 6px;
+            word-break: keep-all;
+            flex: 0.05;
+
+
+            &.success {
+                box-shadow: 0px 0px 15px rgb(64, 131, 64) inset;
+
+                &.relance {
+                    box-shadow: 0px 0px 15px rgb(64, 131, 64) inset,
+                        0px 0px 5px rgb(196, 187, 0);
+
+                }
+            }
+
+            &.fiel {
+                box-shadow: 0px 0px 15px black inset;
+                color: white
+            }
+        }
+
+        .reussite,
+        .arme,
+        .echec {
+            appearance: none;
+            min-height: 15px;
+            background: url(../asset/images/separation.webp) no-repeat 50% 20%;
+            background-size: 81% 60%;
+            padding-top: 2em;
+            text-align: center;
+
+        }
+    }
+
+    .reussite {
+        color: green
+    }
+
+    .echec {
+        color: red
+    }
+
+    .arme {
+        color: #935e4b
+    }
+
+    .inline-roll {
+        i {
+            display: none
+        }
+    }
+}
+
 
 .app .prosemirror {
     menu {
