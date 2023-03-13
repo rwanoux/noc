@@ -9,40 +9,39 @@
     <img class="item-img" src="{{document.img}}" data-edit="img"
       title="{{document.name}}" />
 
-    <div class="tab details" data-group="primary" data-tab="details">
-      <div class="form-group">
-        <h4>description</h4>
-        {{editor document.system.description target="system.description"
-        button=true editable=editable
-        engine="prosemirror" collaborate=false}}
-      </div>
+    <div class="form-group">
+      <h4>description</h4>
+      {{editor document.system.description target="system.description"
+      button=true editable=editable
+      engine="prosemirror" collaborate=false}}
+    </div>
 
-      <div class="form-group">
-        <h4>effets de bureau</h4>
-        {{editor document.system.effetsDeBureau
-        target="system.effetsDeBureau"
-        button=true editable=editable
-        engine="prosemirror" collaborate=false}}
-      </div>
-      <div class="form-group">
-        <h4>bénéficiaires</h4>
-        <input name="system.beneficiaires"
-          value="{{document.system.beneficiaires}}"
-          type="text">
-      </div>
-      <div class="form-group">
-        <h4>rang necessaire</h4>
-        <input name="system.utilisations"
-          value="{{document.system.rangNecessaire}}"
-          type="number">
-      </div>
-      <div class="form-group">
-        <h4>delai d'obtension</h4>
-        <input name="system.utilisations"
-          value="{{document.system.rangNecessaire}}"
-          type="number"><span> heures</span>
-      </div>
+    <div class="form-group">
+      <h4>effets de bureau</h4>
+      {{editor document.system.effetsDeBureau
+      target="system.effetsDeBureau"
+      button=true editable=editable
+      engine="prosemirror" collaborate=false}}
+    </div>
+    <div class="form-group">
+      <h4>bénéficiaires</h4>
+      <input name="system.beneficiaires"
+        value="{{document.system.beneficiaires}}"
+        type="text">
+    </div>
+    <div class="form-group">
+      <h4>rang necessaire</h4>
+      <input name="system.utilisations"
+        value="{{document.system.rangNecessaire}}"
+        type="number">
+    </div>
+    <div class="form-group">
+      <h4>delai d'obtension</h4>
+      <input name="system.utilisations"
+        value="{{document.system.rangNecessaire}}"
+        type="number"><span> heures</span>
+    </div>
 
 
-    </section>
-  </form>
+  </section>
+</form>
