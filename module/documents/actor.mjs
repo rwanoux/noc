@@ -259,9 +259,7 @@ export class nocActor extends Actor {
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    await this.update({
-      'system.contacts': contacts
-    })
+    this.system.contacts=contacts;
 
   }
   resetContactFaveurs() {
