@@ -118,7 +118,7 @@ figure#pause {
 }
 
 div.window-app.sidebar-popout {
-    background: url('../asset/images/fondidentiteconfidentiel.webp');
+    background: url(../asset/images/fondidentiteconfidentiel.webp);
     background-position: center;
     color: black;
     background-size: 300%;
@@ -272,8 +272,8 @@ div.sidebar-popout {
 .chat-message {
     box-shadow: 0px 0px 15px black;
     border: none;
-    background: url('../asset/images/fondNotes.webp');
-    background-position: 100% auto;
+    background: url(../asset/images/fondnotes.webp);
+    background-position: center;
     background-size: cover;
     padding-left: 30px;
 
