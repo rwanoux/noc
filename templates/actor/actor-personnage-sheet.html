@@ -113,7 +113,7 @@
                 <img class="profile-img" src="{{actor.img}}" data-edit="img"
                     title="{{actor.name}}" height="100" width="100"/>
 
-                <div class="form-group">
+                <div class="form-group character-name">
                     <div>nom :</div>
                     <input type="text" name="name" value="{{actor.name}}">
                 </div>
@@ -445,7 +445,8 @@
                 {{#ifnotequal groupIndex "thème"}}
 
                 <ul class="item-list">
-                    <h3>{{localize (concat "ITEM.Type" (upperFirst groupIndex))}}
+                    <h3>{{localize (concat "ITEM.Type" (upperFirst
+                        groupIndex))}}
                         <a class="fas fa-add item-create" data-tooltip="créer un
                             item
                             :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
