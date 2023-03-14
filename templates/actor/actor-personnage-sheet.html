@@ -182,7 +182,7 @@
                     {{/if}}
                 </div>
                 <h3>personnalisation <a class="fas fa-add addPersonnalisation"
-                        data-type="qualite"></a>
+                        data-tooltip="ajouter un bonus de pesonnalisation"></a>
                 </h3>
                 {{#each personnalisations as |perso id|}}
                 <div class="perso flexrow">
@@ -195,9 +195,9 @@
 
                 {{/each}}
 
-                <div class="form-group flexrow">
-                    <div>cabale :</div>
-                    <div>{{actor.system.cabale.nom}}</div>
+                <div class="form-group">
+                    <h3>cabale</h3>
+                    <h4>{{actor.system.cabale.nom}}</h4>
                     {{#if actor.system.cabale.nom}}
                     <div>
                         <a class="fas fa-edit openCabale"
