@@ -1,0 +1,36 @@
+<form class="quality-default">
+  {{log this}}
+  <h2>choisissez votre personnalisation pour {{actor.name}}</h2>
+  <div class="form-group">
+    <label>nom de la personnalisation</label>
+    <input type="text" id="effectLabel">
+
+  </div>
+  <div class="bonus">
+    <h3>Ajouter un bonus <a class="fas fa-add addLine"></a></h3>
+    <div class="form-group bonus-group ">
+      <label>talent lié</label>
+      <select class="key">
+        {{#each talents as |domaine
+        domaineId|}}
+        <optgroup label="{{domaineId}}">
+          {{#each domaine as |talent talentId|}}
+
+          <option value="system.talents.{{domaineId}}.{{talentId}}">
+            {{talent.label}}
+          </option>
+          {{/each}}
+        </optgroup>
+        {{/each}}
+      </select>
+
+      <div class="form-group">
+        <label>bonus</label>
+        <input type="number" class="val">
+      </div>
+
+    </div>
+
+
+
+  </form>

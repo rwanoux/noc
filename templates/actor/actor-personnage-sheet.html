@@ -151,8 +151,8 @@
                 </div>
 
                 <div class="form-group">
-                    <div>qualité : <i class="fas fa-add addQuality"
-                            data-type="qualite"></i>
+                    <div>qualité : <a class="fas fa-add addQuality"
+                            data-type="qualite"></a>
                     </div>
                     {{#if actor.system.qualites.label}}
                     <div>{{actor.system.qualites.label}}
@@ -167,8 +167,8 @@
                 </div>
 
                 <div class="form-group">
-                    <div>défaut : <i class="fas fa-add addQuality"
-                            data-type="defaut"></i>
+                    <div>défaut : <a class="fas fa-add addQuality"
+                            data-type="defaut"></a>
                     </div>
                     {{#if actor.system.defauts.label}}
                     <div>{{actor.system.defauts.label}}
@@ -181,6 +181,19 @@
                     </div>
                     {{/if}}
                 </div>
+                <h3>personnalisation <a class="fas fa-add addPersonnalisation"
+                        data-type="qualite"></a>
+                </h3>
+                {{#each personnalisations as |perso id|}}
+                <div class="perso flexrow">
+                    <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
+                            class="fas fa-trash deletePersonnalisation"></a></h4>
+                    {{#each perso.flags.noc.personnalisation as |bonus label|}}
+                    <div class="bonus">{{label}}:{{bonus}} /</div>
+                    {{/each}}
+                </div>
+
+                {{/each}}
 
                 <div class="form-group flexrow">
                     <div>cabale :</div>
@@ -277,7 +290,8 @@
                 </div>
                 <div class="form-group">
                     <h2>Couverture</h2>
-                    {{editor actor.system.couverture target="system.couverture"
+                    {{editor actor.system.couverture
+                    target="system.couverture"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
                 </div>
@@ -297,10 +311,12 @@
                 <div class="contacts">
                     <h2>Contacts</h2>
 
-                    {{#ifequal actor.system.talents.statut.contact.niveau -1}}
+                    {{#ifequal actor.system.talents.statut.contact.niveau
+                    -1}}
                     <h4>Ce personnage a un ennemi.</h4>
                     {{/ifequal}}
-                    {{#ifequal actor.system.talents.statut.contact.niveau 0}}
+                    {{#ifequal actor.system.talents.statut.contact.niveau
+                    0}}
                     <h4>Ce personnage ne possède aucun contacts</h4>
                     {{/ifequal}}
                     {{#ifgt actor.system.contacts.length 0}}
@@ -316,14 +332,17 @@
                             </div>
                             {{/repeat}}
                         </div>
-                        <a class="fa-solid fa-arrows-rotate" id="resetFaveurs"
+                        <a class="fa-solid fa-arrows-rotate"
+                            id="resetFaveurs"
                             data-tooltip="ré-initialiser les faveurs des
                             contacts"></a>
                     </div>
                     <!-- pour chaque contact-->
 
-                    {{#each actor.system.contacts as |contact contactIndex|}}
-                    <div class="contact" data-contact-index="{{contactIndex}}"
+                    {{#each actor.system.contacts as |contact
+                    contactIndex|}}
+                    <div class="contact"
+                        data-contact-index="{{contactIndex}}"
                         dataset-contact-id="{{contact.id}}">
                         {{#if contact.nom }}
                         <h3 class="flexrow">
@@ -356,7 +375,8 @@
                         <h3 data-tooltip="faites glisser un personnage ou un
                             rouage pour affecter ce contact"
                             class="empty-contact"
-                            data-contact-index="{{contactIndex}}">Vide : faites
+                            data-contact-index="{{contactIndex}}">Vide :
+                            faites
                             glisser un contact</h3>
                         {{/if}}
                     </div>
@@ -367,7 +387,8 @@
                     <h2>Cabale</h2>
                     {{#unless actor.system.cabale.uuid}}
                     <h4>Aucune Cabale</h4>
-                    <p>faites glisser un acteur de type "cabale" pour affecter
+                    <p>faites glisser un acteur de type "cabale" pour
+                        affecter
                         ce
                         personnage à une cabale
                     </p>
@@ -447,9 +468,11 @@
                 <ul class="item-list">
                     <h3>{{localize (concat "ITEM.Type" (upperFirst
                         groupIndex))}}
-                        <a class="fas fa-add item-create" data-tooltip="créer un
+                        <a class="fas fa-add item-create"
+                            data-tooltip="créer un
                             item
-                            :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
+                            :{{groupIndex}}"
+                            data-item-type="{{groupIndex}}"></a>
                     </h3>
                     {{#each group as |item index|}}
                     <li class="flexrow item flexcol ability

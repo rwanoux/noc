@@ -147,7 +147,8 @@ Hooks.once('init', async function () {
   nocUtility.init()
   //  objetDieu.init();
 
-  CONFIG.debug.hooks = false
+  CONFIG.debug.hooks = false;
+
 
 });
 

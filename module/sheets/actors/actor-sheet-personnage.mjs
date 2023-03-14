@@ -5,6 +5,7 @@
  * @extends {ActorSheet}
  */
 import NOCContact from "../../ContactClass.js";
+import { nocPersonnalisation } from "../../dialogs/noc-personnalisation.js";
 import { Quality } from "../../qualite_default.mjs";
 
 export class nocActorSheetPersonnage extends ActorSheet {
@@ -123,10 +124,10 @@ export class nocActorSheetPersonnage extends ActorSheet {
         let choosedThemeId = theme.id;
         let themeItem = await Item.get(choosedThemeId);
         if (themeItem) {
-         await  this.actor.createEmbeddedDocuments("Item", [themeItem])
-        }else {
-        await  this.actor.createEmbeddedDocuments("Item", [theme.itemData])
-      }
+          await this.actor.createEmbeddedDocuments("Item", [themeItem])
+        } else {
+          await this.actor.createEmbeddedDocuments("Item", [theme.itemData])
+        }
       } else {
         ui.notifications.warn("Thème non trouvé")
       }
@@ -201,6 +202,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
   getData() {
 
     const context = super.getData();
+    context.personnalisations = this.actor.effects.filter(ef => ef.flags.noc?.personnalisation)
 
     // Prepare character data and items.
     this._preparePersonnageItems(context);
@@ -289,9 +291,30 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
     html.find(".unassignContact").click(this.unassignContact.bind(this))
     html.find(".faveurContact").click(this._onClickFaveur.bind(this))
-    html.find('#resetFaveurs').click(this._onResetFaveurs.bind(this))
+    html.find('#resetFaveurs').click(this._onResetFaveurs.bind(this));
+
+
+    html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
+    html.find('.deletePersonnalisation').click(this.deletePersonnalisation.bind(this));
+
+
 
   }
+
+  async _onClickPerso(ev) {
+    let talents = game.system.template.Actor.templates.talents.talents;
+    let actor = this.actor;
+    let dial = await nocPersonnalisation.create(actor, talents);
+    dial.render(true)
+  };
+  async deletePersonnalisation(ev) {
+    let effectId = ev.currentTarget.dataset.effectId;
+    let effect = await this.actor.effects.get(effectId);
+    effect.delete()
+  }
+
+
+
   _onResetFaveurs(ev) {
     new Dialog({
       title: `ré-initialiser les faveurs`,
@@ -554,7 +577,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
     context.favItems = favItems;
   }
-  
+
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
     let contactList = this.actor.system.contacts;
