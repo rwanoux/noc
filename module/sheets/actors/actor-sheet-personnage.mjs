@@ -258,7 +258,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
       await item.setFlag("noc", "favItem", !isFav);
       console.log(this.actor.items)
     })
-    html.find('li.item .item-name').click(ev => {
+    html.find('li.item .img').click(ev => {
       ev.currentTarget.closest('li.item').classList.toggle('expanded');
       ev.stopPropagation()
     })

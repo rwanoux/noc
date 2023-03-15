@@ -62,7 +62,7 @@
 
       </div>
       <div class="stats">
-
+        <div class="fond"></div>
         <!-- DOMAINES ET TALENTS -->
         {{#each actor.system.domaines as |domaine domaineId|}}
         <div class="domaine {{domaineId}}">
@@ -148,19 +148,18 @@
       </div>
     </div>
     <div class="tab members flexrow" data-group="primary" data-tab="members">
-
       <ul class="item-list">
         {{#each members as |member key|}}
-          <li class="item" data-actor-id="{{member._id}}">
+        <li class="item" data-actor-id="{{member._id}}">
           <div class="item-summary flexrow">
             <div class="img">
               <img src="{{member.img}}" alt="image de {{member.name}}">
             </div>
             <h4 class="item-name">
-                <span><a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a></span>
+              <span><a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a></span>
             </h4>
           </div>
-          </li>
+        </li>
         {{/each}}
       </ul>
 
