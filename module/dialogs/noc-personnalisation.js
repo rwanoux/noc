@@ -21,7 +21,7 @@ export class nocPersonnalisation extends Dialog {
             buttons: {
                 roll: {
                     icon: '<i class="fas fa-check"></i>',
-                    label: "Lancer !",
+                    label: "Valider",
                     callback: () => { this.createEffect(html) }
                 },
                 cancel: {
@@ -49,14 +49,14 @@ export class nocPersonnalisation extends Dialog {
             console.log(line);
             let key = line.querySelector('.key').value;
             let val = line.querySelector('.val').value;
-            let talent = key.split(".")[key.split(".").length-1];
+            let talent = key.split(".")[key.split(".").length - 1];
             console.log(talent)
             changes.push({
                 key: key + ".niveau",
                 value: val,
                 mode: 2
             })
-            flag[talent]=val
+            flag[talent] = val
 
         }
 
