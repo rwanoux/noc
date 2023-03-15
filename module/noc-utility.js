@@ -219,7 +219,9 @@ export class nocUtility {
     // Dés additionnels
     rollData.nbAddDice = 0
     rollData.nbFiel = 0
+    let maxDiceValue = -1 // Used by Initiative
     for (let result of myRoll.terms[0].results) {
+      maxDiceValue = Math.max(maxDiceValue, result.result)
       if (result.result == 10) {
         rollData.nbAddDice++
       }
@@ -232,6 +234,17 @@ export class nocUtility {
     rollData.nbSuccess = rollData.roll.total
     
     await this.computeFinalResult(rollData)
+
+    // Init management
+    if (rollData.combatData) {
+      // Init management
+      if(rollData.combatData.isInit) {
+        let initValue = rollData.niveauFinal + (maxDiceValue/10)
+        actor.setFlag("world","noc-last-initiative", initValue)
+        let combat = game.combats.get( rollData.combatData.combatId )
+        combat.setInitiative( rollData.combatData.combatantId, initValue)
+      }
+    }
   }
 
   /* -------------------------------------------- */

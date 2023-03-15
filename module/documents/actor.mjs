@@ -335,14 +335,28 @@ export class nocActor extends Actor {
       nbDesDomaine: 0,
     }
   }
+  /* -------------------------------------------- */
+  clearInitiative() {
+    actor.setFlag("world","noc-last-initiative", -1)
+  }
+  /* -------------------------------------------- */
+  getInitiativeScore(combatId, combatantId ) {
+    let init = this.getFlag("world", "noc-last-initiative") || -1
+    if (init == -1) {
+      ui.notifications.info("Vous n'avez pas enregistré d'Initiative pour ce combat, jet d'Instinct à faire.")
+      this.rollTalent("action", "instinct", {isInit: true, combatId: combatId,combatantId: combatantId})
+    } 
+    return init
+  }
 
   /* -------------------------------------------- */
-  rollTalent(domaineId, talentId) {
+  rollTalent(domaineId, talentId, combatData = undefined) {
     let rollData = this.buildGenericRollData()
 
     // Specific stuff
     rollData.title = "Talent"
     rollData.mode = "talent"
+    rollData.combatData = combatData
     rollData.domaine = duplicate(this.system.domaines[domaineId])
     rollData.talent = duplicate(this.system.talents[domaineId][talentId])
     this.startRoll(rollData)
