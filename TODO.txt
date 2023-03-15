@@ -8,10 +8,5 @@ gérer les états (nouvelle classe Trait), en fonctions des niveaux des perditio
     blessures folies traques noirceur etc...
 
 
-nom de perso trop grands+comme fiche perso fond rouage
 
 afficher/gerer les points de progression
-
-css de la sidebar => background-size mmettre à 500%
-css des stats/domaine => virer le scale :hover / domaine sociale sort de la fiche
-                    => mettre un fond non transparent aux ressources

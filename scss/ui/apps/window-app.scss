@@ -1,5 +1,8 @@
 div.app.window-app:not(.sidebar-popout) {
 
+    input {
+        user-select: all;
+    }
 
     header {
         background: url('../asset/images/fond_titre3.webp');

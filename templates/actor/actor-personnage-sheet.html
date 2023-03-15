@@ -14,250 +14,267 @@
     {{!-- Sheet Body --}}
     <section class="sheet-body">
 
-        {{!-- Owned Features Tab --}}
-        <div class="tab principal flexrow" data-group="primary"
+        <div class="tab principal" data-group="primary"
             data-tab="principal">
-            <div class="stats">
 
-                <!-- DOMAINES ET TALENTS -->
-                {{#each actor.system.domaines as |domaine domaineId|}}
-                <div class="domaine {{domaineId}}">
-                    <h3 class="flexrow">
-                        <input type="number"
-                            name="system.domaines.{{domaineId}}.value"
-                            value="{{domaine.value}}"/>
-                        <span>{{domaine.label}}</span>
-                    </h3>
-                    {{#each ../actor.system.talents as |groupTalent
-                    talentGroupName|}}
-                    {{#ifequal talentGroupName domaineId}}
-                    {{#each groupTalent as |talent talentId|}}
-                    <div class="flexrow">
-                        <input
-                            name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
-                            value="{{talent.niveau}}" type="number">
-                        <a class="rollable roll-talent"
-                            data-talent-id="{{talentId}}"
-                            data-domaine-id="{{domaineId}}">
-                            <label for="{{talent.label}}">{{talent.label}}</label>
-                        </a>
+            <div class="flexrow">
+                <div class="stats">
+
+                    <!-- DOMAINES ET TALENTS -->
+                    {{#each actor.system.domaines as |domaine domaineId|}}
+                    <div class="domaine {{domaineId}}">
+                        <h3 class="flexrow">
+                            <input type="number"
+                                name="system.domaines.{{domaineId}}.value"
+                                value="{{domaine.value}}"/>
+                            <span>{{domaine.label}}</span>
+                        </h3>
+                        {{#each ../actor.system.talents as |groupTalent
+                        talentGroupName|}}
+                        {{#ifequal talentGroupName domaineId}}
+                        {{#each groupTalent as |talent talentId|}}
+                        <div class="flexrow">
+                            <input
+                                name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
+                                value="{{talent.niveau}}" type="number">
+                            <a class="rollable roll-talent"
+                                data-talent-id="{{talentId}}"
+                                data-domaine-id="{{domaineId}}">
+                                <label for="{{talent.label}}">{{talent.label}}</label>
+                            </a>
+                        </div>
+                        {{/each}}
+                        {{/ifequal}}
+                        {{/each}}
                     </div>
                     {{/each}}
-                    {{/ifequal}}
+                    <!-- RESERVES-->
+                    {{#each actor.system.reserves as |reserve reserveId|}}
+                    <div class="reserve {{reserveId}}">
+                        <h4>{{reserve.label}}
+                            {{#ifequal reserveId "vecu"}}
+
+                            <a class="setMax"
+                                data-tooltip="ajuster le max"
+                                data-reserve-name="{{reserve.label}}"
+                                data-reserve-property="system.reserves.{{reserveId}}.max">
+                                <i class="fas fa-cog"></i>
+                            </a>
+                            {{/ifequal}}
+                        </h4>
+
+                        {{#repeat 10}}
+                        <input type="checkbox"
+                            data-reserve-value="{{@index}}"
+                            data-reserve-property="system.reserves.{{reserveId}}.value"
+                            class="
+                            {{#ifequal @index 4}}step{{/ifequal}}
+                            {{#ifequal @index 7}}step{{/ifequal}}
+                            {{#ifequal @index 9}}step{{/ifequal}}
+                            {{#ifgteq @index reserve.max
+                            }}unavailable{{/ifgteq}}
+                            "
+                            {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
+                        {{/repeat}}
+
+                    </div>
                     {{/each}}
-                </div>
-                {{/each}}
-                <!-- RESERVES-->
-                {{#each actor.system.reserves as |reserve reserveId|}}
-                <div class="reserve {{reserveId}}">
-                    <h4>{{reserve.label}}
-                        {{#ifequal reserveId "vecu"}}
+                    <!-- PERDITIONS-->
+                    {{#each actor.system.perditions as |perdition perditionId|}}
+                    <div class="reserve perdition {{perditionId}}">
+                        <h4>{{perdition.label}}
+                            <a class="setMax"
+                                data-tooltip="ajuster le max"
+                                data-reserve-name="{{perdition.label}}"
+                                data-reserve-property="system.perditions.{{perditionId}}.max">
+                                <i class="fas fa-cog"></i>
+                            </a>
+                        </h4>
 
-                        <a class="setMax"
-                            data-tooltip="ajuster le max"
-                            data-reserve-name="{{reserve.label}}"
-                            data-reserve-property="system.reserves.{{reserveId}}.max">
-                            <i class="fas fa-cog"></i>
-                        </a>
-                        {{/ifequal}}
-                    </h4>
+                        {{#repeat 10}}
+                        <input type="checkbox"
+                            data-reserve-value="{{@index}}"
+                            data-reserve-property="system.perditions.{{perditionId}}.value"
+                            class="
+                            {{#ifequal @index 4}}step{{/ifequal}}
+                            {{#ifequal @index 7}}step{{/ifequal}}
+                            {{#ifequal @index 9}}step{{/ifequal}}
+                            {{#ifgteq @index perdition.max
+                            }}unavailable{{/ifgteq}}
+                            "
+                            {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
+                        {{/repeat}}
 
-                    {{#repeat 10}}
-                    <input type="checkbox"
-                        data-reserve-value="{{@index}}"
-                        data-reserve-property="system.reserves.{{reserveId}}.value"
-                        class="
-                        {{#ifequal @index 4}}step{{/ifequal}}
-                        {{#ifequal @index 7}}step{{/ifequal}}
-                        {{#ifequal @index 9}}step{{/ifequal}}
-                        {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
-                        "
-                        {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
-                    {{/repeat}}
-
-                </div>
-                {{/each}}
-                <!-- PERDITIONS-->
-                {{#each actor.system.perditions as |perdition perditionId|}}
-                <div class="reserve perdition {{perditionId}}">
-                    <h4>{{perdition.label}}
-                        <a class="setMax"
-                            data-tooltip="ajuster le max"
-                            data-reserve-name="{{perdition.label}}"
-                            data-reserve-property="system.perditions.{{perditionId}}.max">
-                            <i class="fas fa-cog"></i>
-                        </a>
-                    </h4>
-
-                    {{#repeat 10}}
-                    <input type="checkbox"
-                        data-reserve-value="{{@index}}"
-                        data-reserve-property="system.perditions.{{perditionId}}.value"
-                        class="
-                        {{#ifequal @index 4}}step{{/ifequal}}
-                        {{#ifequal @index 7}}step{{/ifequal}}
-                        {{#ifequal @index 9}}step{{/ifequal}}
-                        {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
-                        "
-                        {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
-                    {{/repeat}}
+                    </div>
+                    {{/each}}
 
                 </div>
-                {{/each}}
+
+                <!-- INFOS -->
+
+                <div class="resume flexcol">
+                    <img class="profile-img" src="{{actor.img}}" data-edit="img"
+                        title="{{actor.name}}" height="100" width="100"/>
+
+                    <div class="form-group character-name">
+                        <div>nom :</div>
+                        <input type="text" name="name" value="{{actor.name}}">
+                    </div>
+                    <div class="form-group">
+                        <div>archetype :</div>
+
+                        <div class="archetype-resume flexrow">
+                            {{#each actor.itemTypes.archetype as |archetype|}}
+                            <div class="item-name">{{archetype.name}}</div>
+                            <div class="item-control">
+                                <a class="fas fa-trash item-delete"
+                                    data-item-id="{{archetype.id}}"></a>
+                                <a class="fas fa-edit item-open"
+                                    data-item-id="{{archetype.id}}"></a>
+                            </div>
+
+                            {{/each}}
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div>thème :</div>
+                        <div class="theme-resume flexrow">
+                            {{#each actor.itemTypes.thème as |thème|}}
+                            <div class="item-name">
+                                {{thème.name}}
+                            </div>
+                            <div class="item-control">
+                                <a class="fas fa-trash item-delete"
+                                    data-item-id="{{thème.id}}"></a>
+                                <a class="fas fa-edit item-open"
+                                    data-item-id="{{thème.id}}"></a>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div>qualité : <a class="fas fa-add addQuality"
+                                data-type="qualite"></a>
+                        </div>
+                        {{#if actor.system.qualites.label}}
+                        <div>{{actor.system.qualites.label}}
+                            /{{actor.system.qualites.targetTalent}} +1
+                            <a class="fas fa-trash deleteQuality"
+                                data-tooltip="supprimer la
+                                qualité"
+                                data-type="qualite">
+                            </a>
+                        </div>
+                        {{/if}}
+                    </div>
+
+                    <div class="form-group">
+                        <div>défaut : <a class="fas fa-add addQuality"
+                                data-type="defaut"></a>
+                        </div>
+                        {{#if actor.system.defauts.label}}
+                        <div>{{actor.system.defauts.label}}
+                            /{{actor.system.defauts.targetTalent}} -1
+                            <a class="fas fa-trash deleteQuality"
+                                data-tooltip="supprimer le
+                                défaut"
+                                data-type="defaut">
+                            </a>
+                        </div>
+                        {{/if}}
+                    </div>
+                    <h3>personnalisation <a class="fas fa-add
+                            addPersonnalisation"
+                            data-tooltip="ajouter un bonus de pesonnalisation"></a>
+                    </h3>
+                    {{#each personnalisations as |perso id|}}
+                    <div class="perso flexrow">
+                        <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
+                                class="fas fa-trash deletePersonnalisation"></a></h4>
+                        {{#each perso.flags.noc.personnalisation as |bonus
+                        label|}}
+                        <div class="bonus">{{label}}:{{bonus}} /</div>
+                        {{/each}}
+                    </div>
+
+                    {{/each}}
+
+                    <div class="form-group">
+                        <h3>cabale</h3>
+                        <h4>{{actor.system.cabale.nom}}</h4>
+                        {{#if actor.system.cabale.nom}}
+                        <div>
+                            <a class="fas fa-edit openCabale"
+                                data-cabale-id="{{actor.system.cabale.uuid}}"></a>
+                        </div>
+                        {{/if}}
+
+                    </div>
+                    <div class="form-group">
+                        <h3>progression <input type="number"
+                                value="{{actor.system.progression}}"
+                                name="system.progression"></h3>
+
+
+                    </div>
+
+
+
+                </div>
 
             </div>
+            {{!-- favItems --}}
 
-            <!-- INFOS -->
+            <div class="favItems">
+                <h3>Objets Favoris</h3>
+                <ul class="item-list grid grid-6col">
+                    {{#each favItems as |item index|}}
+                    <li class="item
+                        {{#if item.system.needQuantar}}
+                        {{#unless item.system.quantar}}
+                        unavalaible
+                        {{/unless}}
+                        {{/if}}"
+                        data-item-id="{{item._id}}">
+                        <div class="item-summary flexrow">
+                            <div class="img">
+                                <img src="{{item.img}}" alt="image de
+                                    {{item.name}}">
+                            </div>
+                            <h4 class="item-name">
+                                <span><a class="roll-item"
+                                        data-item-id="{{item._id}}">{{item.name}}</a></span>
+                            </h4>
+                            <div class="item-control">
 
-            <div class="resume flexcol">
-                <img class="profile-img" src="{{actor.img}}" data-edit="img"
-                    title="{{actor.name}}" height="100" width="100"/>
+                                <a class="fas fa-edit item-open"
+                                    data-item-id="{{item._id}}"></a>
+                                <a class="fas fa-trash item-delete"
+                                    data-item-id="{{item._id}}"></a>
+                                <a class="fas fa-star item-fav
+                                    {{#if item.flags.noc.favItem}}
+                                    itemIsFav
+                                    {{/if}}
+                                    "
+                                    data-item-id="{{item._id}}"></a>
+                            </div>
 
-                <div class="form-group character-name">
-                    <div>nom :</div>
-                    <input type="text" name="name" value="{{actor.name}}">
-                </div>
-                <div class="form-group">
-                    <div>archetype :</div>
+                        </div>
+                        <div class="item-details">
+                            <p>{{{item.system.description}}}</p>
+                            {{#ifequal item.type "outil"}}
 
-                    <div class="archetype-resume flexrow">
-                        {{#each actor.itemTypes.archetype as |archetype|}}
-                        <div class="item-name">{{archetype.name}}</div>
-                        <div class="item-control">
-                            <a class="fas fa-trash item-delete"
-                                data-item-id="{{archetype.id}}"></a>
-                            <a class="fas fa-edit item-open"
-                                data-item-id="{{archetype.id}}"></a>
+                            {{/ifequal}}
+
                         </div>
 
-                        {{/each}}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div>thème :</div>
-                    <div class="theme-resume flexrow">
-                        {{#each actor.itemTypes.thème as |thème|}}
-                        <div class="item-name">
-                            {{thème.name}}
-                        </div>
-                        <div class="item-control">
-                            <a class="fas fa-trash item-delete"
-                                data-item-id="{{thème.id}}"></a>
-                            <a class="fas fa-edit item-open"
-                                data-item-id="{{thème.id}}"></a>
-                        </div>
-                        {{/each}}
-                    </div>
-                </div>
 
-                <div class="form-group">
-                    <div>qualité : <a class="fas fa-add addQuality"
-                            data-type="qualite"></a>
-                    </div>
-                    {{#if actor.system.qualites.label}}
-                    <div>{{actor.system.qualites.label}}
-                        /{{actor.system.qualites.targetTalent}} +1
-                        <a class="fas fa-trash deleteQuality"
-                            data-tooltip="supprimer la
-                            qualité"
-                            data-type="qualite">
-                        </a>
-                    </div>
-                    {{/if}}
-                </div>
 
-                <div class="form-group">
-                    <div>défaut : <a class="fas fa-add addQuality"
-                            data-type="defaut"></a>
-                    </div>
-                    {{#if actor.system.defauts.label}}
-                    <div>{{actor.system.defauts.label}}
-                        /{{actor.system.defauts.targetTalent}} -1
-                        <a class="fas fa-trash deleteQuality"
-                            data-tooltip="supprimer le
-                            défaut"
-                            data-type="defaut">
-                        </a>
-                    </div>
-                    {{/if}}
-                </div>
-                <h3>personnalisation <a class="fas fa-add addPersonnalisation"
-                        data-tooltip="ajouter un bonus de pesonnalisation"></a>
-                </h3>
-                {{#each personnalisations as |perso id|}}
-                <div class="perso flexrow">
-                    <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
-                            class="fas fa-trash deletePersonnalisation"></a></h4>
-                    {{#each perso.flags.noc.personnalisation as |bonus label|}}
-                    <div class="bonus">{{label}}:{{bonus}} /</div>
+                    </li>
                     {{/each}}
-                </div>
 
-                {{/each}}
-
-                <div class="form-group">
-                    <h3>cabale</h3>
-                    <h4>{{actor.system.cabale.nom}}</h4>
-                    {{#if actor.system.cabale.nom}}
-                    <div>
-                        <a class="fas fa-edit openCabale"
-                            data-cabale-id="{{actor.system.cabale.uuid}}"></a>
-                    </div>
-                    {{/if}}
-
-                </div>
-                <div class="favItems">
-                    <h4>Objets Favoris</h4>
-                    <ul class="item-list">
-                        {{#each favItems as |item index|}}
-                        <li class="item
-                            {{#if item.system.needQuantar}}
-                            {{#unless item.system.quantar}}
-                            unavalaible
-                            {{/unless}}
-                            {{/if}}"
-                            data-item-id="{{item._id}}">
-                            <div class="item-summary flexrow">
-                                <div class="img">
-                                    <img src="{{item.img}}" alt="image de
-                                        {{item.name}}">
-                                </div>
-                                <h4 class="item-name">
-                                    <span><a class="roll-item"
-                                            data-item-id="{{item._id}}">{{item.name}}</a></span>
-                                </h4>
-                                <div class="item-control">
-
-                                    <a class="fas fa-edit item-open"
-                                        data-item-id="{{item._id}}"></a>
-                                    <a class="fas fa-trash item-delete"
-                                        data-item-id="{{item._id}}"></a>
-                                    <a class="fas fa-star item-fav
-                                        {{#if item.flags.noc.favItem}}
-                                        itemIsFav
-                                        {{/if}}
-                                        "
-                                        data-item-id="{{item._id}}"></a>
-                                </div>
-
-                            </div>
-                            <div class="item-details">
-                                <p>{{{item.system.description}}}</p>
-                                {{#ifequal item.type "outil"}}
-
-                                {{/ifequal}}
-
-                            </div>
-
-
-
-                        </li>
-                        {{/each}}
-
-                    </ul>
-                </div>
-
-
+                </ul>
             </div>
         </div>
 
