@@ -104,7 +104,7 @@ div.noc.sheet.actor {
                         background-position: 50% 50%;
 
                         &:hover {
-                            transform: rotate(720deg);
+                            transform: rotate(360deg);
 
                         }
                     }
@@ -127,7 +127,7 @@ div.noc.sheet.actor {
                         border: 3px solid black;
                         background: url(../asset/images/fondmain.webp);
                         background-position: center;
-
+                        opacity: 0.95;
                         z-index: +1;
 
                         &:hover {
@@ -215,6 +215,7 @@ div.noc.sheet.actor {
                         position: relative;
                         max-width: 70%;
                         margin-left: 15%;
+                        opacity: 0.95;
 
                         &.perdition {
                             input[type="checkbox"] {
