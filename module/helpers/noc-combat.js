@@ -25,5 +25,13 @@ export class nocCombat extends Combat {
     }
     super._onDelete()
   }
+  async resetAll() {
+    let combatants = this.combatants.contents
+    for (let c of combatants) {
+      let actor = game.actors.get(c.actorId)
+      actor.clearInitiative()
+    }
+    super.resetAll()
+  }
 
 }

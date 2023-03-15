@@ -337,7 +337,7 @@ export class nocActor extends Actor {
   }
   /* -------------------------------------------- */
   clearInitiative() {
-    actor.setFlag("world","noc-last-initiative", -1)
+    this.setFlag("world","noc-last-initiative", -1)
   }
   /* -------------------------------------------- */
   getInitiativeScore(combatId, combatantId ) {
