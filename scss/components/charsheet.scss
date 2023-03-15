@@ -94,6 +94,23 @@ div.noc.sheet.actor {
             div.tab.principal {
 
                 .stats {
+                    .fond {
+                        grid-row: 1/11;
+                        grid-column: 1/11;
+                        transition: 120s;
+                        transform-origin: center;
+                        background: url(../asset/images/fondStats.webp)no-repeat;
+                        background-size: 60% auto;
+                        background-position: 50% 50%;
+
+                        &:hover {
+                            transform: rotate(720deg);
+
+                        }
+                    }
+
+
+
                     line-height: 0.5em;
                     display: grid;
                     grid-template-columns: repeat(11, 10%);
@@ -101,9 +118,7 @@ div.noc.sheet.actor {
                     gap: 3px 0px;
                     font-family: 'bold';
                     padding: 2% 1%;
-                    background: url(../asset/images/fondStats.webp)no-repeat;
-                    background-size: 60% auto;
-                    background-position: 50% 50%;
+
 
                     .domaine {
                         padding: 0px 6px 6px;

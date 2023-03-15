@@ -9,4 +9,3 @@ gérer les états (nouvelle classe Trait), en fonctions des niveaux des perditio
 
 
 
-afficher/gerer les points de progression
