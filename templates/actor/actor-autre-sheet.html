@@ -216,6 +216,23 @@
             {{/each}}
           </ul>
         </div>
+        <div class="personnalisations">
+          <h3>personnalisation <a class="fas fa-add
+              addPersonnalisation"
+              data-tooltip="ajouter un bonus de pesonnalisation"></a>
+          </h3>
+          {{#each personnalisations as |perso id|}}
+          <div class="perso flexrow">
+            <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
+                class="fas fa-trash deletePersonnalisation"></a></h4>
+            {{#each perso.flags.noc.personnalisation as |bonus
+            label|}}
+            <div class="bonus">{{label}}:{{bonus}} /</div>
+            {{/each}}
+          </div>
+
+          {{/each}}
+        </div>
       </div>
     </div>
   </section>
