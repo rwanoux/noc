@@ -1,6 +1,8 @@
 // Import document classes.
 import { nocActor } from "./documents/actor.mjs";
 import { nocItem } from "./documents/item.mjs";
+import { nocCombat } from "./helpers/noc-combat.js";
+
 // Import sheet classes.__ACTORS
 import { nocActorSheetPersonnage } from "./sheets/actors/actor-sheet-personnage.mjs";
 import { nocActorSheetRouage } from "./sheets/actors/actor-sheet-rouage.mjs";
@@ -71,6 +73,7 @@ Hooks.once('init', async function () {
   // Define custom Document classes
   CONFIG.Actor.documentClass = nocActor;
   CONFIG.Item.documentClass = nocItem;
+  CONFIG.Combat.documentClass = nocCombat;
 
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
