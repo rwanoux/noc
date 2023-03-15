@@ -502,11 +502,13 @@ div.noc.sheet.actor {
 
                 .favItems {
                     position: absolute;
-                    bottom: 0;
+                    bottom: 2%;
                     z-index: +1;
                     background: url(../asset/images/fondidentiteconfidentiel.webp);
                     background-size: 300%;
                     background-position: center;
+
+                    width: 100%;
 
                     ul.item-list {
                         position: relative;
