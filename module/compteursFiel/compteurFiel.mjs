@@ -1,5 +1,4 @@
 import effetFielCreator from "./effetFielCreator.mjs";
-import { socketManager } from "../socketManager.mjs";
 
 export default class CompteurFiel extends FormApplication {
     constructor(settings) {
@@ -64,7 +63,7 @@ export default class CompteurFiel extends FormApplication {
     async updateFiel(fiel) {
         await game.settings.set('noc', 'compteurFiel', fiel);
         this.render(true)
-        socketManager.launchSocket("renderCompteur", {});
+        game.socketManager.launchSocket("renderCompteur", {});
         Hooks.callAll("updatedFiel", this, fiel)
 
     }

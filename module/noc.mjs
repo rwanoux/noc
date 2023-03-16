@@ -24,16 +24,21 @@ import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { NOC } from "./helpers/config.mjs";
 import CompteurFiel from "./compteursFiel/compteurFiel.mjs";
 import { registerNocSettings } from "./registerSettings.mjs";
-import { socketManager } from "./socketManager.mjs";
+import { SocketManager } from "./socketManager.mjs";
 import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
+
+
+
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
 
 Hooks.once('init', async function () {
+  game.socketManager = new SocketManager;
+
   // Special NOC settings
   registerNocSettings();
   //handlebar custom helpers
@@ -44,7 +49,7 @@ Hooks.once('init', async function () {
   game.socket.on("system.noc", async (sockmsg) => {
     console.log(">>>>> MSG RECV", sockmsg);
     try {
-      socketManager.manageReceived(sockmsg);
+      game.socketManager.manageReceived(sockmsg);
 
     } catch (e) {
       console.error('game.socket.on("system.noc") Exception: ', sockmsg, ' => ', e)
@@ -146,9 +151,8 @@ Hooks.once('init', async function () {
   preloadHandlebarsTemplates();
 
   CONFIG.ui.compteur = CompteurFiel
-
   nocUtility.init()
-  //  objetDieu.init();
+  objetDieu.init();
 
   CONFIG.debug.hooks = false;
 
@@ -193,7 +197,7 @@ Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 
-  objetDieu.productMecanisme();
+  objetDieu.produceMecanisme();
 })
 
 /* -------------------------------------------- */

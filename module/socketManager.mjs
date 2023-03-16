@@ -1,6 +1,7 @@
+import { objetDieu } from "./objectDieu.mjs";
 
 
-class SocketManager {
+export class SocketManager {
     constructor() {
         this.userId = "";
         this.scope = "system.noc"
@@ -31,10 +32,13 @@ class SocketManager {
             case "renderCompteur":
                 ui.compteur.render(true);
                 break;
+            case "displayMecanisme":
+                objetDieu.produceMecanisme()
+            case "displayFiel":
+                objetDieu.displayFiel()
             default: return;
         }
     }
 
 }
-export let socketManager = new SocketManager();
 

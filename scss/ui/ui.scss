@@ -84,10 +84,13 @@ aside#tooltip {
 
 body {
     animation: 2s appear;
+    z-index: 1;
+    position: relative;
 }
 
 #objetDieu {
-    position: absolute;
+
+    position: fixed;
     width: 100vw;
     height: 100vh;
     pointer-events: none;
@@ -95,13 +98,29 @@ body {
     display: grid;
     grid-template-columns: repeat(var(--objetDieuColumns), 1fr);
     grid-template-rows: repeat(var(--objetDieuRows), 1fr);
-    filter: contrast(60%) brightness(36%);
     opacity: 1;
 
     .plaque {
-        box-shadow: 0px 0px 60px 15px black;
-        filter: grayscale(0.8);
-        border-radius: 5%;
+        filter: grayscale(0.3) contrast(0.7) brightness(0.7);
+        box-shadow: 0px 0px 15px black, 8px 40px 100px 100px rgb(0, 0, 0) inset;
+    }
+
+    #videoFiel {
+        position: absolute;
+
+
+
+        video {
+            height: 100vh;
+            transition: 0.3s;
+            height: 100vh;
+            mix-blend-mode: darken;
+            opacity: 0;
+
+            &.visible {
+                opacity: 1
+            }
+        }
     }
 }
 
