@@ -202,7 +202,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
   getData() {
 
     const context = super.getData();
-    context.personnalisations = this.actor.effects.filter(ef => ef.flags.noc?.personnalisation)
+    context.personnalisations = this.actor.effects.filter(ef => ef.flags.noc?.personnalisation);
+    context.perditionsEffects = this.actor.effects.filter(ef => ef.flags.noc?.perdition)
 
     // Prepare character data and items.
     this._preparePersonnageItems(context);
@@ -297,7 +298,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
     html.find('.deletePersonnalisation').click(this.deletePersonnalisation.bind(this));
 
-
+    html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this))
 
   }
 
@@ -313,7 +314,11 @@ export class nocActorSheetPersonnage extends ActorSheet {
     effect.delete()
   }
 
-
+  async deletePerditionEffect(ev) {
+    let efId = ev.currentTarget.dataset.effectId;
+    let effect = await this.actor.effects.get(efId);
+    effect.delete();
+  }
 
   _onResetFaveurs(ev) {
     new Dialog({

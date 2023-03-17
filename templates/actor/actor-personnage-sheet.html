@@ -8,6 +8,21 @@
         <a class="item" data-tab="description">Fiche de signalement</a>
         <a class="item" data-tab="items">Inventaire</a>
     </nav>
+    <aside class="perditionsEffects">
+        <ul>
+            {{#each perditionsEffects as |effect id|}}
+            <li class="perditionEffect">
+                <h4>
+                    {{effect.label}}
+                    <a class="delete-perdition-effect fas fa-trash"
+                        data-effect-id="{{effect._id}}"></a>
+                </h4>
+            </li>
+            {{/each}}
+
+        </ul>
+
+    </aside>
 
 
 

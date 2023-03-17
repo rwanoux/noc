@@ -380,7 +380,9 @@ export class nocActor extends Actor {
 
     }
     let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
-    newEff[0].setFlag("noc", label, true)
+    newEff[0].setFlag("noc", "perdition", {
+      label:label
+    })
   }
   async allDomainesMinus(label) {
     let effData = {
@@ -396,8 +398,9 @@ export class nocActor extends Actor {
       })
     }
     let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
-    newEff[0].setFlag("noc", label, true)
-  }
+ newEff[0].setFlag("noc", "perdition", {
+      label:label
+    })  }
 
 
   addTrait() {
