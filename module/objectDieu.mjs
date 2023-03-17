@@ -25,7 +25,7 @@ objetDieu.initPlaques = () => {
         let backNb = Math.floor(Math.random() * 11) + 1;
         let backSrc = `systems/noc/asset/textureObjetDieu/${backNb}.jpg`
         ch.style.background = `url(${backSrc})`;
-        ch.style.backgroundSize = "600%";
+        ch.style.backgroundSize = "100% 100%";
         ch.style.width = `${Math.max(Math.floor(Math.random() * 1000), 500)}%`;
         ch.style.height = `${Math.max(Math.floor(Math.random() * 1000), 500)}%`;
         ch.style.zIndex = 10000 + (Math.floor(Math.random() * divNb));
@@ -38,8 +38,19 @@ objetDieu.initFiel = () => {
     let videomasque = document.createElement('div');
     videomasque.id = "videoFiel";
     videomasque.innerHTML = `
-    <video controls=false loop autoplay >
+    <video controls=false  >
     <source src="systems/noc/asset/video/Ink_25___4k_res.webm" type="video/webm">
+    </video>
+    `
+    objetDieu.append(videomasque);
+
+}
+objetDieu.initFaisceau = () => {
+    let videomasque = document.createElement('div');
+    videomasque.id = "videoFaisceau";
+    videomasque.innerHTML = `
+    <video controls=false  >
+    <source src="systems/noc/asset/video/light.mp4" type="video/webm">
     </video>
     `
     objetDieu.append(videomasque);
@@ -55,15 +66,31 @@ objetDieu.displayFiel = () => {
     setTimeout(() => {
         vid.classList.remove('visible');
         setTimeout(() => {
-            objetDieu.setBlendMode('unset')
+            objetDieu.setBlendMode('normal')
         }, 1500);
-    }, 5000)
+    }, 11000)
+
 
 }
-objetDieu.initFaisceau = () => {
+objetDieu.displayFaisceau = () => {
+    objetDieu.setBlendMode("exclusion");
+    let vid = document.querySelector('#videoFaisceau video');
+    vid.pause();
+    vid.currentTime = 0;
+    vid.classList.add("visible");
+    vid.play();
+    setTimeout(() => {
+        vid.classList.remove('visible');
+        setTimeout(() => {
+            objetDieu.setBlendMode('normal')
+        }, 1500);
+    }, 11000)
 
 }
+
 objetDieu.produceMecanisme = () => {
+    objetDieu.setBlendMode("normal");
+
     for (let ch of objetDieu.children) {
         if (ch.classList.contains('plaque')) {
             let vert;

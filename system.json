@@ -66,6 +66,14 @@
       "module": "noc",
       "path": "packs/item-themes.db",
       "entity": "Item"
+    },
+    {
+      "name": "macros_noc",
+      "label": "Macros NOC",
+      "system": "noc",
+      "module": "noc",
+      "path": "packs/macros.db",
+      "entity": "Macro"
     }
   ],
   "background": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp",

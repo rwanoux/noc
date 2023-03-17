@@ -33,9 +33,14 @@ export class SocketManager {
                 ui.compteur.render(true);
                 break;
             case "displayMecanisme":
-                objetDieu.produceMecanisme()
+                objetDieu.produceMecanisme();
+                break
             case "displayFiel":
-                objetDieu.displayFiel()
+                objetDieu.displayFiel();
+                break
+            case "displayFaisceau":
+                objetDieu.displayFaisceau();
+                break
             default: return;
         }
     }
