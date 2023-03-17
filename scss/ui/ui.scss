@@ -119,7 +119,8 @@ body {
 
             &.visible {
                 opacity: 1;
-                transition: 0.9s
+                transition: 0.9s;
+                filter: brightness(5)
             }
         }
     }

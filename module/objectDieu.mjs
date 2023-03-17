@@ -7,7 +7,8 @@ objetDieu.init = () => {
     objetDieu.initFiel();
     objetDieu.initFaisceau();
 
-}
+};
+objetDieu.active = false;
 objetDieu.initPlaques = () => {
     let colNb = 4 + (Math.floor(Math.random() * 30))
     let rowNb = 4 + (Math.floor(Math.random() * 8))
@@ -57,6 +58,8 @@ objetDieu.initFaisceau = () => {
 
 }
 objetDieu.displayFiel = () => {
+    if (objetDieu.active) { return ui.notifications.warn("L'objet Dieu est encore actif, patientez") };
+    objetDieu.active = true;
     objetDieu.setBlendMode("darken");
     let vid = document.querySelector('#videoFiel video');
     vid.pause();
@@ -66,14 +69,18 @@ objetDieu.displayFiel = () => {
     setTimeout(() => {
         vid.classList.remove('visible');
         setTimeout(() => {
-            objetDieu.setBlendMode('normal')
+            objetDieu.setBlendMode('normal');
+            objetDieu.active = false;
         }, 1500);
     }, 11000)
 
 
 }
 objetDieu.displayFaisceau = () => {
-    objetDieu.setBlendMode("exclusion");
+    if (objetDieu.active) { return ui.notifications.warn("L'objet Dieu est encore actif, patientez") };
+    objetDieu.active = true;
+
+    objetDieu.setBlendMode("lighten");
     let vid = document.querySelector('#videoFaisceau video');
     vid.pause();
     vid.currentTime = 0;
@@ -82,13 +89,18 @@ objetDieu.displayFaisceau = () => {
     setTimeout(() => {
         vid.classList.remove('visible');
         setTimeout(() => {
-            objetDieu.setBlendMode('normal')
+            objetDieu.setBlendMode('normal');
+            objetDieu.active = false;
+
         }, 1500);
     }, 11000)
 
 }
 
 objetDieu.produceMecanisme = () => {
+    if (objetDieu.active) { return ui.notifications.warn("L'objet Dieu est encore actif, patientez") };
+    objetDieu.active = true;
+
     objetDieu.setBlendMode("normal");
 
     for (let ch of objetDieu.children) {
@@ -105,7 +117,9 @@ objetDieu.produceMecanisme = () => {
 
             }
         }
-
-
     }
+    setTimeout(() => {
+        objetDieu.active = false;
+
+    }, 8000);
 }
