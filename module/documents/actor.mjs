@@ -1,5 +1,6 @@
 import NOCContact from "../ContactClass.js";
 import { nocRollDialog } from "../dialogs/roll-dialog.js";
+import { NOC } from "../helpers/config.mjs";
 import { Quality } from "../qualite_default.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -37,11 +38,13 @@ export class nocActor extends Actor {
 
   }
 
-  _preUpdate(...args) {
-    console.log("preupdate..........", ...args)
+  async _preUpdate(update, options, user) {
+    if (this.type == "personnage" && update.system?.perditions) {
+      await this.checkPerditions(update)
+    }
   }
   async initRouage(data) {
-    
+
     for (let perd in this.system.perditions) {
       this.system.perditions[perd].max = 5;
       this.system.perditions[perd].value = 0;
@@ -50,7 +53,7 @@ export class nocActor extends Actor {
     this.system.reserves.vecu.value = 1;
     this.system.reserves.espoir.max = 5;
     this.system.reserves.espoir.value = 1;
-   
+
 
 
   }
@@ -118,7 +121,6 @@ export class nocActor extends Actor {
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
-
 
   }
   getQuality() {
@@ -259,9 +261,42 @@ export class nocActor extends Actor {
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    this.system.contacts=contacts;
+    this.system.contacts = contacts;
 
-  }
+  };
+  async checkPerditions(update) {
+    for (let perd in update.system.perditions) {
+      console.log(perd);
+      if (update.system.perditions[perd].value) {
+        let key = 'system.perditions.' + perd + '.statut';
+        let statutObject = {
+          system: {
+            perditions: {}
+          }
+        };
+        let newVal = update.system.perditions[perd].value;
+
+        let oldVal = this.system.perditions[perd].value;
+        console.log(oldVal, newVal, NOC.effetsPerditions[perd]);
+        if (newVal >= 5 && newVal < 8) {
+          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][5] }
+        }
+        if (newVal >= 8 && newVal < 10) {
+          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][8] };
+          console.log(NOC.effetsPerditions[perd][8])
+        }
+        if (newVal >= 10) {
+          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][10] }
+        }
+        if (newVal < 5) {
+          statutObject.system.perditions[perd] = { statut: { label: "", description: "" } }
+        }
+        await this.update(statutObject)
+
+      }
+    }
+
+  };
   resetContactFaveurs() {
     if (this.type != "personnage") { return false }
     let contactList = this.system.contacts;
@@ -337,15 +372,15 @@ export class nocActor extends Actor {
   }
   /* -------------------------------------------- */
   clearInitiative() {
-    this.setFlag("world","noc-last-initiative", -1)
+    this.setFlag("world", "noc-last-initiative", -1)
   }
   /* -------------------------------------------- */
-  getInitiativeScore(combatId, combatantId ) {
+  getInitiativeScore(combatId, combatantId) {
     let init = this.getFlag("world", "noc-last-initiative") || -1
     if (init == -1) {
       ui.notifications.info("Vous n'avez pas enregistré d'Initiative pour ce combat, jet d'Instinct à faire.")
-      this.rollTalent("action", "instinct", {isInit: true, combatId: combatId,combatantId: combatantId})
-    } 
+      this.rollTalent("action", "instinct", { isInit: true, combatId: combatId, combatantId: combatantId })
+    }
     return init
   }
 

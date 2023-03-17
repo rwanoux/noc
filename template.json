@@ -232,25 +232,29 @@
             "label": "blessures",
             "value": 0,
             "min": 0,
-            "max": 10
+            "max": 10,
+            "statut": {}
           },
           "traque": {
             "label": "traque",
             "value": 0,
             "min": 0,
-            "max": 10
+            "max": 10,
+            "statut": {}
           },
           "noirceur": {
             "label": "noirceur",
             "value": 0,
             "min": 0,
-            "max": 10
+            "max": 10,
+            "statut": {}
           },
           "trauma": {
             "label": "trauma",
             "value": 0,
             "min": 0,
-            "max": 10
+            "max": 10,
+            "statut": {}
           }
         }
       }
@@ -293,7 +297,8 @@
       },
       "progression": 0,
       "regressions": [],
-      "quantars": 0
+      "quantars": 0,
+      "traits": []
     },
     "cabale": {
       "templates": [

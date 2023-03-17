@@ -216,8 +216,16 @@ div.noc.sheet.actor {
                         max-width: 70%;
                         margin-left: 15%;
                         opacity: 0.95;
+                        height: min-content;
+                        padding-bottom: 6px;
 
                         &.perdition {
+                            .statut {
+                                font-size: 8px;
+                                line-height: 8px;
+                                text-shadow: 0px 0px 6px red
+                            }
+
                             input[type="checkbox"] {
 
 
@@ -231,7 +239,21 @@ div.noc.sheet.actor {
                                         box-shadow: 0px 0px 5px rgba(22, 21, 33, 0.497) inset;
                                     }
 
+
+
                                 }
+
+                                &[checked]::after {
+                                    content: "";
+                                    display: block;
+                                    width: 12px;
+                                    height: 12px;
+                                    box-shadow: 1px -2px 5px 3px rgb(105, 0, 0) inset;
+
+
+                                }
+
+
                             }
                         }
 

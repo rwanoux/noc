@@ -30,7 +30,7 @@ NOC.effetsFiel = [
     description: "dans les coulisses, la Direction de la Sécurité commence à se poser des questions sur les agissements des personnages.Chaque Héros reçoit 2 points de Traque, moins son niveau dans le Talent Façade."
   }
 ];
-NOC.itemTraits = {
+NOC.traitsItems = {
   choc: {
     name: "choc",
     value: null,
@@ -97,5 +97,150 @@ NOC.itemTraits = {
     value: null,
     description: " si l’attaque est réussie, l’arme inflige au minimum 1 point de Blessures à une cible sans armure, même si sa Constitution réduit les dégâts à 0 ou moins."
   }
+};
+NOC.effetsPerditions = {
+  blessures: {
+    5: {
+      label: "blessé",
+      description: `Dès qu’il a subi 5 points de Blessures, le personnage souffre d’un malus de 1 à tous ses niveaux de Domaine.`
+    },
+    8: {
+      label: "lourdement blessé",
+      description: `Si un personnage cumule 8 points de Blessures, il
+est lourdement blessé. Il subit un malus de 1 à tous ses
+niveaux de Talent. De plus, il gardera des séquelles de cet
+événement : l’un de ses points de Blessures devient permanent
+et ne pourra pas être soigné.`
+    },
+    10: {
+      label: "agonisant",
+      description: `Si un personnage cumule 10 points de Blessures, il
+agonise. Il meurt au bout de dix minutes s’il n’est pas
+soigné.`
+    }
+  },
+  trauma: {
+    5: {
+      label: "choqué",
+      description: `Dès qu’un personnage a subi 5 points de Trauma, il est
+Choqué. Son état de stress est tel qu’il influe sur ses performances
+et sur sa lucidité. Il souffre d’un malus de 1 à
+tous ses niveaux de Domaine.`
+    },
+    8: {
+      label: "traumatisé",
+      description: `Dès qu’il a subi 8 points de Trauma, le personnage est
+Traumatisé. Il souffre d’un malus de 1 à tous ses niveaux
+de Talent. De plus, il gardera des séquelles de cet événement
+: l’un de ses points de Trauma devient permanent et
+ne pourra pas être soigné.`
+    },
+    10: {
+      label: "fou",
+      description: `Si un personnage cumule 10 points de Trauma, il
+devient Fou. Il tombe en catatonie durant le reste de la
+scène. Passé ce cap, son traumatisme est tel qu’il ne sera
+plus jouable. Il est définitivement perdu.`
+    }
+  },
+  traque: {
+    5: {
+      label: "signalé",
+      description: `les patrouilles ont le signalement du personnage
+qui sera arrêté en cas de contrôle.`
+    },
+    8: {
+      label: "recherché",
+      description: `Lorsqu’il a cumulé 8 points de Traque, le personnage est
+recherché. Il gardera des séquelles de cet événement :
+l’un de ses points de Traque devient permanent et ne
+pourra pas être retiré. De plus, il gagne le trait Criminel`
+    },
+    10: {
+      label: "pourchassé",
+      description: `Lorsqu’il a cumulé 10 points de Traque, le personnage
+est pourchassé. De plus, il gagne le trait Ennemi public.`
+    }
+  },
+  noirceur: {
+    5: {
+      label: "teinté",
+      description: `Lorsqu’il a cumulé 5 points de Noirceur, le personnage
+est Teinté. Il doit choisir un trait de noirceur.`
+    },
+    8: {
+      label: "possédé",
+      description: `Lorsqu’il a cumulé 8 points de Noirceur, il est Possédé.
+De plus, il gardera des séquelles de cet événement : l’un
+de ses points de Noirceur devient permanent et ne pourra
+pas être soigné. Il doit choisir un trait de noirceur.`
+
+    },
+    10: {
+      label: "corrompu",
+      description: `Lorsqu’il a cumulé 10 points de Noirceur, il est
+Corrompu. La Loi en prend le contrôle (à moins que
+le joueur n’accepte de jouer ce rôle jusqu’au bout). Le
+corrompu fera tout pour rallier un Axe le plus rapidement
+possible. S’il y parvient, il disparaît dans l’Artefact
+à tout jamais. Il doit choisir un trait de noirceur.`
+    }
+  },
 }
+NOC.traitsPerditions = {
+  criminel: {
+    label: "criminel",
+    description: `le personnage est activement recherché. Des
+investigateurs se rendent à son travail, interrogent son
+entourage, etc.Une équipe du Bureau des Investigations
+se met à sa poursuite.`
+  },
+  ennemi_public: {
+    label: "ennemi public",
+    description: `le personnage est l’ennemi numéro 1
+du Bloc. Des patrouilles sillonnent la ville à sa recherche.
+Ses proches et ses collègues sont surveillés. Certains,
+violentés ou arrêtés. Son domicile est fouillé sans ménagement.
+Cinq équipes du Bureau des Investigations le
+recherchent.`
+  },
+  violence: {
+    label: "violence",
+    description: `le personnage ne peut pas arrêter un
+combat tant qu’il n’a pas occasionné la perte d’au moins
+3 points de Blessures à un ennemi (à moins qu’il ne soit
+neutralisé avant).`
+  }
+  ,
+  malaise: {
+    label: "malaise",
+    description: `le personnage est victime de malaises et
+nausées. Il a l’impression que son corps est parasité. Lorsqu’il
+est victime de n’importe quel effet du Fiel, il perd
+un point d’Espoir additionnel. S’il n’en a plus, il devient
+Fatigué et subit un niveau de malus à tous ses Talents
+jusqu’à ce qu’il bénéficie d’un moment de calme (voir
+p. 234).`
+  }
+  ,
+  hallucinations: {
+    label: "hallucinations",
+    description: `le personnage est victime d’hallucinations.
+Il voit des choses terrifiantes qui n’existent pas. Il
+entend des voix, sent des choses qui le touchent, perçoit
+des odeurs putrides. Lorsqu’il est victime de n’importe
+quel effet du Fiel, il subit un point de Trauma additionnel.`
+  }
+  ,
+  mauvais_penchants: {
+    label: "mauvais penchants",
+    description: `le personnage ne régénère plus
+sa jauge d’Espoir qu’en s’adonnant à ses vices. Lors de
+chaque moment de calme (voir p. 234), s’il désire recharger
+ses réserves ou soigner des points de Blessures, Trauma ou
+Noirceur, il doit recevoir un point de Traque.`
+  }
+
+}
+
 

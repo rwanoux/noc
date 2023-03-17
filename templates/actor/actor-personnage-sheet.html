@@ -91,6 +91,13 @@
                                 <i class="fas fa-cog"></i>
                             </a>
                         </h4>
+                        <div class="statut"
+                            {{#if perdition.statut.description}}
+                            data-tooltip="{{perdition.statut.description}}"
+                            {{/if}}>
+                            {{perdition.statut.label}}
+                        </div>
+
 
                         {{#repeat 10}}
                         <input type="checkbox"

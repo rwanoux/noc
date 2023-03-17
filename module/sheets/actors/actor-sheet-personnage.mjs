@@ -459,7 +459,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let value = parseInt(ev.currentTarget.dataset.reserveValue) + 1;
     let property = ev.currentTarget.dataset.reserveProperty;
     let lastProp = property.split('.')[2];
-    console.log([lastProp])
     if ((this.actor.system.energieNoire?.value == value || this.actor.system.reserves[lastProp]?.value == value || this.actor.system.perditions[lastProp]?.value == value)) { value -= 1 };
     let updating = {};
     updating[property] = value;
