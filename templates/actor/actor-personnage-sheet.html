@@ -109,6 +109,9 @@
                             {{#ifequal @index 9}}step{{/ifequal}}
                             {{#ifgteq @index perdition.max
                             }}unavailable{{/ifgteq}}
+                            {{#ifgt perdition.min @index}}
+                            unavailable
+                            {{/ifgt}}
                             "
                             {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
                         {{/repeat}}

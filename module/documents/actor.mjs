@@ -291,12 +291,124 @@ export class nocActor extends Actor {
         if (newVal < 5) {
           statutObject.system.perditions[perd] = { statut: { label: "", description: "" } }
         }
-        await this.update(statutObject)
+        await this.update(statutObject);
+        this.applyPerditionEffect(statutObject);
 
       }
     }
 
   };
+  applyPerditionEffect(update) {
+
+    let perdition = Object.getOwnPropertyNames(update.system.perditions)[0]
+    let statutLabel = update.system.perditions[perdition].statut.label
+    switch (perdition) {
+      case "blessures":
+        this.apply_blessuresEffect(statutLabel)
+        break;
+      case "traque":
+        this.apply_traqueEffect(statutLabel)
+
+        break;
+      case "trauma":
+        this.apply_traumaEffect(statutLabel)
+
+        break;
+      case "noirceur":
+        this.apply_noirceurEffect(statutLabel)
+
+        break;
+    }
+  }
+  async apply_blessuresEffect(label) {
+    if (!this.effects.filter(ef => ef.label == label)[0]) {
+      console.log(label)
+      switch (label) {
+        case "blessé":
+          this.allDomainesMinus(label);
+          break;
+        case "lourdement blessé":
+          this.allTalentsMinus(label);
+          await this.update({
+            "system.perditions.blessures.min": 1
+          })
+          break;
+        case "agonnisant":
+          break;
+      }
+    }
+
+  };
+  apply_traqueEffect(label) {
+
+  };
+  async apply_traumaEffect(label) {
+    if (!this.effects.filter(ef => ef.label == label)[0]) {
+      console.log(label)
+      switch (label) {
+        case "choqué":
+          this.allDomainesMinus(label);
+          break;
+        case "traumatisé":
+          this.allTalentsMinus(label);
+          await this.update({
+            "system.perditions.trauma.min": 1
+          })
+          break;
+        case "fou":
+          break;
+      }
+    }
+  }
+  apply_noirceurEffect(label) {
+
+  };
+  async allTalentsMinus(label) {
+    let effData = {
+      label: label,
+      changes: []
+    }
+    for (let dom in this.system.talents) {
+      for (let tal in this.system.talents[dom]) {
+        let key = "system.talents." + dom + "." + tal + ".niveau"
+        effData.changes.push({
+          key: key,
+          mode: 2,
+          value: "-1"
+        })
+      }
+
+    }
+    let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
+    newEff[0].setFlag("noc", label, true)
+  }
+  async allDomainesMinus(label) {
+    let effData = {
+      label: label,
+      changes: []
+    }
+    for (let dom in this.system.domaines) {
+      let key = "system.domaines." + dom + ".value"
+      effData.changes.push({
+        key: key,
+        mode: 2,
+        value: "-1"
+      })
+    }
+    let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
+    newEff[0].setFlag("noc", label, true)
+  }
+
+
+  addTrait() {
+
+  }
+  removeTrait() {
+
+  }
+  noirceurTraitDialog() {
+
+  }
   resetContactFaveurs() {
     if (this.type != "personnage") { return false }
     let contactList = this.system.contacts;
