@@ -210,13 +210,20 @@ div.noc.sheet.actor {
                                 position: absolute;
                                 font-size: larger;
 
+
                                 a {
-                                    background-color: gray;
+                                    font-size: 8px;
+                                    padding: 2px;
+                                    color: white;
+                                    background-color: rgb(92, 92, 92);
                                     border-radius: 50%;
+                                    box-shadow: 2px 3px 5px rgb(0, 0, 0) inset,
+                                        -1px -3px 3px rgb(0, 0, 0) inset;
                                 }
                             }
 
                             &:hover {
+
 
                                 span.talent-control,
                                 span.domaine-control {
