@@ -38,10 +38,14 @@ export class nocActor extends Actor {
 
   }
 
-  async _preUpdate(update, options, user) {
+  async _onUpdate(update, options, user) {
+
     if (this.type == "personnage" && update.system?.perditions) {
       await this.checkPerditions(update)
     }
+
+    super._onUpdate(update, options, user);
+
   }
   async initRouage(data) {
 
@@ -88,24 +92,6 @@ export class nocActor extends Actor {
     })
   }
 
-  /** @override */
-  prepareData() {
-    // Prepare data for the actor. Calling the super version of this executes
-    // the following, in order: data reset (to clear active effects),
-    // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
-    // prepareDerivedData().
-
-    super.prepareData();
-  }
-
-  /** @override */
-  prepareBaseData() {
-    // Data modifications in this step occur before processing embedded
-    // documents or derived data.
-    this._preparePersonnageData();
-    this._prepareRouageData();
-    this._prepareAutreData();
-  }
 
   /**
    * @override
@@ -118,6 +104,9 @@ export class nocActor extends Actor {
    */
   prepareDerivedData() {
 
+    this._preparePersonnageData();
+    this._prepareRouageData();
+    this._prepareAutreData();
 
     // Make separate methods for each Actor type (character, npc, etc.) to keep
     // things organized.
@@ -200,6 +189,7 @@ export class nocActor extends Actor {
    * Prepare NPC type specific data.
    */
   _prepareRouageData(actorData) {
+    if (this.type !== 'rouage') return;
 
 
   }
@@ -267,102 +257,117 @@ export class nocActor extends Actor {
   async checkPerditions(update) {
     for (let perd in update.system.perditions) {
       console.log(perd);
-      if (update.system.perditions[perd].value) {
-        let key = 'system.perditions.' + perd + '.statut';
-        let statutObject = {
-          system: {
-            perditions: {}
-          }
-        };
-        let newVal = update.system.perditions[perd].value;
 
+      if (update.system.perditions[perd].value) {
+
+        let perdition = Object.getOwnPropertyNames(update.system.perditions)[0]
+        let newVal = update.system.perditions[perd].value;
         let oldVal = this.system.perditions[perd].value;
-        console.log(oldVal, newVal, NOC.effetsPerditions[perd]);
-        if (newVal >= 5 && newVal < 8) {
-          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][5] }
+
+
+
+        if (oldVal < 5) {
+          if (newVal >= 5 && newVal < 8) {
+            this.perditionStep(perdition, [5])
+          }
+          if (newVal >= 8 && newVal < 10) {
+            this.perditionStep(perdition, [5, 8]);
+            await this.addSequelle(perd);
+          }
+          if (newVal >= 10) {
+            this.perditionStep(perdition, [5, 8, 10])
+          }
         }
-        if (newVal >= 8 && newVal < 10) {
-          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][8] };
-          console.log(NOC.effetsPerditions[perd][8])
+
+        if (oldVal >= 5 && oldVal < 8) {
+          if (newVal < 5) {
+            this.perditionStep(perdition, [-5])
+          }
+          if (newVal >= 8 && newVal < 10) {
+            await this.addSequelle(perd);
+            this.perditionStep(perdition, [8]);
+          }
+          if (newVal >= 10) {
+            this.perditionStep(perdition, [8, 10])
+          }
         }
-        if (newVal >= 10) {
-          statutObject.system.perditions[perd] = { statut: NOC.effetsPerditions[perd][10] }
+
+        if (oldVal >= 8) {
+          if (newVal >= 5 && newVal < 8) {
+            this.perditionStep(perdition, [-5])
+          }
+          if (newVal < 5) {
+            this.perditionStep(perdition, [-5, -8])
+          }
+          if (newVal >= 10) {
+            this.perditionStep(perdition, [10])
+          }
         }
-        if (newVal < 5) {
-          statutObject.system.perditions[perd] = { statut: { label: "", description: "" } }
-        }
-        await this.update(statutObject);
-        this.applyPerditionEffect(statutObject);
+
 
       }
+
     }
 
   };
-  applyPerditionEffect(update) {
 
-    let perdition = Object.getOwnPropertyNames(update.system.perditions)[0]
-    let statutLabel = update.system.perditions[perdition].statut.label
+  async addSequelle(perdition) {
+    let updateMin = {
+      system: {
+        perditions: {
+        }
+      }
+    };
+    updateMin.system.perditions[perdition] = { min: this.system.perditions[perdition].min + 1 }
+    await this.update(updateMin)
+  }
+  perditionStep(perdition, steps) {
+    for (let step of steps) {
+      console.log(NOC.effetsPerditions[perdition][step])
+    }
+
+
+
     switch (perdition) {
       case "blessures":
-        this.apply_blessuresEffect(statutLabel)
+        this.applyBlessuresEffect(steps)
         break;
       case "traque":
-        this.apply_traqueEffect(statutLabel)
+        this.applyTraqueEffect(steps)
 
         break;
       case "trauma":
-        this.apply_traumaEffect(statutLabel)
+        this.applyTraumaEffect(steps)
 
         break;
       case "noirceur":
-        this.apply_noirceurEffect(statutLabel)
+        this.applyNoirceurEffect(steps)
 
         break;
     }
+  };
+  applyBlessuresEffect(steps) {
+    let statut = this.system.perditions.blessures.statut;
+    console.log(statut, steps);
+
   }
-  async apply_blessuresEffect(label) {
-    if (!this.effects.filter(ef => ef.label == label)[0]) {
-      console.log(label)
-      switch (label) {
-        case "blessé":
-          this.allDomainesMinus(label);
-          break;
-        case "lourdement blessé":
-          this.allTalentsMinus(label);
-          await this.update({
-            "system.perditions.blessures.min": 1
-          })
-          break;
-        case "agonnisant":
-          break;
-      }
-    }
+  applyTraumaEffect(steps) {
+    let statut = this.system.perditions.trauma.statut;
+    console.log(statut, steps);
 
-  };
-  apply_traqueEffect(label) {
 
-  };
-  async apply_traumaEffect(label) {
-    if (!this.effects.filter(ef => ef.label == label)[0]) {
-      console.log(label)
-      switch (label) {
-        case "choqué":
-          this.allDomainesMinus(label);
-          break;
-        case "traumatisé":
-          this.allTalentsMinus(label);
-          await this.update({
-            "system.perditions.trauma.min": 1
-          })
-          break;
-        case "fou":
-          break;
-      }
-    }
   }
-  apply_noirceurEffect(label) {
+  applyNoirceurEffect(steps) {
+    let statut = this.system.perditions.noirceur.statut;
+    console.log(statut, steps)
 
-  };
+  }
+  applyTraqueEffect(steps) {
+    let statut = this.system.perditions.traque.statut;
+    console.log(statut, steps)
+
+  }
+
   async allTalentsMinus(label) {
     let effData = {
       label: label,
@@ -381,7 +386,7 @@ export class nocActor extends Actor {
     }
     let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
     newEff[0].setFlag("noc", "perdition", {
-      label:label
+      label: label
     })
   }
   async allDomainesMinus(label) {
@@ -398,9 +403,10 @@ export class nocActor extends Actor {
       })
     }
     let newEff = await this.createEmbeddedDocuments("ActiveEffect", [effData]);
- newEff[0].setFlag("noc", "perdition", {
-      label:label
-    })  }
+    newEff[0].setFlag("noc", "perdition", {
+      label: label
+    })
+  }
 
 
   addTrait() {

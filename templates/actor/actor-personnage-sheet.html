@@ -8,21 +8,6 @@
         <a class="item" data-tab="description">Fiche de signalement</a>
         <a class="item" data-tab="items">Inventaire</a>
     </nav>
-    <aside class="perditionsEffects">
-        <ul>
-            {{#each perditionsEffects as |effect id|}}
-            <li class="perditionEffect">
-                <h4>
-                    {{effect.label}}
-                    <a class="delete-perdition-effect fas fa-trash"
-                        data-effect-id="{{effect._id}}"></a>
-                </h4>
-            </li>
-            {{/each}}
-
-        </ul>
-
-    </aside>
 
 
 
@@ -31,6 +16,21 @@
 
         <div class="tab principal" data-group="primary"
             data-tab="principal">
+            <aside class="perditionsEffects">
+                <ul>
+                    {{#each perditionsEffects as |effect id|}}
+                    <li class="perditionEffect">
+                        <h4>
+                            {{effect.label}}
+                            <a class="delete-perdition-effect fas fa-trash"
+                                data-effect-id="{{effect._id}}"></a>
+                        </h4>
+                    </li>
+                    {{/each}}
+
+                </ul>
+
+            </aside>
 
             <div class="flexrow">
                 <div class="stats">
@@ -40,9 +40,12 @@
                     {{#each actor.system.domaines as |domaine domaineId|}}
                     <div class="domaine {{domaineId}}">
                         <h3 class="flexrow">
-                            <input type="number"
-                                name="system.domaines.{{domaineId}}.value"
-                                value="{{domaine.value}}"/>
+                            <span class="domaine-niveau"
+                                data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
+                                <span class="domaine-control"><a class="fas
+                                        fa-add"></a> <a class="fas fa-minus"></a>
+                                </span>
+                            </span>
                             <span>{{domaine.label}}</span>
                         </h3>
                         {{#each ../actor.system.talents as |groupTalent
@@ -50,9 +53,12 @@
                         {{#ifequal talentGroupName domaineId}}
                         {{#each groupTalent as |talent talentId|}}
                         <div class="flexrow">
-                            <input
-                                name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
-                                value="{{talent.niveau}}" type="number">
+                            <span class="talent-niveau"
+                                data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
+                                <span class="talent-control"><a class="fas
+                                        fa-add"></a> <a class="fas fa-minus"></a>
+                                </span>
+                            </span>
                             <a class="rollable roll-talent"
                                 data-talent-id="{{talentId}}"
                                 data-domaine-id="{{domaineId}}">
@@ -89,6 +95,8 @@
                             {{#ifequal @index 9}}step{{/ifequal}}
                             {{#ifgteq @index reserve.max
                             }}unavailable{{/ifgteq}}
+                            {{#ifgt reserve.min @index
+                            }}unavailable{{/ifgt}}
                             "
                             {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
                         {{/repeat}}
@@ -96,7 +104,8 @@
                     </div>
                     {{/each}}
                     <!-- PERDITIONS-->
-                    {{#each actor.system.perditions as |perdition perditionId|}}
+                    {{#each actor.system.perditions as |perdition
+                    perditionId|}}
                     <div class="reserve perdition {{perditionId}}">
                         <h4>{{perdition.label}}
                             <a class="setMax"
@@ -128,7 +137,8 @@
                             unavailable
                             {{/ifgt}}
                             "
-                            {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
+                            {{#ifgt perdition.value
+                            @index}}checked{{/ifgt}}/>
                         {{/repeat}}
 
                     </div>
@@ -139,18 +149,20 @@
                 <!-- INFOS -->
 
                 <div class="resume flexcol">
-                    <img class="profile-img" src="{{actor.img}}" data-edit="img"
+                    <img class="profile-img" src="{{actor.img}}"
+                        data-edit="img"
                         title="{{actor.name}}" height="100" width="100"/>
-
                     <div class="form-group character-name">
                         <div>nom :</div>
-                        <input type="text" name="name" value="{{actor.name}}">
+                        <input type="text" name="name"
+                            value="{{actor.name}}">
                     </div>
                     <div class="form-group">
                         <div>archetype :</div>
 
                         <div class="archetype-resume flexrow">
-                            {{#each actor.itemTypes.archetype as |archetype|}}
+                            {{#each actor.itemTypes.archetype as
+                            |archetype|}}
                             <div class="item-name">{{archetype.name}}</div>
                             <div class="item-control">
                                 <a class="fas fa-trash item-delete"
@@ -212,7 +224,8 @@
                     </div>
                     <h3>personnalisation <a class="fas fa-add
                             addPersonnalisation"
-                            data-tooltip="ajouter un bonus de pesonnalisation"></a>
+                            data-tooltip="ajouter un bonus de
+                            pesonnalisation"></a>
                     </h3>
                     {{#each personnalisations as |perso id|}}
                     <div class="perso flexrow">

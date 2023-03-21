@@ -16,6 +16,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
       classes: ["noc", "sheet", "actor", "personnage"],
       width: 850,
       height: 710,
+      submitOnChange: true,
       dragDrop: [
         { dragSelector: ".item-list .item", dropSelector: null },
         { dragSelector: "img.quantarQty", dropSelector: "li.item" },
@@ -84,6 +85,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
     }
   }
+
   async _onDropActor(ev, data) {
     let dropActor = await Actor.implementation.fromDropData(data);
     if (!this.actor.isOwner || !dropActor.isOwner) return () => {
@@ -298,10 +300,65 @@ export class nocActorSheetPersonnage extends ActorSheet {
     html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
     html.find('.deletePersonnalisation').click(this.deletePersonnalisation.bind(this));
 
-    html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this))
+    html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this));
+
+    html.find(".talent-control a").click(this.updateTalent.bind(this))
+    html.find(".domaine-control a").click(this.updateDomaine.bind(this))
+
+  }
+  async updateTalent(ev) {
+    let key = ev.currentTarget.closest('.talent-niveau').dataset.key;
+    let dom = key.split(".")[2];
+    let tal = key.split('.')[3]
+
+    let update = {
+      system: {
+        talents: {}
+      }
+    };
+    update.system.talents[dom] = {};
+    update.system.talents[dom][tal] = {};
+
+    let value = this.actor._source.system.talents[dom][tal].niveau;
+
+
+
+    if (ev.currentTarget.classList.contains('fa-add')) {
+      update.system.talents[dom][tal].niveau = value + 1;
+
+    } else {
+      update.system.talents[dom][tal].niveau = value - 1;
+    }
+    console.log(update, this.actor)
+    await this.actor.update(update)
 
   }
 
+  async updateDomaine(ev) {
+    let key = ev.currentTarget.closest('.domaine-niveau').dataset.key;
+    console.log(key)
+    let dom = key.split(".")[2];
+
+    let update = {
+      system: {
+        domaines: {}
+      }
+    };
+    update.system.domaines[dom] = {};
+
+    let value = this.actor._source.system.domaines[dom].value;
+
+
+
+    if (ev.currentTarget.classList.contains('fa-add')) {
+      update.system.domaines[dom].value = value + 1;
+
+    } else {
+      update.system.domaines[dom].value = value - 1;
+    }
+    console.log(update, this.actor)
+    await this.actor.update(update)
+  }
   async _onClickPerso(ev) {
     let talents = game.system.template.Actor.templates.talents.talents;
     let actor = this.actor;
@@ -436,16 +493,23 @@ export class nocActorSheetPersonnage extends ActorSheet {
     new Dialog({
       title: `Ajustement de reserve`,
       content: `
-        <h2>Ajuster la valeur max de : ${reserveName}</h2>
-        <input type="number" id="newVal">
+        <h2> Ajuster ${reserveName}</h2>
+        <h4>Ajuster la valeur maximum</h4>
+        <input type="number" id="newMax" value="10">
+        <h4>Ajuster la valeur minimum </h4>
+        <input type="number" id="newMin" value="0">
       `,
       buttons: {
         import: {
           icon: '<i class="fas fa-check"></i>',
           label: "Modifier",
           callback: html => {
+            console.log(reserveProp)
             let updating = {};
-            updating[reserveProp] = html.find('#newVal')[0].value;
+            let max = reserveProp;
+            let min = reserveProp.replace('max', 'min');
+            updating[max] = parseInt(html.find('#newMax')[0].value);
+            updating[min] = parseInt(html.find('#newMin')[0].value);
             this.actor.update(updating)
 
           }
