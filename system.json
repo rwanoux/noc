@@ -2,7 +2,7 @@
   "id": "noc",
   "title": "NOC",
   "description": "The Earth has been locked inside an object from the depths of space, called the Artifact, which isolates it from the light of the Sun. If its purpose remains unknown, protection according to some prisons according to others, it has led humans to regress and to regroup in separate cities, the Blocks. The game proposes to play citizens who, beyond the Administration's propaganda, doubt what surrounds them and what they are told as truth, in a dystopian world where they will have to try to rebuild a future for humanity.",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "compatibility": {
     "minimum": "10",
     "verified": "10",
