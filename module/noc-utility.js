@@ -282,13 +282,14 @@ export class nocUtility {
   static getWhisperRecipients(rollMode, name) {
     switch (rollMode) {
       case "blindroll": return this.getUsers(user => user.isGM);
-      case "gmroll": return this.getWhisperRecipientsAndGMs(name);
+      case "gmroll": return this.getWhisperRecipientsAndGMs("GM");
       case "selfroll": return [game.user.id];
     }
     return undefined;
   }
   /* -------------------------------------------- */
   static getWhisperRecipientsAndGMs(name) {
+    console.log("NAME", name)
     let recep1 = ChatMessage.getWhisperRecipients(name) || [];
     return recep1.concat(ChatMessage.getWhisperRecipients('GM'));
   }

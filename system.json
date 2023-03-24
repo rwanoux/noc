@@ -39,41 +39,46 @@
       "name": "armes",
       "label": "Armes",
       "system": "noc",
-      "module": "noc",
       "path": "packs/item-armes.db",
-      "entity": "Item"
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "archetypes",
       "label": "Archetypes",
       "system": "noc",
-      "module": "noc",
       "path": "packs/item-archetypes.db",
-      "entity": "Item"
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "armures",
       "label": "Armures",
       "system": "noc",
-      "module": "noc",
       "path": "packs/item-armures.db",
-      "entity": "Item"
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "themes",
       "label": "Thèmes",
       "system": "noc",
-      "module": "noc",
       "path": "packs/item-themes.db",
-      "entity": "Item"
+      "type": "Item",
+      "private": false,
+      "flags": {}
     },
     {
       "name": "macros_noc",
       "label": "Macros NOC",
       "system": "noc",
-      "module": "noc",
       "path": "packs/macros.db",
-      "entity": "Macro"
+      "type": "Macro",
+      "private": false,
+      "flags": {}
     }
   ],
   "background": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp",
@@ -81,13 +86,13 @@
     {
       "lang": "fr",
       "name": "French",
-      "path": "lang/fr.json"
+      "path": "lang/fr.json",
+      "flags": {}
     }
   ],
   "gridDistance": 1,
   "gridUnits": "m",
   "socket": true,
-  "url": "",
   "manifest": "https://raw.githubusercontent.com/rwanoux/noc/master/system.json",
   "download": "https://github.com/rwanoux/noc/archive/refs/tags/0.0.13.zip",
   "license": "LICENSE.txt"
