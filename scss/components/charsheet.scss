@@ -26,6 +26,18 @@ div.noc.sheet.actor {
         }
     }
 
+    ;
+
+    form.cabale {
+        .domaine {
+            font-size: smaller;
+
+            .roll-talent {
+                line-height: 1em;
+            }
+        }
+    }
+
 
 
     section.window-content {
@@ -35,7 +47,7 @@ div.noc.sheet.actor {
 
         max-height: min-content;
         line-height: 1rem;
-        font-size: 0.6rem;
+        font-size: 0.8rem;
 
         nav.sheet-tabs {
             margin: 0;
@@ -183,10 +195,10 @@ div.noc.sheet.actor {
                         span.talent-niveau,
                         span.domaine-niveau {
                             position: relative;
-                            height: 16px;
-                            max-width: 16px;
-                            top: -6px;
-                            padding-top: 3px;
+                            height: 20px;
+                            max-width: 20px;
+                            top: -0.4rem;
+                            padding-top: 0.5rem;
                             background-color: white;
                             text-shadow: none;
                             padding-top: 5px;
