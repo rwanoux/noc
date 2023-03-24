@@ -10,8 +10,8 @@ objetDieu.init = () => {
 };
 objetDieu.active = false;
 objetDieu.initPlaques = () => {
-    let colNb = 4 + (Math.floor(Math.random() * 30))
-    let rowNb = 4 + (Math.floor(Math.random() * 8))
+    let colNb = 4 + (Math.floor(Math.random() * 5))
+    let rowNb = 4 + (Math.floor(Math.random() * 5))
     let divNb = colNb * rowNb;
 
     document.documentElement.style.setProperty('--objetDieuColumns', colNb);
@@ -27,9 +27,10 @@ objetDieu.initPlaques = () => {
         let backSrc = `systems/noc/asset/textureObjetDieu/${backNb}.jpg`
         ch.style.background = `url(${backSrc})`;
         ch.style.backgroundSize = "100% 100%";
-        ch.style.width = `${Math.max(Math.floor(Math.random() * 1000), 500)}%`;
-        ch.style.height = `${Math.max(Math.floor(Math.random() * 1000), 500)}%`;
+        ch.style.width = '300%';
+        ch.style.height = `300%`;
         ch.style.zIndex = 10000 + (Math.floor(Math.random() * divNb));
+
     }
 }
 objetDieu.setBlendMode = (mode) => {
