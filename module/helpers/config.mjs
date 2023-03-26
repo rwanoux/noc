@@ -98,14 +98,28 @@ NOC.traitsItems = {
     description: " si l’attaque est réussie, l’arme inflige au minimum 1 point de Blessures à une cible sans armure, même si sa Constitution réduit les dégâts à 0 ou moins."
   }
 };
+NOC.compteur2Step = [0, 0, 0, 0, 0, 5, 5, 5, 8, 8, 10, 10, 10, 10, 10, 10, 10];
 NOC.effetsPerditions = {
   blessures: {
+    0: {
+      seuil: 0,
+      deleteEffects: ["perdition-blessure5", "perdition-blessure8", "perdition-blessure10" ]
+       } ,
     5: {
-      label: "blessé",
+      seuil: 5,
+      effect: "malusDomaine",
+      deleteEffects: ["perdition-blessure8", "perdition-blessure10" ],
+      flag: "perdition-blessure5",
+      label: "Blessé",
       description: `Dès qu’il a subi 5 points de Blessures, le personnage souffre d’un malus de 1 à tous ses niveaux de Domaine.`
     },
     8: {
-      label: "lourdement blessé",
+      seuil: 8,
+      effect: "malusTalent",
+      deleteEffects: ["perdition-blessure10" ],
+      flag: "perdition-blessure8",
+      sequelle: true,
+      label: "Lourdement blessé",
       description: `Si un personnage cumule 8 points de Blessures, il
 est lourdement blessé. Il subit un malus de 1 à tous ses
 niveaux de Talent. De plus, il gardera des séquelles de cet
@@ -113,22 +127,36 @@ niveaux de Talent. De plus, il gardera des séquelles de cet
 et ne pourra pas être soigné.`
     },
     10: {
-      label: "agonisant",
+      seuil: 10,
+      label: "Agonisant",
       description: `Si un personnage cumule 10 points de Blessures, il
 agonise. Il meurt au bout de dix minutes s’il n’est pas
 soigné.`
     }
   },
   trauma: {
+    0: {
+      seuil: 0,
+      deleteEffects: ["perdition-trauma5", "perdition-trauma8", "perdition-trauma10" ]
+       } ,
     5: {
+      seuil: 5,
       label: "choqué",
+      effect: "malusDomaine",
+      deleteEffects: ["perdition-trauma8", "perdition-trauma10" ],
+      flag: "perdition-trauma5",
       description: `Dès qu’un personnage a subi 5 points de Trauma, il est
 Choqué. Son état de stress est tel qu’il influe sur ses performances
 et sur sa lucidité. Il souffre d’un malus de 1 à
 tous ses niveaux de Domaine.`
     },
     8: {
+      seuil: 8,
       label: "traumatisé",
+      effect: "malusTalent",
+      deleteEffects: ["perdition-trauma10" ],
+      flag: "perdition-trauma8",
+      sequelle: true,
       description: `Dès qu’il a subi 8 points de Trauma, le personnage est
 Traumatisé. Il souffre d’un malus de 1 à tous ses niveaux
 de Talent. De plus, il gardera des séquelles de cet événement
@@ -137,6 +165,8 @@ ne pourra pas être soigné.`
     },
     10: {
       label: "fou",
+      effect: "malusTalent",
+      flag: "perdition-trauma10",
       description: `Si un personnage cumule 10 points de Trauma, il
 devient Fou. Il tombe en catatonie durant le reste de la
 scène. Passé ce cap, son traumatisme est tel qu’il ne sera

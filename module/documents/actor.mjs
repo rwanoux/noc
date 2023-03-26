@@ -261,55 +261,54 @@ export class nocActor extends Actor {
       if (update.system.perditions[perd].value) {
 
         let perdition = Object.getOwnPropertyNames(update.system.perditions)[0]
-        let newVal = update.system.perditions[perd].value;
-        let oldVal = this.system.perditions[perd].value;
-
-
-
-        if (oldVal < 5) {
-          if (newVal >= 5 && newVal < 8) {
-            this.perditionStep(perdition, [5])
+        let newVal = update.system.perditions[perd].value
+        let relevantStep = NOC.compteur2Step[newVal] // Get the relevant step value
+        let perditionStep = NOC.effetsPerditions[perd][relevantStep] // Get the perdition data
+        
+        if (perditionStep) {
+          if (perditionStep.deleteEffects) {
+            let toDelete = []
+            for (let flag of perditionStep.deleteEffects ) {
+              let effect = this.effects.find(effect => effect.getFlag("world", flag) )
+              if (effect) {
+                toDelete.push( effect.id)  
+              }
+            }
+            await this.deleteEmbeddedDocuments("ActiveEffect", toDelete )  
           }
-          if (newVal >= 8 && newVal < 10) {
-            this.perditionStep(perdition, [5, 8]);
-            await this.addSequelle(perd);
+          // Update status
+          this.update( { [`system.perditions.${perdition}.statut`]: {label: perditionStep.label, description: perditionStep.description} } )
+          
+          // Effect ?
+          let effect = this.effects.find(effect => effect.getFlag("world", perditionStep.effectFlag) )
+          if (!effect && perditionStep.effect) {  // Effet absent, à ajouter
+            let effectData = {
+              label: perditionStep.label,
+              changes: [],
+              disabled: false
+            }
+            if ( perditionStep.effect == "malusDomaine") { // Specific logic for effect type
+              for (let key in this.system.domaines) {
+                effectData.changes.push({ key: `system.domaines.${key}.value`, value: -1, mode: 2})
+              }
+            }
+            if ( perditionStep.effect == "malusTalent") { // Specific logic for effect type
+              for (let keyDomaine in this.system.talents) {
+                for (let key in this.system.talents[keyDomaine]) {
+                 effectData.changes.push({ key: `system.talents.${keyDomaine}.${key}.niveau`, value: -1, mode: 2})
+                }
+              }
+            }
+            let newEffect = await this.createEmbeddedDocuments("ActiveEffect", [effectData])
+            newEffect[0].setFlag("world", perditionStep.flag, true)
+            if ( perditionStep.sequelle) {
+              this.addSequelle(perdition)
+            }            
           }
-          if (newVal >= 10) {
-            this.perditionStep(perdition, [5, 8, 10])
-          }
-        }
-
-        if (oldVal >= 5 && oldVal < 8) {
-          if (newVal < 5) {
-            this.perditionStep(perdition, [-5])
-          }
-          if (newVal >= 8 && newVal < 10) {
-            await this.addSequelle(perd);
-            this.perditionStep(perdition, [8]);
-          }
-          if (newVal >= 10) {
-            this.perditionStep(perdition, [8, 10])
-          }
-        }
-
-        if (oldVal >= 8) {
-          if (newVal >= 5 && newVal < 8) {
-            this.perditionStep(perdition, [-5])
-          }
-          if (newVal < 5) {
-            this.perditionStep(perdition, [-5, -8])
-          }
-          if (newVal >= 10) {
-            this.perditionStep(perdition, [10])
-          }
-        }
-
-
+        } 
       }
-
     }
-
-  };
+  }
 
   async addSequelle(perdition) {
     let updateMin = {
@@ -320,52 +319,6 @@ export class nocActor extends Actor {
     };
     updateMin.system.perditions[perdition] = { min: this.system.perditions[perdition].min + 1 }
     await this.update(updateMin)
-  }
-  perditionStep(perdition, steps) {
-    for (let step of steps) {
-      console.log(NOC.effetsPerditions[perdition][step])
-    }
-
-
-
-    switch (perdition) {
-      case "blessures":
-        this.applyBlessuresEffect(steps)
-        break;
-      case "traque":
-        this.applyTraqueEffect(steps)
-
-        break;
-      case "trauma":
-        this.applyTraumaEffect(steps)
-
-        break;
-      case "noirceur":
-        this.applyNoirceurEffect(steps)
-
-        break;
-    }
-  };
-  applyBlessuresEffect(steps) {
-    let statut = this.system.perditions.blessures.statut;
-    console.log(statut, steps);
-
-  }
-  applyTraumaEffect(steps) {
-    let statut = this.system.perditions.trauma.statut;
-    console.log(statut, steps);
-
-
-  }
-  applyNoirceurEffect(steps) {
-    let statut = this.system.perditions.noirceur.statut;
-    console.log(statut, steps)
-
-  }
-  applyTraqueEffect(steps) {
-    let statut = this.system.perditions.traque.statut;
-    console.log(statut, steps)
-
   }
 
   async allTalentsMinus(label) {
