@@ -340,11 +340,11 @@ div.noc.sheet.actor {
 
                                 }
 
-                                ;
 
-                                &[checked].unavailable::after {
+
+                                &.unavailable {
                                     pointer-events: none;
-                                    opacity: 0.2;
+                                    opacity: 0.5;
 
                                     &::after {
                                         content: "";
@@ -363,10 +363,18 @@ div.noc.sheet.actor {
 
                         h4 {
                             position: relative;
-                            top: 5px;
+                            top: 3px;
                             text-align: center;
                             color: black;
+                            font-size: smaller;
+
                             text-shadow: 0px 0px 2px white;
+
+                            a {
+                                position: absolute;
+                                top: 0;
+                                left: -0.6em
+                            }
                         }
 
                         input[type="checkbox"] {
@@ -402,7 +410,7 @@ div.noc.sheet.actor {
 
                             &.unavailable {
                                 pointer-events: none;
-                                opacity: 0.2;
+                                opacity: 0.3;
 
                                 &::after {
                                     content: "";

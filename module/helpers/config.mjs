@@ -102,13 +102,14 @@ NOC.compteur2Step = [0, 0, 0, 0, 0, 5, 5, 5, 8, 8, 10, 10, 10, 10, 10, 10, 10];
 NOC.effetsPerditions = {
   blessures: {
     0: {
+      label: "",
       seuil: 0,
-      deleteEffects: ["perdition-blessure5", "perdition-blessure8", "perdition-blessure10" ]
-       } ,
+      deleteEffects: ["perdition-blessure5", "perdition-blessure8", "perdition-blessure10"]
+    },
     5: {
       seuil: 5,
       effect: "malusDomaine",
-      deleteEffects: ["perdition-blessure8", "perdition-blessure10" ],
+      deleteEffects: ["perdition-blessure8", "perdition-blessure10"],
       flag: "perdition-blessure5",
       label: "Blessé",
       description: `Dès qu’il a subi 5 points de Blessures, le personnage souffre d’un malus de 1 à tous ses niveaux de Domaine.`
@@ -116,7 +117,7 @@ NOC.effetsPerditions = {
     8: {
       seuil: 8,
       effect: "malusTalent",
-      deleteEffects: ["perdition-blessure10" ],
+      deleteEffects: ["perdition-blessure10"],
       flag: "perdition-blessure8",
       sequelle: true,
       label: "Lourdement blessé",
@@ -136,14 +137,15 @@ soigné.`
   },
   trauma: {
     0: {
+      label: "",
       seuil: 0,
-      deleteEffects: ["perdition-trauma5", "perdition-trauma8", "perdition-trauma10" ]
-       } ,
+      deleteEffects: ["perdition-trauma5", "perdition-trauma8", "perdition-trauma10"]
+    },
     5: {
       seuil: 5,
       label: "choqué",
       effect: "malusDomaine",
-      deleteEffects: ["perdition-trauma8", "perdition-trauma10" ],
+      deleteEffects: ["perdition-trauma8", "perdition-trauma10"],
       flag: "perdition-trauma5",
       description: `Dès qu’un personnage a subi 5 points de Trauma, il est
 Choqué. Son état de stress est tel qu’il influe sur ses performances
@@ -154,7 +156,7 @@ tous ses niveaux de Domaine.`
       seuil: 8,
       label: "traumatisé",
       effect: "malusTalent",
-      deleteEffects: ["perdition-trauma10" ],
+      deleteEffects: ["perdition-trauma10"],
       flag: "perdition-trauma8",
       sequelle: true,
       description: `Dès qu’il a subi 8 points de Trauma, le personnage est
