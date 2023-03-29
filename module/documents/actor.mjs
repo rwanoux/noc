@@ -2,6 +2,7 @@ import NOCContact from "../ContactClass.js";
 import { nocRollDialog } from "../dialogs/roll-dialog.js";
 import { NOC } from "../helpers/config.mjs";
 import { Quality } from "../qualite_default.mjs";
+import { nocNoirceurTraits } from '../dialogs/noc-noirceurTrait.js';
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -264,52 +265,82 @@ export class nocActor extends Actor {
         let newVal = update.system.perditions[perd].value
         let relevantStep = NOC.compteur2Step[newVal] // Get the relevant step value
         let perditionStep = NOC.effetsPerditions[perd][relevantStep] // Get the perdition data
-        
+        // clearing effects
         if (perditionStep) {
           if (perditionStep.deleteEffects) {
             let toDelete = []
-            for (let flag of perditionStep.deleteEffects ) {
-              let effect = this.effects.find(effect => effect.getFlag("world", flag) )
+            for (let flag of perditionStep.deleteEffects) {
+              let effect = this.effects.find(effect => effect.getFlag("world", flag))
               if (effect) {
-                toDelete.push( effect.id)  
+                toDelete.push(effect.id)
               }
             }
-            await this.deleteEmbeddedDocuments("ActiveEffect", toDelete )  
-          }
+            await this.deleteEmbeddedDocuments("ActiveEffect", toDelete)
+          };
+
           // Update status
-          this.update( { [`system.perditions.${perdition}.statut`]: {label: perditionStep.label, description: perditionStep.description} } )
-          
+          this.update({ [`system.perditions.${perdition}.statut`]: { label: perditionStep.label, description: perditionStep.description } })
+
           // Effect ?
-          let effect = this.effects.find(effect => effect.getFlag("world", perditionStep.effectFlag) )
+          let effect = this.effects.find(effect => effect.getFlag("world", perditionStep.flag))
           if (!effect && perditionStep.effect) {  // Effet absent, à ajouter
             let effectData = {
               label: perditionStep.label,
               changes: [],
               disabled: false
             }
-            if ( perditionStep.effect == "malusDomaine") { // Specific logic for effect type
+            if (perditionStep.effect == "malusDomaine") { // Specific logic for effect type
               for (let key in this.system.domaines) {
-                effectData.changes.push({ key: `system.domaines.${key}.value`, value: -1, mode: 2})
+                effectData.changes.push({ key: `system.domaines.${key}.value`, value: -1, mode: 2 })
               }
             }
-            if ( perditionStep.effect == "malusTalent") { // Specific logic for effect type
+            if (perditionStep.effect == "malusTalent") { // Specific logic for effect type
               for (let keyDomaine in this.system.talents) {
                 for (let key in this.system.talents[keyDomaine]) {
-                 effectData.changes.push({ key: `system.talents.${keyDomaine}.${key}.niveau`, value: -1, mode: 2})
+                  effectData.changes.push({ key: `system.talents.${keyDomaine}.${key}.niveau`, value: -1, mode: 2 })
                 }
               }
             }
             let newEffect = await this.createEmbeddedDocuments("ActiveEffect", [effectData])
             newEffect[0].setFlag("world", perditionStep.flag, true)
-            if ( perditionStep.sequelle) {
-              this.addSequelle(perdition)
-            }            
+
           }
-        } 
+          if (perditionStep.sequelle) {
+            this.addSequelle(perdition)
+          };
+          if (perditionStep.trait) {
+            ui.notifications.warn("add trait");
+            this.addTrait(perdition)
+          }
+        }
       }
     }
   }
+  async addTrait(perdition) {
+    let traits = this.system.traits || [];
 
+    if (perdition == "noirceur") {
+      this.noirceurTraitDialog()
+    }
+    if (perdition == "traque") {
+      if (this.system.perditions.traque.value < 10) {
+        if (!this.system.traits.find(t => t.label == "criminel")) {
+          traits.push(NOC.traitsPerditions.traque.criminel)
+        }
+
+      }
+      if (this.system.perditions.traque.value >= 10) {
+        let traits = this.system.traits || [];
+        if (!this.system.traits.find(t => t.label == "ennemi public")) {
+          traits.push(NOC.traitsPerditions.traque.ennemi_public)
+        }
+      }
+
+    }
+    await this.update({
+      'system.traits': traits
+    })
+  }
   async addSequelle(perdition) {
     let updateMin = {
       system: {
@@ -362,13 +393,19 @@ export class nocActor extends Actor {
   }
 
 
-  addTrait() {
+  async removeTrait(label) {
+    let traits = this.system.traits;
+    let targetTrait = traits.find(t => t.label == label);
+    traits.splice(traits.indexOf(targetTrait), 1);
+    await this.update({
+      'system.traits': traits
+    })
+
 
   }
-  removeTrait() {
-
-  }
-  noirceurTraitDialog() {
+  async noirceurTraitDialog() {
+    let dial =await  nocNoirceurTraits.create(this);
+    dial.render(true)
 
   }
   resetContactFaveurs() {

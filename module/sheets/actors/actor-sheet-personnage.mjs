@@ -302,9 +302,14 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
     html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this));
 
-    html.find(".talent-control a").click(this.updateTalent.bind(this))
-    html.find(".domaine-control a").click(this.updateDomaine.bind(this))
+    html.find(".talent-control a").click(this.updateTalent.bind(this));
+    html.find(".domaine-control a").click(this.updateDomaine.bind(this));
+    html.find(".delete-trait").click(this.deleteTrait.bind(this));
 
+  }
+  async deleteTrait(ev) {
+    let traitLabel = ev.currentTarget.dataset.traitLabel;
+    await this.actor.removeTrait(traitLabel)
   }
   async updateTalent(ev) {
     let key = ev.currentTarget.closest('.talent-niveau').dataset.key;

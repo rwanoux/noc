@@ -1,0 +1,16 @@
+<h1>Choisissez un trait de noirceur</h1>
+{{log this}}
+
+<ul>
+    {{#each traits as |trait id|}}
+    <li>
+        <h4>
+            <input type="checkbox" data-trait-id="{{id}}">
+            {{trait.label}}
+        </h4>
+        <p>
+            {{trait.description}}
+        </p>
+    </li>
+    {{/each}}
+</ul>

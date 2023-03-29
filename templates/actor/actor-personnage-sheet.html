@@ -16,14 +16,14 @@
 
         <div class="tab principal" data-group="primary"
             data-tab="principal">
-            <aside class="perditionsEffects">
+            <aside class="traits">
                 <ul>
-                    {{#each perditionsEffects as |effect id|}}
+                    {{#each actor.system.traits as |trait id|}}
                     <li class="perditionEffect">
-                        <h4>
-                            {{effect.label}}
-                            <a class="delete-perdition-effect fas fa-trash"
-                                data-effect-id="{{effect._id}}"></a>
+                        <h4 data-tooltip="{{trait.description}}">
+                            {{trait.label}}
+                            <a class="delete-trait fas fa-trash"
+                                data-trait-label="{{trait.label}}"></a>
                         </h4>
                     </li>
                     {{/each}}
