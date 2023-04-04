@@ -11,3 +11,8 @@ Sethmes édition autorise le plein usage de cette proposition, sans cession de s
 ## Pour tout retour de bug :
 
 -ouvrir un ticket sur le dépot du projet : https://github.com/rwanoux/noc/issues/new/choose
+
+### à venir :
+
+-les compendiums complets, rouages, items, creatures et autres
+-l'implémentation des règles de cabales et configurations.
