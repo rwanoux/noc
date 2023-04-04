@@ -257,9 +257,12 @@ Hooks.on("renderSidebarTab", (app, html) => {
 <h2> Liens Utiles</h2>
 <button>
 <a  target="_blank" href="https://sethmes-editions.com/noc/">
-le site de l'éditeur</a>
+<img style="border:none ;height:2rem ;width:auto; top:0.5rem ; position:relative" src="systems/noc/asset/logoSethmes.webp"></a>
+le site de l'éditeur
 </button>
-
+<p>
+  Sethmes édition autorise le plein usage de cette proposition, sans cession de ses droits, en dehors de tput usage commercial...
+</p>
 <button>
 <a  target="_blank" href="https://discord.gg/pPSDNJk">
 <i class="fa-brands fa-discord"></i>
