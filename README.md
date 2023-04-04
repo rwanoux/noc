@@ -14,5 +14,5 @@ Sethmes édition autorise le plein usage de cette proposition, sans cession de s
 
 ### à venir :
 
--les compendiums complets, rouages, items, creatures et autres
--l'implémentation des règles de cabales et configurations.
+- les compendiums complets, rouages, items, creatures et autres.
+- l'implémentation des règles de cabales et configurations.
