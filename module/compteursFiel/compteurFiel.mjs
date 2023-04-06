@@ -68,7 +68,7 @@ export default class CompteurFiel extends FormApplication {
 
     }
     _injectHTML(html) {
-        html.insertBefore('#players');
+        html.insertAfter('#controls');
         this._element = html;
         html.hide().fadeIn(200);
     }

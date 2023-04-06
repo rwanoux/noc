@@ -31,6 +31,8 @@ form#compteurs {
     div#fiel {
         position: relative;
         max-width: var(--players-width);
+        min-width: var(--players-width);
+        max-height: var(--players-width);
         min-height: var(--players-width);
         // animation: up 1s 1;
         background: url('../asset/images/fielcompteur2.webp');
