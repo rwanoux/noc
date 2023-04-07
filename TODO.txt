@@ -4,8 +4,7 @@ lancer les suppressions des thèmes dans les archetypes depuis Hooks.on("deleteI
 méchaniques d'aura sur canvas (talent lumière)
 gérer les "moments de calme"=> reduction des perditions+
 
-gérer les états (nouvelle classe Trait), en fonctions des niveaux des perditions :
-    blessures folies traques noirceur etc...
+gerer les bonus de cabales
 
 
 
