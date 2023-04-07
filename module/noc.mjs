@@ -261,7 +261,7 @@ Hooks.on("renderSidebarTab", (app, html) => {
 le site de l'éditeur
 </button>
 <p>
-Les éditions Sethmes autorisent l'utilisation de ce système NOC pour Let's roll à destination de parties privées mais aussi lors d'actual play, en live ou redifféré gratuit, sur les plateformes de streaming et sites web d'hébergement vidéo à la condition que soient mentionnés NOC et SETHMES.
+Les éditions Sethmes autorisent l'utilisation de ce système NOC pour Foundry VTT à destination de parties privées mais aussi lors d'actual play, en live ou redifféré gratuit, sur les plateformes de streaming et sites web d'hébergement vidéo à la condition que soient mentionnés NOC et SETHMES.
 </p>
 <p>Cette utilisation ne peut être considérée comme une cession de droit, mais une tolérance d'usage.
 </p>
