@@ -261,7 +261,9 @@ Hooks.on("renderSidebarTab", (app, html) => {
 le site de l'éditeur
 </button>
 <p>
-  Sethmes édition autorise le plein usage de cette proposition, sans cession de ses droits, en dehors de tput usage commercial...
+Les éditions Sethmes autorisent l'utilisation de ce système NOC pour Let's roll à destination de parties privées mais aussi lors d'actual play, en live ou redifféré gratuit, sur les plateformes de streaming et sites web d'hébergement vidéo à la condition que soient mentionnés NOC et SETHMES.
+</p>
+<p>Cette utilisation ne peut être considérée comme une cession de droit, mais une tolérance d'usage.
 </p>
 <button>
 <a  target="_blank" href="https://discord.gg/pPSDNJk">
