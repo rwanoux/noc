@@ -1,3 +1,5 @@
+import { SocketManager } from "../socketManager.mjs";
+
 export default class effetFielCreator extends FormApplication {
     constructor(settings) {
         super();
