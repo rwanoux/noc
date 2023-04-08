@@ -37,7 +37,7 @@ jobs:
           download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/noc.zip
 
       # Create a zip file with all files required by the module to add to the release
-      - run: zip -r ./noc.zip system.json template.json README.md asset/ css/ lang/ module/ packs/ templates/
+      - run: zip -r ./system.zip system.json template.json README.md asset/ css/ lang/ module/ packs/ templates/
 
       # Create a release for this specific version
       - name: Update Release with Files
@@ -49,6 +49,6 @@ jobs:
           draft: ${{ github.event.release.unpublished }}
           prerelease: ${{ github.event.release.prerelease }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: "./system.json, ./noc.zip"
+          artifacts: "./system.json, ./system.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
