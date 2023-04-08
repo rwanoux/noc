@@ -106,7 +106,8 @@ body {
     }
 
     #videoFaisceau,
-    #videoFiel {
+    #videoFiel,
+    #videoDroplet {
         position: absolute;
 
 
@@ -122,6 +123,16 @@ body {
                 transition: 0.9s;
                 filter: brightness(5)
             }
+        }
+    }
+
+    #videoDroplet {
+
+        video.visible {
+            width: 200vw;
+            position: relative;
+            left: -25%;
+            filter: invert(100%) contrast(150%)
         }
     }
 }

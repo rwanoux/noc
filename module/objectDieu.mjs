@@ -6,6 +6,7 @@ objetDieu.init = () => {
     objetDieu.initPlaques();
     objetDieu.initFiel();
     objetDieu.initFaisceau();
+    objetDieu.initDroplet();
 
 };
 objetDieu.active = false;
@@ -47,6 +48,17 @@ objetDieu.initFiel = () => {
     objetDieu.append(videomasque);
 
 }
+objetDieu.initDroplet = () => {
+    let videomasque = document.createElement('div');
+    videomasque.id = "videoDroplet";
+    videomasque.innerHTML = `
+    <video controls=false  >
+    <source src="systems/noc/asset/video/drop.mp4" type="video/mp4">
+    </video>
+    `
+    objetDieu.append(videomasque);
+
+}
 objetDieu.initFaisceau = () => {
     let videomasque = document.createElement('div');
     videomasque.id = "videoFaisceau";
@@ -74,8 +86,23 @@ objetDieu.displayFiel = () => {
             objetDieu.active = false;
         }, 1500);
     }, 11000)
-
-
+}
+objetDieu.displayDroplet = () => {
+    if (objetDieu.active) { return ui.notifications.warn("L'objet Dieu est encore actif, patientez") };
+    objetDieu.active = true;
+    objetDieu.setBlendMode("exclusion");
+    let vid = document.querySelector('#videoDroplet video');
+    vid.pause();
+    vid.currentTime = 0;
+    vid.classList.add("visible");
+    vid.play();
+    setTimeout(() => {
+        vid.classList.remove('visible');
+        setTimeout(() => {
+            objetDieu.setBlendMode('normal');
+            objetDieu.active = false;
+        }, 1500);
+    }, 5000)
 }
 objetDieu.displayFaisceau = () => {
     if (objetDieu.active) { return ui.notifications.warn("L'objet Dieu est encore actif, patientez") };

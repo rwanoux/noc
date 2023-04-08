@@ -41,6 +41,9 @@ export class SocketManager {
             case "displayFaisceau":
                 objetDieu.displayFaisceau();
                 break
+            case "displayDroplet":
+                objetDieu.displayDroplet();
+                break
             default: return;
         }
     }
