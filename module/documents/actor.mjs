@@ -63,34 +63,36 @@ export class nocActor extends Actor {
 
   }
   async initCabale() {
-    await this.update({
-      "system.perditions": {
-        "blessures": {
-          "label": "dégradation",
-          "value": 0,
-          "min": 0,
-          "max": 10
-        },
-        "traque": {
-          "label": "traque",
-          "value": 0,
-          "min": 0,
-          "max": 10
-        },
-        "noirceur": {
-          "label": "noirceur",
-          "value": 0,
-          "min": 0,
-          "max": 10
-        },
-        "trauma": {
-          "label": "division",
-          "value": 0,
-          "min": 0,
-          "max": 10
+    if (this.id ) {
+      await this.update({
+        "system.perditions": {
+          "blessures": {
+            "label": "dégradation",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "traque": {
+            "label": "traque",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "noirceur": {
+            "label": "noirceur",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          },
+          "trauma": {
+            "label": "division",
+            "value": 0,
+            "min": 0,
+            "max": 10
+          }
         }
-      }
-    })
+      })  
+    }
   }
 
 
