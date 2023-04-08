@@ -1,4 +1,10 @@
+_French language only_
+
 **Ce system pour Foundry VTT implémente les règles pour jouer au jeu NOC, édité par Sethmes éditions.**
+
+## Présentation du jeu
+
+https://sethmes-editions.com/noc/
 
 ### Pour toutes questions et contact avec les développeurs :
 
