@@ -188,6 +188,10 @@ export class nocUtility {
   /* -------------------------------------------- */
   static async rollBonus(rollData, nbBonusDice) {
     let actor = game.actors.get(rollData.actorId)
+    if (!actor.isOwner) {
+      ui.notifications.warn("Vous n'avez pas les droits pour relancer les jets de cet Acteur")
+      return
+    }
 
     rollData.formulaBonus = `${nbBonusDice}d10cs>=8`
     let myRollBonus = new Roll(rollData.formulaBonus, actor.system).roll({ async: false })
@@ -195,7 +199,7 @@ export class nocUtility {
     for (let result of myRollBonus.terms[0].results) {
       if (result.result == 1) {
         ui.compteur.gouttePlus(1)
-        nbFiel++
+        rollData.nbFiel++
       }
     }
     rollData.nbBonusDice = nbBonusDice
@@ -209,6 +213,10 @@ export class nocUtility {
   /* -------------------------------------------- */
   static async roll(rollData) {
     let actor = game.actors.get(rollData.actorId)
+    if (!actor.isOwner) {
+      ui.notifications.warn("Vous n'avez pas les droits pour lancer les jets de cet Acteur")
+      return
+    }
 
     // Jetde base
     rollData.nbDesTotal = rollData.nbDesDomaine + ((rollData.useEspoir) ? 3 : 0);
