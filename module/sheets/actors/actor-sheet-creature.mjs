@@ -11,8 +11,8 @@ export class nocActorSheetCreature extends nocActorSheetRouage {
   static get defaultOptions() {
     return mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "creature"],
-      width: 500,
-      height: 870,
+      width: 600,
+      height: 780,
       dragDrop: [
         { dragSelector: ".item-list .item", dropSelector: null },
       ],
