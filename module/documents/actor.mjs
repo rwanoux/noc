@@ -63,7 +63,7 @@ export class nocActor extends Actor {
 
   }
   async initCabale() {
-    if (this.id ) {
+    if (this.id) {
       await this.update({
         "system.perditions": {
           "blessures": {
@@ -91,7 +91,7 @@ export class nocActor extends Actor {
             "max": 10
           }
         }
-      })  
+      })
     }
   }
 
@@ -200,14 +200,7 @@ export class nocActor extends Actor {
     if (this.type !== 'autre') return;
 
     this.system.energieNoire.max = 8 - this.system.classeExo.value;
-    for (let dom in this.system.domaines) {
-      this.system.domaines[dom].value = 2 + this.system.energieNoire.max
-    }
-    for (let dom in this.system.talents) {
-      for (let tal in this.system.talents[dom]) {
-        this.system.talents[dom][tal].niveau = 0 + this.system.energieNoire.max
-      }
-    }
+
   }
   async prepareContacts() {
     let length = 0;
@@ -406,7 +399,7 @@ export class nocActor extends Actor {
 
   }
   async noirceurTraitDialog() {
-    let dial =await  nocNoirceurTraits.create(this);
+    let dial = await nocNoirceurTraits.create(this);
     dial.render(true)
 
   }

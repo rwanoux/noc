@@ -62,9 +62,12 @@
         {{#each actor.system.domaines as |domaine domaineId|}}
         <div class="domaine {{domaineId}}">
           <h3 class="flexrow">
-            <input type="number"
-              name="system.domaines.{{domaineId}}.value"
-              value="{{domaine.value}}"/>
+            <span class="domaine-niveau"
+              data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
+              <span class="domaine-control"><a class="fas
+                  fa-add"></a> <a class="fas fa-minus"></a>
+              </span>
+            </span>
             <span>{{domaine.label}}</span>
           </h3>
           {{#each ../actor.system.talents as |groupTalent
@@ -72,9 +75,12 @@
           {{#ifequal talentGroupName domaineId}}
           {{#each groupTalent as |talent talentId|}}
           <div class="flexrow">
-            <input
-              name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
-              value="{{talent.niveau}}" type="number">
+            <span class="talent-niveau"
+              data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
+              <span class="talent-control"><a class="fas
+                  fa-add"></a> <a class="fas fa-minus"></a>
+              </span>
+            </span>
             <a class="rollable roll-talent"
               data-talent-id="{{talentId}}"
               data-domaine-id="{{domaineId}}">
