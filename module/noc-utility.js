@@ -163,18 +163,21 @@ export class nocUtility {
     let actor = game.actors.get(rollData.actorId)
 
     rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
-    if ( rollData.niveauFinalRequis ) {
+    if (rollData.niveauFinalRequis) {
       rollData.margin = Number(rollData.niveauFinal) - Number(rollData.niveauFinalRequis)
-      rollData.isReussite = (rollData.margin>=0)
+      rollData.isReussite = (rollData.margin >= 0)
     }
-    
     let msg = await this.createChatWithRollMode(rollData.alias, {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)
-    })
+    });
+    rollData.roll = foundry.utils.duplicate(rollData.roll);
+    if (rollData.rollBonus) {
+      rollData.rollBonus = foundry.utils.duplicate(rollData.rollBonus);
+    }
     msg.setFlag("world", "rolldata", rollData)
 
     if (rollData.useEspoir && !rollData.espoirApplied) {
-      rollData.espoirApplied = true 
+      rollData.espoirApplied = true
       actor.incDecReserve("espoir", -1)
     }
     if (rollData.useVecu && !rollData.vecuApplied) {
@@ -205,7 +208,7 @@ export class nocUtility {
     rollData.nbBonusDice = nbBonusDice
     rollData.rollBonus = myRollBonus
     // Update du nombre de réussites
-    rollData.nbSuccess += rollData.rollBonus.total 
+    rollData.nbSuccess += rollData.rollBonus.total
     rollData.nbAddDice = 0 // To disable buttons
     await this.computeFinalResult(rollData)
   }
@@ -240,17 +243,17 @@ export class nocUtility {
     }
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
-    
+
     await this.computeFinalResult(rollData)
 
     // Init management
     if (rollData.combatData) {
       // Init management
-      if(rollData.combatData.isInit) {
-        let initValue = rollData.niveauFinal + (maxDiceValue/10)
-        actor.setFlag("world","noc-last-initiative", initValue)
-        let combat = game.combats.get( rollData.combatData.combatId )
-        combat.setInitiative( rollData.combatData.combatantId, initValue)
+      if (rollData.combatData.isInit) {
+        let initValue = rollData.niveauFinal + (maxDiceValue / 10)
+        actor.setFlag("world", "noc-last-initiative", initValue)
+        let combat = game.combats.get(rollData.combatData.combatId)
+        combat.setInitiative(rollData.combatData.combatantId, initValue)
       }
     }
   }
