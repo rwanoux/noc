@@ -119,7 +119,7 @@
   "gridDistance": 1,
   "gridUnits": "m",
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/latest/download/system.json",
-  "download": "https://github.com/rwanoux/noc/releases/latest/download/system.zip",
+  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/V11.0.1/download/system.json",
+  "download": "https://github.com/rwanoux/noc/releases/V11.0.1/download/system.zip",
   "license": "LICENSE.txt"
 }
