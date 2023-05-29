@@ -1,4 +1,5 @@
-div.app.window-app:not(.sidebar-popout) {
+div.app.window-app:not(.sidebar-popout),
+div.app.window-app.sidebar-popout {
 
     input {
         user-select: all;
@@ -120,6 +121,11 @@ div.app.window-app:not(.sidebar-popout) {
 
             }
         }
+    }
+
+    strong {
+        font-weight: bolder;
+        text-shadow: 0 0 2px black
     }
 
 
