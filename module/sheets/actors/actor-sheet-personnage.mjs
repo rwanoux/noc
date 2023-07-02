@@ -99,7 +99,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
         if (!ev.target.classList.contains("cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
-      case ("personnage"|| "rouage"):
+      case "personnage":
+      case "rouage":
         if (!ev.target.classList.contains("empty-contact")) { return };
         this.setContact(dropActor, ev.target.dataset.contactIndex);
         break;
@@ -295,6 +296,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     html.find(".unassignContact").click(this.unassignContact.bind(this))
     html.find(".faveurContact").click(this._onClickFaveur.bind(this))
     html.find('#resetFaveurs').click(this._onResetFaveurs.bind(this));
+    html.find(".contact i.createContact").click(this.createContact.bind(this))
 
 
     html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
@@ -381,7 +383,59 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let effect = await this.actor.effects.get(efId);
     effect.delete();
   }
+  async createContact(ev) {
+    let contactIndex = ev.currentTarget.closest("h3.empty-contact").dataset.contactIndex;
+    console.log(contactIndex);
+    let dial = new Dialog({
+      title: `nouveau contact`,
+      content: `
+          <h4>créer un :<select id="contactType">
+            <option value="personnage">un personnage</option>
+            <option value="rouage">un rouage</option>
+          </select></h4>
+          
+          <div class="flexrow">
+          <p>nommé :</p>
+          <p><input id="contactName" type="text"></p>
+          </div>
+          <div class="flexrow">
+          <p>décris comme :</p>
+          <p><textarea id="contactDesc"></textarea></p>
+          </div>
 
+      `,
+      buttons: {
+        valid: {
+          icon: '<i class="fas fa-check"></i>',
+          label: "Valider",
+          callback: async (html) => {
+            let name = html.find("#contactName")[0].value;
+            let type = html.find("#contactType")[0].options[html.find("#contactType")[0].selectedIndex].value;
+            let desc = html.find("#contactDesc")[0].value
+
+            let newContact = await Actor.create({
+              name: name,
+              type: type,
+              system: {
+                description: desc
+              }
+            });
+            return this.setContact(newContact, contactIndex)
+
+          }
+        },
+        cancel: {
+          icon: '<i class="fas fa-times"></i>',
+          label: "Annuler"
+        }
+      },
+      default: "cancel"
+    }, {
+      classes: ["nocDialog"]
+    });
+    dial.render(true)
+
+  }
   _onResetFaveurs(ev) {
     new Dialog({
       title: `ré-initialiser les faveurs`,
@@ -494,7 +548,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
     let reserveProp = ev.currentTarget.dataset.reserveProperty;
 
 
-    console.log(reserveName, reserveProp)
     new Dialog({
       title: `Ajustement de reserve`,
       content: `
