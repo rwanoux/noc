@@ -727,6 +727,15 @@ div.noc.sheet.actor {
                         text-align: center;
                     }
 
+
+                    .createContact {
+                        border: 1px solid white;
+                        padding: 5px;
+                        border-radius: 50%;
+                        cursor: pointer;
+
+                    }
+
                     #resetFaveurs {
 
                         justify-self: flex-end;

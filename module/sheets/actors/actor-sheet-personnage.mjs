@@ -99,7 +99,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
         if (!ev.target.classList.contains("cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
-      case "personnage", "rouage":
+      case ("personnage"|| "rouage"):
         if (!ev.target.classList.contains("empty-contact")) { return };
         this.setContact(dropActor, ev.target.dataset.contactIndex);
         break;
@@ -628,6 +628,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }).render(true);
   };
   async setContact(actor, index) {
+    console.log("________contact", actor)
     let contactList = this.actor.system.contacts;
     contactList[index] = new NOCContact(actor.id);
     await this.actor.update({

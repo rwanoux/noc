@@ -1,15 +1,12 @@
 {{log this}}
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
 
-
     <nav class="sheet-tabs tabs" data-group="primary">
         {{!-- Default tab is specified in actor-sheet.mjs --}}
         <a class="item" data-tab="principal">Domaines et Talents</a>
         <a class="item" data-tab="description">Fiche de signalement</a>
         <a class="item" data-tab="items">Inventaire</a>
     </nav>
-
-
 
     {{!-- Sheet Body --}}
     <section class="sheet-body">
@@ -98,7 +95,7 @@
                             {{#ifgt reserve.min @index
                             }}unavailable{{/ifgt}}
                             "
-                            {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
+                            {{#ifgt reserve.value @index}}checked{{/ifgt}} />
                         {{/repeat}}
 
                     </div>
@@ -122,7 +119,6 @@
                             {{perdition.statut.label}}
                         </div>
 
-
                         {{#repeat 10}}
                         <input type="checkbox"
                             data-reserve-value="{{@index}}"
@@ -138,7 +134,7 @@
                             {{/ifgt}}
                             "
                             {{#ifgt perdition.value
-                            @index}}checked{{/ifgt}}/>
+                            @index}}checked{{/ifgt}} />
                         {{/repeat}}
 
                     </div>
@@ -151,7 +147,7 @@
                 <div class="resume flexcol">
                     <img class="profile-img" src="{{actor.img}}"
                         data-edit="img"
-                        title="{{actor.name}}" height="100" width="100"/>
+                        title="{{actor.name}}" height="100" width="100" />
                     <div class="form-group character-name">
                         <div>nom :</div>
                         <input type="text" name="name"
@@ -255,10 +251,7 @@
                                 value="{{actor.system.progression}}"
                                 name="system.progression"></h3>
 
-
                     </div>
-
-
 
                 </div>
 
@@ -308,16 +301,12 @@
 
                         </div>
 
-
-
                     </li>
                     {{/each}}
 
                 </ul>
             </div>
         </div>
-
-
 
         {{!-- signalement+cabale+contacts --}}
         <div class="tab description flexrow" data-group="primary"
@@ -426,14 +415,15 @@
                             <p>{{{contact.description}}}</p>
                         </div>
 
-
                         {{else}}
                         <h3 data-tooltip="faites glisser un personnage ou un
                             rouage pour affecter ce contact"
                             class="empty-contact"
                             data-contact-index="{{contactIndex}}">Vide :
                             faites
-                            glisser un contact</h3>
+                            glisser un contact ou créez-en un :
+                            <i class="fas fa-add createContact"></i>
+                        </h3>
                         {{/if}}
                     </div>
                     {{/each}}
@@ -496,7 +486,7 @@
                 Quantars possédés :
                 <input type="number"
                     name="system.quantars"
-                    value="{{actor.system.quantars}}"/>
+                    value="{{actor.system.quantars}}" />
                 <div class="flexrow " data-tooltip="faites glisser les
                     quantars sur les objets qui en ont besoin">
 
@@ -507,15 +497,12 @@
                         item.unused}}unavalaible{{/unless}}"
                         {{#if item.name}}
                         data-tooltip="utilisé dans : {{item.name}}"
-                        {{/if}}
-
-                        />
+                        {{/if}} />
                     {{/each}}
                 </div>
             </h3>
 
             <ul class="item-types flexrow">
-
 
                 {{#each actor.itemTypes as |group groupIndex|}}
                 {{#ifnotequal groupIndex "archetype"}}
@@ -548,7 +535,7 @@
                                 {{#if item.system.needQuantar}}
                                 <img
                                     src="systems/noc/asset/default_icons/quantar.webp"
-                                    alt=""
+                                    alt
                                     class="needQuantar {{#if
                                     item.system.quantar}}
                                     quantarUsed{{/if}}">
@@ -585,7 +572,6 @@
                 {{/ifnotequal}}
                 {{/each}}
             </ul>
-
 
         </div>
     </section>
