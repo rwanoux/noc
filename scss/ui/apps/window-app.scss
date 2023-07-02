@@ -131,6 +131,12 @@ div.app.window-app.sidebar-popout {
 
 }
 
+div.app.window-app.sidebar-popout {
+    section.window-content {
+        background: url(../asset/images/fondidentiteconfidentiel.webp);
+    }
+}
+
 #chat-notification {
     @keyframes bounce {
         0% {
