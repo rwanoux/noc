@@ -36,6 +36,7 @@
       "extensions": [
         "css",
         "hbs",
+        "html",
         "mjs",
         "js",
         "json"
