@@ -5,9 +5,12 @@
         <input type="text" name="name" value="{{actor.name}}">
       </h1>
       <div class="flexrow">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img"
-          title="{{actor.name}}" />
-        <div>
+        <div class="profile-image">
+          <img src="{{actor.img}}" data-edit="img"
+            title="{{actor.name}}" />
+        </div>
+
+        <div class="description">
           <h2>description</h2>
           {{editor actor.system.description
           target="system.description"
@@ -15,8 +18,6 @@
           engine="prosemirror" collaborate=false}}
         </div>
       </div>
-
-
 
     </header>
     <div class="tab principal ">
@@ -58,7 +59,6 @@
         </div>
         {{/each}}
 
-
       </div>
       <div class="flexrow">
         <div class="rouage-reserves">
@@ -86,7 +86,7 @@
               {{#ifequal @index 9}}step{{/ifequal}}
               {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
               "
-              {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
+              {{#ifgt reserve.value @index}}checked{{/ifgt}} />
             {{/repeat}}
 
           </div>
@@ -110,7 +110,7 @@
               {{#ifequal @index 9}}step{{/ifequal}}
               {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
               "
-              {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
+              {{#ifgt perdition.value @index}}checked{{/ifgt}} />
             {{/repeat}}
 
           </div>
@@ -149,7 +149,7 @@
                     {{#if item.system.needQuantar}}
                     <img
                       src="systems/noc/asset/default_icons/quantar.webp"
-                      alt=""
+                      alt
                       class="needQuantar {{#if
                       item.system.quantar}}
                       quantarUsed{{/if}}">
@@ -190,7 +190,5 @@
       </div>
     </div>
   </section>
-
-
 
 </form>

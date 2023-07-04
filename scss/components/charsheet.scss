@@ -902,6 +902,7 @@ div.noc.sheet.actor {
         .window-content {
             header {
                 background: none;
+                overflow: hidden;
 
                 h1 {
                     input {
@@ -912,9 +913,24 @@ div.noc.sheet.actor {
 
                 }
 
-                img {
-                    max-width: 30%;
+                .profile-image {
+                    margin: 0% 3%;
+                    flex: 0.3;
+                    width: 30%;
+                    align-items: end;
+                    position: relative;
+
+                    img {
+                        position: absolute;
+                        top: 5%;
+                        height: auto;
+                        max-height: 90%;
+
+                    }
                 }
+
+
+
             }
 
             section.sheet-body div.tab.principal .stats.rouage .domaine {
