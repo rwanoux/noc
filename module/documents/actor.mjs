@@ -456,7 +456,7 @@ export class nocActor extends Actor {
 
   /* -------------------------------------------- */
   incDecReserve(reserveKey, value) {
-    let reserve = duplicate(this.system.reserves[reserveKey])
+    let reserve = foundry.utils.duplicate(this.system.reserves[reserveKey])
     reserve.value += value
     console.log("Updating: ", reserve)
     this.update({ [`system.reserves.${reserveKey}`]: reserve })
@@ -498,8 +498,8 @@ export class nocActor extends Actor {
     rollData.title = "Talent"
     rollData.mode = "talent"
     rollData.combatData = combatData
-    rollData.domaine = duplicate(this.system.domaines[domaineId])
-    rollData.talent = duplicate(this.system.talents[domaineId][talentId])
+    rollData.domaine = foundry.utils.duplicate(this.system.domaines[domaineId])
+    rollData.talent = foundry.utils.duplicate(this.system.talents[domaineId][talentId])
     this.startRoll(rollData)
   }
 
@@ -511,9 +511,9 @@ export class nocActor extends Actor {
       // Specific stuff
       rollData.title = "Arme"
       rollData.mode = "arme"
-      rollData.arme = duplicate(item)
-      rollData.domaine = duplicate(this.system.domaines['action'])
-      rollData.talent = duplicate(this.system.talents['action']['combat'])
+      rollData.arme = foundry.utils.duplicate(item)
+      rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
+      rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
       rollData.niveauRequis = (item.system.adistance) ? 0 : 1
       rollData.niveauFinalRequis = rollData.niveauRequis
       rollData.modCouvert = 0

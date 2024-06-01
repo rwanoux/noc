@@ -80,6 +80,15 @@ Hooks.once('init', async function () {
   CONFIG.Item.documentClass = nocItem;
   CONFIG.Combat.documentClass = nocCombat;
 
+  //modifying compendium banners
+  CONFIG.Actor.compendiumBanner = "systems/noc/asset/ui/actor_tab.png"
+  CONFIG.Cards.compendiumBanner = "systems/noc/asset/ui/card_tab.png"
+  CONFIG.Item.compendiumBanner = "systems/noc/asset/ui/item_tab.png"
+  CONFIG.JournalEntry.compendiumBanner = "systems/noc/asset/ui/journal_tab.png"
+  CONFIG.Scene.compendiumBanner = "systems/noc/asset/ui/scene_tab.png"
+  CONFIG.RollTable.compendiumBanner = "systems/noc/asset/ui/table_tab.png"
+  CONFIG.Macro.compendiumBanner = "systems/noc/asset/ui/macro_tab.png"
+
   // Register sheet application classes
   Actors.unregisterSheet("core", ActorSheet);
   Actors.registerSheet("noc", nocActorSheetPersonnage, {

@@ -28,7 +28,7 @@ export default class effetFielCreator extends FormApplication {
             menace: fielSettings.menace,
             actualEffects: fielSettings.effetActif
         };
-        return mergeObject(super.getData(), data);
+        return foundry.utils.mergeObject(super.getData(), data);
     }
     activateListeners(html) {
         html.find('a#cancelEffects')[0].addEventListener("click", () => { this.close() })
@@ -56,7 +56,7 @@ export default class effetFielCreator extends FormApplication {
                 }
                 let notes = c.closest('.flexrow').getElementsByClassName('gmNotes')[0].value
                 effect.gmNotes = notes;
-                effect.id = randomID();
+                effect.id = foundry.utils.randomID();
                 choosedEffects[effect.id] = effect
             }
         })
@@ -84,7 +84,7 @@ export default class effetFielCreator extends FormApplication {
             fielSettings.effetActif = newEffects
 
         } else {
-            fielSettings.effetActif = mergeObject(fielSettings.effetActif, newEffects);
+            fielSettings.effetActif = foundry.utils.mergeObject(fielSettings.effetActif, newEffects);
         };
         await game.settings.set("noc", "compteurFiel", fielSettings);
         ui.compteur.render(true)

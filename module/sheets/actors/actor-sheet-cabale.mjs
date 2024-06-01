@@ -9,7 +9,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "cabale"],
       width: 900,
       height: 700,
@@ -73,7 +73,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
       return false
     };
     // Activer la cabale chez cet acteur
-    dropActor.setCabale(duplicate(this.object))
+    dropActor.setCabale(foundry.utils.duplicate(this.object))
     console.log(dropActor)
   }
   _onDropItem(ev, data) {

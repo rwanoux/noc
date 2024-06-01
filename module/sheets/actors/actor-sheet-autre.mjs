@@ -9,7 +9,7 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "autre"],
       width: 600,
       height: 780,

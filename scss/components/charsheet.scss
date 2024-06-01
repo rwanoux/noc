@@ -52,6 +52,7 @@ div.noc.sheet.actor {
         nav.sheet-tabs {
             margin: 0;
             max-height: 3em;
+            font-size: smaller;
 
             a.item {
                 background: url(../asset/images/fondmain.webp);
@@ -727,6 +728,15 @@ div.noc.sheet.actor {
                         text-align: center;
                     }
 
+
+                    .createContact {
+                        border: 1px solid white;
+                        padding: 5px;
+                        border-radius: 50%;
+                        cursor: pointer;
+
+                    }
+
                     #resetFaveurs {
 
                         justify-self: flex-end;
@@ -892,6 +902,7 @@ div.noc.sheet.actor {
         .window-content {
             header {
                 background: none;
+                overflow: hidden;
 
                 h1 {
                     input {
@@ -902,9 +913,24 @@ div.noc.sheet.actor {
 
                 }
 
-                img {
-                    max-width: 30%;
+                .profile-image {
+                    margin: 0% 3%;
+                    flex: 0.3;
+                    width: 30%;
+                    align-items: end;
+                    position: relative;
+
+                    img {
+                        position: absolute;
+                        top: 5%;
+                        height: auto;
+                        max-height: 90%;
+
+                    }
                 }
+
+
+
             }
 
             section.sheet-body div.tab.principal .stats.rouage .domaine {

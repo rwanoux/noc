@@ -2,11 +2,10 @@
   "id": "noc",
   "title": "NOC",
   "description": "The Earth has been locked inside an object from the depths of space, called the Artifact, which isolates it from the light of the Sun. If its purpose remains unknown, protection according to some prisons according to others, it has led humans to regress and to regroup in separate cities, the Blocks. The game proposes to play citizens who, beyond the Administration's propaganda, doubt what surrounds them and what they are told as truth, in a dystopian world where they will have to try to rebuild a future for humanity.",
-  "version": "10.0.16",
+  "version": "12.0.0",
   "compatibility": {
     "minimum": "10",
-    "verified": "10",
-    "maximum": "10"
+    "verified": "12"
   },
   "authors": [
     {
@@ -25,6 +24,24 @@
       "flags": {}
     }
   ],
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp"
+    }
+  ],
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "hbs",
+        "html",
+        "mjs",
+        "js",
+        "json"
+      ]
+    }
+  },
   "esmodules": [
     "module/noc.mjs"
   ],
@@ -99,10 +116,12 @@
       "flags": {}
     }
   ],
-  "gridDistance": 1,
-  "gridUnits": "m",
+  "grid": {
+    "distance": 1,
+    "units": "m"
+  },
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/latest/download/system.json",
-  "download": "https://github.com/rwanoux/noc/releases/latest/download/system.zip",
+  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/V12.0.0/download/system.json",
+  "download": "https://github.com/rwanoux/noc/releases/V12.0.0/download/system.zip",
   "license": "LICENSE.txt"
 }

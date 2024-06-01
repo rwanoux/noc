@@ -228,7 +228,9 @@ div.sidebar-popout {
         h3,
         a {
             background-image: none;
-            text-shadow: 0px 0px 5px white
+            -webkit-text-stroke-width: 1px;
+            -webkit-text-stroke-color: rgb(104, 104, 104);
+
         }
     }
 
@@ -246,10 +248,6 @@ div.sidebar-popout {
 
         a[data-tab],
         a.collapse {
-            i {
-                display: none;
-
-            }
 
             position:relative;
             border-radius: 0px;
@@ -389,15 +387,28 @@ div#sidebar.collapsed {
     }
 }
 
-#compendium {
+#compendium,
+#compendium-popout {
     .compendium-footer {
         color: rgb(63, 63, 63);
     }
 
     .status-icons {
-        text-shadow: none;
+        text-shadow: 0px 0px 5px white;
         color: black;
         top: 3px;
+    }
+
+    span.source {
+        color: white
+    }
+
+    li.compendium:hover {
+        .status-icons {
+            text-shadow: 0px 0px 2px white;
+            color: gray;
+
+        }
     }
 }
 
@@ -571,12 +582,19 @@ div#sidebar.collapsed {
 
             button[type="button"],
             button[type="button"].pm-dropdown span {
+                text-shadow: none;
+
                 max-width: min-content;
                 font-size: 10px;
                 padding: 0 3px;
-                margin: unset
+                margin: unset;
             }
         }
+    }
+
+    strong {
+        font-weight: bolder;
+        text-shadow: 0 0 2px black
     }
 }
 
