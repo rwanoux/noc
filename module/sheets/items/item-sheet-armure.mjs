@@ -2,7 +2,7 @@
 export class nocItemSheetArmure extends ItemSheet {
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "item"],
       width: 300,
       height: 580,

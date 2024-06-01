@@ -12,7 +12,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
   /** @override */
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "actor", "personnage"],
       width: 850,
       height: 710,
@@ -602,7 +602,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     // Get the type of item to create.
     const type = header.dataset.itemType;
     // Grab any data associated with this control.
-    const data = duplicate(header.dataset);
+    const data = foundry.utils.duplicate(header.dataset);
     // Initialize a default name.
     const name = `${type.capitalize()} (indéfini)`;
     // Prepare the item object.

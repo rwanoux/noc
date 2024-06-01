@@ -197,7 +197,7 @@ export class nocUtility {
     }
 
     rollData.formulaBonus = `${nbBonusDice}d10cs>=8`
-    let myRollBonus = new Roll(rollData.formulaBonus, actor.system).roll({ async: false })
+    let myRollBonus = await new Roll(rollData.formulaBonus, actor.system).roll()
     await this.showDiceSoNice(myRollBonus, game.settings.get("core", "rollMode"))
     for (let result of myRollBonus.terms[0].results) {
       if (result.result == 1) {
@@ -224,7 +224,7 @@ export class nocUtility {
     // Jetde base
     rollData.nbDesTotal = rollData.nbDesDomaine + ((rollData.useEspoir) ? 3 : 0);
     rollData.formula = `${rollData.nbDesTotal}d10cs>=8`
-    let myRoll = new Roll(rollData.formula, actor.system).roll({ async: false })
+    let myRoll = await new Roll(rollData.formula, actor.system).roll()
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
 
     // Dés additionnels
@@ -307,7 +307,7 @@ export class nocUtility {
 
   /* -------------------------------------------- */
   static blindMessageToGM(chatOptions) {
-    let chatGM = duplicate(chatOptions);
+    let chatGM = foundry.utils.duplicate(chatOptions);
     chatGM.whisper = this.getUsers(user => user.isGM);
     chatGM.content = "Blinde message of " + game.user.name + "<br>" + chatOptions.content;
     console.log("blindMessageToGM", chatGM);

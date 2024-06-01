@@ -5,7 +5,7 @@ import { nocItemSheetTheme } from "./item-sheet-theme.mjs";
 export class nocItemSheetArchetype extends ItemSheet {
 
   static get defaultOptions() {
-    return mergeObject(super.defaultOptions, {
+    return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "item"],
       width: 750,
       height: 500,
