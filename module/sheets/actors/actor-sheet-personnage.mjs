@@ -367,7 +367,7 @@ export class nocActorSheetPersonnage extends ActorSheet {
     await this.actor.update(update)
   }
   async _onClickPerso(ev) {
-    let talents = game.system.template.Actor.templates.talents.talents;
+    let talents = game.system.documentTypes.Actor.templates.talents.talents;
     let actor = this.actor;
     let dial = await nocPersonnalisation.create(actor, talents);
     dial.render(true)

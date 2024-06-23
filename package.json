@@ -5,6 +5,7 @@
   "scripts": {
     "launch Foundry10": "cd C:/Program Files/Foundry Virtual Tabletop_10/resources/app && node main.js",
     "launch Foundry11": "cd C:/Program Files/Foundry Virtual Tabletop_V11/resources/app && node main.js",
+    "launch Foundry12": "cd C:/Program Files/Foundry Virtual Tabletop_V12/resources/app && node main.js",
     "watch": "gulp watch"
   },
   "browserslist": [

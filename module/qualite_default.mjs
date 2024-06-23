@@ -28,7 +28,7 @@ export class Quality {
 
         let dialogData = {
             type: this.isDefault ? "défaut" : "qualité",
-            talents: game.system.template.Actor.templates.talents.talents,
+            talents: game.system.documentTypes.Actor.templates.talents.talents,
             actor: await this.getActor()
         };
         let content = await renderTemplate('systems/noc/templates/window_app/dialog-quality.hbs', dialogData)
@@ -84,7 +84,7 @@ export class Quality {
         this.effectData = {};
         this.effectId = "";
 
-       await  this.updateActor()
+        await this.updateActor()
     }
     async createEffect() {
         console.log(this)
