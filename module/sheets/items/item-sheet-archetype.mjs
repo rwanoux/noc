@@ -32,7 +32,7 @@ export class nocItemSheetArchetype extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-    context.systemTemplate = game.system.documentTypes;
+    context.systemTemplate = game.system.template;
     // Opportunistic init
     if (!this.item.system.talentsMineurs["erudition"]) {
       this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.templates.talents.talents)

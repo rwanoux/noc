@@ -46,7 +46,7 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
 
   async createEffectDial() {
     let dialogData = {
-      talents: game.system.documentTypes.Actor.templates.talents.talents,
+      talents: game.system.template.Actor.templates.talents.talents,
       actor: this.actor
     };
     let content = await renderTemplate('systems/noc/templates/window_app/dialog-surcharge.hbs', dialogData)

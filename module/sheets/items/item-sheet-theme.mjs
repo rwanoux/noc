@@ -22,7 +22,7 @@ export class nocItemSheetTheme extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-    context.systemTemplate = game.system.documentTypes;
+    context.systemTemplate = game.system.template;
 
     this.options.editable = !(context.document.system.origin && context.document.system.origin == "embeddedItem")
     this.options.editable = (context.document.parent) ? false : true

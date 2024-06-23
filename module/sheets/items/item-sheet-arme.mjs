@@ -22,7 +22,7 @@ export class nocItemSheetArme extends ItemSheet {
   getData() {
     // Retrieve base data structure.
     const context = super.getData();
-    context.systemTemplate = game.system.documentTypes;
+    context.systemTemplate = game.system.template;
     return context;
   }
 

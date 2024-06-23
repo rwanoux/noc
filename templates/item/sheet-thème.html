@@ -5,13 +5,13 @@
 		<input class="item-name" name="name" type="text" value="{{document.name}}" placeholder="Name"/>
 		{{#if item.actor}}
 			<h2>Attention ! ce thème est déjà dans un acteur, les modifications ne
-				      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
-				      Foundry</h2>
+																								      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
+																								      Foundry</h2>
 		{{/if}}
 		<div class="talents-mineurs">
 			<h4>talents</h4>
 			<div class="talents-mineurs-grid">
-				{{#each systemTemplate.Actor.templates.talents.talents as |domaine
+				{{#each systemTemplate.Actor.personnage.talents as |domaine
         domaineId|}}
 					<div class="flexcol domaine-container">
 						<h5>{{domaineId}}</h5>
