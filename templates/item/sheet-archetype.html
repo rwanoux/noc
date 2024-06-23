@@ -1,115 +1,94 @@
 <form class="{{cssClass}}" autocomplete="off">
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-    {{#if item.actor}}
-    <h2>Attention ! cet archetype est déjà dans un acteur, les modifications ne
-      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
-      Foundry</h2>
-    {{/if}}
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		{{#if item.actor}}
+			<h2>Attention ! cet archetype est déjà dans un acteur, les modifications ne
+								      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
+								      Foundry</h2>
+		{{/if}}
 
 
+		<div class="flexrow">
 
-    <div class="flexrow">
 
+			<div class="img-container">
+				<input class="item-name" name="name" type="text" value="{{document.name}}" placeholder="Name"/>
 
-      <div class="img-container">
-        <input class="item-name" name="name" type="text" value="{{document.name}}"
-        placeholder="Name"/>
-  
-        <img class="item-img" src="{{document.img}}" data-edit="img"
-          title="{{document.name}}" />
-        <h4>description</h4>
-        {{editor item.system.description target="system.description"
+				<img class="item-img" src="{{document.img}}" data-edit="img" title="{{document.name}}"/>
+				<h4>description</h4>
+				{{editor item.system.description target="system.description"
         button=true editable=editable
         engine="prosemirror" collaborate=false}}
-      </div>
-      <div class="arch-stats">
+			</div>
+			<div class="arch-stats">
 
-        <h4>Talent Majeur (niv 2)</h4>
-        <select name="system.talentMajeur">
-          <option value="null">Aucun</option>
-          {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+				<h4>Talent Majeur (niv 2)</h4>
+				<select name="system.talentMajeur">
+					<option value="null">Aucun</option>
+					{{#each systemTemplate.Actor.personnage.talents as |domaine
           domaineId|}}
-          <optgroup label="{{domaineId}}">
-            {{#each domaine as |talent talentId|}}
+						<optgroup label="{{domaineId}}">
+							{{#each domaine as |talent talentId|}}
 
-            <option value="{{domaineId}}.{{talentId}}"
-              {{#ifequal @root.item.system.talentMajeur (concat domaineId "."
-              talentId)}}
-              selected
-              {{/ifequal}}>
-              {{talent.label}}
-            </option>
-            {{/each}}
-          </optgroup>
-          {{/each}}
-        </select>
+								<option value="{{domaineId}}.{{talentId}}" {{#ifequal @root.item.system.talentMajeur (concat domaineId "." talentId)}} selected {{/ifequal}}>
+									{{talent.label}}
+								</option>
+							{{/each}}
+						</optgroup>
+					{{/each}}
+				</select>
 
-        <h4>affinités</h4>
-        <div class="flexcol">
+				<h4>affinités</h4>
+				<div class="flexcol">
 
-          {{#each item.system.affinite as |domaine domaineId|}}
-          <div class="flexrow">
-            <input name="system.affinite.{{domaineId}}.active"
-              class="affinite-check"
-              type="checkbox"
-              {{checked domaine.active }}>
-            <span>{{domaineId}}</span>
-            {{#if domaine.active}}
-            <input type="number" name="system.affinite.{{domaineId}}.value"
-              value="{{domaine.value}}"
-              class="affinite-value">
-            {{/if}}
+					{{#each item.system.affinite as |domaine domaineId|}}
+						<div class="flexrow">
+							<input name="system.affinite.{{domaineId}}.active" class="affinite-check" type="checkbox" {{checked domaine.active }}>
+							<span>{{domaineId}}</span>
+							{{#if domaine.active}}
+								<input type="number" name="system.affinite.{{domaineId}}.value" value="{{domaine.value}}" class="affinite-value">
+							{{/if}}
 
-          </div>
-          {{/each}}
-        </div>
-        <div class="themes drop-area">
-          <h4>thèmes possibles</h4>
-          {{#each item.flags.noc.linkedThemes as |theme index|}}
-          <div class="flexrow">
-            <input data-tooltip="choisir ce theme" type="checkbox"
-              data-action="choose-theme"
-              data-theme-id="{{theme.id}}"
-              {{checked theme.choosed}}>
-            <span>{{theme.name}}</span>
-            <div class="controls">
-              <a class="fas fa-trash"
-                data-tooltip="supprimer ce theme de l'archétype"
-                data-action="delete-theme" data-theme-id="{{theme.id}}"></a>
-              <a class="fa-solid fa-edit"
-                data-tooltip="ouvrir les details du thème"
-                data-action="open-theme" data-theme-id="{{theme.id}}"></a>
-            </div>
-          </div>
-          {{/each}}
+						</div>
+					{{/each}}
+				</div>
+				<div class="themes drop-area">
+					<h4>thèmes possibles</h4>
+					{{#each item.flags.noc.linkedThemes as |theme index|}}
+						<div class="flexrow">
+							<input data-tooltip="choisir ce theme" type="checkbox" data-action="choose-theme" data-theme-id="{{theme.id}}" {{checked theme.choosed}}>
+							<span>{{theme.name}}</span>
+							<div class="controls">
+								<a class="fas fa-trash" data-tooltip="supprimer ce theme de l'archétype" data-action="delete-theme" data-theme-id="{{theme.id}}"></a>
+								<a class="fa-solid fa-edit" data-tooltip="ouvrir les details du thème" data-action="open-theme" data-theme-id="{{theme.id}}"></a>
+							</div>
+						</div>
+					{{/each}}
 
-        </div>
-      </div>
-      <div class="talents-mineurs">
+				</div>
+			</div>
+			<div class="talents-mineurs">
 
-        <h4>talents</h4>
-        <div class="talents-mineurs-grid">
-          {{#each systemTemplate.Actor.templates.talents.talents as |domaine domaineId|}}
-          <div class="flexcol domaine-container">
-            <h5>{{domaineId}}</h5>
-            {{#each domaine as |talent talentId|}}
-            <div class="flexrow">
-              <a data-value="0"
-                class="talent-check" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
-                  class="fa-solid fa-square"></i></a>{{talent.label}}
-            </div>
-            {{/each}}
-          </div>
-          {{/each}}
-        </div>
+				<h4>talents</h4>
+				<div class="talents-mineurs-grid">
+					{{#each systemTemplate.Actor.personnage.talents as |domaine domaineId|}}
+						<div class="flexcol domaine-container">
+							<h5>{{domaineId}}</h5>
+							{{#each domaine as |talent talentId|}}
+								<div class="flexrow">
+									<a data-value="0" class="talent-check" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}">
+										<i class="fa-solid fa-square"></i>
+									</a>
+									{{talent.label}}
+								</div>
+							{{/each}}
+						</div>
+					{{/each}}
+				</div>
 
-      </div>
-    </div>
+			</div>
+		</div>
 
 
-
-
-
-  </section>
+	</section>
 </form>
