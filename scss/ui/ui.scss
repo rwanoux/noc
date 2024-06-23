@@ -238,26 +238,35 @@ div.sidebar-popout {
     nav#sidebar-tabs {
         border: none;
         overflow: visible;
-        min-height: 3rem;
         background: url('../asset/images/fondidentiteconfidentiel.webp');
         background-size: 200% 200%;
         position: absolute;
         bottom: 0;
         right: 0;
         z-index: +1;
+        height: 3rem;
+
+        i {
+            opacity: 0;
+        }
+
+        .collapse i {
+            opacity: 1;
+        }
 
         a[data-tab],
         a.collapse {
 
-            position:relative;
+            position: relative;
             border-radius: 0px;
             margin: 0;
             padding: 0;
-            top:0;
+            top: 0;
             min-width: 3rem;
             max-height: 3rem;
             border: none;
-            transition:0.3s;
+            transition: 0.3s;
+
 
 
             &.active {

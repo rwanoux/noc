@@ -1,33 +1,31 @@
 <form class="{{cssClass}}" autocomplete="off">
-
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
-    <input class="item-name" name="name" type="text" value="{{document.name}}"
-      placeholder="Name"/>
-    {{#if item.actor}}
-    <h2>Attention ! ce thème est déjà dans un acteur, les modifications ne
-      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
-      Foundry</h2>
-    {{/if}}
-    <div class="talents-mineurs">
-      <h4>talents</h4>
-      <div class="talents-mineurs-grid">
-        {{#each systemTemplate.Actor.templates.talents.talents as |domaine
+	{{log this}}
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
+		<input class="item-name" name="name" type="text" value="{{document.name}}" placeholder="Name"/>
+		{{#if item.actor}}
+			<h2>Attention ! ce thème est déjà dans un acteur, les modifications ne
+				      seront pas répercutés sur l'acteur. Ceci est du à une limitation de
+				      Foundry</h2>
+		{{/if}}
+		<div class="talents-mineurs">
+			<h4>talents</h4>
+			<div class="talents-mineurs-grid">
+				{{#each systemTemplate.Actor.templates.talents.talents as |domaine
         domaineId|}}
-        <div class="flexcol domaine-container">
-          <h5>{{domaineId}}</h5>
-          {{#each domaine as |talent talentId|}}
-          <div class="flexrow">
-            <a data-value="0"
-              class="talent-check" type="checkbox"
-              data-domaine="{{domaineId}}" data-talent="{{talentId}}"><i
-                class="fa-solid fa-square"></i></a>
-            {{talent.label}}
-          </div>
-          {{/each}}
-        </div>
-        {{/each}}
-      </div>
-    </div>
-  </section>
+					<div class="flexcol domaine-container">
+						<h5>{{domaineId}}</h5>
+						{{#each domaine as |talent talentId|}}
+							<div class="flexrow">
+								<a data-value="0" class="talent-check" type="checkbox" data-domaine="{{domaineId}}" data-talent="{{talentId}}">
+									<i class="fa-solid fa-square"></i>
+								</a>
+								{{talent.label}}
+							</div>
+						{{/each}}
+					</div>
+				{{/each}}
+			</div>
+		</div>
+	</section>
 </form>
