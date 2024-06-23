@@ -1,578 +1,517 @@
 {{log this}}
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
 
-    <nav class="sheet-tabs tabs" data-group="primary">
-        {{!-- Default tab is specified in actor-sheet.mjs --}}
-        <a class="item" data-tab="principal">Domaines et Talents</a>
-        <a class="item" data-tab="description">Fiche de signalement</a>
-        <a class="item" data-tab="items">Inventaire</a>
-    </nav>
+	<nav class="sheet-tabs tabs" data-group="primary">
+		{{!-- Default tab is specified in actor-sheet.mjs --}}
+		<a class="item" data-tab="principal">Domaines et Talents</a>
+		<a class="item" data-tab="description">Fiche de signalement</a>
+		<a class="item" data-tab="items">Inventaire</a>
+	</nav>
 
-    {{!-- Sheet Body --}}
-    <section class="sheet-body">
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
 
-        <div class="tab principal" data-group="primary"
-            data-tab="principal">
-            <aside class="traits">
-                <ul>
-                    {{#each actor.system.traits as |trait id|}}
-                    <li class="perditionEffect">
-                        <h4 data-tooltip="{{trait.description}}">
-                            {{trait.label}}
-                            <a class="delete-trait fas fa-trash"
-                                data-trait-label="{{trait.label}}"></a>
-                        </h4>
-                    </li>
-                    {{/each}}
+		<div class="tab principal" data-group="primary" data-tab="principal">
+			<aside class="traits">
+				<ul>
+					{{#each actor.system.traits as |trait id|}}
+						<li class="perditionEffect">
+							<h4 data-tooltip="{{trait.description}}">
+								{{trait.label}}
+								<a class="delete-trait fas fa-trash" data-trait-label="{{trait.label}}"></a>
+							</h4>
+						</li>
+					{{/each}}
 
-                </ul>
+				</ul>
 
-            </aside>
+			</aside>
 
-            <div class="flexrow">
-                <div class="stats">
-                    <div class="fond"></div>
+			<div class="flexrow">
+				<div class="stats">
+					<div class="fond"></div>
 
-                    <!-- DOMAINES ET TALENTS -->
-                    {{#each actor.system.domaines as |domaine domaineId|}}
-                    <div class="domaine {{domaineId}}">
-                        <h3 class="flexrow">
-                            <span class="domaine-niveau"
-                                data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
-                                <span class="domaine-control"><a class="fas
-                                        fa-add"></a> <a class="fas fa-minus"></a>
-                                </span>
-                            </span>
-                            <span>{{domaine.label}}</span>
-                        </h3>
-                        {{#each ../actor.system.talents as |groupTalent
+					<!-- DOMAINES ET TALENTS -->
+					{{#each actor.system.domaines as |domaine domaineId|}}
+						<div class="domaine {{domaineId}}">
+							<h3 class="flexrow">
+								<span class="domaine-niveau" data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
+									<span class="domaine-control">
+										<a class="fas
+																						                                        fa-add"></a>
+										<a class="fas fa-minus"></a>
+									</span>
+								</span>
+								<span>{{domaine.label}}</span>
+							</h3>
+							{{#each ../actor.system.talents as |groupTalent
                         talentGroupName|}}
-                        {{#ifequal talentGroupName domaineId}}
-                        {{#each groupTalent as |talent talentId|}}
-                        <div class="flexrow">
-                            <span class="talent-niveau"
-                                data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
-                                <span class="talent-control"><a class="fas
-                                        fa-add"></a> <a class="fas fa-minus"></a>
-                                </span>
-                            </span>
-                            <a class="rollable roll-talent"
-                                data-talent-id="{{talentId}}"
-                                data-domaine-id="{{domaineId}}">
-                                <label for="{{talent.label}}">{{talent.label}}</label>
-                            </a>
-                        </div>
-                        {{/each}}
-                        {{/ifequal}}
-                        {{/each}}
-                    </div>
-                    {{/each}}
-                    <!-- RESERVES-->
-                    {{#each actor.system.reserves as |reserve reserveId|}}
-                    <div class="reserve {{reserveId}}">
-                        <h4>{{reserve.label}}
-                            {{#ifequal reserveId "vecu"}}
+								{{#ifequal talentGroupName domaineId}}
+									{{#each groupTalent as |talent talentId|}}
+										<div class="flexrow">
+											<span class="talent-niveau" data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
+												<span class="talent-control">
+													<a class="fas
+																												                                        fa-add"></a>
+													<a class="fas fa-minus"></a>
+												</span>
+											</span>
+											<a class="rollable roll-talent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
+												<label for="{{talent.label}}">{{talent.label}}</label>
+											</a>
+										</div>
+									{{/each}}
+								{{/ifequal}}
+							{{/each}}
+						</div>
+					{{/each}}
+					<!-- RESERVES-->
+					{{#each actor.system.reserves as |reserve reserveId|}}
+						<div class="reserve {{reserveId}}">
+							<h4>{{reserve.label}}
+								{{#ifequal reserveId "vecu"}}
 
-                            <a class="setMax"
-                                data-tooltip="ajuster le max"
-                                data-reserve-name="{{reserve.label}}"
-                                data-reserve-property="system.reserves.{{reserveId}}.max">
-                                <i class="fas fa-cog"></i>
-                            </a>
-                            {{/ifequal}}
-                        </h4>
+									<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
+										<i class="fas fa-cog"></i>
+									</a>
+								{{/ifequal}}
+							</h4>
 
-                        {{#repeat 10}}
-                        <input type="checkbox"
-                            data-reserve-value="{{@index}}"
-                            data-reserve-property="system.reserves.{{reserveId}}.value"
-                            class="
-                            {{#ifequal @index 4}}step{{/ifequal}}
-                            {{#ifequal @index 7}}step{{/ifequal}}
-                            {{#ifequal @index 9}}step{{/ifequal}}
-                            {{#ifgteq @index reserve.max
-                            }}unavailable{{/ifgteq}}
-                            {{#ifgt reserve.min @index
-                            }}unavailable{{/ifgt}}
-                            "
-                            {{#ifgt reserve.value @index}}checked{{/ifgt}} />
-                        {{/repeat}}
+							{{#repeat 10}}
+								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value" class="
+																		                            {{#ifequal @index 4}}step{{/ifequal}}
+																		                            {{#ifequal @index 7}}step{{/ifequal}}
+																		                            {{#ifequal @index 9}}step{{/ifequal}}
+																		                            {{#ifgteq @index reserve.max
+																		                            }}unavailable{{/ifgteq}}
+																		                            {{#ifgt reserve.min @index
+																		                            }}unavailable{{/ifgt}}
+																		                            " {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
+							{{/repeat}}
 
-                    </div>
-                    {{/each}}
-                    <!-- PERDITIONS-->
-                    {{#each actor.system.perditions as |perdition
+						</div>
+					{{/each}}
+					<!-- PERDITIONS-->
+					{{#each actor.system.perditions as |perdition
                     perditionId|}}
-                    <div class="reserve perdition {{perditionId}}">
-                        <h4>{{perdition.label}}
-                            <a class="setMax"
-                                data-tooltip="ajuster le max"
-                                data-reserve-name="{{perdition.label}}"
-                                data-reserve-property="system.perditions.{{perditionId}}.max">
-                                <i class="fas fa-cog"></i>
-                            </a>
-                        </h4>
-                        <div class="statut"
-                            {{#if perdition.statut.description}}
-                            data-tooltip="{{perdition.statut.description}}"
-                            {{/if}}>
-                            {{perdition.statut.label}}
-                        </div>
+						<div class="reserve perdition {{perditionId}}">
+							<h4>{{perdition.label}}
+								<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{perdition.label}}" data-reserve-property="system.perditions.{{perditionId}}.max">
+									<i class="fas fa-cog"></i>
+								</a>
+							</h4>
+							<div class="statut" {{#if perdition.statut.description}} data-tooltip="{{perdition.statut.description}}" {{/if}}>
+								{{perdition.statut.label}}
+							</div>
 
-                        {{#repeat 10}}
-                        <input type="checkbox"
-                            data-reserve-value="{{@index}}"
-                            data-reserve-property="system.perditions.{{perditionId}}.value"
-                            class="
-                            {{#ifequal @index 4}}step{{/ifequal}}
-                            {{#ifequal @index 7}}step{{/ifequal}}
-                            {{#ifequal @index 9}}step{{/ifequal}}
-                            {{#ifgteq @index perdition.max
-                            }}unavailable{{/ifgteq}}
-                            {{#ifgt perdition.min @index}}
-                            unavailable
-                            {{/ifgt}}
-                            "
-                            {{#ifgt perdition.value
-                            @index}}checked{{/ifgt}} />
-                        {{/repeat}}
+							{{#repeat 10}}
+								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.{{perditionId}}.value" class="
+																		                            {{#ifequal @index 4}}step{{/ifequal}}
+																		                            {{#ifequal @index 7}}step{{/ifequal}}
+																		                            {{#ifequal @index 9}}step{{/ifequal}}
+																		                            {{#ifgteq @index perdition.max
+																		                            }}unavailable{{/ifgteq}}
+																		                            {{#ifgt perdition.min @index}}
+																		                            unavailable
+																		                            {{/ifgt}}
+																		                            " {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
+							{{/repeat}}
 
-                    </div>
-                    {{/each}}
+						</div>
+					{{/each}}
 
-                </div>
+				</div>
 
-                <!-- INFOS -->
+				<!-- INFOS -->
 
-                <div class="resume flexcol">
-                    <img class="profile-img" src="{{actor.img}}"
-                        data-edit="img"
-                        title="{{actor.name}}" height="100" width="100" />
-                    <div class="form-group character-name">
-                        <div>nom :</div>
-                        <input type="text" name="name"
-                            value="{{actor.name}}">
-                    </div>
-                    <div class="form-group">
-                        <div>archetype :</div>
+				<div class="resume flexcol">
+					<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
+					<div class="form-group character-name">
+						<div>nom :</div>
+						<input type="text" name="name" value="{{actor.name}}">
+					</div>
+					<div class="form-group">
+						<div>archetype :</div>
 
-                        <div class="archetype-resume flexrow">
-                            {{#each actor.itemTypes.archetype as
+						<div class="archetype-resume flexrow">
+							{{#each actor.itemTypes.archetype as
                             |archetype|}}
-                            <div class="item-name">{{archetype.name}}</div>
-                            <div class="item-control">
-                                <a class="fas fa-trash item-delete"
-                                    data-item-id="{{archetype.id}}"></a>
-                                <a class="fas fa-edit item-open"
-                                    data-item-id="{{archetype.id}}"></a>
-                            </div>
+								<div class="item-name">{{archetype.name}}</div>
+								<div class="item-control">
+									<a class="fas fa-trash item-delete" data-item-id="{{archetype.id}}"></a>
+									<a class="fas fa-edit item-open" data-item-id="{{archetype.id}}"></a>
+								</div>
 
-                            {{/each}}
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div>thème :</div>
-                        <div class="theme-resume flexrow">
-                            {{#each actor.itemTypes.thème as |thème|}}
-                            <div class="item-name">
-                                {{thème.name}}
-                            </div>
-                            <div class="item-control">
-                                <a class="fas fa-trash item-delete"
-                                    data-item-id="{{thème.id}}"></a>
-                                <a class="fas fa-edit item-open"
-                                    data-item-id="{{thème.id}}"></a>
-                            </div>
-                            {{/each}}
-                        </div>
-                    </div>
+							{{/each}}
+						</div>
+					</div>
+					<div class="form-group">
+						<div>thème :</div>
+						<div class="theme-resume flexrow">
+							{{#each actor.itemTypes.thème as |thème|}}
+								<div class="item-name">
+									{{thème.name}}
+								</div>
+								<div class="item-control">
+									<a class="fas fa-trash item-delete" data-item-id="{{thème.id}}"></a>
+									<a class="fas fa-edit item-open" data-item-id="{{thème.id}}"></a>
+								</div>
+							{{/each}}
+						</div>
+					</div>
 
-                    <div class="form-group">
-                        <div>qualité : <a class="fas fa-add addQuality"
-                                data-type="qualite"></a>
-                        </div>
-                        {{#if actor.system.qualites.label}}
-                        <div>{{actor.system.qualites.label}}
-                            /{{actor.system.qualites.targetTalent}} +1
-                            <a class="fas fa-trash deleteQuality"
-                                data-tooltip="supprimer la
-                                qualité"
-                                data-type="qualite">
-                            </a>
-                        </div>
-                        {{/if}}
-                    </div>
+					<div class="form-group">
+						<div>qualité :
+							<a class="fas fa-add addQuality" data-type="qualite"></a>
+						</div>
+						{{#if actor.system.qualites.label}}
+							<div>{{actor.system.qualites.label}}
+								/{{actor.system.qualites.targetTalent}}
+								+1
+								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer la
+																		                                qualité" data-type="qualite"></a>
+							</div>
+						{{/if}}
+					</div>
 
-                    <div class="form-group">
-                        <div>défaut : <a class="fas fa-add addQuality"
-                                data-type="defaut"></a>
-                        </div>
-                        {{#if actor.system.defauts.label}}
-                        <div>{{actor.system.defauts.label}}
-                            /{{actor.system.defauts.targetTalent}} -1
-                            <a class="fas fa-trash deleteQuality"
-                                data-tooltip="supprimer le
-                                défaut"
-                                data-type="defaut">
-                            </a>
-                        </div>
-                        {{/if}}
-                    </div>
-                    <h3>personnalisation <a class="fas fa-add
-                            addPersonnalisation"
-                            data-tooltip="ajouter un bonus de
-                            pesonnalisation"></a>
-                    </h3>
-                    {{#each personnalisations as |perso id|}}
-                    <div class="perso flexrow">
-                        <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
-                                class="fas fa-trash deletePersonnalisation"></a></h4>
-                        {{#each perso.flags.noc.personnalisation as |bonus
+					<div class="form-group">
+						<div>défaut :
+							<a class="fas fa-add addQuality" data-type="defaut"></a>
+						</div>
+						{{#if actor.system.defauts.label}}
+							<div>{{actor.system.defauts.label}}
+								/{{actor.system.defauts.targetTalent}}
+								-1
+								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer le
+																		                                défaut" data-type="defaut"></a>
+							</div>
+						{{/if}}
+					</div>
+					<h3>personnalisation
+						<a class="fas fa-add
+														                            addPersonnalisation" data-tooltip="ajouter un bonus de
+														                            pesonnalisation"></a>
+					</h3>
+					{{#each personnalisations as |perso id|}}
+						<div class="perso flexrow">
+							<h4>{{perso.label}}
+								<a data-effect-id="{{perso.id}}" class="fas fa-trash deletePersonnalisation"></a>
+							</h4>
+							{{#each perso.flags.noc.personnalisation as |bonus
                         label|}}
-                        <div class="bonus">{{label}}:{{bonus}} /</div>
-                        {{/each}}
-                    </div>
+								<div class="bonus">{{label}}:{{bonus}}
+									/</div>
+							{{/each}}
+						</div>
 
-                    {{/each}}
+					{{/each}}
 
-                    <div class="form-group">
-                        <h3>cabale</h3>
-                        <h4>{{actor.system.cabale.nom}}</h4>
-                        {{#if actor.system.cabale.nom}}
-                        <div>
-                            <a class="fas fa-edit openCabale"
-                                data-cabale-id="{{actor.system.cabale.uuid}}"></a>
-                        </div>
-                        {{/if}}
+					<div class="form-group">
+						<h3>cabale</h3>
+						<h4>{{actor.system.cabale.nom}}</h4>
+						{{#if actor.system.cabale.nom}}
+							<div>
+								<a class="fas fa-edit openCabale" data-cabale-id="{{actor.system.cabale.uuid}}"></a>
+							</div>
+						{{/if}}
 
-                    </div>
-                    <div class="form-group">
-                        <h3>progression <input type="number"
-                                value="{{actor.system.progression}}"
-                                name="system.progression"></h3>
+					</div>
+					<div class="form-group">
+						<h3>progression
+							<input type="number" value="{{actor.system.progression}}" name="system.progression"></h3>
 
-                    </div>
+					</div>
 
-                </div>
+				</div>
 
-            </div>
-            {{!-- favItems --}}
+			</div>
+			{{!-- favItems --}}
 
-            <div class="favItems">
-                <h3>Objets Favoris</h3>
-                <ul class="item-list grid grid-6col">
-                    {{#each favItems as |item index|}}
-                    <li class="item
-                        {{#if item.system.needQuantar}}
-                        {{#unless item.system.quantar}}
-                        unavalaible
-                        {{/unless}}
-                        {{/if}}"
-                        data-item-id="{{item._id}}">
-                        <div class="item-summary flexrow">
-                            <div class="img">
-                                <img src="{{item.img}}" alt="image de
-                                    {{item.name}}">
-                            </div>
-                            <h4 class="item-name">
-                                <span><a class="roll-item"
-                                        data-item-id="{{item._id}}">{{item.name}}</a></span>
-                            </h4>
-                            <div class="item-control">
+			<div class="favItems">
+				<h3>Objets Favoris</h3>
+				<ul class="item-list grid grid-6col">
+					{{#each favItems as |item index|}}
+						<li class="item
+														                        {{#if item.system.needQuantar}}
+														                        {{#unless item.system.quantar}}
+														                        unavalaible
+														                        {{/unless}}
+														                        {{/if}}" data-item-id="{{item._id}}">
+							<div class="item-summary flexrow">
+								<div class="img">
+									<img src="{{item.img}}" alt="image de
+																		                                    {{item.name}}">
+								</div>
+								<h4 class="item-name">
+									<span>
+										<a class="roll-item" data-item-id="{{item._id}}">{{item.name}}</a>
+									</span>
+								</h4>
+								<div class="item-control">
 
-                                <a class="fas fa-edit item-open"
-                                    data-item-id="{{item._id}}"></a>
-                                <a class="fas fa-trash item-delete"
-                                    data-item-id="{{item._id}}"></a>
-                                <a class="fas fa-star item-fav
-                                    {{#if item.flags.noc.favItem}}
-                                    itemIsFav
-                                    {{/if}}
-                                    "
-                                    data-item-id="{{item._id}}"></a>
-                            </div>
+									<a class="fas fa-edit item-open" data-item-id="{{item._id}}"></a>
+									<a class="fas fa-trash item-delete" data-item-id="{{item._id}}"></a>
+									<a class="fas fa-star item-fav
+																				                                    {{#if item.flags.noc.favItem}}
+																				                                    itemIsFav
+																				                                    {{/if}}
+																				                                    " data-item-id="{{item._id}}"></a>
+								</div>
 
-                        </div>
-                        <div class="item-details">
-                            <p>{{{item.system.description}}}</p>
-                            {{#ifequal item.type "outil"}}
+							</div>
+							<div class="item-details">
+								<p>{{{item.system.description}}}</p>
+								{{#ifequal item.type "outil"}}{{/ifequal}}
 
-                            {{/ifequal}}
+							</div>
 
-                        </div>
+						</li>
+					{{/each}}
 
-                    </li>
-                    {{/each}}
+				</ul>
+			</div>
+		</div>
 
-                </ul>
-            </div>
-        </div>
-
-        {{!-- signalement+cabale+contacts --}}
-        <div class="tab description flexrow" data-group="primary"
-            data-tab="description">
-            <div class="signalement flexcol">
-                <div class="form-group">
-                    <h2>Signalement</h2>
-                    {{editor actor.system.signalement
+		{{!-- signalement+cabale+contacts --}}
+		<div class="tab description flexrow" data-group="primary" data-tab="description">
+			<div class="signalement flexcol">
+				<div class="form-group">
+					<h2>Signalement</h2>
+					{{editor actor.system.signalement
                     target="system.signalement"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
-                </div>
-                <div class="form-group">
-                    <h2>Description</h2>
-                    {{editor actor.system.description
+				</div>
+				<div class="form-group">
+					<h2>Description</h2>
+					{{editor actor.system.description
                     target="system.description"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
-                </div>
-                <div class="form-group">
-                    <h2>Implication</h2>
-                    {{editor actor.system.implication
+				</div>
+				<div class="form-group">
+					<h2>Implication</h2>
+					{{editor actor.system.implication
                     target="system.implication"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
-                </div>
-                <div class="form-group">
-                    <h2>Couverture</h2>
-                    {{editor actor.system.couverture
+				</div>
+				<div class="form-group">
+					<h2>Couverture</h2>
+					{{editor actor.system.couverture
                     target="system.couverture"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
-                </div>
-                <div class="form-group">
-                    <h2>Notes</h2>
-                    {{editor actor.system.notes target="system.notes"
+				</div>
+				<div class="form-group">
+					<h2>Notes</h2>
+					{{editor actor.system.notes target="system.notes"
                     button=true editable=editable
                     engine="prosemirror" collaborate=false}}
-                </div>
+				</div>
 
-            </div>
+			</div>
 
-            <!--CONTACTS ET CABALE-->
+			<!--CONTACTS ET CABALE-->
 
-            <div class=" flexcol">
+			<div class=" flexcol">
 
-                <div class="contacts">
-                    <h2>Contacts</h2>
+				<div class="contacts">
+					<h2>Contacts</h2>
 
-                    {{#ifequal actor.system.talents.statut.contact.niveau
+					{{#ifequal actor.system.talents.statut.contact.niveau
                     -1}}
-                    <h4>Ce personnage a un ennemi.</h4>
-                    {{/ifequal}}
-                    {{#ifequal actor.system.talents.statut.contact.niveau
+						<h4>Ce personnage a un ennemi.</h4>
+					{{/ifequal}}
+					{{#ifequal actor.system.talents.statut.contact.niveau
                     0}}
-                    <h4>Ce personnage ne possède aucun contacts</h4>
-                    {{/ifequal}}
-                    {{#ifgt actor.system.contacts.length 0}}
-                    <div class="form-group">
-                        <h4>faveurs </h4>
-                        <div class="faveurs-totales flexrow">
-                            {{#repeat actor.system.reserves.faveurs.max}}
-                            <div class="faveur
-                                {{#ifgt actor.system.reserves.faveurs.value
-                                @index}}
-                                faveur-used
-                                {{/ifgt}}">
-                            </div>
-                            {{/repeat}}
-                        </div>
-                        <a class="fa-solid fa-arrows-rotate"
-                            id="resetFaveurs"
-                            data-tooltip="ré-initialiser les faveurs des
-                            contacts"></a>
-                    </div>
-                    <!-- pour chaque contact-->
+						<h4>Ce personnage ne possède aucun contacts</h4>
+					{{/ifequal}}
+					{{#ifgt actor.system.contacts.length 0}}
+						<div class="form-group">
+							<h4>faveurs
+							</h4>
+							<div class="faveurs-totales flexrow">
+								{{#repeat actor.system.reserves.faveurs.max}}
+									<div class="faveur
+																				                                {{#ifgt actor.system.reserves.faveurs.value
+																				                                @index}}
+																				                                faveur-used
+																				                                {{/ifgt}}"></div>
+								{{/repeat}}
+							</div>
+							<a class="fa-solid fa-arrows-rotate" id="resetFaveurs" data-tooltip="ré-initialiser les faveurs des
+																                            contacts"></a>
+						</div>
+						<!-- pour chaque contact-->
 
-                    {{#each actor.system.contacts as |contact
+						{{#each actor.system.contacts as |contact
                     contactIndex|}}
-                    <div class="contact"
-                        data-contact-index="{{contactIndex}}"
-                        dataset-contact-id="{{contact.id}}">
-                        {{#if contact.nom }}
-                        <h3 class="flexrow">
-                            <span>{{contact.nom}}</span>
-                            <div class="faveurList flexrow">
-                                {{#repeat contact.faveurs}}
-                                <div class="faveurContact
-                                    {{#ifgt contact.usedFaveurs
-                                    @index}}
-                                    faveur-used
-                                    {{/ifgt}}
-                                    ">
-                                </div>
-                                {{/repeat}}
-                            </div>
-                            <div class="contactControls">
-                                <a data-tooltip="supprimer ce contact"
-                                    class="unassignContact">
-                                    <i class="fa-solid fa-close"></i>
-                                </a>
-                            </div>
-                        </h3>
-                        <div class="flexrow">
-                            <img src="{{contact.img}}" />
-                            <p>{{{contact.description}}}</p>
-                        </div>
+							<div class="contact" data-contact-index="{{contactIndex}}" dataset-contact-id="{{contact.id}}">
+								{{#if contact.nom }}
+									<h3 class="flexrow">
+										<span>{{contact.nom}}</span>
+										<div class="faveurList flexrow">
+											{{#repeat contact.faveurs}}
+												<div class="faveurContact
+																										                                    {{#ifgt contact.usedFaveurs
+																										                                    @index}}
+																										                                    faveur-used
+																										                                    {{/ifgt}}
+																										                                    "></div>
+											{{/repeat}}
+										</div>
+										<div class="contactControls">
+											<a data-tooltip="supprimer ce contact" class="unassignContact">
+												<i class="fa-solid fa-close"></i>
+											</a>
+										</div>
+									</h3>
+									<div class="flexrow">
+										<img src="{{contact.img}}"/>
+										<p>{{{contact.description}}}</p>
+									</div>
 
-                        {{else}}
-                        <h3 data-tooltip="faites glisser un personnage ou un
-                            rouage pour affecter ce contact"
-                            class="empty-contact"
-                            data-contact-index="{{contactIndex}}">Vide :
-                            faites
-                            glisser un contact ou créez-en un :
-                            <i class="fas fa-add createContact"></i>
-                        </h3>
-                        {{/if}}
-                    </div>
-                    {{/each}}
-                    {{/ifgt}}
-                </div>
-                <div class="cabale ">
-                    <h2>Cabale</h2>
-                    {{#unless actor.system.cabale.uuid}}
-                    <h4>Aucune Cabale</h4>
-                    <p>faites glisser un acteur de type "cabale" pour
-                        affecter
-                        ce
-                        personnage à une cabale
-                    </p>
-                    {{/unless}}
-                    {{#if actor.system.cabale.uuid}}
-                    <h3 class="flexrow">
-                        <div>
-                            {{actor.system.cabale.nom}}
-                        </div>
-                        <div
-                            class="cabaleControls">
-                            <a class="openCabale"
-                                data-cabale-id="{{actor.system.cabale.uuid}}"
-                                data-tooltip="ouvrir la fiche de
-                                cabale"><i class="fa-solid
-                                    fa-edit"></i></a>
-                            <a data-tooltip="quitter cette cabale"
-                                data-cabale-id="{{actor.system.cabale.uuid}}"
-                                class="unassignCabale"><i class="fa-solid
-                                    fa-right-from-bracket"></i></a>
-                        </div>
-                    </h3>
-                    <div class="flexcol">
-                        <div class="flexrow">
-                            <h4>bloc : </h4>
-                            <p>{{actor.system.cabale.bloc}}</p>
-                        </div>
-                        <div class="flexrow">
-                            <h4>coordonnées :</h4>
-                            <p>{{actor.system.cabale.coordonnes}}</p>
-                        </div>
-                        <div class="flexrow">
-                            <h4>société écran</h4>
-                            <p>{{actor.system.cabale.societe}}</p>
-                        </div>
-                    </div>
+								{{else}}
+									<h3 data-tooltip="faites glisser un personnage ou un
+																				                            rouage pour affecter ce contact" class="empty-contact" data-contact-index="{{contactIndex}}">Vide :
+																				                            faites
+																				                            glisser un contact ou créez-en un :
+										<i class="fas fa-add createContact"></i>
+									</h3>
+								{{/if}}
+							</div>
+						{{/each}}
+					{{/ifgt}}
+				</div>
+				<div class="cabale ">
+					<h2>Cabale</h2>
+					{{#unless actor.system.cabale.uuid}}
+						<h4>Aucune Cabale</h4>
+						<p>faites glisser un acteur de type "cabale" pour
+														                        affecter
+														                        ce
+														                        personnage à une cabale
+						</p>
+					{{/unless}}
+					{{#if actor.system.cabale.uuid}}
+						<h3 class="flexrow">
+							<div>
+								{{actor.system.cabale.nom}}
+							</div>
+							<div class="cabaleControls">
+								<a class="openCabale" data-cabale-id="{{actor.system.cabale.uuid}}" data-tooltip="ouvrir la fiche de
+																				                                cabale">
+									<i class="fa-solid
+																				                                    fa-edit"></i>
+								</a>
+								<a data-tooltip="quitter cette cabale" data-cabale-id="{{actor.system.cabale.uuid}}" class="unassignCabale">
+									<i class="fa-solid
+																				                                    fa-right-from-bracket"></i>
+								</a>
+							</div>
+						</h3>
+						<div class="flexcol">
+							<div class="flexrow">
+								<h4>bloc :
+								</h4>
+								<p>{{actor.system.cabale.bloc}}</p>
+							</div>
+							<div class="flexrow">
+								<h4>coordonnées :</h4>
+								<p>{{actor.system.cabale.coordonnes}}</p>
+							</div>
+							<div class="flexrow">
+								<h4>société écran</h4>
+								<p>{{actor.system.cabale.societe}}</p>
+							</div>
+						</div>
 
-                    {{/if}}
+					{{/if}}
 
-                </div>
-            </div>
-        </div>
+				</div>
+			</div>
+		</div>
 
-        {{!-- Owned Items Tab --}}
-        <div class="tab items flexcol" data-group="primary"
-            data-tab="items">
-            <!--inventaire-->
-            <h3 class="flexrow quantarQty">
-                Quantars possédés :
-                <input type="number"
-                    name="system.quantars"
-                    value="{{actor.system.quantars}}" />
-                <div class="flexrow " data-tooltip="faites glisser les
-                    quantars sur les objets qui en ont besoin">
+		{{!-- Owned Items Tab --}}
+		<div
+			class="tab items flexcol" data-group="primary" data-tab="items">
+			<!--inventaire-->
+			<h3 class="flexrow quantarQty">
+				Quantars possédés :
+				<input type="number" name="system.quantars" value="{{actor.system.quantars}}"/>
+				<div class="flexrow " data-tooltip="faites glisser les
+												                    quantars sur les objets qui en ont besoin">
 
-                    {{#each quantarUsage as |item index| }}
-                    <img
-                        src="systems/noc/asset/default_icons/quantar.webp"
-                        class="quantarQty {{#unless
-                        item.unused}}unavalaible{{/unless}}"
-                        {{#if item.name}}
-                        data-tooltip="utilisé dans : {{item.name}}"
-                        {{/if}} />
-                    {{/each}}
-                </div>
-            </h3>
+					{{#each quantarUsage as |item index| }}
+						<img src="systems/noc/asset/default_icons/quantar.webp" class="quantarQty {{#unless
+														                        item.unused}}unavalaible{{/unless}}" {{#if item.name}} data-tooltip="utilisé dans : {{item.name}}" {{/if}}/>
+					{{/each}}
+				</div>
+			</h3>
 
-            <ul class="item-types flexrow">
+			<ul class="item-types flexrow">
 
-                {{#each actor.itemTypes as |group groupIndex|}}
-                {{#ifnotequal groupIndex "archetype"}}
-                {{#ifnotequal groupIndex "thème"}}
+				{{#each actor.itemTypes as |group groupIndex|}}
+					{{#ifnotequal groupIndex "archetype"}}
+						{{#ifnotequal groupIndex "thème"}}
+							{{#ifnotequal groupIndex "base"}}
 
-                <ul class="item-list">
-                    <h3>{{localize (concat "ITEM.Type" (upperFirst
+								<ul class="item-list">
+									<h3>{{localize (concat "ITEM.Type" (upperFirst
                         groupIndex))}}
-                        <a class="fas fa-add item-create"
-                            data-tooltip="créer un
-                            item
-                            :{{groupIndex}}"
-                            data-item-type="{{groupIndex}}"></a>
-                    </h3>
-                    {{#each group as |item index|}}
-                    <li class="flexrow item flexcol ability
-                        {{#if item.system.needQuantar}}
-                        {{#unless item.system.quantar}}
-                        unavalaible
-                        {{/unless}}
-                        {{/if}}"
-                        data-item-id="{{item.id}}">
-                        <div class="item-summary flexrow">
-                            <div class="img">
-                                <img src="{{item.img}}" alt="image de
-                                    {{item.name}}">
-                            </div>
-                            <h4 class="item-name">
-                                <span>{{item.name}}</span>
-                                {{#if item.system.needQuantar}}
-                                <img
-                                    src="systems/noc/asset/default_icons/quantar.webp"
-                                    alt
-                                    class="needQuantar {{#if
-                                    item.system.quantar}}
-                                    quantarUsed{{/if}}">
-                                {{/if}}
-                            </h4>
-                            <div class="item-control">
+										<a class="fas fa-add item-create" data-tooltip="créer un
+																						                            item
+																						                            :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
+									</h3>
+									{{#each group as |item index|}}
+										<li class="flexrow item flexcol ability
+																						                        {{#if item.system.needQuantar}}
+																						                        {{#unless item.system.quantar}}
+																						                        unavalaible
+																						                        {{/unless}}
+																						                        {{/if}}" data-item-id="{{item.id}}">
+											<div class="item-summary flexrow">
+												<div class="img">
+													<img src="{{item.img}}" alt="image de
+																										                                    {{item.name}}">
+												</div>
+												<h4 class="item-name">
+													<span>{{item.name}}</span>
+													{{#if item.system.needQuantar}}
+														<img src="systems/noc/asset/default_icons/quantar.webp" alt class="needQuantar {{#if
+																												                                    item.system.quantar}}
+																												                                    quantarUsed{{/if}}">
+													{{/if}}
+												</h4>
+												<div class="item-control">
 
-                                <a class="fas fa-edit item-open"
-                                    data-item-id="{{item.id}}"></a>
-                                <a class="fas fa-trash item-delete"
-                                    data-item-id="{{item.id}}"></a>
-                                <a class="fas fa-star item-fav
-                                    {{#if item.flags.noc.favItem}}
-                                    itemIsFav
-                                    {{/if}}
-                                    "
-                                    data-item-id="{{item.id}}"></a>
-                            </div>
+													<a class="fas fa-edit item-open" data-item-id="{{item.id}}"></a>
+													<a class="fas fa-trash item-delete" data-item-id="{{item.id}}"></a>
+													<a class="fas fa-star item-fav
+																												                                    {{#if item.flags.noc.favItem}}
+																												                                    itemIsFav
+																												                                    {{/if}}
+																												                                    " data-item-id="{{item.id}}"></a>
+												</div>
 
-                        </div>
-                        <div class="item-details">
-                            <p>{{{item.system.description}}}</p>
-                            {{#ifequal item.type "outil"}}
+											</div>
+											<div class="item-details">
+												<p>{{{item.system.description}}}</p>
+												{{#ifequal item.type "outil"}}{{/ifequal}}
 
-                            {{/ifequal}}
+											</div>
 
-                        </div>
+										</li>
+									{{/each}}
+								</ul>
 
-                    </li>
-                    {{/each}}
-                </ul>
+							{{/ifnotequal}}
+						{{/ifnotequal}}
+					{{/ifnotequal}}
+				{{/each}}
+			</ul>
 
-                {{/ifnotequal}}
-                {{/ifnotequal}}
-                {{/each}}
-            </ul>
-
-        </div>
-    </section>
+		</div>
+	</section>
 </form>
