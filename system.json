@@ -121,7 +121,7 @@
     "units": "m"
   },
   "socket": true,
-  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/V12.0.2/download/system.json",
-  "download": "https://github.com/rwanoux/noc/releases/V12.0.2/download/system.zip",
+  "manifest": "https://raw.githubusercontent.com/rwanoux/noc/releases/12.0.2/download/system.json",
+  "download": "https://github.com/rwanoux/noc/releases/12.0.2/download/system.zip",
   "license": "LICENSE.txt"
 }
