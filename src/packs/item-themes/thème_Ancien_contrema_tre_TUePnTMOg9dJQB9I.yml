@@ -1,0 +1,103 @@
+name: Ancien contremaître
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: action.constitution
+      value: 1
+    - talent: statut.contact
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: VSYPtuhIU66u0QgX
+    changes:
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Ancien contremaître_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!TUePnTMOg9dJQB9I.VSYPtuhIU66u0QgX'
+  - transfer: true
+    disabled: false
+    _id: PflTpJanoSTOgVLD
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Ancien contremaître_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!TUePnTMOg9dJQB9I.PflTpJanoSTOgVLD'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.TUePnTMOg9dJQB9I
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678348870260
+  modifiedTime: 1678521005505
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.TUePnTMOg9dJQB9I
+  duplicateSource: null
+_id: TUePnTMOg9dJQB9I
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!TUePnTMOg9dJQB9I'
+

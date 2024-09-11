@@ -1,12 +1,3 @@
-# SPDX-FileCopyrightText: 2020 Cody Swendrowski
-# SPDX-FileCopyrightText: 2020 Andrew Krigline
-# SPDX-FileCopyrightText: 2020 Fallayn
-# SPDX-FileCopyrightText: 2021 Johannes Loher
-# SPDX-FileCopyrightText: 2021 Anthony Ronda
-# SPDX-FileCopyrightText: 2022 BadIdeasBureau
-#
-# SPDX-License-Identifier: MIT
-
 name: Release Creation
 
 on:
@@ -33,11 +24,11 @@ jobs:
         env:
           version: ${{steps.get_version.outputs.version-without-v}}
           url: https://github.com/${{github.repository}}
-          manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
-          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
+          manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
+          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
 
       # Create a zip file with all files required by the module to add to the release
-      - run: zip -r ./system.zip system.json template.json README.md asset/ css/ lang/ module/ packs/ templates/
+      - run: zip -r ./system.zip system.json template.json asset/ css/ lang/ module/ templates/
 
       # Create a release for this specific version
       - name: Update Release with Files
@@ -52,3 +43,14 @@ jobs:
           artifacts: "./system.json, ./system.zip"
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
+      - name: Deploy Release
+        id: deploy_release
+        uses: fjogeleit/http-request-action@v1
+        with:
+          preventFailureOnNoResponse: 'true' 
+          url: 'https://api.foundryvtt.com/_api/packages/release_version'
+          method: 'POST'
+          contentType: 'application/json'
+          customHeaders: '{"Authorization": "${{ secrets.FVTT_SYSTEM_TOKEN }}"}'
+          data: '{"id": "SRD_HD","dry-run":false,"release":{"version":"${{github.event.release.tag_name}}","manifest":"https://github.com/rwanoux/SRD-Heros-et-Dragons/releases/download/${{github.event.release.tag_name}}/module.json","compatibility":{"minimum":"11","verified":"12","maximum":"12"}}}'
+      

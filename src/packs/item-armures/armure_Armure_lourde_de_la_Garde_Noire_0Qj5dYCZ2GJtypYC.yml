@@ -1,0 +1,29 @@
+name: Armure lourde de la Garde Noire
+type: armure
+img: systems/noc/asset/default_icons/armure.webp
+system:
+  description: >-
+    <p>Tenue renforcée dont sont équipés les Gardes Noirs protégeant les points
+    stratégiques.</p>
+  armure: 2
+  traits: Encombrant, limité (3)
+  valeur: 3
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  systemVersion: 0.0.7
+  coreVersion: '12.325'
+  createdTime: 1677925976170
+  modifiedTime: 1678351883894
+  lastModifiedBy: g1hXofeJ7VfDjBe7
+  compendiumSource: null
+  duplicateSource: null
+_id: 0Qj5dYCZ2GJtypYC
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!0Qj5dYCZ2GJtypYC'
+

@@ -87,7 +87,6 @@ export class Quality {
         await this.updateActor()
     }
     async createEffect() {
-        console.log(this)
         this.effectData = {
             label: `qualité : ${this.label}`,
             changes: [{
@@ -99,11 +98,9 @@ export class Quality {
         };
     }
     async applyEffect() {
-        console.log(this)
         let act = await this.getActor();
         let eff = await act.createEmbeddedDocuments("ActiveEffect", [this.effectData]);
         this.effectId = eff[0]._id;
-        console.log(eff, this)
 
         this.updateActor()
     }

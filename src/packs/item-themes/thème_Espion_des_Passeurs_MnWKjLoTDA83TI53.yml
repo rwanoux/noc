@@ -1,0 +1,113 @@
+name: Espion des Passeurs
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - social.conviction
+    - statut.façade
+    - talent: social.conviction
+      value: 1
+    - talent: statut.façade
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: Z42qe0WhpOynOszp
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Espion des Passeurs_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!MnWKjLoTDA83TI53.Z42qe0WhpOynOszp'
+  - transfer: true
+    disabled: false
+    _id: gleSekJTKpGTeuLj
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Espion des Passeurs_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!MnWKjLoTDA83TI53.gleSekJTKpGTeuLj'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.MnWKjLoTDA83TI53
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677922514728
+  modifiedTime: 1678521005485
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.MnWKjLoTDA83TI53
+  duplicateSource: null
+_id: MnWKjLoTDA83TI53
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!MnWKjLoTDA83TI53'
+

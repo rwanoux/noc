@@ -1,0 +1,103 @@
+name: Ingénieur agronome de l'Intégrité
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: vie.soins
+      value: 1
+    - talent: technique.ingenierie
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: CIPS0qWFS80ifnoh
+    changes:
+      - key: system.talents.vie.soins.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.ingenierie.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Ingénieur agronome de l'Intégrité_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!2rXM75BsSCfhsteC.CIPS0qWFS80ifnoh'
+  - transfer: true
+    disabled: false
+    _id: iZQXT2CAxTJhhJmQ
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Ingénieur agronome de l'Intégrité_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!2rXM75BsSCfhsteC.iZQXT2CAxTJhhJmQ'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.2rXM75BsSCfhsteC
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678348768684
+  modifiedTime: 1678521005425
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.2rXM75BsSCfhsteC
+  duplicateSource: null
+_id: 2rXM75BsSCfhsteC
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!2rXM75BsSCfhsteC'
+

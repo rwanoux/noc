@@ -1,0 +1,38 @@
+name: Hache
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: ''
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 1
+  limite: 0
+  degats: ' @talents.action.constitution.niveau + 4'
+  matrise: false
+  traits: Tranchant, Complexe
+  munitions:
+    type: ''
+    quantite: null
+  portee: 0
+effects: []
+flags:
+  core:
+    sourceId: Item.vXEsNnMcdPltWSWd
+_stats:
+  systemId: noc
+  systemVersion: 0.0.4
+  coreVersion: '12.325'
+  createdTime: 1676840485007
+  modifiedTime: 1677254761282
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Item.vXEsNnMcdPltWSWd
+  duplicateSource: null
+_id: Nlsoo8mrrpnijQ1D
+folder: null
+sort: 0
+ownership:
+  default: 0
+  GqESxdGhOwgra802: 3
+_key: '!items!Nlsoo8mrrpnijQ1D'
+

@@ -1,0 +1,28 @@
+name: Faisceau
+type: script
+scope: global
+author: eHvmVEyeQfWErAPU
+img: icons/svg/dice-target.svg
+command: |-
+  objetDieu.displayFaisceau()
+  game.socketManager.launchSocket("displayFaisceau", {})
+ownership:
+  default: 0
+  eHvmVEyeQfWErAPU: 3
+flags:
+  core:
+    sourceId: Macro.DeAdodtCTOZfmrcq
+_stats:
+  systemId: noc
+  systemVersion: 0.0.12
+  coreVersion: '12.325'
+  createdTime: 1678988324939
+  modifiedTime: 1679034668886
+  lastModifiedBy: eHvmVEyeQfWErAPU
+  compendiumSource: Macro.DeAdodtCTOZfmrcq
+  duplicateSource: null
+folder: null
+sort: 0
+_id: Wlyo1xcpOwRT37Um
+_key: '!macros!Wlyo1xcpOwRT37Um'
+

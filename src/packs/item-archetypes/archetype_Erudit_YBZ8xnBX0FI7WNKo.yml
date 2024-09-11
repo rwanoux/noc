@@ -1,0 +1,676 @@
+name: Erudit
+type: archetype
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: >-
+    <p><span class="fontstyle0">Dans un monde où certains savoirs sont prohibés,
+    l’érudit joue un jeu dangereux. Ceux qui intègrent les universités du Bureau
+    savent que toutes les vérités ne sont pas bonnes à connaître. D’autres ne se
+    contentent pas des ouvrages de propagande et décident de se lancer à la
+    recherche d’une réalité bafouée.</span></p>
+  talentMajeur: erudition.culture
+  talentsMineurs:
+    erudition:
+      bureau:
+        label: bureau
+        checked: true
+        niveau: 1
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: true
+        niveau: 1
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 0
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 0
+      deplacement:
+        label: déplacement
+        checked: false
+        niveau: 0
+      instinct:
+        label: instinct
+        checked: false
+        niveau: 0
+    statut:
+      contact:
+        label: contact
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: false
+        niveau: 0
+      rang:
+        label: rang
+        checked: false
+        niveau: 0
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: false
+        niveau: 0
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  special: ''
+  affinite:
+    vie:
+      active: false
+      value: 1
+    erudition:
+      active: true
+      value: 4
+    technique:
+      active: false
+      value: 1
+    action:
+      active: false
+      value: 1
+    statut:
+      active: false
+      value: 1
+    ame:
+      active: false
+      value: 1
+    social:
+      active: false
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: 83AyvMQ0TTbnGONu
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Erudit_talentMajeur
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!YBZ8xnBX0FI7WNKo.83AyvMQ0TTbnGONu'
+  - transfer: true
+    disabled: false
+    _id: Ueu9WSyftxPbBQ55
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.erudition.culture.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.recherche.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.societe.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artisanat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.ingenierie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.survie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.combat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.instinct.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.rang.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.extase.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.folie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.psychologie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.apaisement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.ferveur.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.lumiere.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.soins.niveau
+        mode: 2
+        value: '0'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Erudit_talentsMineurs
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!YBZ8xnBX0FI7WNKo.Ueu9WSyftxPbBQ55'
+  - transfer: true
+    disabled: false
+    _id: CBMukjQHOH1UpF1h
+    changes:
+      - key: system.domaines.vie.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.erudition.value
+        mode: 2
+        value: '4'
+        priority: null
+      - key: system.domaines.technique.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.action.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.statut.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.ame.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.social.value
+        mode: 2
+        value: '2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Erudit_affinite
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!YBZ8xnBX0FI7WNKo.CBMukjQHOH1UpF1h'
+  - transfer: true
+    disabled: false
+    _id: lrqRckcDrxtM9a0k
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Erudit_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!YBZ8xnBX0FI7WNKo.lrqRckcDrxtM9a0k'
+flags:
+  noc:
+    linkedThemes:
+      - id: 7zP4dvg2yJTS1qGj
+        name: Professeur accrédité
+        itemData:
+          name: Professeur accrédité
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - statut.fortune
+              - social.tromperie
+              - talent: statut.fortune
+                value: 1
+              - talent: social.tromperie
+                value: 1
+          effects:
+            - label: thème_Professeur accrédité_talents
+              transfer: true
+              disabled: false
+              _id: 4toZfFA8FBNiOOZe
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.statut.fortune.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.social.tromperie.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Professeur accrédité_description
+              transfer: true
+              disabled: false
+              _id: fqIXvqAJbmXoiIen
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.7zP4dvg2yJTS1qGj
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921529306
+            modifiedTime: 1678521005360
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: 7zP4dvg2yJTS1qGj
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: 9xOS0ZRj6LK2JLOW
+        name: Gardien des savoirs interdits
+        itemData:
+          name: Gardien des savoirs interdits
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - ame.folie
+              - erudition.recherche
+              - talent: ame.folie
+                value: 1
+              - talent: erudition.recherche
+                value: 1
+          effects:
+            - label: thème_Gardien des savoirs interdits_talents
+              transfer: true
+              disabled: false
+              _id: RWGDIpClVQvnXgjR
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.ame.folie.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.erudition.recherche.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Gardien des savoirs interdits_description
+              transfer: true
+              disabled: false
+              _id: GxemMhkwH7qdEQNT
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.9xOS0ZRj6LK2JLOW
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921547598
+            modifiedTime: 1678521005362
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: 9xOS0ZRj6LK2JLOW
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: 9E56XNlE60BDEcYj
+        name: Chercheur en quête de vérité
+        itemData:
+          name: Chercheur en quête de vérité
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - statut.façade
+              - statut.contact
+              - talent: statut.façade
+                value: 1
+              - talent: statut.contact
+                value: 1
+          effects:
+            - label: thème_Chercheur en quête de vérité_talents
+              transfer: true
+              disabled: false
+              _id: n2MHxXyNyK31uOpG
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.statut.façade.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.statut.contact.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Chercheur en quête de vérité_description
+              transfer: true
+              disabled: false
+              _id: CkAF5fnV3FtuflJK
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.9E56XNlE60BDEcYj
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921563969
+            modifiedTime: 1678521005362
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: 9E56XNlE60BDEcYj
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+  core:
+    sourceId: Compendium.noc.archetypes.YBZ8xnBX0FI7WNKo
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677923938217
+  modifiedTime: 1678522132095
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.archetypes.YBZ8xnBX0FI7WNKo
+  duplicateSource: null
+_id: YBZ8xnBX0FI7WNKo
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!YBZ8xnBX0FI7WNKo'
+

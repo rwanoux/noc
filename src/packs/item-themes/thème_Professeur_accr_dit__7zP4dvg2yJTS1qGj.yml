@@ -1,0 +1,113 @@
+name: Professeur accrédité
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - statut.fortune
+    - social.tromperie
+    - talent: statut.fortune
+      value: 1
+    - talent: social.tromperie
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: 4toZfFA8FBNiOOZe
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Professeur accrédité_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!7zP4dvg2yJTS1qGj.4toZfFA8FBNiOOZe'
+  - transfer: true
+    disabled: false
+    _id: fqIXvqAJbmXoiIen
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Professeur accrédité_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!7zP4dvg2yJTS1qGj.fqIXvqAJbmXoiIen'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.7zP4dvg2yJTS1qGj
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921529306
+  modifiedTime: 1678521005441
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.7zP4dvg2yJTS1qGj
+  duplicateSource: null
+_id: 7zP4dvg2yJTS1qGj
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!7zP4dvg2yJTS1qGj'
+

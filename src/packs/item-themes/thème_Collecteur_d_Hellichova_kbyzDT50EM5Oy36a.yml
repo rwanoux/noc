@@ -1,0 +1,103 @@
+name: Collecteur d'Hellichova
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: ame.tenebres
+      value: 1
+    - talent: action.deplacement
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: l18RIfaWAd5qXpXh
+    changes:
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Collecteur d'Hellichova_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!kbyzDT50EM5Oy36a.l18RIfaWAd5qXpXh'
+  - transfer: true
+    disabled: false
+    _id: R6kqiGjZ49knsOkg
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Collecteur d'Hellichova_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!kbyzDT50EM5Oy36a.R6kqiGjZ49knsOkg'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.kbyzDT50EM5Oy36a
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678347736384
+  modifiedTime: 1678521005567
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.kbyzDT50EM5Oy36a
+  duplicateSource: null
+_id: kbyzDT50EM5Oy36a
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!kbyzDT50EM5Oy36a'
+

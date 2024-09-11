@@ -1,0 +1,674 @@
+name: Garde noir
+type: archetype
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: >-
+    <p><span class="fontstyle0">Le Garde Noir est un individu rude et
+    impassible, coutumier des horreurs et des injustices. De sa sévérité dépend
+    l’ordre social.</span></p>
+  talentMajeur: action.combat
+  talentsMineurs:
+    erudition:
+      bureau:
+        label: bureau
+        checked: false
+        niveau: 0
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: false
+        niveau: 0
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 0
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 0
+      deplacement:
+        label: déplacement
+        checked: true
+        niveau: 1
+      instinct:
+        label: instinct
+        checked: true
+        niveau: 1
+    statut:
+      contact:
+        label: contact
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: false
+        niveau: 0
+      rang:
+        label: rang
+        checked: false
+        niveau: 0
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: false
+        niveau: 0
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  special: ''
+  affinite:
+    vie:
+      active: false
+      value: 1
+    erudition:
+      active: false
+      value: 1
+    technique:
+      active: false
+      value: 1
+    action:
+      active: true
+      value: 4
+    statut:
+      active: false
+      value: 1
+    ame:
+      active: false
+      value: 1
+    social:
+      active: false
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: PtKOchHCSLJAsEKm
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Garde noir_talentMajeur
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!WMuTwWpCKSrpnyn2.PtKOchHCSLJAsEKm'
+  - transfer: true
+    disabled: false
+    _id: UgBPkCRWbHAPwMEL
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.culture.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.recherche.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.societe.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artisanat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.ingenierie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.survie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.combat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.action.instinct.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.rang.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.extase.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.folie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.psychologie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.apaisement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.ferveur.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.lumiere.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.soins.niveau
+        mode: 2
+        value: '0'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Garde noir_talentsMineurs
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!WMuTwWpCKSrpnyn2.UgBPkCRWbHAPwMEL'
+  - transfer: true
+    disabled: false
+    _id: nlO6lWDD7i7XN5rI
+    changes:
+      - key: system.domaines.vie.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.erudition.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.technique.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.action.value
+        mode: 2
+        value: '4'
+        priority: null
+      - key: system.domaines.statut.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.ame.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.social.value
+        mode: 2
+        value: '2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Garde noir_affinite
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!WMuTwWpCKSrpnyn2.nlO6lWDD7i7XN5rI'
+  - transfer: true
+    disabled: false
+    _id: cfGl3sJZjg70gnC5
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Garde noir_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!WMuTwWpCKSrpnyn2.cfGl3sJZjg70gnC5'
+flags:
+  noc:
+    linkedThemes:
+      - id: Goi26cm2Oz1YJFaV
+        name: Aguerri
+        itemData:
+          name: Aguerri
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - action.constitution
+              - social.conviction
+              - talent: action.constitution
+                value: 1
+              - talent: social.conviction
+                value: 1
+          effects:
+            - label: thème_Aguerri_talents
+              transfer: true
+              disabled: false
+              _id: DmzqzTAY0gq5oI2Y
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.action.constitution.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.social.conviction.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Aguerri_description
+              transfer: true
+              disabled: false
+              _id: mEmbr9aSfRRRMsH7
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.Goi26cm2Oz1YJFaV
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921889021
+            modifiedTime: 1678521005363
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: Goi26cm2Oz1YJFaV
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: egytkwnah5LEcvZm
+        name: Vétéran brisé
+        itemData:
+          name: Vétéran brisé
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - ame.folie
+              - ame.extase
+              - talent: ame.folie
+                value: 1
+              - talent: ame.extase
+                value: 1
+          effects:
+            - label: thème_Vétéran brisé_talents
+              transfer: true
+              disabled: false
+              _id: XMhWPTYruJ0rBz6k
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.ame.folie.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.ame.extase.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Vétéran brisé_description
+              transfer: true
+              disabled: false
+              _id: qXVJOlxsFcBy6Zib
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.egytkwnah5LEcvZm
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921904596
+            modifiedTime: 1678521005370
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: egytkwnah5LEcvZm
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: mHlKxr9pT8aISnAf
+        name: Officier
+        itemData:
+          name: Officier
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - statut.rang
+              - social.charisme
+              - talent: social.charisme
+                value: 1
+              - talent: statut.rang
+                value: 1
+          effects:
+            - label: thème_Officier_talents
+              transfer: true
+              disabled: false
+              _id: PDITJRL2ZMvBrEex
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.social.charisme.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.statut.rang.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Officier_description
+              transfer: true
+              disabled: false
+              _id: rM28bq1pIVOmCiFI
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.mHlKxr9pT8aISnAf
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921913632
+            modifiedTime: 1678521005371
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: mHlKxr9pT8aISnAf
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+  core:
+    sourceId: Compendium.noc.archetypes.WMuTwWpCKSrpnyn2
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677924164897
+  modifiedTime: 1678522132094
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.archetypes.WMuTwWpCKSrpnyn2
+  duplicateSource: null
+_id: WMuTwWpCKSrpnyn2
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!WMuTwWpCKSrpnyn2'
+

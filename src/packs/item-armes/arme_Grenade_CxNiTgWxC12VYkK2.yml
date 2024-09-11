@@ -1,0 +1,38 @@
+name: Grenade
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: ''
+  needQuantar: false
+  quantar: false
+  adistance: true
+  valeur: 1
+  limite: 0
+  degats: '5'
+  matrise: false
+  traits: Multiple (3), Limité (2)
+  munitions:
+    type: ''
+    quantite: 1
+  portee: 0
+effects: []
+flags:
+  core:
+    sourceId: Item.vXEsNnMcdPltWSWd
+_stats:
+  systemId: noc
+  systemVersion: 0.0.4
+  coreVersion: '12.325'
+  createdTime: 1676840485007
+  modifiedTime: 1677254761281
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Item.vXEsNnMcdPltWSWd
+  duplicateSource: null
+_id: CxNiTgWxC12VYkK2
+folder: null
+sort: 0
+ownership:
+  default: 0
+  GqESxdGhOwgra802: 3
+_key: '!items!CxNiTgWxC12VYkK2'
+

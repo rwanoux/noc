@@ -66,18 +66,20 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
     }
   }
   async _onDropActor(ev, data) {
-    console.log(ev, data);
     let dropActor = await Actor.implementation.fromDropData(data);
     if (!this.actor.isOwner || !dropActor.isOwner) return () => {
       ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
       return false
     };
     // Activer la cabale chez cet acteur
-    dropActor.setCabale(foundry.utils.duplicate(this.object))
-    console.log(dropActor)
+    if (dropActor.type == "personnage") {
+      return dropActor.setCabale(foundry.utils.duplicate(this.object))
+    }
+    else {
+      return ui.notifications.warn("Vous ne pouvez ajouter que des personnages aux cabales");
+    }
   }
   _onDropItem(ev, data) {
-    console.log(ev, data)
   }
   /* -------------------------------------------- */
 
@@ -98,7 +100,6 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
   /* -------------------------------------------- */
   _preparePersonnageData(context) {
     context.members = game.actors.filter(act => act.type == "personnage" && act.system.cabale && act.system.cabale.uuid == this.actor.id)
-    console.log("Found members", context.members, this.actor.id)
   }
   /* -------------------------------------------- */
 
@@ -125,7 +126,6 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
   }
   randomRotate(element) {
-    console.log(element)
     let rdm = () => { return Math.floor(Math.random() * 10) - 5 };
     element.style.transform = `rotate(${rdm()}deg)`;
     element.style.top = `${rdm() * 2}%`;

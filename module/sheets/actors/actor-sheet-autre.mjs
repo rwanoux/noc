@@ -80,7 +80,6 @@ export class nocActorSheetAutre extends nocActorSheetPersonnage {
     d.render(true);
   }
   async createSurchargeEffect(talentPath) {
-    console.log(talentPath);
     let effectData = {
       label: `surcharge`,
       changes: [{

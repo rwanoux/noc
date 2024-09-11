@@ -33,6 +33,9 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
   /** @override */
   get template() {
+    if (this.actor.permission == 1 || this.actor.permission == 2) {
+      return `systems/noc/templates/actor/limitted.html`;
+    }
     return `systems/noc/templates/actor/actor-${this.actor.type}-sheet.html`;
   }
   /* -------------------------------------------- */
@@ -92,10 +95,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
       ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
       return false
     };
-    console.log(dropActor, ev);
     switch (dropActor.type) {
       case "cabale":
-        console.log("DROPPED TO CABALE!:!!!")
         if (!ev.target.classList.contains("cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
@@ -119,7 +120,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
 
   }
   async _onDropArchetype(ev, item) {
-    console.log(item);
     let linkedThemes = await item.getFlag("noc", "linkedThemes");
     if (linkedThemes) {
       let theme = linkedThemes.find(th => th.choosed)
@@ -172,7 +172,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
   }
   /* -------------------------------------------- */
   _onDragStart(ev) {
-    console.log(ev);
     if (ev.currentTarget.classList.contains('quantarQty')) {
       let dragData = {
         type: "affectQuantar"
@@ -260,7 +259,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
       ev.preventDefault();
       let isFav = await item.getFlag("noc", "favItem");
       await item.setFlag("noc", "favItem", !isFav);
-      console.log(this.actor.items)
     })
     html.find('li.item .img').click(ev => {
       ev.currentTarget.closest('li.item').classList.toggle('expanded');
@@ -336,14 +334,12 @@ export class nocActorSheetPersonnage extends ActorSheet {
     } else {
       update.system.talents[dom][tal].niveau = value - 1;
     }
-    console.log(update, this.actor)
     await this.actor.update(update)
 
   }
 
   async updateDomaine(ev) {
     let key = ev.currentTarget.closest('.domaine-niveau').dataset.key;
-    console.log(key)
     let dom = key.split(".")[2];
 
     let update = {
@@ -363,7 +359,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
     } else {
       update.system.domaines[dom].value = value - 1;
     }
-    console.log(update, this.actor)
     await this.actor.update(update)
   }
   async _onClickPerso(ev) {
@@ -385,7 +380,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
   }
   async createContact(ev) {
     let contactIndex = ev.currentTarget.closest("h3.empty-contact").dataset.contactIndex;
-    console.log(contactIndex);
     let dial = new Dialog({
       title: `nouveau contact`,
       content: `
@@ -473,7 +467,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
           icon: '<i class="fas fa-check"></i>',
           label: "Valider",
           callback: html => {
-            console.log(this)
             let usedFaveurs = html.find(('input#faveursInUse'))[0].value;
             this.faveurToChat(contact, usedFaveurs);
             this.applyFaveurs(contactIndex, usedFaveurs)
@@ -562,7 +555,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
           icon: '<i class="fas fa-check"></i>',
           label: "Modifier",
           callback: html => {
-            console.log(reserveProp)
             let updating = {};
             let max = reserveProp;
             let min = reserveProp.replace('max', 'min');
@@ -681,7 +673,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
     }).render(true);
   };
   async setContact(actor, index) {
-    console.log("________contact", actor)
     let contactList = this.actor.system.contacts;
     contactList[index] = new NOCContact(actor.id);
     await this.actor.update({
@@ -700,7 +691,6 @@ export class nocActorSheetPersonnage extends ActorSheet {
   }
 
   async prepareFavItems(context) {
-    //console.log("preparing fav")
     let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
     context.favItems = favItems;
   }

@@ -1,0 +1,113 @@
+name: Gros bras
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - action.combat
+    - action.constitution
+    - talent: action.combat
+      value: 1
+    - talent: action.constitution
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: QGqIsgWETPPm5L9g
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.action.combat.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Gros bras_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!mWnkUt734zjjkyeF.QGqIsgWETPPm5L9g'
+  - transfer: true
+    disabled: false
+    _id: kVh8Wb1IRkFgQwUr
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Gros bras_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!mWnkUt734zjjkyeF.kVh8Wb1IRkFgQwUr'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.mWnkUt734zjjkyeF
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921432342
+  modifiedTime: 1678521005571
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.mWnkUt734zjjkyeF
+  duplicateSource: null
+_id: mWnkUt734zjjkyeF
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!mWnkUt734zjjkyeF'
+

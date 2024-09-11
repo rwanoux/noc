@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "CSS compiler for the NOC system",
   "scripts": {
-    "launch Foundry10": "cd C:/Program Files/Foundry Virtual Tabletop_10/resources/app && node main.js",
     "launch Foundry11": "cd C:/Program Files/Foundry Virtual Tabletop_V11/resources/app && node main.js",
     "launch Foundry12": "cd C:/Program Files/Foundry Virtual Tabletop_V12/resources/app && node main.js",
-    "watch": "gulp watch"
+    "watch": "gulp watch",
+    "pushLDBtoYAML": "node ./tools/pushLDBtoYAML.mjs",
+    "pullYAMLtoLDB": "node ./tools/pullYAMLtoLDB.mjs"
   },
   "browserslist": [
     "last 3 versions"
@@ -15,8 +16,9 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "browser-sync": "^2.27.11",
-    "gulp": "^4.0.2",
+    "@foundryvtt/foundryvtt-cli": "^1.0.2",
+    "browser-sync": "^2.26.2",
+    "gulp": "^5.0.0",
     "gulp-sass": "^5.1.0",
     "sass": "^1.55.0"
   },

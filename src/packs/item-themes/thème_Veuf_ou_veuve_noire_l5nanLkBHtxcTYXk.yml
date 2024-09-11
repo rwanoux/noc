@@ -1,0 +1,113 @@
+name: Veuf ou veuve noire
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - social.tromperie
+    - statut.fortune
+    - talent: statut.fortune
+      value: 1
+    - talent: social.tromperie
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: b9gZbTfwPf7AhUP4
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Veuf ou veuve noire_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!l5nanLkBHtxcTYXk.b9gZbTfwPf7AhUP4'
+  - transfer: true
+    disabled: false
+    _id: tmc18nfOccYW8njZ
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Veuf ou veuve noire_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!l5nanLkBHtxcTYXk.tmc18nfOccYW8njZ'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.l5nanLkBHtxcTYXk
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921730806
+  modifiedTime: 1678521005568
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.l5nanLkBHtxcTYXk
+  duplicateSource: null
+_id: l5nanLkBHtxcTYXk
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!l5nanLkBHtxcTYXk'
+

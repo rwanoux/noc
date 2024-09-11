@@ -102,7 +102,6 @@ export class nocItem extends Item {
       }
     }
 
-    console.log(">>>>>>", this.system.affinite, updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -115,7 +114,6 @@ export class nocItem extends Item {
     }];
     if (this.system.talentMajeur == "null") { updatedChanges.value = 0 }
 
-    console.log(">>>>>>", updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -134,7 +132,6 @@ export class nocItem extends Item {
       }
 
     }
-    console.log(">>>>>>", updatedChanges) 
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }
@@ -149,7 +146,6 @@ export class nocItem extends Item {
       })
 
     }
-    console.log(">>>>>>", updatedChanges, effectId)
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
   }

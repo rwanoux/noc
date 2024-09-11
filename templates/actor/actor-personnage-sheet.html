@@ -1,4 +1,3 @@
-{{log this}}
 <form class="{{cssClass}} {{actor.type}}" autocomplete="off">
 
 	<nav class="sheet-tabs tabs" data-group="primary">
@@ -38,7 +37,7 @@
 								<span class="domaine-niveau" data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
 									<span class="domaine-control">
 										<a class="fas
-																						                                        fa-add"></a>
+																																																																																																																													        fa-add"></a>
 										<a class="fas fa-minus"></a>
 									</span>
 								</span>
@@ -52,7 +51,7 @@
 											<span class="talent-niveau" data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
 												<span class="talent-control">
 													<a class="fas
-																												                                        fa-add"></a>
+																																																																																																																																																        fa-add"></a>
 													<a class="fas fa-minus"></a>
 												</span>
 											</span>
@@ -79,14 +78,14 @@
 
 							{{#repeat 10}}
 								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value" class="
-																		                            {{#ifequal @index 4}}step{{/ifequal}}
-																		                            {{#ifequal @index 7}}step{{/ifequal}}
-																		                            {{#ifequal @index 9}}step{{/ifequal}}
-																		                            {{#ifgteq @index reserve.max
-																		                            }}unavailable{{/ifgteq}}
-																		                            {{#ifgt reserve.min @index
-																		                            }}unavailable{{/ifgt}}
-																		                            " {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
+																																																		    {{#ifequal @index 4}}step{{/ifequal}}
+																																																		    {{#ifequal @index 7}}step{{/ifequal}}
+																																																		    {{#ifequal @index 9}}step{{/ifequal}}
+																																																		    {{#ifgteq @index reserve.max
+																																																		    }}unavailable{{/ifgteq}}
+																																																		    {{#ifgt reserve.min @index
+																																																		    }}unavailable{{/ifgt}}
+																																																		    " {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
 							{{/repeat}}
 
 						</div>
@@ -106,15 +105,15 @@
 
 							{{#repeat 10}}
 								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.{{perditionId}}.value" class="
-																		                            {{#ifequal @index 4}}step{{/ifequal}}
-																		                            {{#ifequal @index 7}}step{{/ifequal}}
-																		                            {{#ifequal @index 9}}step{{/ifequal}}
-																		                            {{#ifgteq @index perdition.max
-																		                            }}unavailable{{/ifgteq}}
-																		                            {{#ifgt perdition.min @index}}
-																		                            unavailable
-																		                            {{/ifgt}}
-																		                            " {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
+																																																		    {{#ifequal @index 4}}step{{/ifequal}}
+																																																		    {{#ifequal @index 7}}step{{/ifequal}}
+																																																		    {{#ifequal @index 9}}step{{/ifequal}}
+																																																		    {{#ifgteq @index perdition.max
+																																																		    }}unavailable{{/ifgteq}}
+																																																		    {{#ifgt perdition.min @index}}
+																																																		    unavailable
+																																																		    {{/ifgt}}
+																																																		    " {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
 							{{/repeat}}
 
 						</div>
@@ -168,8 +167,7 @@
 							<div>{{actor.system.qualites.label}}
 								/{{actor.system.qualites.targetTalent}}
 								+1
-								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer la
-																		                                qualité" data-type="qualite"></a>
+								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer la qualité" data-type="qualite"></a>
 							</div>
 						{{/if}}
 					</div>
@@ -182,15 +180,14 @@
 							<div>{{actor.system.defauts.label}}
 								/{{actor.system.defauts.targetTalent}}
 								-1
-								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer le
-																		                                défaut" data-type="defaut"></a>
+								<a class="fas fa-trash deleteQuality" data-tooltip="supprimer le défaut" data-type="defaut"></a>
 							</div>
 						{{/if}}
 					</div>
 					<h3>personnalisation
 						<a class="fas fa-add
-														                            addPersonnalisation" data-tooltip="ajouter un bonus de
-														                            pesonnalisation"></a>
+														    addPersonnalisation" data-tooltip="ajouter un bonus de
+														    pesonnalisation"></a>
 					</h3>
 					{{#each personnalisations as |perso id|}}
 						<div class="perso flexrow">
@@ -218,7 +215,8 @@
 					</div>
 					<div class="form-group">
 						<h3>progression
-							<input type="number" value="{{actor.system.progression}}" name="system.progression"></h3>
+							<input type="number" value="{{actor.system.progression}}" name="system.progression">
+						</h3>
 
 					</div>
 
@@ -232,15 +230,15 @@
 				<ul class="item-list grid grid-6col">
 					{{#each favItems as |item index|}}
 						<li class="item
-														                        {{#if item.system.needQuantar}}
-														                        {{#unless item.system.quantar}}
-														                        unavalaible
-														                        {{/unless}}
-														                        {{/if}}" data-item-id="{{item._id}}">
+														{{#if item.system.needQuantar}}
+														{{#unless item.system.quantar}}
+														unavalaible
+														{{/unless}}
+														{{/if}}" data-item-id="{{item._id}}">
 							<div class="item-summary flexrow">
 								<div class="img">
 									<img src="{{item.img}}" alt="image de
-																		                                    {{item.name}}">
+																																																		            {{item.name}}">
 								</div>
 								<h4 class="item-name">
 									<span>
@@ -252,10 +250,10 @@
 									<a class="fas fa-edit item-open" data-item-id="{{item._id}}"></a>
 									<a class="fas fa-trash item-delete" data-item-id="{{item._id}}"></a>
 									<a class="fas fa-star item-fav
-																				                                    {{#if item.flags.noc.favItem}}
-																				                                    itemIsFav
-																				                                    {{/if}}
-																				                                    " data-item-id="{{item._id}}"></a>
+																															{{#if item.flags.noc.favItem}}
+																															itemIsFav
+																															{{/if}}
+																															" data-item-id="{{item._id}}"></a>
 								</div>
 
 							</div>
@@ -334,14 +332,13 @@
 							<div class="faveurs-totales flexrow">
 								{{#repeat actor.system.reserves.faveurs.max}}
 									<div class="faveur
-																				                                {{#ifgt actor.system.reserves.faveurs.value
-																				                                @index}}
-																				                                faveur-used
-																				                                {{/ifgt}}"></div>
+																													{{#ifgt actor.system.reserves.faveurs.value
+																													@index}}
+																													faveur-used
+																													{{/ifgt}}"></div>
 								{{/repeat}}
 							</div>
-							<a class="fa-solid fa-arrows-rotate" id="resetFaveurs" data-tooltip="ré-initialiser les faveurs des
-																                            contacts"></a>
+							<a class="fa-solid fa-arrows-rotate" id="resetFaveurs" data-tooltip="ré-initialiser les faveurs des contacts"></a>
 						</div>
 						<!-- pour chaque contact-->
 
@@ -354,11 +351,11 @@
 										<div class="faveurList flexrow">
 											{{#repeat contact.faveurs}}
 												<div class="faveurContact
-																										                                    {{#ifgt contact.usedFaveurs
-																										                                    @index}}
-																										                                    faveur-used
-																										                                    {{/ifgt}}
-																										                                    "></div>
+																																							{{#ifgt contact.usedFaveurs
+																																							@index}}
+																																							faveur-used
+																																							{{/ifgt}}
+																																							"></div>
 											{{/repeat}}
 										</div>
 										<div class="contactControls">
@@ -368,15 +365,12 @@
 										</div>
 									</h3>
 									<div class="flexrow">
-										<img src="{{contact.img}}"/>
-										<p>{{{contact.description}}}</p>
+										<img class="profile-img" src="{{contact.img}}"/>
+										<div>{{{contact.description}}}</div>
 									</div>
 
 								{{else}}
-									<h3 data-tooltip="faites glisser un personnage ou un
-																				                            rouage pour affecter ce contact" class="empty-contact" data-contact-index="{{contactIndex}}">Vide :
-																				                            faites
-																				                            glisser un contact ou créez-en un :
+									<h3 data-tooltip="faites glisser un personnage ou un rouage pour affecter ce contact" class="empty-contact" data-contact-index="{{contactIndex}}">Vide :
 										<i class="fas fa-add createContact"></i>
 									</h3>
 								{{/if}}
@@ -389,9 +383,9 @@
 					{{#unless actor.system.cabale.uuid}}
 						<h4>Aucune Cabale</h4>
 						<p>faites glisser un acteur de type "cabale" pour
-														                        affecter
-														                        ce
-														                        personnage à une cabale
+																																																																																											affecter
+																																																																																											ce
+																																																																																											personnage à une cabale
 						</p>
 					{{/unless}}
 					{{#if actor.system.cabale.uuid}}
@@ -401,13 +395,11 @@
 							</div>
 							<div class="cabaleControls">
 								<a class="openCabale" data-cabale-id="{{actor.system.cabale.uuid}}" data-tooltip="ouvrir la fiche de
-																				                                cabale">
-									<i class="fa-solid
-																				                                    fa-edit"></i>
+																																																																																																											cabale">
+									<i class="fa-solid fa-edit"></i>
 								</a>
 								<a data-tooltip="quitter cette cabale" data-cabale-id="{{actor.system.cabale.uuid}}" class="unassignCabale">
-									<i class="fa-solid
-																				                                    fa-right-from-bracket"></i>
+									<i class="fa-solid fa-right-from-bracket"></i>
 								</a>
 							</div>
 						</h3>
@@ -441,11 +433,11 @@
 				Quantars possédés :
 				<input type="number" name="system.quantars" value="{{actor.system.quantars}}"/>
 				<div class="flexrow " data-tooltip="faites glisser les
-												                    quantars sur les objets qui en ont besoin">
+																																																																														  quantars sur les objets qui en ont besoin">
 
 					{{#each quantarUsage as |item index| }}
 						<img src="systems/noc/asset/default_icons/quantar.webp" class="quantarQty {{#unless
-														                        item.unused}}unavalaible{{/unless}}" {{#if item.name}} data-tooltip="utilisé dans : {{item.name}}" {{/if}}/>
+														item.unused}}unavalaible{{/unless}}" {{#if item.name}} data-tooltip="utilisé dans : {{item.name}}" {{/if}}/>
 					{{/each}}
 				</div>
 			</h3>
@@ -461,27 +453,27 @@
 									<h3>{{localize (concat "ITEM.Type" (upperFirst
                         groupIndex))}}
 										<a class="fas fa-add item-create" data-tooltip="créer un
-																						                            item
-																						                            :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
+																																																																																						    item
+																																																																																						    :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
 									</h3>
 									{{#each group as |item index|}}
 										<li class="flexrow item flexcol ability
-																						                        {{#if item.system.needQuantar}}
-																						                        {{#unless item.system.quantar}}
-																						                        unavalaible
-																						                        {{/unless}}
-																						                        {{/if}}" data-item-id="{{item.id}}">
+																																																																																						{{#if item.system.needQuantar}}
+																																																																																						{{#unless item.system.quantar}}
+																																																																																						unavalaible
+																																																																																						{{/unless}}
+																																																																																						{{/if}}" data-item-id="{{item.id}}">
 											<div class="item-summary flexrow">
 												<div class="img">
 													<img src="{{item.img}}" alt="image de
-																										                                    {{item.name}}">
+																																																																																																																																																																									                  {{item.name}}">
 												</div>
 												<h4 class="item-name">
 													<span>{{item.name}}</span>
 													{{#if item.system.needQuantar}}
 														<img src="systems/noc/asset/default_icons/quantar.webp" alt class="needQuantar {{#if
-																												                                    item.system.quantar}}
-																												                                    quantarUsed{{/if}}">
+																																																																																																																																																    item.system.quantar}}
+																																																																																																																																																    quantarUsed{{/if}}">
 													{{/if}}
 												</h4>
 												<div class="item-control">
@@ -489,10 +481,10 @@
 													<a class="fas fa-edit item-open" data-item-id="{{item.id}}"></a>
 													<a class="fas fa-trash item-delete" data-item-id="{{item.id}}"></a>
 													<a class="fas fa-star item-fav
-																												                                    {{#if item.flags.noc.favItem}}
-																												                                    itemIsFav
-																												                                    {{/if}}
-																												                                    " data-item-id="{{item.id}}"></a>
+																																																																																																																																																    {{#if item.flags.noc.favItem}}
+																																																																																																																																																    itemIsFav
+																																																																																																																																																    {{/if}}
+																																																																																																																																																    " data-item-id="{{item.id}}"></a>
 												</div>
 
 											</div>

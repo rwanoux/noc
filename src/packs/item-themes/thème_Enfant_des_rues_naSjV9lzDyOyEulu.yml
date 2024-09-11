@@ -1,0 +1,113 @@
+name: Enfant des rues
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - action.deplacement
+    - vie.lumiere
+    - talent: action.deplacement
+      value: 1
+    - talent: vie.lumiere
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: ilk2aZCOX1ks6lS3
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.vie.lumiere.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Enfant des rues_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!naSjV9lzDyOyEulu.ilk2aZCOX1ks6lS3'
+  - transfer: true
+    disabled: false
+    _id: IAd7wsNp2uMxtuN6
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Enfant des rues_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!naSjV9lzDyOyEulu.IAd7wsNp2uMxtuN6'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.naSjV9lzDyOyEulu
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677922219358
+  modifiedTime: 1678521005574
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.naSjV9lzDyOyEulu
+  duplicateSource: null
+_id: naSjV9lzDyOyEulu
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!naSjV9lzDyOyEulu'
+

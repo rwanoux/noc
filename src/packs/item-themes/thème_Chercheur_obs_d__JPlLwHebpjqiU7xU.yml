@@ -1,0 +1,113 @@
+name: Chercheur obsédé
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - ame.tenebres
+    - technique.artefact
+    - talent: ame.tenebres
+      value: 1
+    - talent: technique.artefact
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: BdfOBjhMS37G53wQ
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Chercheur obsédé_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!JPlLwHebpjqiU7xU.BdfOBjhMS37G53wQ'
+  - transfer: true
+    disabled: false
+    _id: WvIq0wL04J32HobW
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Chercheur obsédé_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!JPlLwHebpjqiU7xU.WvIq0wL04J32HobW'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.JPlLwHebpjqiU7xU
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677922431133
+  modifiedTime: 1678521005478
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.JPlLwHebpjqiU7xU
+  duplicateSource: null
+_id: JPlLwHebpjqiU7xU
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!JPlLwHebpjqiU7xU'
+

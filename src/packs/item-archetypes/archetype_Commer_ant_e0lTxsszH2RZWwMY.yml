@@ -1,0 +1,818 @@
+name: Commerçant
+type: archetype
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: >-
+    <p><span class="fontstyle0">Le commerçant participe à l’effort de guerre à
+    sa façon. Du boutiquier de quartier au gestionnaire de grand magasin, il est
+    une figure importante du Bloc.</span></p>
+  talentMajeur: 'null'
+  talentsMineurs:
+    erudition:
+      bureau:
+        label: bureau
+        checked: true
+        niveau: 1
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: true
+        niveau: 1
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 0
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 0
+      deplacement:
+        label: déplacement
+        checked: false
+        niveau: 0
+      instinct:
+        label: instinct
+        checked: false
+        niveau: 0
+    statut:
+      contact:
+        label: contact
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: true
+        niveau: 1
+      rang:
+        label: rang
+        checked: false
+        niveau: 0
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: true
+        niveau: 1
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  special: ''
+  affinite:
+    vie:
+      active: false
+      value: 1
+    erudition:
+      active: false
+      value: 1
+    technique:
+      active: false
+      value: 1
+    action:
+      active: false
+      value: 1
+    statut:
+      active: false
+      value: 1
+    ame:
+      active: false
+      value: 1
+    social:
+      active: true
+      value: 3
+effects:
+  - transfer: true
+    disabled: false
+    _id: FbfMX8dh2nYRZaem
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant (pas fini)_talentMajeur
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.FbfMX8dh2nYRZaem'
+  - transfer: true
+    disabled: false
+    _id: jTbjQnRVaRPxEELQ
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant (pas fini)_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.jTbjQnRVaRPxEELQ'
+  - transfer: true
+    disabled: false
+    _id: UvvnX9f02CXTP43L
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.erudition.societe.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant (pas fini)_talentsMineurs
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.UvvnX9f02CXTP43L'
+  - transfer: true
+    disabled: false
+    _id: 9BxwIFbW9xlzSH9F
+    changes:
+      - key: system.domaines.vie.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.erudition.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.technique.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.action.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.statut.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.ame.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.social.value
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant (pas fini)_affinite
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.9BxwIFbW9xlzSH9F'
+  - transfer: true
+    disabled: false
+    _id: 12vIJ4d5yL5PXSIa
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.erudition.culture.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.recherche.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.societe.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artisanat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.ingenierie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.survie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.combat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.instinct.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.rang.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.extase.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.folie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.psychologie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.apaisement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.ferveur.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.lumiere.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.soins.niveau
+        mode: 2
+        value: '0'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant_talentsMineurs
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.12vIJ4d5yL5PXSIa'
+  - transfer: true
+    disabled: false
+    _id: QNjLRftYaeMchwlV
+    changes:
+      - key: system.domaines.vie.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.erudition.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.technique.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.action.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.statut.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.ame.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.social.value
+        mode: 2
+        value: '3'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant_affinite
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.QNjLRftYaeMchwlV'
+  - transfer: true
+    disabled: false
+    _id: TNtuogdzsyF2CFhR
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Commerçant_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!e0lTxsszH2RZWwMY.TNtuogdzsyF2CFhR'
+flags:
+  noc:
+    linkedThemes:
+      - id: SR7XUYI8jgHZwkKG
+        name: Petit échoppier
+        itemData:
+          name: Petit échoppier
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - statut.contact
+              - statut.façade
+              - talent: statut.contact
+                value: 1
+              - talent: statut.façade
+                value: 1
+          effects:
+            - label: thème_Petit échoppier_talents
+              transfer: true
+              disabled: false
+              _id: YEemn3pBfHltRNN2
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.statut.contact.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.statut.façade.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Petit échoppier_description
+              transfer: true
+              disabled: false
+              _id: WPSgkV6qUZIUXD7L
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.SR7XUYI8jgHZwkKG
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921371817
+            modifiedTime: 1678521005366
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: SR7XUYI8jgHZwkKG
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: SaiwcHRiSKsnqDi7
+        name: Boutiquier installé
+        itemData:
+          name: Boutiquier installé
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - statut.fortune
+              - statut.rang
+              - talent: statut.fortune
+                value: 1
+              - talent: statut.rang
+                value: 1
+          effects:
+            - label: thème_Boutiquier installé_talents
+              transfer: true
+              disabled: false
+              _id: smTctnME69Fyy2Sm
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.statut.fortune.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.statut.rang.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Boutiquier installé_description
+              transfer: true
+              disabled: false
+              _id: ePCL1Mh1DP2k81pN
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.SaiwcHRiSKsnqDi7
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921390285
+            modifiedTime: 1678521005367
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: SaiwcHRiSKsnqDi7
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: 6jsT69YFgHlSPB21
+        name: Brocanteur antiquaire
+        itemData:
+          name: Brocanteur antiquaire
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - erudition.culture
+              - technique.artisanat
+              - talent: erudition.culture
+                value: 1
+              - talent: technique.artisanat
+                value: 1
+          effects:
+            - label: thème_Brocanteur antiquaire_talents
+              transfer: true
+              disabled: false
+              _id: zPYZn5f1LAYnaECv
+              changes:
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.undefined.niveau
+                  mode: 2
+                - key: system.talents.erudition.culture.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.technique.artisanat.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Brocanteur antiquaire_description
+              transfer: true
+              disabled: false
+              _id: 5Bb7mOFsphHXAWN8
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.6jsT69YFgHlSPB21
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1677921408832
+            modifiedTime: 1678521005360
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: 6jsT69YFgHlSPB21
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+  core:
+    sourceId: Compendium.noc.archetypes.e0lTxsszH2RZWwMY
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677923504621
+  modifiedTime: 1678522132225
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.archetypes.e0lTxsszH2RZWwMY
+  duplicateSource: null
+_id: e0lTxsszH2RZWwMY
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!e0lTxsszH2RZWwMY'
+

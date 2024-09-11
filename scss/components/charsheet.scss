@@ -224,6 +224,13 @@ div.noc.sheet.actor {
                             text-align: center;
                             cursor: pointer;
 
+                            a.roll-talent {
+                                justify-content: center;
+                                vertical-align: middle;
+
+
+                            }
+
                             span.talent-control,
                             span.domaine-control {
                                 opacity: 0;
@@ -293,8 +300,9 @@ div.noc.sheet.actor {
                         }
 
                         label {
-                            font-size: smaller;
+                            font-size: x-small;
                             line-height: 1em;
+                            cursor: pointer;
                         }
 
                     }
@@ -647,33 +655,50 @@ div.noc.sheet.actor {
                 }
 
                 .favItems {
-                    position: absolute;
-                    bottom: 2%;
-                    z-index: +1;
-                    background: url(../asset/images/fondidentiteconfidentiel.webp);
-                    background-size: 300%;
-                    background-position: center;
 
-                    width: 100%;
 
-                    ul.item-list {
-                        position: relative;
+                    h3 {
+
+                        background-size: 300%;
+                        background-position: center;
+                        padding: 0rem;
+                        width: 100%;
                         transition: 0.3s;
-                        padding: 0;
-                        top: 0;
-                        max-height: 0px;
-                        overflow: hidden;
+                        box-shadow: 0px 0px 30px 15px black;
+                        border-radius: 0 5rem 0.5rem 0;
+
+
+
+                        ul.item-list {
+                            position: relative;
+                            transition: 0.3s;
+                            padding: 0;
+                            top: 0;
+                            margin: 0;
+
+                            li {
+                                position: absolute;
+                                left: -100%
+                            }
+
+                            &:hover {
+                                max-height: 100%;
+                                overflow: hidden;
+                                top: 100%;
+
+
+                            }
+                        }
+
+
+
+
                     }
 
-                    &:hover ul.item-list {
-                        padding: 10px;
-                        max-height: 100px;
-                        overflow: hidden;
-                        top: -100%;
+                    div.img img {
+                        min-width: 35%
                     }
-
                 }
-
             }
 
             div.tab.description {
@@ -768,8 +793,14 @@ div.noc.sheet.actor {
                         }
 
                         img {
+                            aspect-ratio: auto;
                             max-width: 20%;
-                            flex: 0.2;
+                            max-height: 5rem;
+                            object-fit: cover;
+                            object-position: center;
+                            margin-right: 2rem;
+
+
                         }
 
                         font-size: smaller;
@@ -829,20 +860,26 @@ div.noc.sheet.actor {
 
                 ul.item-list {
                     h3 {
-                        text-align: center;
+                        text-align: left;
+
                     }
 
                     padding: 10px;
                     box-shadow: 0px 0px 30px black;
+                    appearance: none;
 
 
                     li.item {
+                        position: relative;
+                        display: block;
+                        border-bottom: 1px solid rgba(41, 39, 39, 0.562);
                         background: url('../asset/images/fondidentite.webp');
-                        background-size: 300% auto;
-                        background-repeat: no-repeat;
-                        background-position: 75% 50%;
-                        margin-bottom: 4px;
+                        background-position: 30% 0.5%;
+                        padding-bottom: 1rem;
                         padding-left: 5%;
+                        transition: all 3s;
+                        box-shadow: 0px 0px 5px black;
+                        margin: 0.3rem 0.1rem;
 
 
                         &.unavalaible {
@@ -851,25 +888,44 @@ div.noc.sheet.actor {
                         }
 
                         div.img img {
+                            flex: 1.5;
+                            height: auto;
+                            min-width: 1.5rem;
 
-                            max-height: 4em;
                         }
 
 
                         div.item-details {
+                            padding: 0;
+                            margin: 0;
                             max-height: 1px;
+                            max-width: 100%;
                             overflow: hidden;
+                            transition-delay: 0.3s;
+
+                            transition: 2s;
+
+                            p:empty {
+                                min-height: 0;
+                            }
 
 
                         }
 
-                        &.expanded div.item-details {
-                            max-height: 100px;
+                        &:hover {
+                            background-position: 30% 0%;
+
+                            div.item-details {
+                                max-height: 1500px;
+                            }
                         }
 
                         div.item-control {
-                            align-self: flex-start;
-                            text-align: right;
+
+                            position: absolute;
+                            bottom: 0;
+                            right: 0;
+                            ;
 
                             .itemIsFav {
                                 color: rgb(0, 187, 0)
@@ -902,7 +958,8 @@ div.noc.sheet.actor {
         .window-content {
             header {
                 background: none;
-                overflow: hidden;
+                display: flex;
+                flex-direction: column;
 
                 h1 {
                     input {
@@ -914,17 +971,17 @@ div.noc.sheet.actor {
                 }
 
                 .profile-image {
-                    margin: 0% 3%;
-                    flex: 0.3;
+                    flex: 0.6;
                     width: 30%;
-                    align-items: end;
+                    min-height: fit-content;
                     position: relative;
+                    margin: 0% 3%;
 
                     img {
-                        position: absolute;
                         top: 5%;
-                        height: auto;
-                        max-height: 90%;
+                        min-width: 90%;
+                        min-height: auto;
+
 
                     }
                 }
@@ -1055,5 +1112,61 @@ div.noc.sheet.actor {
             }
 
         }
+    }
+
+    .window-content {
+
+        .limitted {
+            .resume {
+                justify-content: center;
+            }
+
+            .profile-img {
+                max-height: unset;
+                max-width: unset;
+                width: 80%;
+                height: auto;
+                margin-left: 10%;
+                top: 5rem;
+                position: absolute;
+                z-index: -1;
+
+                ;
+            }
+
+            .form-group {
+                opacity: 0;
+                padding: 0 5rem;
+                flex-direction: column;
+                background: transparent;
+                transition: 0.3s;
+
+
+                &.character-name {
+                    opacity: 1;
+                    box-shadow: 0px 0px 100px gray inset;
+                    background: white;
+
+
+                }
+
+
+
+
+            }
+
+
+
+
+        }
+
+        &:hover form.limitted {
+            .form-group {
+                opacity: 1;
+                box-shadow: 0px 0px 100px gray inset;
+                background: rgba(255, 255, 255, 0.76);
+            }
+        }
+
     }
 }

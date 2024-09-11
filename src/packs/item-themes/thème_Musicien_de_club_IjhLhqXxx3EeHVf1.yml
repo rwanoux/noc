@@ -1,0 +1,103 @@
+name: Musicien de club
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: ame.sensibilite
+      value: 1
+    - talent: statut.fortune
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: ICtocUQzCsE8oCNF
+    changes:
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Musicien de club_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!IjhLhqXxx3EeHVf1.ICtocUQzCsE8oCNF'
+  - transfer: true
+    disabled: false
+    _id: TGEGQ94yLTlJd3pN
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Musicien de club_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!IjhLhqXxx3EeHVf1.TGEGQ94yLTlJd3pN'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.IjhLhqXxx3EeHVf1
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678349160400
+  modifiedTime: 1678521005475
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.IjhLhqXxx3EeHVf1
+  duplicateSource: null
+_id: IjhLhqXxx3EeHVf1
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!IjhLhqXxx3EeHVf1'
+

@@ -41,16 +41,13 @@ export class nocPersonnalisation extends Dialog {
 
 
     async createEffect(html) {
-        console.log(this)
         let label = this.element[0].querySelector('#effectLabel').value;
         let changes = [];
         let flag = {};
         for (let line of this.element[0].querySelectorAll('.bonus-group')) {
-            console.log(line);
             let key = line.querySelector('.key').value;
             let val = line.querySelector('.val').value;
             let talent = key.split(".")[key.split(".").length - 1];
-            console.log(talent)
             changes.push({
                 key: key + ".niveau",
                 value: val,

@@ -1,0 +1,28 @@
+name: Mecanisme Objet-Dieu
+type: script
+scope: global
+author: eHvmVEyeQfWErAPU
+img: icons/svg/dice-target.svg
+command: |-
+  objetDieu.produceMecanisme()
+  game.socketManager.launchSocket("displayMecanisme", {})
+ownership:
+  default: 0
+  eHvmVEyeQfWErAPU: 3
+flags:
+  core:
+    sourceId: Macro.nQCGMSaA28I3qPzn
+_stats:
+  systemId: noc
+  systemVersion: 0.0.12
+  coreVersion: '12.325'
+  createdTime: 1678959315356
+  modifiedTime: 1679034673680
+  lastModifiedBy: eHvmVEyeQfWErAPU
+  compendiumSource: Macro.nQCGMSaA28I3qPzn
+  duplicateSource: null
+folder: null
+sort: 0
+_id: JZKHGtfXh6seTnWS
+_key: '!macros!JZKHGtfXh6seTnWS'
+

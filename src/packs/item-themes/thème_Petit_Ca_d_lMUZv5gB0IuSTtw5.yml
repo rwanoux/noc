@@ -1,0 +1,103 @@
+name: Petit Caïd
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: statut.contact
+      value: 1
+    - talent: social.conviction
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: 2Qe2mYLbwUtGfitL
+    changes:
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Petit Caïd_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!lMUZv5gB0IuSTtw5.2Qe2mYLbwUtGfitL'
+  - transfer: true
+    disabled: false
+    _id: uK0JhjfRCKwCwjrA
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Petit Caïd_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!lMUZv5gB0IuSTtw5.uK0JhjfRCKwCwjrA'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.lMUZv5gB0IuSTtw5
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678349564739
+  modifiedTime: 1678521005569
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.lMUZv5gB0IuSTtw5
+  duplicateSource: null
+_id: lMUZv5gB0IuSTtw5
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!lMUZv5gB0IuSTtw5'
+

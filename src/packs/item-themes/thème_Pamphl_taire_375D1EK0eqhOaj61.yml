@@ -1,0 +1,113 @@
+name: Pamphlétaire
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - statut.contact
+    - social.conviction
+    - talent: social.conviction
+      value: 1
+    - talent: statut.contact
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: uYrQ17jBDD6v999q
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Pamphlétaire_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!375D1EK0eqhOaj61.uYrQ17jBDD6v999q'
+  - transfer: true
+    disabled: false
+    _id: RXYP9biqq2yU09Ki
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Pamphlétaire_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!375D1EK0eqhOaj61.RXYP9biqq2yU09Ki'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.375D1EK0eqhOaj61
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921990792
+  modifiedTime: 1678521005429
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.375D1EK0eqhOaj61
+  duplicateSource: null
+_id: 375D1EK0eqhOaj61
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!375D1EK0eqhOaj61'
+

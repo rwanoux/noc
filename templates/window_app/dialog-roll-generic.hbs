@@ -1,19 +1,19 @@
 <form class="skill-roll-dialog">
   <header class="roll-dialog-header">
-    {{#if img}}
-    <img class="actor-icon" src="{{img}}" data-edit="img" title="{{name}}" />
-    {{/if}}
-    <h1 class="dialog-roll-title roll-dialog-header">Provoquer le destin -
-      {{title}}</h1>
+
+    <h3 class="dialog-roll-title roll-dialog-header">{{#if img}}
+      <img class="actor-icon" src="{{img}}" data-edit="img" title="{{name}}" />
+      {{/if}}Provoquer le destin -
+      {{title}}</h3>
   </header>
 
   <div class="flexcol">
 
     {{#if (eq mode "arme")}}
-    <h3>
+    <h2>
       <div>
-        <span class="">Arme : </span>
-        <span class="">{{arme.name}}
+        <span class>Arme : </span>
+        <span class>{{arme.name}}
           {{#if arme.system.maitrise}}
           (Maitrisée)
           {{else}}
@@ -22,11 +22,11 @@
         </span>
       </div>
       <div>
-        <span class="">Combat : </span>
-        <span class="">{{talent.niveau}}</span>
+        <span class>Combat : </span>
+        <span class>{{talent.niveau}}</span>
       </div>
 
-    </h3>
+    </h2>
 
     {{#if arme.system.adistance}}
     <h3>Modificateurs à distance</h3>
@@ -59,18 +59,18 @@
     </div>
     {{else}}
     <div class="fexrow form-group">
-      <span class="">Niveau requis : </span>
-      <span class="">{{niveauRequis}}</span>
+      <span class>Niveau requis : </span>
+      <span class>{{niveauRequis}}</span>
     </div>
     {{/if}}
     <h3>autres modificateurs</h3>
     <div class="fexrow form-group">
       <span class="item-field-label-vlong">Cible au sol ? </span>
       <span class="item-field-label-medium"><input type="checkbox"
-          id="cibleAuSol" name="cibleAuSol" {{checked cibleAuSol}}/></span>
+          id="cibleAuSol" name="cibleAuSol" {{checked cibleAuSol}} /></span>
     </div>
     <div class="fexrow form-group">
-      <span class="">Modificateurs supplémentaires : </span>
+      <span class>Modificateurs supplémentaires : </span>
       <span data-display-range="modSupplement">0</span>
       <input class="noc-slider" id="modSupplement"
         value="{{modSupplement}}"
@@ -84,19 +84,20 @@
 
     </div>
     <h4 class="fexrow form-group niveauFinalRequis">
-      <span class="">Niveau final requis : </span>
-      <span class=""><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
+      <span class>Niveau final requis : </span>
+      <span class><label
+          id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
     </h4>
     {{/if}}
 
     {{#if (eq mode "talent")}}
-    <h3>
-      <span class="">Talent : </span>
-      <span class="">{{talent.label}} ({{talent.niveau}})</span>
-    </h3>
+    <h2>
+      <span class>Talent : </span>
+      <span class>{{talent.label}} ({{talent.niveau}})</span>
+    </h2>
 
     <div class="fexrow form-group">
-      <span class="">Bonus collaboratif : </span>
+      <span class>Bonus collaboratif : </span>
       <span data-display-range="nbBonusCollaboratif">0</span>
       <input class="noc-slider" id="nbBonusCollaboratif"
         value="{{nbBonusCollaboratif}}"
@@ -111,19 +112,18 @@
     </div>
     {{/if}}
 
-
     <div class="fexrow form-group">
       <h4>
         <div class="nbrDes">
-          <span class="">Dés de domaine : </span>
+          <span class>Dés de domaine : </span>
           <span data-display-range="nbDesDomaine">
             {{domaine.value}}
           </span>
           <i class="fa-light fa-dice-d10"></i>
         </div>
         <div>
-          <span class="">Domaine : </span>
-          <span class="">{{domaine.label}} ({{domaine.value}})</span>
+          <span class>Domaine : </span>
+          <span class>{{domaine.label}} ({{domaine.value}})</span>
         </div>
 
       </h4>
@@ -147,7 +147,7 @@
           dés)?</span>
 
         <input type="checkbox"
-          id="useEspoir" name="useEspoir" {{checked useEspoir}}/></h5>
+          id="useEspoir" name="useEspoir" {{checked useEspoir}} /></h5>
       {{/if}}
       {{#if vecu}}
       <h5 class="flexrow">
@@ -156,7 +156,7 @@
           de Talent)?</span>
         <input type="checkbox"
           id="useVecu"
-          name="useVecu" {{checked useVecu}}/></h5>
+          name="useVecu" {{checked useVecu}} /></h5>
       {{/if}}
     </div>
   </div>

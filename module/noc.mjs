@@ -47,7 +47,6 @@ Hooks.once('init', async function () {
 
   //manage socket messages
   game.socket.on("system.noc", async (sockmsg) => {
-    console.log(">>>>> MSG RECV", sockmsg);
     try {
       game.socketManager.manageReceived(sockmsg);
 

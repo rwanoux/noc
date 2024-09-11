@@ -1,0 +1,113 @@
+name: Errant
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - ame.tenebres
+    - technique.artefact
+    - talent: ame.tenebres
+      value: 1
+    - talent: technique.artefact
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: sxe8l8Tg0FUQfr27
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Errant_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!b8UUKigmhWw7bxQm.sxe8l8Tg0FUQfr27'
+  - transfer: true
+    disabled: false
+    _id: 1wUwNuSPqvsl7a8N
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Errant_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!b8UUKigmhWw7bxQm.1wUwNuSPqvsl7a8N'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.b8UUKigmhWw7bxQm
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677922205325
+  modifiedTime: 1678521005525
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.b8UUKigmhWw7bxQm
+  duplicateSource: null
+_id: b8UUKigmhWw7bxQm
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!b8UUKigmhWw7bxQm'
+

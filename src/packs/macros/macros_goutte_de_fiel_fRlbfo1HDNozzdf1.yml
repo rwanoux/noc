@@ -1,0 +1,28 @@
+name: goutte de fiel
+type: script
+scope: global
+author: eHvmVEyeQfWErAPU
+img: icons/svg/dice-target.svg
+command: |-
+  objetDieu.displayDroplet()
+  game.socketManager.launchSocket("displayDroplet", {})
+ownership:
+  default: 0
+  eHvmVEyeQfWErAPU: 3
+flags:
+  core:
+    sourceId: Macro.0BGfokQa0KQWgYXb
+_stats:
+  systemId: noc
+  systemVersion: 0.0.15
+  coreVersion: '12.325'
+  createdTime: 1680895043352
+  modifiedTime: 1680944200864
+  lastModifiedBy: eHvmVEyeQfWErAPU
+  compendiumSource: Macro.0BGfokQa0KQWgYXb
+  duplicateSource: null
+folder: null
+sort: 0
+_id: fRlbfo1HDNozzdf1
+_key: '!macros!fRlbfo1HDNozzdf1'
+

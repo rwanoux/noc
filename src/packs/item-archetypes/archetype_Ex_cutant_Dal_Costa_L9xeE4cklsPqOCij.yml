@@ -1,0 +1,656 @@
+name: Exécutant Dal'Costa
+type: archetype
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: >-
+    <p><span class="fontstyle0">Le personnage est un homme de main des
+    Dal’Costa, un exécutant de la pègre aux grandes ambitions ou aux méthodes
+    brutales.</span></p>
+  talentMajeur: ame.tenebres
+  talentsMineurs:
+    erudition:
+      bureau:
+        label: bureau
+        checked: false
+        niveau: 0
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: false
+        niveau: 0
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 1
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 0
+      deplacement:
+        label: déplacement
+        checked: false
+        niveau: 0
+      instinct:
+        label: instinct
+        checked: false
+        niveau: 1
+    statut:
+      contact:
+        label: contact
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: false
+        niveau: 0
+      rang:
+        label: rang
+        checked: false
+        niveau: 0
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: false
+        niveau: 0
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  special: ''
+  affinite:
+    vie:
+      active: false
+      value: 3
+    erudition:
+      active: false
+      value: 3
+    technique:
+      active: false
+      value: 3
+    action:
+      active: true
+      value: 3
+    statut:
+      active: false
+      value: 3
+    ame:
+      active: true
+      value: 3
+    social:
+      active: false
+      value: 3
+effects:
+  - transfer: true
+    disabled: false
+    _id: oe0JjD2bBLccPWxm
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Exécutant Dal'Costa_talentMajeur
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!L9xeE4cklsPqOCij.oe0JjD2bBLccPWxm'
+  - transfer: true
+    disabled: false
+    _id: ldPBuUjxtgGlLe2P
+    changes:
+      - key: system.domaines.vie.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.erudition.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.technique.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.action.value
+        mode: 2
+        value: '3'
+        priority: null
+      - key: system.domaines.statut.value
+        mode: 2
+        value: '2'
+        priority: null
+      - key: system.domaines.ame.value
+        mode: 2
+        value: '3'
+        priority: null
+      - key: system.domaines.social.value
+        mode: 2
+        value: '2'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Exécutant Dal'Costa_affinite
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!L9xeE4cklsPqOCij.ldPBuUjxtgGlLe2P'
+  - transfer: true
+    disabled: false
+    _id: y2vKAEBI6x8Lmf2o
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Exécutant Dal'Costa_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!L9xeE4cklsPqOCij.y2vKAEBI6x8Lmf2o'
+  - transfer: true
+    disabled: false
+    _id: zN87oxXqv98XK5id
+    changes:
+      - key: system.talents.erudition.bureau.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.culture.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.recherche.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.erudition.societe.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artefact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.artisanat.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.ingenierie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.technique.survie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.combat.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.action.constitution.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.deplacement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.action.instinct.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.fortune.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.statut.rang.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.extase.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.folie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.ame.tenebres.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.conviction.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.psychologie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.social.tromperie.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.apaisement.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.ferveur.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.lumiere.niveau
+        mode: 2
+        value: '0'
+        priority: null
+      - key: system.talents.vie.soins.niveau
+        mode: 2
+        value: '0'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: archetype_Exécutant Dal'Costa_talentsMineurs
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!L9xeE4cklsPqOCij.zN87oxXqv98XK5id'
+flags:
+  noc:
+    linkedThemes:
+      - id: lMUZv5gB0IuSTtw5
+        name: Petit Caïd
+        itemData:
+          name: Petit Caïd
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - talent: statut.contact
+                value: 1
+              - talent: social.conviction
+                value: 1
+          effects:
+            - label: thème_Petit Caïd_talents
+              transfer: true
+              disabled: false
+              _id: 2Qe2mYLbwUtGfitL
+              changes:
+                - key: system.talents.statut.contact.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.social.conviction.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Petit Caïd_description
+              transfer: true
+              disabled: false
+              _id: uK0JhjfRCKwCwjrA
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.lMUZv5gB0IuSTtw5
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1678349564739
+            modifiedTime: 1678521005371
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: lMUZv5gB0IuSTtw5
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: 1MS35Ao5lDEVbpPE
+        name: Gorille
+        itemData:
+          name: Gorille
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - talent: action.constitution
+                value: 1
+              - talent: social.conviction
+                value: 1
+          effects:
+            - label: thème_Gorille_talents
+              transfer: true
+              disabled: false
+              _id: EVVseVLXuYorPxQV
+              changes:
+                - key: system.talents.action.constitution.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.social.conviction.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Gorille_description
+              transfer: true
+              disabled: false
+              _id: Inrw3szbJIL3yp1y
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.1MS35Ao5lDEVbpPE
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1678349592737
+            modifiedTime: 1678521005359
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: 1MS35Ao5lDEVbpPE
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+      - id: N5zCQP4ZRc4YicLm
+        name: Contrebandier fluvial
+        itemData:
+          name: Contrebandier fluvial
+          type: thème
+          img: systems/noc/asset/default_icons/question_mark.webp
+          system:
+            description: ''
+            talents:
+              - talent: action.deplacement
+                value: 1
+              - talent: technique.survie
+                value: 1
+          effects:
+            - label: thème_Contrebandier fluvial_talents
+              transfer: true
+              disabled: false
+              _id: 9HCwdUNxpweQmxko
+              changes:
+                - key: system.talents.action.deplacement.niveau
+                  mode: 2
+                  value: '1'
+                - key: system.talents.technique.survie.niveau
+                  mode: 2
+                  value: '1'
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+            - label: thème_Contrebandier fluvial_description
+              transfer: true
+              disabled: false
+              _id: o2BubTX4xrbOpmXQ
+              changes: []
+              duration:
+                startTime: null
+                seconds: null
+                combat: null
+                rounds: null
+                turns: null
+                startRound: null
+                startTurn: null
+              icon: null
+              origin: null
+              tint: null
+              flags: {}
+          flags:
+            core:
+              sourceId: Compendium.noc.themes.N5zCQP4ZRc4YicLm
+          _stats:
+            systemId: noc
+            systemVersion: 0.0.8
+            coreVersion: '10.291'
+            createdTime: 1678349607537
+            modifiedTime: 1678521005364
+            lastModifiedBy: GqESxdGhOwgra802
+          _id: N5zCQP4ZRc4YicLm
+          folder: null
+          sort: 0
+          ownership:
+            default: 0
+            g1hXofeJ7VfDjBe7: 3
+        choosed: false
+  core:
+    sourceId: Compendium.noc.archetypes.L9xeE4cklsPqOCij
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678349623445
+  modifiedTime: 1678522132090
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.archetypes.L9xeE4cklsPqOCij
+  duplicateSource: null
+_id: L9xeE4cklsPqOCij
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!L9xeE4cklsPqOCij'
+

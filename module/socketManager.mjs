@@ -29,6 +29,11 @@ export class SocketManager {
     }
     async manageReceived(socketMsg) {
         switch (socketMsg.type) {
+            case "gouttePlus":
+                if (!game.user.isGM) return;
+                this.launchSocket("dispayDroplet", {})
+                ui.compteur.gouttePlus(socketMsg.data.qt)
+                break;
             case "renderCompteur":
                 ui.compteur.render(true);
                 break;

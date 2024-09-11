@@ -1,0 +1,103 @@
+name: Rabbin conforme
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - talent: social.charisme
+      value: 1
+    - talent: social.psychologie
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: LelS8ejWqfByZLKp
+    changes:
+      - key: system.talents.social.charisme.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.social.psychologie.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Rabbin conforme_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!2yBkFvIXs8Dz8YaT.LelS8ejWqfByZLKp'
+  - transfer: true
+    disabled: false
+    _id: pHqJnolfg1R3qH28
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Rabbin conforme_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!2yBkFvIXs8Dz8YaT.pHqJnolfg1R3qH28'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.2yBkFvIXs8Dz8YaT
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1678348269294
+  modifiedTime: 1678521005427
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.2yBkFvIXs8Dz8YaT
+  duplicateSource: null
+_id: 2yBkFvIXs8Dz8YaT
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!2yBkFvIXs8Dz8YaT'
+

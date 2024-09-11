@@ -48,7 +48,6 @@ export class nocUtility {
       nocUtility.removeChatMessageId(msgId)
 
       let nbDice = $(event.target).data('nb-dice')
-      console.log(">>>>>", nbDice)
       this.rollBonus(rollData, nbDice)
     })
 
@@ -185,7 +184,6 @@ export class nocUtility {
       actor.incDecReserve("vecu", -1)
     }
 
-    console.log("rollTalent", rollData)
 
   }
   /* -------------------------------------------- */
@@ -201,7 +199,8 @@ export class nocUtility {
     await this.showDiceSoNice(myRollBonus, game.settings.get("core", "rollMode"))
     for (let result of myRollBonus.terms[0].results) {
       if (result.result == 1) {
-        ui.compteur.gouttePlus(1)
+        game.socketManager.launchSocket("gouttePlus", { qt: 1 })
+        //ui.compteur.gouttePlus(1)
         rollData.nbFiel++
       }
     }
@@ -237,7 +236,9 @@ export class nocUtility {
         rollData.nbAddDice++
       }
       if (result.result == 1) {
-        ui.compteur.gouttePlus(1)
+        game.socketManager.launchSocket("gouttePlus", { qt: 1 })
+
+        //ui.compteur.gouttePlus(1)
         rollData.nbFiel++
       }
     }
@@ -300,7 +301,6 @@ export class nocUtility {
   }
   /* -------------------------------------------- */
   static getWhisperRecipientsAndGMs(name) {
-    console.log("NAME", name)
     let recep1 = ChatMessage.getWhisperRecipients(name) || [];
     return recep1.concat(ChatMessage.getWhisperRecipients('GM'));
   }
@@ -310,7 +310,6 @@ export class nocUtility {
     let chatGM = foundry.utils.duplicate(chatOptions);
     chatGM.whisper = this.getUsers(user => user.isGM);
     chatGM.content = "Blinde message of " + game.user.name + "<br>" + chatOptions.content;
-    console.log("blindMessageToGM", chatGM);
     game.socket.emit("system.fvtt-warhero", { msg: "msg_gm_chat_message", data: chatGM });
   }
 

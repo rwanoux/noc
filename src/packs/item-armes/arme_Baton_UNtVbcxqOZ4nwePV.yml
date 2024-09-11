@@ -1,0 +1,38 @@
+name: Baton
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: ''
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 0
+  limite: 0
+  degats: ' @talents.action.constitution.niveau + 2'
+  matrise: false
+  traits: Long
+  munitions:
+    type: ''
+    quantite: 0
+  portee: 0
+effects: []
+flags:
+  core:
+    sourceId: Item.vXEsNnMcdPltWSWd
+_stats:
+  systemId: noc
+  systemVersion: 0.0.4
+  coreVersion: '12.325'
+  createdTime: 1676840485007
+  modifiedTime: 1677254761280
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Item.vXEsNnMcdPltWSWd
+  duplicateSource: null
+_id: UNtVbcxqOZ4nwePV
+folder: null
+sort: 0
+ownership:
+  default: 0
+  GqESxdGhOwgra802: 3
+_key: '!items!UNtVbcxqOZ4nwePV'
+

@@ -1,4 +1,3 @@
-import CompteurFiel from "../compteursFiel/compteurFiel.mjs";
 import { nocUtility } from "../noc-utility.js";
 
 export class nocRollDialog extends Dialog {
@@ -77,7 +76,6 @@ export class nocRollDialog extends Dialog {
       }
     }
     $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
-    console.log(this.rollData)
   }
   /* -------------------------------------------- */
   activateListeners(html) {

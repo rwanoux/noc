@@ -47,16 +47,15 @@ export class nocNoirceurTraits extends Dialog {
         let inputs = this.element[0].querySelectorAll('input');
         for (let input of inputs) {
             if (input.checked) {
-                console.log(input)
                 selectedTraits.push(NOC.traitsPerditions.noirceur[input.dataset.traitId])
             }
         }
 
         let traits = this.actor.system.traits.concat(selectedTraits);
         await this.actor.update({
-            'system.traits':traits
+            'system.traits': traits
         })
-         
+
 
     }
     /* -------------------------------------------- */

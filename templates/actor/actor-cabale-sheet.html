@@ -1,169 +1,154 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
 
-  {{!-- Sheet Header --}}
+	{{!-- Sheet Header --}}
 
 
-  {{!-- Sheet Tab Navigation --}}
-  <nav class="sheet-tabs tabs" data-group="primary">
-    {{!-- Default tab is specified in actor-sheet.mjs --}}
-    <a class="item" data-tab="description">Description</a>
-    <a class="item" data-tab="members">Membres</a>
-  </nav>
+	{{!-- Sheet Tab Navigation --}}
+	<nav class="sheet-tabs tabs" data-group="primary">
+		{{!-- Default tab is specified in actor-sheet.mjs --}}
+		<a class="item" data-tab="description">Description</a>
+		<a class="item" data-tab="members">Membres</a>
+	</nav>
 
-  {{!-- Sheet Body --}}
-  <section class="sheet-body">
+	{{!-- Sheet Body --}}
+	<section class="sheet-body">
 
-    {{!-- Owned Features Tab --}}
-    <div class="tab principal flexrow" data-group="primary"
-      data-tab="description">
-      <div class="resume flexcol">
-        <img class="profile-img" src="{{actor.img}}" data-edit="img"
-          title="{{actor.name}}" height="100" width="100"/>
+		{{!-- Owned Features Tab --}}
+		<div class="tab principal flexrow" data-group="primary" data-tab="description">
+			<div class="resume flexcol">
+				<img class="profile-img" src="{{actor.img}}" data-edit="img" title="{{actor.name}}" height="100" width="100"/>
 
-        <div class="form-group">
-          <div>nom :</div>
-          <input type="text" name="name" value="{{actor.name}}">
-        </div>
-        <div class="form-group">
-          <div>bloc :</div>
-          <input type="text" name="system.bloc" value="{{actor.system.bloc}}">
-        </div>
-        <div class="form-group">
-          <div>coordonnées :</div>
-          <input type="text" name="system.coordonnes"
-            value="{{actor.system.coordonnes}}">
-        </div>
-        <div class="form-group">
-          <div>societé écran :</div>
-          <input type="text" name="system.societeEcran"
-            value="{{actor.system.societeEcran}}">
-        </div>
-        <div class="form-group">
-          <div>réseau :</div>
-          <input type="text" name="system.reseau"
-            value="{{actor.system.reseau}}">
-        </div>
-        <div class="form-group">
-          <div class="flexcol">
-            <div>qualités : <i class="fas fa-add" data-action="add-qualite"></i>
-            </div>
-            {{#each actor.system.qualites.liste as |qualite index|}}
-            {{qualite}}
-            {{/each}}
-          </div>
-        </div>
+				<div class="form-group">
+					<div>nom :</div>
+					<input type="text" name="name" value="{{actor.name}}">
+				</div>
+				<div class="form-group">
+					<div>bloc :</div>
+					<input type="text" name="system.bloc" value="{{actor.system.bloc}}">
+				</div>
+				<div class="form-group">
+					<div>coordonnées :</div>
+					<input type="text" name="system.coordonnes" value="{{actor.system.coordonnes}}">
+				</div>
+				<div class="form-group">
+					<div>societé écran :</div>
+					<input type="text" name="system.societeEcran" value="{{actor.system.societeEcran}}">
+				</div>
+				<div class="form-group">
+					<div>réseau :</div>
+					<input type="text" name="system.reseau" value="{{actor.system.reseau}}">
+				</div>
+				<div class="form-group">
+					<div class="flexcol">
+						<div>qualités :
+							<i class="fas fa-add" data-action="add-qualite"></i>
+						</div>
+						{{#each actor.system.qualites.liste as |qualite index|}}
+							{{qualite}}
+						{{/each}}
+					</div>
+				</div>
 
-        <div class="form-group">
-          <div>progression :</div>
-          <input type="number" name="system.progression"
-            value="{{actor.system.progression}}">
-        </div>
+				<div class="form-group">
+					<div>progression :</div>
+					<input type="number" name="system.progression" value="{{actor.system.progression}}">
+				</div>
+				<div class="description">
+					<h2>description</h2>
+					{{editor actor.system.description
+          target="system.description"
+          button=true editable=editable
+          engine="prosemirror" collaborate=false}}
+				</div>
 
 
-      </div>
-      <div class="stats">
-        <div class="fond"></div>
-        <!-- DOMAINES ET TALENTS -->
-        {{#each actor.system.domaines as |domaine domaineId|}}
-        <div class="domaine {{domaineId}}">
-          <h3 class="flexrow">
-            <input type="number"
-              name="system.domaines.{{domaineId}}.value"
-              value="{{domaine.value}}"/>
-            <span>{{domaine.label}}</span>
-          </h3>
-          {{#each ../actor.system.talents as |groupTalent
+			</div>
+			<div class="stats">
+				<div class="fond"></div>
+				<!-- DOMAINES ET TALENTS -->
+				{{#each actor.system.domaines as |domaine domaineId|}}
+					<div class="domaine {{domaineId}}">
+						<h3 class="flexrow">
+							<input type="number" name="system.domaines.{{domaineId}}.value" value="{{domaine.value}}"/>
+							<span>{{domaine.label}}</span>
+						</h3>
+						{{#each ../actor.system.talents as |groupTalent
           talentGroupName|}}
-          {{#ifequal talentGroupName domaineId}}
-          {{#each groupTalent as |talent talentId|}}
-          <div class="flexrow">
-            <input
-              name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
-              value="{{talent.niveau}}" type="number">
-            <a class="rollable roll-talent" data-talent-id="{{talentId}}"
-              data-domaine-id="{{domaineId}}">
-              <label for="{{talent.label}}">{{talent.label}}</label>
-            </a>
-          </div>
-          {{/each}}
-          {{/ifequal}}
-          {{/each}}
-        </div>
-        {{/each}}
-        <!-- RESERVES-->
-        {{#each actor.system.reserves as |reserve reserveId|}}
-        <div class="reserve {{reserveId}}">
-          <h4>{{reserve.label}}
-            <a class="setMax"
-              data-tooltip="ajuster le max"
-              data-reserve-name="{{reserve.label}}"
-              data-reserve-property="system.reserves.{{reserveId}}.max">
-              <i class="fas fa-cog"></i>
-            </a>
-          </h4>
+							{{#ifequal talentGroupName domaineId}}
+								{{#each groupTalent as |talent talentId|}}
+									<div class="flexrow">
+										<input name="system.talents.{{talentGroupName}}.{{talentId}}.niveau" value="{{talent.niveau}}" type="number">
+										<a class="rollable roll-talent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
+											<label for="{{talent.label}}">{{talent.label}}</label>
+										</a>
+									</div>
+								{{/each}}
+							{{/ifequal}}
+						{{/each}}
+					</div>
+				{{/each}}
+				<!-- RESERVES-->
+				{{#each actor.system.reserves as |reserve reserveId|}}
+					<div class="reserve {{reserveId}}">
+						<h4>{{reserve.label}}
+							<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
+								<i class="fas fa-cog"></i>
+							</a>
+						</h4>
 
-          {{#repeat 10}}
-          <input type="checkbox"
-            data-reserve-value="{{@index}}"
-            data-reserve-property="system.reserves.{{reserveId}}.value"
-            class="
-            {{#ifequal @index 4}}step{{/ifequal}}
-            {{#ifequal @index 7}}step{{/ifequal}}
-            {{#ifequal @index 9}}step{{/ifequal}}
-            {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
-            "
-            {{#ifgt reserve.value @index}}checked{{/ifgt}}/>
-          {{/repeat}}
+						{{#repeat 10}}
+							<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value" class="
+								            {{#ifequal @index 4}}step{{/ifequal}}
+								            {{#ifequal @index 7}}step{{/ifequal}}
+								            {{#ifequal @index 9}}step{{/ifequal}}
+								            {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
+								            " {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
+						{{/repeat}}
 
-        </div>
-        {{/each}}
-        <!-- PERDITIONS-->
-        {{#each actor.system.perditions as |perdition perditionId|}}
-        <div class="reserve perdition {{perditionId}}">
-          <h4>{{perdition.label}}
-            <a class="setMax"
-              data-tooltip="ajuster le max"
-              data-reserve-name="{{perdition.label}}"
-              data-reserve-property="system.perditions.{{perditionId}}.max">
-              <i class="fas fa-cog"></i>
-            </a>
-          </h4>
+					</div>
+				{{/each}}
+				<!-- PERDITIONS-->
+				{{#each actor.system.perditions as |perdition perditionId|}}
+					<div class="reserve perdition {{perditionId}}">
+						<h4>{{perdition.label}}
+							<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{perdition.label}}" data-reserve-property="system.perditions.{{perditionId}}.max">
+								<i class="fas fa-cog"></i>
+							</a>
+						</h4>
 
-          {{#repeat 10}}
-          <input type="checkbox"
-            data-reserve-value="{{@index}}"
-            data-reserve-property="system.perditions.{{perditionId}}.value"
-            class="
-            {{#ifequal @index 4}}step{{/ifequal}}
-            {{#ifequal @index 7}}step{{/ifequal}}
-            {{#ifequal @index 9}}step{{/ifequal}}
-            {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
-            "
-            {{#ifgt perdition.value @index}}checked{{/ifgt}}/>
-          {{/repeat}}
+						{{#repeat 10}}
+							<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.{{perditionId}}.value" class="
+								            {{#ifequal @index 4}}step{{/ifequal}}
+								            {{#ifequal @index 7}}step{{/ifequal}}
+								            {{#ifequal @index 9}}step{{/ifequal}}
+								            {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
+								            " {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
+						{{/repeat}}
 
-        </div>
-        {{/each}}
+					</div>
+				{{/each}}
 
-      </div>
-    </div>
-    <div class="tab members flexrow" data-group="primary" data-tab="members">
-      <ul class="item-list">
-        {{#each members as |member key|}}
-        <li class="item" data-actor-id="{{member._id}}">
-          <div class="item-summary flexrow">
-            <div class="img">
-              <img src="{{member.img}}" alt="image de {{member.name}}">
-            </div>
-            <h4 class="item-name">
-              <span><a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a></span>
-            </h4>
-          </div>
-        </li>
-        {{/each}}
-      </ul>
+			</div>
+		</div>
+		<div class="tab members flexrow" data-group="primary" data-tab="members">
+			<ul class="item-list">
+				{{#each members as |member key|}}
+					<li class="item" data-actor-id="{{member._id}}">
+						<div class="item-summary flexrow">
+							<div class="img">
+								<img src="{{member.img}}" alt="image de {{member.name}}">
+							</div>
+							<h4 class="item-name">
+								<span>
+									<a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a>
+								</span>
+							</h4>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
 
-    </div>
+		</div>
 
-  </section>
+	</section>
 </form>

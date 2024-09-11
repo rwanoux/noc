@@ -1,0 +1,513 @@
+name: Garde Lourd
+type: rouage
+img: systems/noc/asset/default_icons/personnage.webp
+system:
+  domaines:
+    vie:
+      value: 2
+      label: vie
+    erudition:
+      value: 2
+      label: érudition
+    technique:
+      value: 2
+      label: technique
+    action:
+      value: 4
+      label: action
+    statut:
+      value: 2
+      label: statut
+    ame:
+      value: 2
+      label: âme
+    social:
+      value: 2
+      label: social
+  talents:
+    erudition:
+      bureau:
+        label: bureau
+        checked: false
+        niveau: 0
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: false
+        niveau: 0
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 2
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 1
+      deplacement:
+        label: déplacement
+        checked: false
+        niveau: 1
+      instinct:
+        label: instinct
+        checked: false
+        niveau: 2
+    statut:
+      contact:
+        label: contacts
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: false
+        niveau: 0
+      rang:
+        label: rang
+        checked: false
+        niveau: 1
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: false
+        niveau: 0
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  reserves:
+    singularite:
+      label: singularité
+      value: 0
+      min: 0
+      max: 10
+    faveurs:
+      label: faveurs
+      value: 0
+      min: 0
+      max: 10
+    espoir:
+      label: espoir
+      value: 3
+      min: 0
+      max: 3
+    vecu:
+      label: vécu
+      value: 3
+      min: 0
+      max: 3
+  perditions:
+    blessures:
+      label: blessures
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    traque:
+      label: traque
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    noirceur:
+      label: noirceur
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    trauma:
+      label: trauma
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+  isMineur: true
+  description: >-
+    <p><span class="fontstyle0">Ce profil est celui des Gardes Noirs protégeant
+    les points stratégiques et disposant des équipements les plus lourds.</span>
+    <br style=" font-style: normal; font-variant: normal; font-weight: normal;
+    letter-spacing: normal; line-height: normal; orphans: 2; text-align:
+    -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal;
+    widows: 2; word-spacing: 0px; -webkit-text-size-adjust: auto;
+    -webkit-text-stroke-width: 0px; "></p>
+prototypeToken:
+  name: Garde Régulier
+  displayName: 0
+  actorLink: false
+  texture:
+    src: systems/noc/asset/default_icons/personnage.webp
+    scaleX: 1
+    scaleY: 1
+    offsetX: 0
+    offsetY: 0
+    rotation: 0
+    tint: '#ffffff'
+    anchorX: 0.5
+    anchorY: 0.5
+    fit: contain
+    alphaThreshold: 0.75
+  width: 1
+  height: 1
+  lockRotation: false
+  rotation: 0
+  alpha: 1
+  disposition: -1
+  displayBars: 0
+  bar1:
+    attribute: null
+  bar2:
+    attribute: null
+  light:
+    alpha: 0.5
+    angle: 360
+    bright: 0
+    color: null
+    coloration: 1
+    dim: 0
+    attenuation: 0.5
+    luminosity: 0.5
+    saturation: 0
+    contrast: 0
+    shadows: 0
+    animation:
+      type: null
+      speed: 5
+      intensity: 5
+      reverse: false
+    darkness:
+      min: 0
+      max: 1
+    negative: false
+    priority: 0
+  sight:
+    enabled: false
+    range: 0
+    angle: 360
+    visionMode: basic
+    color: null
+    attenuation: 0.1
+    brightness: 0
+    saturation: 0
+    contrast: 0
+  detectionModes: []
+  flags: {}
+  randomImg: false
+  appendNumber: false
+  prependAdjective: false
+  hexagonalShape: 0
+  occludable:
+    radius: 0
+  ring:
+    enabled: false
+    colors:
+      ring: null
+      background: null
+    effects: 1
+    subject:
+      scale: 1
+      texture: null
+items:
+  - name: Mitraillette
+    type: arme
+    img: systems/noc/asset/default_icons/arme.webp
+    system:
+      description: ''
+      needQuantar: false
+      quantar: false
+      adistance: true
+      valeur: 2
+      limite: 0
+      degats: '4'
+      matrise: false
+      traits: Perforant, Limité (2), Multiple (2)
+      munitions:
+        type: Balles
+        quantite: 15
+      portee: 0
+    effects: []
+    flags:
+      core:
+        sourceId: Item.vXEsNnMcdPltWSWd
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1676840485007
+      modifiedTime: 1681401836087
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Item.vXEsNnMcdPltWSWd
+      duplicateSource: null
+    _id: GX96nwoTUt17EOh8
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      GqESxdGhOwgra802: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.GX96nwoTUt17EOh8'
+  - name: Tenue de combat
+    type: armure
+    img: systems/noc/asset/default_icons/armure.webp
+    system:
+      description: <p>Protections légères et coquées</p>
+      armure: 1
+      traits: Limité (2)
+      valeur: 2
+    effects: []
+    flags:
+      core:
+        sourceId: Compendium.noc.armures.y5Y3uNIwq9rxPNVV
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1677925910795
+      modifiedTime: 1681401843475
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Compendium.noc.armures.y5Y3uNIwq9rxPNVV
+      duplicateSource: null
+    _id: z6uaUFjvZ2wsopVp
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      g1hXofeJ7VfDjBe7: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.z6uaUFjvZ2wsopVp'
+  - name: Sabre
+    type: arme
+    img: systems/noc/asset/default_icons/arme.webp
+    system:
+      description: ''
+      needQuantar: false
+      quantar: false
+      adistance: false
+      valeur: 1
+      limite: 0
+      degats: ' @talents.action.constitution.niveau + 3'
+      matrise: false
+      traits: Tranchant, Long
+      munitions:
+        type: ''
+        quantite: null
+      portee: 0
+    effects: []
+    flags:
+      core:
+        sourceId: Item.vXEsNnMcdPltWSWd
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1676840485007
+      modifiedTime: 1681403289269
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Item.vXEsNnMcdPltWSWd
+      duplicateSource: null
+    _id: EL7Unx5bP6qgY95Y
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      GqESxdGhOwgra802: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.EL7Unx5bP6qgY95Y'
+  - name: Fusil (Chevrotines)
+    type: arme
+    img: systems/noc/asset/default_icons/arme.webp
+    system:
+      description: ''
+      needQuantar: false
+      quantar: false
+      adistance: true
+      valeur: 1
+      limite: 0
+      degats: '3'
+      matrise: false
+      traits: Tranchant, Limité (1), Multiple (1)
+      munitions:
+        type: Chevrotines
+        quantite: 2
+      portee: 0
+    effects: []
+    flags:
+      core:
+        sourceId: Item.vXEsNnMcdPltWSWd
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1676840485007
+      modifiedTime: 1681403301659
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Item.vXEsNnMcdPltWSWd
+      duplicateSource: null
+    _id: 1USc4yItsDZjQsDM
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      GqESxdGhOwgra802: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.1USc4yItsDZjQsDM'
+  - name: Lance Flammes
+    type: arme
+    img: systems/noc/asset/default_icons/arme.webp
+    system:
+      description: ''
+      needQuantar: false
+      quantar: false
+      adistance: true
+      valeur: 3
+      limite: 0
+      degats: '3'
+      matrise: false
+      traits: Multiple (1), Récurrent, Limité (3)
+      munitions:
+        type: ''
+        quantite: 3
+      portee: 0
+    effects: []
+    flags:
+      core:
+        sourceId: Item.vXEsNnMcdPltWSWd
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1676840485007
+      modifiedTime: 1681403305243
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Item.vXEsNnMcdPltWSWd
+      duplicateSource: null
+    _id: uaaxBm4oVK0aQNuP
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      GqESxdGhOwgra802: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.uaaxBm4oVK0aQNuP'
+  - name: Armure lourde de la Garde Noire
+    type: armure
+    img: systems/noc/asset/default_icons/armure.webp
+    system:
+      description: >-
+        <p>Tenue renforcée dont sont équipés les Gardes Noirs protégeant les
+        points stratégiques.</p>
+      armure: 2
+      traits: Encombrant, limité (3)
+      valeur: 3
+    effects: []
+    flags:
+      core:
+        sourceId: Compendium.noc.armures.0Qj5dYCZ2GJtypYC
+    _stats:
+      systemId: noc
+      systemVersion: 0.1.4
+      coreVersion: '12.325'
+      createdTime: 1677925976170
+      modifiedTime: 1681403315086
+      lastModifiedBy: iQu9l7KNRqrZFIC0
+      compendiumSource: Compendium.noc.armures.0Qj5dYCZ2GJtypYC
+      duplicateSource: null
+    _id: cSk6MiGrCmbHkZ5T
+    folder: null
+    sort: 0
+    ownership:
+      default: 0
+      g1hXofeJ7VfDjBe7: 3
+      iQu9l7KNRqrZFIC0: 3
+    _key: '!actors.items!0LTgQY9dnBTG1tHV.cSk6MiGrCmbHkZ5T'
+effects: []
+flags:
+  core:
+    sourceId: Actor.yNBUD1GPX3GVbFkz
+  cf:
+    id: temp_i51d9wtm76
+_stats:
+  systemId: noc
+  systemVersion: 0.1.5
+  coreVersion: '12.325'
+  createdTime: 1681401742255
+  modifiedTime: 1681584393161
+  lastModifiedBy: iQu9l7KNRqrZFIC0
+  compendiumSource: Actor.yNBUD1GPX3GVbFkz
+  duplicateSource: null
+ownership:
+  default: 0
+  iQu9l7KNRqrZFIC0: 3
+folder: null
+sort: 0
+_id: 0LTgQY9dnBTG1tHV
+_key: '!actors!0LTgQY9dnBTG1tHV'
+

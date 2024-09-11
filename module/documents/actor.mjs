@@ -252,7 +252,6 @@ export class nocActor extends Actor {
   };
   async checkPerditions(update) {
     for (let perd in update.system.perditions) {
-      console.log(perd);
 
       if (update.system.perditions[perd].value) {
 
@@ -424,7 +423,6 @@ export class nocActor extends Actor {
     if (this.system.cabale.uuid) {
       return ui.notifications.warn("Ce personnage est déjà affecté à une cabale")
     }
-    console.log("Adding cabale", cabale)
     let update = {
       nom: cabale.name,
       uuid: cabale._id,
@@ -458,7 +456,6 @@ export class nocActor extends Actor {
   incDecReserve(reserveKey, value) {
     let reserve = foundry.utils.duplicate(this.system.reserves[reserveKey])
     reserve.value += value
-    console.log("Updating: ", reserve)
     this.update({ [`system.reserves.${reserveKey}`]: reserve })
   }
 

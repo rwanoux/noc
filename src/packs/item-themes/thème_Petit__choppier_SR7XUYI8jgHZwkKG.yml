@@ -1,0 +1,113 @@
+name: Petit échoppier
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - statut.contact
+    - statut.façade
+    - talent: statut.contact
+      value: 1
+    - talent: statut.façade
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: YEemn3pBfHltRNN2
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.statut.contact.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.statut.façade.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Petit échoppier_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!SR7XUYI8jgHZwkKG.YEemn3pBfHltRNN2'
+  - transfer: true
+    disabled: false
+    _id: WPSgkV6qUZIUXD7L
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Petit échoppier_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!SR7XUYI8jgHZwkKG.WPSgkV6qUZIUXD7L'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.SR7XUYI8jgHZwkKG
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921371817
+  modifiedTime: 1678521005499
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.SR7XUYI8jgHZwkKG
+  duplicateSource: null
+_id: SR7XUYI8jgHZwkKG
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!SR7XUYI8jgHZwkKG'
+

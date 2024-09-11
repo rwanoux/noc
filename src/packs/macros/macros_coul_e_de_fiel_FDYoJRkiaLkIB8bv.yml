@@ -1,0 +1,28 @@
+name: coulée de fiel
+type: script
+scope: global
+author: eHvmVEyeQfWErAPU
+img: icons/svg/dice-target.svg
+command: |-
+  objetDieu.displayFiel()
+  game.socketManager.launchSocket("displayFiel", {})
+ownership:
+  default: 0
+  eHvmVEyeQfWErAPU: 3
+flags:
+  core:
+    sourceId: Macro.MCM1bjRJKzoHInYV
+_stats:
+  systemId: noc
+  systemVersion: 0.0.12
+  coreVersion: '12.325'
+  createdTime: 1678963323452
+  modifiedTime: 1679034671215
+  lastModifiedBy: eHvmVEyeQfWErAPU
+  compendiumSource: Macro.MCM1bjRJKzoHInYV
+  duplicateSource: null
+folder: null
+sort: 0
+_id: FDYoJRkiaLkIB8bv
+_key: '!macros!FDYoJRkiaLkIB8bv'
+

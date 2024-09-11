@@ -52,7 +52,7 @@ objetDieu.initDroplet = () => {
     let videomasque = document.createElement('div');
     videomasque.id = "videoDroplet";
     videomasque.innerHTML = `
-    <video controls=false  >
+    <video controls=false muted=true >
     <source src="systems/noc/asset/video/drop.mp4" type="video/mp4">
     </video>
     `

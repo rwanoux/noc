@@ -1,0 +1,113 @@
+name: Chasseur de mystères
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - ame.folie
+    - ame.sensibilite
+    - talent: ame.folie
+      value: 1
+    - talent: ame.sensibilite
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: 4OufwkzyT9v2i3wW
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.ame.folie.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.ame.sensibilite.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Chasseur de mystères_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!BMmxCIPqTHWDVSc2.4OufwkzyT9v2i3wW'
+  - transfer: true
+    disabled: false
+    _id: B0YFNTuVA2b8WDZU
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Chasseur de mystères_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!BMmxCIPqTHWDVSc2.B0YFNTuVA2b8WDZU'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.BMmxCIPqTHWDVSc2
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921510214
+  modifiedTime: 1678521005459
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.BMmxCIPqTHWDVSc2
+  duplicateSource: null
+_id: BMmxCIPqTHWDVSc2
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!BMmxCIPqTHWDVSc2'
+

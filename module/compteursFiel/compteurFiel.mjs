@@ -48,14 +48,12 @@ export default class CompteurFiel extends FormApplication {
     async deleteEffect(ev) {
         let effectId = ev.currentTarget.closest('.effect').dataset.effectId;
         delete this.object.effetActif[effectId];
-        console.log(this.object);
         await this.updateFiel(this.object);
 
 
     }
     async _updateObject(event, formData) {
-        console.log(this.object.gouttes, this.object.menace)
-        console.log(event, formData)
+
         const data = expandObject(formData);
         await game.settings.set('noc', 'compteurFiel', data);
         await game.socket.emit({ type: "renderCompteur" })

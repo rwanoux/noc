@@ -115,26 +115,18 @@ body {
         video {
             height: 120vh;
             transition: 0.9s;
-            mix-blend-mode: darken;
+            //mix-blend-mode: darken;
             opacity: 0;
 
             &.visible {
                 opacity: 1;
                 transition: 0.9s;
-                filter: brightness(5)
+                //filter: brightness(5)
             }
         }
     }
 
-    #videoDroplet {
 
-        video.visible {
-            width: 200vw;
-            position: relative;
-            left: -25%;
-            filter: invert(100%) contrast(150%)
-        }
-    }
 }
 
 @import 'apps/window-app.scss';
@@ -206,15 +198,11 @@ div.sidebar-popout {
     color: black;
     background-size: 500%;
     background-position: center;
+    transition: all 0.3s;
+    transition-delay: 0s;
 
 
 
-    &.collapsed {
-        background-size: auto 200%;
-
-
-
-    }
 
     h1,
     h2,
@@ -235,13 +223,35 @@ div.sidebar-popout {
         }
     }
 
+    .playlists-sidebar .sound-control {
+        color: rgb(47, 78, 47);
 
+        &.inactive {
+            color: rgb(134, 0, 0);
+        }
+    }
+
+    .chat-sidebar .jump-to-bottom a {
+        background-color: #d4d4d4;
+        color: rgba(26, 19, 4, 0.726)
+    }
+
+    section.tab {
+        background: url('../asset/images/fondtalents.webp') auto 100%;
+
+    }
 
     nav#sidebar-tabs {
         border: none;
         overflow: visible;
         background: url('../asset/images/fondidentiteconfidentiel.webp');
         background-size: 200% 200%;
+        position: absolute;
+        flex-direction: column;
+        right: calc(var(--sidebar-width) + 0.2rem);
+        height: 100%;
+        width: 3.2rem;
+        justify-content: space-around;
 
 
         i {
@@ -253,7 +263,27 @@ div.sidebar-popout {
         }
 
 
+
+
         a[data-tab] {
+            aspect-ratio: 1/1;
+            min-height: 3rem;
+            max-width: 3rem;
+            position: relative;
+            left: 0%;
+            transition: 0.3s;
+
+
+            &.active {
+                position: relative;
+                left: -18%;
+                box-shadow: -5px 0px 8px 5px rgba(160, 204, 2, 0.438);
+            }
+
+            &:hover {
+                left: -18%;
+            }
+
 
 
             &[data-tab="chat"] {
@@ -343,22 +373,10 @@ div#sidebar.collapsed {
 
 
     nav#sidebar-tabs {
-        a[data-tab] {
-            min-height: 3rem;
-            min-width: 3rem;
+        top: 0;
+        right: 0;
 
-            &.active {
-                position: relative;
-                left: -10%;
-                top: 0;
-            }
 
-            &:hover {
-                left: -5%;
-                top: 0;
-            }
-
-        }
     }
 }
 

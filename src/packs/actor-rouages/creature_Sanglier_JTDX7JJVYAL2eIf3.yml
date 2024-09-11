@@ -1,0 +1,296 @@
+name: Sanglier
+type: creature
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  domaines:
+    vie:
+      value: 0
+      label: vie
+    erudition:
+      value: 0
+      label: érudition
+    technique:
+      value: 0
+      label: technique
+    action:
+      value: 3
+      label: action
+    statut:
+      value: 0
+      label: statut
+    ame:
+      value: 0
+      label: âme
+    social:
+      value: 0
+      label: social
+  talents:
+    erudition:
+      bureau:
+        label: bureau
+        checked: false
+        niveau: 0
+      culture:
+        label: culture
+        checked: false
+        niveau: 0
+      recherche:
+        label: recherche
+        checked: false
+        niveau: 0
+      societe:
+        label: societé
+        checked: false
+        niveau: 0
+    technique:
+      artefact:
+        label: artefact
+        checked: false
+        niveau: 0
+      artisanat:
+        label: artisanat
+        checked: false
+        niveau: 0
+      ingenierie:
+        label: ingénierie
+        checked: false
+        niveau: 0
+      survie:
+        label: survie
+        checked: false
+        niveau: 0
+    action:
+      combat:
+        label: combat
+        checked: false
+        niveau: 1
+      constitution:
+        label: constitution
+        checked: false
+        niveau: 2
+      deplacement:
+        label: déplacement
+        checked: false
+        niveau: 1
+      instinct:
+        label: instinct
+        checked: false
+        niveau: 1
+    statut:
+      contact:
+        label: contacts
+        checked: false
+        niveau: 0
+      façade:
+        label: façade
+        checked: false
+        niveau: 0
+      fortune:
+        label: fortune
+        checked: false
+        niveau: 0
+      rang:
+        label: rang
+        checked: false
+        niveau: 0
+    ame:
+      extase:
+        label: extase
+        checked: false
+        niveau: 0
+      folie:
+        label: folie
+        checked: false
+        niveau: 0
+      sensibilite:
+        label: sensibilité
+        checked: false
+        niveau: 0
+      tenebres:
+        label: tenêbres
+        checked: false
+        niveau: 0
+    social:
+      charisme:
+        label: charisme
+        checked: false
+        niveau: 0
+      conviction:
+        label: conviction
+        checked: false
+        niveau: 0
+      psychologie:
+        label: psychologie
+        checked: false
+        niveau: 0
+      tromperie:
+        label: tromperie
+        checked: false
+        niveau: 0
+    vie:
+      apaisement:
+        label: apaisement
+        checked: false
+        niveau: 0
+      ferveur:
+        label: ferveur
+        checked: false
+        niveau: 0
+      lumiere:
+        label: lumière
+        checked: false
+        niveau: 0
+      soins:
+        label: soins
+        checked: false
+        niveau: 0
+  reserves:
+    singularite:
+      label: singularité
+      value: 0
+      min: 0
+      max: 10
+    faveurs:
+      label: faveurs
+      value: 0
+      min: 0
+      max: 10
+    espoir:
+      label: espoir
+      value: 1
+      min: 0
+      max: 1
+    vecu:
+      label: vécu
+      value: 1
+      min: 0
+      max: 1
+  perditions:
+    blessures:
+      label: blessures
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    traque:
+      label: traque
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    noirceur:
+      label: noirceur
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+    trauma:
+      label: trauma
+      value: 0
+      min: 0
+      max: 10
+      statut: {}
+  attaque:
+    label: Défenses
+    degats: 3, perforant
+  special: ''
+prototypeToken:
+  name: Molosse
+  displayName: 0
+  actorLink: false
+  texture:
+    src: systems/noc/asset/default_icons/question_mark.webp
+    scaleX: 1
+    scaleY: 1
+    offsetX: 0
+    offsetY: 0
+    rotation: 0
+    tint: '#ffffff'
+    anchorX: 0.5
+    anchorY: 0.5
+    fit: contain
+    alphaThreshold: 0.75
+  width: 1
+  height: 1
+  lockRotation: false
+  rotation: 0
+  alpha: 1
+  disposition: -1
+  displayBars: 0
+  bar1:
+    attribute: null
+  bar2:
+    attribute: null
+  light:
+    alpha: 0.5
+    angle: 360
+    bright: 0
+    color: null
+    coloration: 1
+    dim: 0
+    attenuation: 0.5
+    luminosity: 0.5
+    saturation: 0
+    contrast: 0
+    shadows: 0
+    animation:
+      type: null
+      speed: 5
+      intensity: 5
+      reverse: false
+    darkness:
+      min: 0
+      max: 1
+    negative: false
+    priority: 0
+  sight:
+    enabled: false
+    range: 0
+    angle: 360
+    visionMode: basic
+    color: null
+    attenuation: 0.1
+    brightness: 0
+    saturation: 0
+    contrast: 0
+  detectionModes: []
+  flags: {}
+  randomImg: false
+  appendNumber: false
+  prependAdjective: false
+  hexagonalShape: 0
+  occludable:
+    radius: 0
+  ring:
+    enabled: false
+    colors:
+      ring: null
+      background: null
+    effects: 1
+    subject:
+      scale: 1
+      texture: null
+items: []
+effects: []
+flags:
+  core:
+    sourceId: Actor.I1ow2H40ZISabQur
+  cf:
+    id: temp_qwpy4ifw80g
+_stats:
+  systemId: noc
+  systemVersion: 0.1.5
+  coreVersion: '12.325'
+  createdTime: 1681401994959
+  modifiedTime: 1681584436041
+  lastModifiedBy: iQu9l7KNRqrZFIC0
+  compendiumSource: Actor.I1ow2H40ZISabQur
+  duplicateSource: null
+ownership:
+  default: 0
+  iQu9l7KNRqrZFIC0: 3
+folder: null
+sort: 0
+_id: JTDX7JJVYAL2eIf3
+_key: '!actors!JTDX7JJVYAL2eIf3'
+

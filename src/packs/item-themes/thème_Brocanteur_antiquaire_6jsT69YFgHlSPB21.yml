@@ -1,0 +1,113 @@
+name: Brocanteur antiquaire
+type: thème
+img: systems/noc/asset/default_icons/question_mark.webp
+system:
+  description: ''
+  talents:
+    - erudition.culture
+    - technique.artisanat
+    - talent: erudition.culture
+      value: 1
+    - talent: technique.artisanat
+      value: 1
+effects:
+  - transfer: true
+    disabled: false
+    _id: zPYZn5f1LAYnaECv
+    changes:
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.undefined.niveau
+        mode: 2
+        value: ''
+        priority: null
+      - key: system.talents.erudition.culture.niveau
+        mode: 2
+        value: '1'
+        priority: null
+      - key: system.talents.technique.artisanat.niveau
+        mode: 2
+        value: '1'
+        priority: null
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Brocanteur antiquaire_talents
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!6jsT69YFgHlSPB21.zPYZn5f1LAYnaECv'
+  - transfer: true
+    disabled: false
+    _id: 5Bb7mOFsphHXAWN8
+    changes: []
+    duration:
+      startTime: null
+      seconds: null
+      combat: null
+      rounds: null
+      turns: null
+      startRound: null
+      startTurn: null
+    origin: null
+    tint: '#ffffff'
+    flags: {}
+    _stats:
+      coreVersion: '12.325'
+      systemId: null
+      systemVersion: null
+      createdTime: null
+      modifiedTime: null
+      lastModifiedBy: null
+      compendiumSource: null
+      duplicateSource: null
+    name: thème_Brocanteur antiquaire_description
+    img: null
+    type: base
+    system: {}
+    description: ''
+    statuses: []
+    sort: 0
+    _key: '!items.effects!6jsT69YFgHlSPB21.5Bb7mOFsphHXAWN8'
+flags:
+  core:
+    sourceId: Compendium.noc.themes.6jsT69YFgHlSPB21
+_stats:
+  systemId: noc
+  systemVersion: 0.0.8
+  coreVersion: '12.325'
+  createdTime: 1677921408832
+  modifiedTime: 1678521005436
+  lastModifiedBy: GqESxdGhOwgra802
+  compendiumSource: Compendium.noc.themes.6jsT69YFgHlSPB21
+  duplicateSource: null
+_id: 6jsT69YFgHlSPB21
+folder: null
+sort: 0
+ownership:
+  default: 0
+  g1hXofeJ7VfDjBe7: 3
+_key: '!items!6jsT69YFgHlSPB21'
+
