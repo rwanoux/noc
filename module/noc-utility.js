@@ -242,6 +242,7 @@ export class nocUtility {
         rollData.nbFiel++
       }
     }
+    if (maxDiceValue==-1)maxDiceValue=0;
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
 
@@ -251,7 +252,7 @@ export class nocUtility {
     if (rollData.combatData) {
       // Init management
       if (rollData.combatData.isInit) {
-        let initValue = rollData.niveauFinal + (maxDiceValue / 10)
+        let initValue = rollData.niveauFinal + (maxDiceValue / 100) ;
         actor.setFlag("world", "noc-last-initiative", initValue)
         let combat = game.combats.get(rollData.combatData.combatId)
         combat.setInitiative(rollData.combatData.combatantId, initValue)
