@@ -80,6 +80,9 @@ export default class CompteurFiel extends FormApplication {
 
     }
     async goutteMoins(qt) {
+
+        Hooks.callAll("preMinusFiel", this, qt)
+
         this.object.gouttes = this.object.gouttes - qt;
         this.caclculMenace(this.object.gouttes);
         this.updateFiel(this.object);
@@ -87,6 +90,8 @@ export default class CompteurFiel extends FormApplication {
 
     }
     async gouttePlus(qt) {
+        Hooks.callAll("preAddFiel", this, qt)
+
         this.object.gouttes = this.object.gouttes + qt;
         this.caclculMenace(this.object.gouttes);
         this.updateFiel(this.object)

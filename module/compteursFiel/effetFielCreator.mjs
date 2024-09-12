@@ -88,7 +88,7 @@ export default class effetFielCreator extends FormApplication {
         };
         await game.settings.set("noc", "compteurFiel", fielSettings);
         ui.compteur.render(true)
-        await SocketManager.launchSocket("renderCompteur", {})
+        await game.socketManager.launchSocket("renderCompteur", {})
 
     }
 }

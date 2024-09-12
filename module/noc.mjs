@@ -257,7 +257,13 @@ function rollItemMacro(itemName) {
   // Trigger the item roll
   return item.roll();
 }
+Hooks.on("preAddFiel", async (app, fiel) => {
+  if (await game.settings.get("noc", "displayDroplet")) {
+    objetDieu.displayDroplet();
+    game.socketManager.launchSocket("displayDroplet", {});
+  }
 
+})
 // creations de boutons lien dans l'onglet settings
 
 Hooks.on("renderSidebarTab", (app, html) => {
@@ -281,7 +287,5 @@ le discord francophone de foundry</a>
 
 `
   html.find("#settings-documentation").append(content);
-
-
 
 })
