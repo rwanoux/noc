@@ -133,7 +133,8 @@ div.app.window-app.sidebar-popout {
 
 div.app.window-app.sidebar-popout {
     section.window-content {
-        background: url(../asset/images/fondidentiteconfidentiel.webp);
+        background: url(../asset/images/fondidentiteconfidentiel.webp) no-repeat center center fixed;
+
     }
 }
 
