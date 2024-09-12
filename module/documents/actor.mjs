@@ -518,7 +518,17 @@ export class nocActor extends Actor {
       rollData.modSupplement = 0
       this.startRoll(rollData)
     } else {
-      ui.notifications.warn("Cet item n'a pas de jet associé.")
+      const speaker = ChatMessage.getSpeaker({ user: game.user });
+      // a simple chat message for now
+      ChatMessage.create({
+        whisper: game.user.id,
+        speaker: speaker,
+        content: `
+      <h3>${item.name} </h3>
+      <p>${item.system.description}</p>
+      <img src="${item.img}" width="100%" height="auto">
+      `
+      });
     }
   }
 

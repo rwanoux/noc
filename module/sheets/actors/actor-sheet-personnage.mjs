@@ -143,7 +143,8 @@ export class nocActorSheetPersonnage extends ActorSheet {
     await item.update({
       "system.quantar": true
     })
-  } async _onUnaffectQuantar(ev, data) {
+  }
+  async _onUnaffectQuantar(ev, data) {
     let item = await this.actor.getEmbeddedDocument('Item', data.sourceItem);
     await item.update({
       "system.quantar": false
