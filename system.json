@@ -56,55 +56,73 @@
       "name": "armes",
       "label": "Armes",
       "system": "noc",
-      "path": "packs/item-armes.db",
+      "path": "packs/item-armes",
       "type": "Item",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "archetypes",
       "label": "Archetypes",
       "system": "noc",
-      "path": "packs/item-archetypes.db",
+      "path": "packs/item-archetypes",
       "type": "Item",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "armures",
       "label": "Armures",
       "system": "noc",
-      "path": "packs/item-armures.db",
+      "path": "packs/item-armures",
       "type": "Item",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "themes",
       "label": "Thèmes",
       "system": "noc",
-      "path": "packs/item-themes.db",
+      "path": "packs/item-themes",
       "type": "Item",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "rouages",
       "label": "Rouages",
       "system": "noc",
-      "path": "packs/actor-rouages.db",
+      "path": "packs/actor-rouages",
       "type": "Actor",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     },
     {
       "name": "macros_noc",
       "label": "Macros NOC",
       "system": "noc",
-      "path": "packs/macros.db",
+      "path": "packs/macros",
       "type": "Macro",
-      "private": false,
-      "flags": {}
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
     }
   ],
   "background": "systems/noc/asset/images/EbImmt1XQAA1wQS.webp",
