@@ -29,6 +29,7 @@ import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
 
+import { Calendar } from "./time.mjs";
 
 
 
@@ -206,6 +207,20 @@ Hooks.once("ready", async function () {
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 
   objetDieu.produceMecanisme();
+
+  // Exemple d'utilisation
+  let calendar = new Calendar();
+
+  // Définir une nouvelle date courante
+  calendar.setCurrentDate(2, 5, 3);
+  console.log(calendar.getCurrentDate());
+
+  // Avancer et reculer dans le calendrier
+  calendar.advanceQuarter();
+  console.log(calendar.getCurrentDate());
+  calendar.retreatQuarter();
+  console.log(calendar.getCurrentDate());
+
 })
 
 /* -------------------------------------------- */

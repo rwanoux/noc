@@ -1,5 +1,5 @@
 // Classe représentant un quart
-class Quarter {
+export class Quarter {
     constructor(number) {
         this.number = number;
         this.duration = 7; // Durée d'un quart en heures
@@ -36,7 +36,7 @@ class Quarter {
 }
 
 // Classe représentant un cycle
-class Cycle {
+export class Cycle {
     constructor(number) {
         this.number = number;
         this.quarters = [];
@@ -54,7 +54,7 @@ class Cycle {
 }
 
 // Classe représentant un mois
-class Month {
+export class Month {
     constructor(number) {
         this.number = number;
         this.cycles = [];
@@ -72,7 +72,7 @@ class Month {
 }
 
 // Classe représentant le calendrier
-class Calendar {
+export class Calendar {
     constructor() {
         this.months = [];
         this.currentDate = { month: 1, cycle: 1, quarter: 1 }; // Date courante par défaut
