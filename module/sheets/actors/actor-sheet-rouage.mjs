@@ -21,10 +21,7 @@ export class nocActorSheetRouage extends nocActorSheetPersonnage {
     });
   }
 
-  /** @override */
-  get template() {
-    return `systems/noc/templates/actor/actor-${this.actor.type}-sheet.html`;
-  }
+
   /* -------------------------------------------- */
   /*  Drag and Drop                               */
   /* -------------------------------------------- */
