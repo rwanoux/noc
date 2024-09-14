@@ -1,1 +1,0 @@
-- fixe de la generation de packs

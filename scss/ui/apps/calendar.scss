@@ -1,0 +1,122 @@
+#calendar {
+    #date {
+        text-align: center;
+    }
+
+    &:hover {
+        max-height: 100rem;
+    }
+
+    .year {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 0.5rem;
+
+        .month {
+            width: 100%;
+
+            &:hover {
+                background: rgba(66, 40, 40, 0.342);
+            }
+
+            .cycle-container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 4px;
+
+
+
+                .cycle {
+                    &:hover {
+                        background: rgba(66, 40, 40, 0.342);
+                    }
+
+                    height: 0.8rem;
+                    margin-right: 2px;
+                    box-shadow: 0px 0px 5px rgba(255, 255, 255, 0.678);
+                    padding:2px;
+
+                    &:nth-child(2n) {
+                        box-shadow: 0px 0px 5px rgb(0, 0, 0);
+                    }
+
+                    .quarter-container {
+                        display: grid;
+                        grid-template-columns: repeat(7, 1fr);
+                        gap: 1px;
+                        height: 100%;
+
+                        .quarter {
+                            padding: 2px;
+
+                            &:hover {
+                                border: 2px solid gray;
+                            }
+
+                            span.label {
+                                display: none;
+                                opacity: 0;
+                            }
+
+                            &:hover span.label {
+                                opacity: 1;
+                            }
+
+                            max-width:100%;
+                            overflow: hidden;
+
+
+
+                            background: blue;
+
+
+
+                            &.travail {
+                                background: rgba(83, 204, 83, 0.651);
+                            }
+
+                            &.contemplation,
+                            &.travail.contemplation {
+                                border: 1px solid gold;
+                                color: white;
+                            }
+
+                            &.current {
+                                @keyframes bounceday {
+                                    0% {
+                                        transform: scale(1);
+                                        border: 3px solid yellow;
+
+                                    }
+
+                                    33% {
+                                        transform: scale(2);
+                                        border: 3px solid red;
+
+                                    }
+
+                                    66% {
+                                        transform: scale(2);
+                                        border: 3px solid rgb(255, 0, 0);
+
+                                    }
+
+                                    100% {
+                                        transform: scale(1);
+                                        border: 3px solid yellow;
+
+                                    }
+                                }
+
+                                animation: bounceday 2s ease-in-out infinite;
+                                border-radius: 30%;
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+}

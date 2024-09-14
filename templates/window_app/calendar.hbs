@@ -1,0 +1,49 @@
+<div id="calendar">
+    {{log this}}
+    <form class="fexcol">
+        <h2 id="date">{{object.currentStringDate}}</h2>
+        <div>
+            {{#each object.years as |year|}}
+            <div class="year grid-4col">
+               
+                    {{#each year.months as |month|}}
+                    <div class="month">
+                        <h4> mois n°{{month.number}}</h4>
+                        <div class="cycle-container">
+
+                            {{#each month.cycles as |cycle|}}
+                            {{#if cycle.quarters.length}}
+
+                            <div class="cycle">
+                                <div class="quarter-container">
+                                    {{#each cycle.quarters as |quarter|}}
+                                    {{log @root.currentDate}}
+                                    <div data-tooltip="
+                                            <h5>{{quarter.monthPosition}}e quart du mois {{quarter.monthNumber}}</h5>
+                                            <p>cycle {{cycle.monthIndex}}</p> 
+                                            <p>quart de : {{quarter.type}} {{#if quarter.isContemplation}}et de contemplation{{/if}}</p> "
+                                        class="quarter 
+                                            {{quarter.type}} 
+                                            {{#if quarter.isContemplation}} contemplation {{/if}}
+                                            {{#ifequal quarter.yearPosition @root.object.currentDate.quarter}}current{{/ifequal}}
+                                            ">
+                                        <span class="label">{{quarter.monthPosition}} </span>
+                                    </div> 
+                                    {{/each}}
+                                </div>
+                                
+                            </div>
+
+                            {{/if}}
+                            {{/each}}
+
+                        </div>
+                    </div>
+                    {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </form>
+</div>

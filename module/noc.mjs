@@ -29,7 +29,7 @@ import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
 
-import { Calendar } from "./time.mjs";
+import { CalendarApp } from "./calendar/CalendarApp.mjs";
 
 
 
@@ -159,8 +159,8 @@ Hooks.once('init', async function () {
   // Preload Handlebars templates.
   preloadHandlebarsTemplates();
 
-  CONFIG.ui.compteur = CompteurFiel
-  nocUtility.init()
+  CONFIG.ui.compteur = CompteurFiel;
+  nocUtility.init();
   objetDieu.init();
 
   CONFIG.debug.hooks = false;
@@ -201,25 +201,13 @@ Hooks.once("ready", async function () {
 
   // rendering compteur de fiel
   ui.compteur.render(true);
+  new CalendarApp().render(true);
 
 
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 
   objetDieu.produceMecanisme();
-
-  // Exemple d'utilisation
-  let calendar = new Calendar();
-
-  // Définir une nouvelle date courante
-  calendar.setCurrentDate(2, 5, 3);
-  console.log(calendar.getCurrentDate());
-
-  // Avancer et reculer dans le calendrier
-  calendar.advanceQuarter();
-  console.log(calendar.getCurrentDate());
-  calendar.retreatQuarter();
-  console.log(calendar.getCurrentDate());
 
 })
 
