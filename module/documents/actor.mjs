@@ -40,8 +40,8 @@ export class nocActor extends Actor {
   }
 
   async _onUpdate(update, options, user) {
-
-    if (this.type == "personnage" && update.system?.perditions) {
+    console.log('onupdate', user)
+    if (user == game.user._id && this.type == "personnage" && update.system?.perditions) {
       await this.checkPerditions(update)
     }
 
