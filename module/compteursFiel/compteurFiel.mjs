@@ -66,7 +66,7 @@ export default class CompteurFiel extends FormApplication {
 
     }
     _injectHTML(html) {
-        html.insertAfter('#controls');
+        html.insertAfter('#scene-controls');
         this._element = html;
         html.hide().fadeIn(200);
     }

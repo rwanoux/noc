@@ -85,14 +85,16 @@ aside#tooltip {
 body {
     animation: 2s appear;
     z-index: 1;
-    position: relative;
+    position: fixed;
 }
 
 #objetDieu {
 
     position: fixed;
-    width: 100vw;
-    height: 100vh;
+    top: -10vh;
+    left: -10vw;
+    width: 120vw;
+    height: 120vh;
     pointer-events: none;
     z-index: 10000;
     display: grid;
@@ -108,8 +110,11 @@ body {
     #videoFaisceau,
     #videoFiel,
     #videoDroplet {
-        position: absolute;
-
+        position: fixed;
+        top: -10vh;
+        left: -10vw;
+        width: 120vw;
+        height: 120vh;
 
 
         video {
@@ -194,14 +199,10 @@ div.sidebar-popout {
     background: none;
     box-shadow: none;
     overflow: visible;
-    background: url('../asset/images/fondidentiteconfidentiel.webp');
-    color: black;
-    background-size: 500%;
-    background-position: center;
-    transition: all 0.3s;
-    transition-delay: 0s;
 
-
+    .chat-scroll {
+        direction: ltr;
+    }
 
 
     h1,
@@ -241,144 +242,125 @@ div.sidebar-popout {
 
     }
 
-    nav#sidebar-tabs {
-        border: none;
-        overflow: visible;
-        background: url('../asset/images/fondidentiteconfidentiel.webp');
-        background-size: 200% 200%;
-        position: absolute;
-        flex-direction: column;
-        right: calc(var(--sidebar-width) + 0.2rem);
-        height: 100%;
-        width: 3.2rem;
-        justify-content: space-around;
+    nav.tabs {
+        background: url(../asset/images/fondidentiteconfidentiel.webp);
+        background-size: cover;
+        background-position: 2% -60%;
+        position: relative;
+        padding: 0 0.3rem 0 0;
+
+        menu {
 
 
-        i {
-            opacity: 0;
-        }
-
-        .collapse i {
-            opacity: 1;
-        }
-
-
-
-
-        a[data-tab] {
-            aspect-ratio: 1/1;
-            min-height: 3rem;
-            max-width: 3rem;
-            position: relative;
-            left: 0%;
-            transition: 0.3s;
-
-
-            &.active {
+            button[data-tab] {
+                aspect-ratio: 1/1;
                 position: relative;
-                left: -18%;
-                box-shadow: -5px 0px 8px 5px rgba(160, 204, 2, 0.438);
-            }
+                left: -0.2rem;
+                transition: 0.3s;
 
-            &:hover {
-                left: -18%;
-            }
-
+                &::before {
+                    opacity: 0;
+                }
 
 
-            &[data-tab="chat"] {
-                background: url("../asset/ui/tab_chat.png");
-                background-size: 100% 100%;
+                &.active {
+                    position: relative;
+                    left: -18%;
+                    box-shadow: -5px 0px 8px 5px rgba(160, 204, 2, 0.438);
+                }
 
-            }
-
-            &[data-tab="combat"] {
-                background: url("../asset/ui/combat_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="scenes"] {
-                background: url("../asset/ui/scenes_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="actors"] {
-                background: url("../asset/ui/actor_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="journal"] {
-                background: url("../asset/ui/journal_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="items"] {
-                background: url("../asset/ui/item_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="tables"] {
-                background: url("../asset/ui/table_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="playlists"] {
-                background: url("../asset/ui/playlist_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="cards"] {
-                background: url("../asset/ui/card_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="settings"] {
-                background: url("../asset/ui/setting_tab.png");
-                background-size: 100% 100%;
-
-            }
-
-            &[data-tab="compendium"] {
-                background: url("../asset/ui/compendium_tab.png");
-                background-size: 100% 100%;
-
-            }
+                &:hover {
+                    left: -18%;
+                }
 
 
-        }
 
-        a.collapse {
-            right: 0;
+                &[data-tab="chat"] {
+                    background: url("../asset/ui/tab_chat.png");
+                    background-size: 100% 100%;
 
-            i {
-                display: unset;
-                color: black;
+                }
+
+                &[data-tab="combat"] {
+                    background: url("../asset/ui/combat_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="scenes"] {
+                    background: url("../asset/ui/scenes_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="actors"] {
+                    background: url("../asset/ui/actor_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="journal"] {
+                    background: url("../asset/ui/journal_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="items"] {
+                    background: url("../asset/ui/item_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="tables"] {
+                    background: url("../asset/ui/table_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="playlists"] {
+                    background: url("../asset/ui/playlist_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="cards"] {
+                    background: url("../asset/ui/card_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="settings"] {
+                    background: url("../asset/ui/setting_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="compendium"] {
+                    background: url("../asset/ui/compendium_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+                &[data-tab="macros"] {
+                    background: url("../asset/ui/macro_tab.png");
+                    background-size: 100% 100%;
+
+                }
+
+
             }
         }
     }
 }
 
-div#sidebar.collapsed {
-    transition: 0.2s;
-    overflow: visible;
-    border: none;
+#roll-privacy {
+    background: url('../asset/images/fondidentiteconfidentiel.webp');
+    background-size: cover;
 
-
-    nav#sidebar-tabs {
-        top: 0;
-        right: 0;
-
-
-    }
 }
+
+
+
 
 #scenes {
     h3 {

@@ -17,7 +17,13 @@
 
 @import 'components/_forms';
 @import 'components/charsheet';
+
 @import 'components/_resource';
 @import 'components/_items';
 
 @import 'ui/ui';
+
+canvas#board {
+    width: 100vw !important;
+    height: 100vh !important;
+}

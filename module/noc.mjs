@@ -194,9 +194,6 @@ Hooks.on("renderPause", () => {
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
 
-  //----logo image
-  var logo = document.getElementById("logo");
-  logo.setAttribute("src", "systems/noc/asset/images/logo.webp");
 
   // rendering compteur de fiel
   ui.compteur.render(true);
@@ -266,12 +263,15 @@ Hooks.on("preAddFiel", async (app, fiel) => {
 })
 // creations de boutons lien dans l'onglet settings
 
-Hooks.on("renderSidebarTab", (app, html) => {
+Hooks.on("changeSidebarTab", (app) => {
+  if (app.id !== "settings") return;
+  if (app.element.querySelector("#noc-legal")) return;
+
   let content = `
-<h2> Liens Utiles</h2>
+<h4> Liens Utiles</h4>
 <button>
 <a  target="_blank" href="https://sethmes-editions.com/noc/">
-<img style="border:none ;height:2rem ;width:auto; top:0.5rem ; position:relative" src="systems/noc/asset/logoSethmes.webp"></a>
+<img style="display:inline-block; height:1rem ;aspect-ratio:1 ; top:0.5rem ; position:relative" src="systems/noc/asset/logoSethmes.webp"></a>
 le site de l'éditeur
 </button>
 <p>
@@ -286,6 +286,9 @@ le discord francophone de foundry</a>
 </button>
 
 `
-  html.find("#settings-documentation").append(content);
+  let div = document.createElement("div");
+  div.id = "noc-legal"
+  div.innerHTML = content
+  app.element.querySelector("[data-help-docs]").append(div);
 
 })

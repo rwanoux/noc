@@ -41,14 +41,16 @@ export class nocUtility {
   /* -------------------------------------------- */
   static async chatListeners(html) {
 
-    html.on("click", '.roll-dice-bonus', event => {
-      let rollData = this.getRollDataFromMessage(event)
+    html.querySelectorAll('.roll-dice-bonus').forEach((element) => {
+      element.addEventListener('click', (event) => {
+        let rollData = this.getRollDataFromMessage(event)
 
-      let msgId = nocUtility.findChatMessageId(event.currentTarget)
-      nocUtility.removeChatMessageId(msgId)
+        let msgId = nocUtility.findChatMessageId(event.currentTarget)
+        nocUtility.removeChatMessageId(msgId)
 
-      let nbDice = $(event.target).data('nb-dice')
-      this.rollBonus(rollData, nbDice)
+        let nbDice = $(event.target).data('nb-dice')
+        this.rollBonus(rollData, nbDice)
+      })
     })
 
   }
@@ -242,7 +244,7 @@ export class nocUtility {
         rollData.nbFiel++
       }
     }
-    if (maxDiceValue==-1)maxDiceValue=0;
+    if (maxDiceValue == -1) maxDiceValue = 0;
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
 
@@ -252,7 +254,7 @@ export class nocUtility {
     if (rollData.combatData) {
       // Init management
       if (rollData.combatData.isInit) {
-        let initValue = rollData.niveauFinal + (maxDiceValue / 100) ;
+        let initValue = rollData.niveauFinal + (maxDiceValue / 100);
         actor.setFlag("world", "noc-last-initiative", initValue)
         let combat = game.combats.get(rollData.combatData.combatId)
         combat.setInitiative(rollData.combatData.combatantId, initValue)
