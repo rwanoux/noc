@@ -20,7 +20,7 @@ form#compteurs {
     object-fit: cover;
 
     width: clamp(15vw, 200%, 22vw);
-    overflow-y: hidden;
+    overflow: hidden;
 
     &.hide {
         left: -22vw;
@@ -100,7 +100,6 @@ div#effets {
     }
 
     background-size: 100% 200%;
-    overflow-y: scroll;
 
     .effetName {
         background: url('../asset/images/fondequipement.webp');
