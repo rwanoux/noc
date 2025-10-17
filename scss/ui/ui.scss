@@ -461,14 +461,13 @@ div.sidebar-popout {
     }
 }
 
-.chat-message {
+li.chat-message {
     box-shadow: 0px 0px 15px black;
     border: none;
     background: url(../asset/images/fondnotes.webp);
-    background-position: center;
     background-size: cover;
-    padding-left: 30px;
-    position: relative;
+
+    padding: 1rem 2rem;
 
     &.whisper {
         box-shadow: 0px 0px 100px 10px rgb(124, 102, 68) inset;
@@ -576,6 +575,22 @@ div.sidebar-popout {
         i {
             display: none
         }
+    }
+
+    li.rollResult {
+        font-weight: bold;
+        font-size: 1.2rem;
+        text-align: right;
+    }
+
+    .dice-bonus-buttons {
+        display: flex;
+        justify-content: space-between;
+
+        button.roll-dice-bonus {
+            max-width: max-content;
+        }
+
     }
 }
 

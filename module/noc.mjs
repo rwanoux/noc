@@ -43,7 +43,7 @@ Hooks.once('init', async function () {
   registerNocSettings();
   //handlebar custom helpers
   registerHelpers();
-  //CONFIG.debug.hooks = true
+  CONFIG.debug.hooks = true
 
   //manage socket messages
   game.socket.on("system.noc", async (sockmsg) => {
@@ -158,11 +158,12 @@ Hooks.once('init', async function () {
   // Preload Handlebars templates.
   preloadHandlebarsTemplates();
 
-  CONFIG.ui.compteur = CompteurFiel
+  CONFIG.ui.compteur = CompteurFiel;
+
+  //init utilities
   nocUtility.init()
   objetDieu.init();
 
-  CONFIG.debug.hooks = false;
 
 
 });
@@ -172,16 +173,15 @@ Hooks.once('init', async function () {
 /* -------------------------------------------- */
 /*  custom pause                                  */
 /* -------------------------------------------- */
-Hooks.on("renderPause", () => {
-  let pauseImg = document.querySelector('#pause img');
+Hooks.on("renderGamePause", (app, html, data, options) => {
+  let pauseImg = html.querySelector('img');
   pauseImg.setAttribute('src', 'systems/noc/asset/images/pause.webp');
   pauseImg.style.width = "20vw";
   pauseImg.style.height = "20vw";
   pauseImg.style.left = "40vw";
-  pauseImg.style.top = "-10vw";
 
   pauseImg.style.opacity = "1";
-
+  html.querySelector('figcaption').style.fontSize = "3rem";
   TweenMax.to(pauseImg, 10, { rotation: 360, repeat: -1, ease: Quad.easeInOut });
 
 });

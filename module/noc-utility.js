@@ -6,7 +6,8 @@ export class nocUtility {
 
   /* -------------------------------------------- */
   static async init() {
-    Hooks.on('renderChatLog', (log, html, data) => nocUtility.chatListeners(html))
+    Hooks.on('renderChatLog', (log, html, data) => nocUtility.chatListeners(html));
+    Hooks.on('renderChatMessageHTML', (message, html, options) => nocUtility.chatListeners(html));
   }
 
   /*-------------------------------------------- */

@@ -17,104 +17,107 @@
     {{/if}}
   </div>
 
-</div>
 
-<hr>
+  <hr>
 
-{{#if img}}
-  <div class="chat-message-header flexflexcol">
-    <div class="flexrow"> <img
-        class="chat-icon"
-        src="{{img}}"
-        alt="{{name}}"
-      />
-      <h4 class="chat-actor-name">{{name}}</h4>
-    </div>
-    <div class="flexrow"> {{#if (eq mode "talent")}}
-        <h4>Talent : {{talent.label}} ({{talent.niveau}})</h4>
-      {{/if}}
-      {{#if (eq mode "arme")}}
-        <h4>Arme : {{arme.name}} </h4>
-      {{/if}}
-    </div>
-
-  </div>
-{{/if}}
-
-<div>
-  <ul>
-
-
-    <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
-    <li class="dicesResults flexrow">
-      {{#each roll.terms as |term index|}}
-        {{#each term.results as |dice index|}}
-          <div class="dice
-            {{#if dice.success}} success {{/if}}
-            {{#ifequal dice.result 1}} fiel{{/ifequal}}
-            {{#ifequal dice.result 10}} relance{{/ifequal}}
-            ">
-            {{dice.result}}
-            <i class="fa-light fa-dice-d10"></i>
-          </div>
-        {{/each}}
-      {{/each}}
-
-      {{#each rollBonus.terms as |term index|}}
-        {{#each term.results as |dice index|}}
-          <div class="dice relance
-            {{#if dice.success}} success {{/if}}
-            {{#ifequal dice.result 1}} fiel{{/ifequal}}
-            {{#ifequal dice.result 10}} relance{{/ifequal}}
-            ">
-            {{dice.result}}
-            <i class="fa-light fa-dice-d10"></i>
-
-          </div>
-        {{/each}}
-      {{/each}}
-    </li>
-    {{#if nbBonusCollaboratif}}
-      <li>Bonus collaboratif : {{nbBonusCollaboratif}}</li>
-    {{/if}}
-    {{#if useEspoir}}
-      <li>Un point d'Espoir utilisé</li>
-    {{/if}}
-    {{#if useVecu}}
-      <li>Un point de vécu a été utilisé</li>
-    {{/if}}
-    <li>Gouttes de Fiel ajoutées : {{nbFiel}}</li>
-    <li>Nombre de succès : {{nbSuccess}}</li>
-    <li class="rollResult">Niveau final obtenu : {{niveauFinal}}</li>
-
-    {{#if niveauFinalRequis}}
-      <li>Niveau final requis : {{niveauFinalRequis}} </li>
-      {{#if isReussite}}
-        <li class="rollResult reussite">Réussite !! (Marge {{margin}})</li>
-        {{#if (eq mode "arme")}}
-          <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
-          <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] (- Constitution - Armure)</li>
+  {{#if img}}
+    <div class="chat-message-header flex flexcol">
+      <div class="flexrow"> <img
+          class="chat-icon"
+          src="{{img}}"
+          alt="{{name}}"
+        />
+        <h4 class="chat-actor-name">{{name}}</h4>
+      </div>
+      <div class="flexrow"> {{#if (eq mode "talent")}}
+          <h4>Talent : {{talent.label}} ({{talent.niveau}})</h4>
         {{/if}}
-      {{else}}
-        <li class="rollResult echec">Echec!! (Marge {{margin}})</li>
-      {{/if}}
-    {{/if}}
-  </ul>
+        {{#if (eq mode "arme")}}
+          <h4>Arme : {{arme.name}} </h4>
+        {{/if}}
+      </div>
 
-  {{#if nbAddDice}}
-    Vous pouvez bénéficier de {{nbAddDice}} dés. Combien voulez vous en lancer ?</li>
-    <button
-      class="roll-dice-bonus"
-      data-nb-dice="0"
-    >Aucun dé</button>
-    {{#repeat nbAddDice}}
-      <button
-        class="roll-dice-bonus"
-        data-nb-dice="{{add @index 1}}"
-      >{{add @index 1}} Dé(s)</button>
-    {{/repeat}}
+    </div>
   {{/if}}
 
-</div>
+  <div>
+    <ul>
 
+
+      <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
+      <li class="dicesResults flexrow">
+        {{#each roll.terms as |term index|}}
+          {{#each term.results as |dice index|}}
+            <div class="dice
+            {{#if dice.success}} success {{/if}}
+            {{#ifequal dice.result 1}} fiel{{/ifequal}}
+            {{#ifequal dice.result 10}} relance{{/ifequal}}
+            ">
+              {{dice.result}}
+              <i class="fa-light fa-dice-d10"></i>
+            </div>
+          {{/each}}
+        {{/each}}
+
+        {{#each rollBonus.terms as |term index|}}
+          {{#each term.results as |dice index|}}
+            <div class="dice relance
+            {{#if dice.success}} success {{/if}}
+            {{#ifequal dice.result 1}} fiel{{/ifequal}}
+            {{#ifequal dice.result 10}} relance{{/ifequal}}
+            ">
+              {{dice.result}}
+              <i class="fa-light fa-dice-d10"></i>
+
+            </div>
+          {{/each}}
+        {{/each}}
+      </li>
+      {{#if nbBonusCollaboratif}}
+        <li>Bonus collaboratif : {{nbBonusCollaboratif}}</li>
+      {{/if}}
+      {{#if useEspoir}}
+        <li>Un point d'Espoir utilisé</li>
+      {{/if}}
+      {{#if useVecu}}
+        <li>Un point de vécu a été utilisé</li>
+      {{/if}}
+      <li>Gouttes de Fiel ajoutées : {{nbFiel}}</li>
+      <li style="font-weight: bold; color: var(--color-text);">Nombre de succès : {{nbSuccess}}</li>
+      <li class="rollResult">Niveau final obtenu : {{niveauFinal}}</li>
+
+      {{#if niveauFinalRequis}}
+        <li>Niveau final requis : {{niveauFinalRequis}} </li>
+        {{#if isReussite}}
+          <li class="rollResult reussite">Réussite !! (Marge {{margin}})</li>
+          {{#if (eq mode "arme")}}
+            <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
+            <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] (- Constitution - Armure)</li>
+          {{/if}}
+        {{else}}
+          <li class="rollResult echec">Echec!! (Marge {{margin}})</li>
+        {{/if}}
+      {{/if}}
+    </ul>
+
+    {{#if nbAddDice}}
+      <section>
+        <p>Vous pouvez bénéficier de {{nbAddDice}} dés. Combien voulez vous en lancer ?</p>
+        <ul class="flexrow dice-bonus-buttons">
+          <button
+            class="roll-dice-bonus"
+            data-nb-dice="0"
+          >Aucun dé</button>
+          {{#repeat nbAddDice}}
+            <button
+              class="roll-dice-bonus"
+              data-nb-dice="{{add @index 1}}"
+            >{{add @index 1}} Dé(s)</button>
+          {{/repeat}}
+        </ul>
+
+      </section>
+    {{/if}}
+
+  </div>
 </div>
