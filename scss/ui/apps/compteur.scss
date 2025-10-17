@@ -17,6 +17,10 @@ form#compteurs {
     transition: 0.3s;
 
     overflow: visible;
+    object-fit: cover;
+
+    width: clamp(15vw, 200%, 22vw);
+    overflow-y: hidden;
 
     &.hide {
         left: -22vw;
@@ -32,7 +36,7 @@ form#compteurs {
         position: relative;
         background: url(../asset/images/fielcompteur2.webp);
         background-size: 100% 100%;
-        width: 300%;
+        width: 100%;
         aspect-ratio: 1 / 1;
         /* height: 300%; */
     }
@@ -95,7 +99,6 @@ div#effets {
         font-size: smaller;
     }
 
-    width: max-content;
     background-size: 100% 200%;
     overflow-y: scroll;
 

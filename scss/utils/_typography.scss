@@ -29,7 +29,6 @@ sans-serif;
 }
 
 body.system-noc {
-    font-size: 1em;
     font-family: "raleway";
 
     h1,
@@ -39,7 +38,7 @@ body.system-noc {
         border: none;
         font-family: "bold";
         color: white;
-        text-shadow: 0px 0px 3px black, 0px 0px 15px gray
+        text-shadow: 0px 0px 3px black, 0px 0px 15px gray;
     }
 
     ;
@@ -48,21 +47,27 @@ body.system-noc {
         background: url("../asset/images/fond_titre1.webp");
         background-position: center;
         background-size: 200% 200%;
+        font-size: 200%;
+
     }
 
     h2 {
         background: url("../asset/images/fond_titre2.webp");
         background-position: center;
         background-size: 200% 200%;
+        font-size: 160%;
     }
 
     h3 {
         background: url("../asset/images/fond_titre3.webp");
         background-position: center;
         background-size: 200% 200%;
+        font-size: 140%;
     }
 
-    ;
+    h4 {
+        font-size: 120%;
+    }
 
     h5 {
         margin: 5px;

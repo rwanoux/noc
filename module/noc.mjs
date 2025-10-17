@@ -268,12 +268,15 @@ Hooks.on("changeSidebarTab", (app) => {
   if (app.element.querySelector("#noc-legal")) return;
 
   let content = `
-<h4> Liens Utiles</h4>
-<button>
-<a  target="_blank" href="https://sethmes-editions.com/noc/">
-<img style="display:inline-block; height:1rem ;aspect-ratio:1 ; top:0.5rem ; position:relative" src="systems/noc/asset/logoSethmes.webp"></a>
+<h4 class="divider"> Liens Utiles</h4>
+<a  target="_blank" class="button" href="https://sethmes-editions.com/noc/">
+<img style="    filter: drop-shadow(0px 0px 6px white);
+    display: inline-block;
+    height: 1.5rem;
+    aspect-ratio: 1;
+    position: relative;" src="systems/noc/asset/logoSethmes.webp">
 le site de l'éditeur
-</button>
+</a>
 <p>
 Les éditions Sethmes autorisent l'utilisation de ce système NOC pour Foundry VTT à destination de parties privées mais aussi lors d'actual play, en live ou redifféré gratuit, sur les plateformes de streaming et sites web d'hébergement vidéo à la condition que soient mentionnés NOC et SETHMES.
 </p>

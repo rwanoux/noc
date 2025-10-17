@@ -82,10 +82,11 @@ aside#tooltip {
     --objetDieuRows: 6;
 }
 
-body {
+html:has(.system-noc) {
     animation: 2s appear;
     z-index: 1;
     position: fixed;
+    font-size: 100%;
 }
 
 #objetDieu {
