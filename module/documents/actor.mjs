@@ -279,6 +279,7 @@ export class nocActor extends Actor {
           let effect = this.effects.find(effect => effect.getFlag("world", perditionStep.flag))
           if (!effect && perditionStep.effect) {  // Effet absent, à ajouter
             let effectData = {
+              name: perditionStep.label,
               label: perditionStep.label,
               changes: [],
               disabled: false

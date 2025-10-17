@@ -57,7 +57,7 @@ export class nocPersonnalisation extends Dialog {
 
         }
 
-        let eff = await this.actor.createEmbeddedDocuments('ActiveEffect', [{ label: label, changes: changes }])
+        let eff = await this.actor.createEmbeddedDocuments('ActiveEffect', [{ name: label, changes: changes }])
         await eff[0].setFlag('noc', 'personnalisation', flag);
 
     }
