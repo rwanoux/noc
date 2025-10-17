@@ -162,7 +162,7 @@ export class nocUtility {
 
   /* -------------------------------------------- */
   static async computeFinalResult(rollData) {
-    let actor = game.actors.get(rollData.actorId)
+    let actor = game.actors.get(rollData.actorId);
 
     rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
     if (rollData.niveauFinalRequis) {
@@ -187,7 +187,6 @@ export class nocUtility {
       actor.incDecReserve("vecu", -1)
     }
 
-
   }
   /* -------------------------------------------- */
   static async rollBonus(rollData, nbBonusDice) {
@@ -203,7 +202,7 @@ export class nocUtility {
     for (let result of myRollBonus.terms[0].results) {
       if (result.result == 1) {
         game.socketManager.launchSocket("gouttePlus", { qt: 1 })
-        //ui.compteur.gouttePlus(1)
+        ui.compteur.gouttePlus(1)
         rollData.nbFiel++
       }
     }
@@ -240,8 +239,7 @@ export class nocUtility {
       }
       if (result.result == 1) {
         game.socketManager.launchSocket("gouttePlus", { qt: 1 })
-
-        //ui.compteur.gouttePlus(1)
+        ui.compteur.gouttePlus(1)
         rollData.nbFiel++
       }
     }
