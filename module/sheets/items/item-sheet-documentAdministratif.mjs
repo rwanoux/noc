@@ -1,5 +1,5 @@
 
-export class nocItemSheetDocumentAdministratif extends ItemSheet {
+export class nocItemSheetDocumentAdministratif extends foundry.appv1.sheets.ItemSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

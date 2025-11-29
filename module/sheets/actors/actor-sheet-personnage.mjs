@@ -8,7 +8,7 @@ import NOCContact from "../../ContactClass.js";
 import { nocPersonnalisation } from "../../dialogs/noc-personnalisation.js";
 import { Quality } from "../../qualite_default.mjs";
 
-export class nocActorSheetPersonnage extends ActorSheet {
+export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   /** @override */
   static get defaultOptions() {

@@ -2,7 +2,7 @@
 import { nocItem } from "../../documents/item.mjs";
 import { nocItemSheetTheme } from "./item-sheet-theme.mjs";
 
-export class nocItemSheetArchetype extends ItemSheet {
+export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
 
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {

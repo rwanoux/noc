@@ -89,28 +89,28 @@ Hooks.once('init', async function () {
   CONFIG.Macro.compendiumBanner = "systems/noc/asset/ui/macro_tab.png"
 
   // Register sheet application classes
-  Actors.unregisterSheet("core", ActorSheet);
-  Actors.registerSheet("noc", nocActorSheetPersonnage, {
+  foundry.documents.collections.Actors.unregisterSheet("core", foundry.appv1.sheets.ActorSheet);
+  foundry.documents.collections.Actors.registerSheet("noc", nocActorSheetPersonnage, {
     types: ["personnage"],
     makeDefault: true,
     label: "fiche de personnage"
   });
-  Actors.registerSheet("noc", nocActorSheetRouage, {
+  foundry.documents.collections.Actors.registerSheet("noc", nocActorSheetRouage, {
     types: ["rouage"],
     makeDefault: true,
     label: "fiche de rouage"
   });
-  Actors.registerSheet("noc", nocActorSheetCabale, {
+  foundry.documents.collections.Actors.registerSheet("noc", nocActorSheetCabale, {
     types: ["cabale"],
     makeDefault: true,
     label: "fiche de cabale"
   });
-  Actors.registerSheet("noc", nocActorSheetAutre, {
+  foundry.documents.collections.Actors.registerSheet("noc", nocActorSheetAutre, {
     types: ["autre"],
     makeDefault: true,
     label: "fiche d'Autre"
   });
-  Actors.registerSheet("noc", nocActorSheetCreature, {
+  foundry.documents.collections.Actors.registerSheet("noc", nocActorSheetCreature, {
     types: ["creature"],
     makeDefault: true,
     label: "fiche de créature"
@@ -118,38 +118,38 @@ Hooks.once('init', async function () {
 
 
   // ITEMS sheet registering
-  Items.unregisterSheet("core", ItemSheet);
-  Items.registerSheet("noc", nocItemSheetOutil, {
+  foundry.documents.collections.Items.unregisterSheet("core", foundry.appv1.sheets.ItemSheet);
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetOutil, {
     types: ["outil"],
     makeDefault: true,
     label: "fiche d'outil"
   });
-  Items.registerSheet("noc", nocItemSheetObjetUsuel, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetObjetUsuel, {
     types: ["objetusuel"],
     makeDefault: true,
     label: "fiche d'objet usuel"
   });
-  Items.registerSheet("noc", nocItemSheetArchetype, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetArchetype, {
     types: ["archetype"],
     makeDefault: true,
     label: "fiche d'archetype"
   });
-  Items.registerSheet("noc", nocItemSheetArme, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetArme, {
     types: ["arme"],
     makeDefault: true,
     label: "fiche d'arme"
   });
-  Items.registerSheet("noc", nocItemSheetDocumentAdministratif, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetDocumentAdministratif, {
     types: ["document administratif"],
     makeDefault: true,
     label: "fiche de document administratif"
   });
-  Items.registerSheet("noc", nocItemSheetTheme, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetTheme, {
     types: ["thème"],
     makeDefault: true,
     label: "fiche de theme"
   });
-  Items.registerSheet("noc", nocItemSheetArmure, {
+  foundry.documents.collections.Items.registerSheet("noc", nocItemSheetArmure, {
     types: ["armure"],
     makeDefault: true,
     label: "fiche d'armure'"

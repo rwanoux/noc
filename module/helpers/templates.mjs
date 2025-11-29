@@ -3,8 +3,8 @@
  * Pre-loaded templates are compiled and cached for fast access when rendering
  * @return {Promise}
  */
- export const preloadHandlebarsTemplates = async function() {
-  return loadTemplates([
+export const preloadHandlebarsTemplates = async function () {
+  return foundry.applications.handlebars.loadTemplates([
 
     // Actor partials.
     "systems/noc/templates/actor/parts/actor-features.html",
