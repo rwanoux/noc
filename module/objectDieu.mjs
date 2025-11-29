@@ -31,6 +31,8 @@ objetDieu.initPlaques = () => {
         ch.style.width = '300%';
         ch.style.height = `300%`;
         ch.style.zIndex = 10000 + (Math.floor(Math.random() * divNb));
+        ch.style.opacity = 0;
+        ch.style.pointerEvents = "none"
 
     }
 }
@@ -132,7 +134,15 @@ objetDieu.produceMecanisme = () => {
     objetDieu.setBlendMode("normal");
 
     for (let ch of objetDieu.children) {
+        /*ch.style = {
+            ...ch.style,
+            opacity: 1,
+            pointerEvents: "all",
+        }
+        */
+        ch.style.opacity = 1;
         if (ch.classList.contains('plaque')) {
+
             let vert;
             if (Math.random() > 0.5) {
                 vert = true;

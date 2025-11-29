@@ -162,7 +162,6 @@ Hooks.once('init', async function () {
 
   //init utilities
   nocUtility.init()
-  objetDieu.init();
 
 
 
@@ -193,6 +192,7 @@ Hooks.on("renderGamePause", (app, html, data, options) => {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
+  objetDieu.init();
 
 
   // rendering compteur de fiel
@@ -202,7 +202,10 @@ Hooks.once("ready", async function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on("hotbarDrop", (bar, data, slot) => createItemMacro(data, slot));
 
-  objetDieu.produceMecanisme();
+
+  if (game.settings.get('noc', 'displayMecanisme')) {
+    objetDieu.produceMecanisme();
+  }
 })
 
 /* -------------------------------------------- */
