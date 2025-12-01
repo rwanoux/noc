@@ -563,7 +563,7 @@ export class nocActor extends Actor {
     data.domaines = this.system.domaines;
     data.reserves = this.system.reserves;
     data.perditions = this.system.perditions;
-
+    console.log("getrolldata actor", data);
     return data;
   }
 

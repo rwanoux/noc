@@ -551,11 +551,9 @@ li.chat-message {
         .echec {
             appearance: none;
             min-height: 15px;
-            background: url(../asset/images/separation.webp) no-repeat 50% 20%;
-            background-size: 81% 60%;
-            padding-top: 2em;
             text-align: center;
-
+            border-top: 1px solid black;
+            margin-top: 2rem;
         }
     }
 

@@ -169,6 +169,26 @@ export class nocUtility {
       rollData.margin = Number(rollData.niveauFinal) - Number(rollData.niveauFinalRequis)
       rollData.isReussite = (rollData.margin >= 0)
     }
+
+    // Evaluate damage formula with actor context if weapon attack
+    if (rollData.arme && rollData.arme.system.degats && rollData.isReussite) {
+      try {
+        // Get the actor's roll data for formula evaluation
+        let actorRollData = actor.getRollData();
+        console.log("Actor roll data for damage:", actorRollData);
+        console.log("Damage formula:", rollData.arme.system.degats);
+
+        // Create and evaluate the roll with actor context
+        let damageRoll = new Roll(rollData.arme.system.degats, actorRollData);
+        await damageRoll.evaluate();
+        rollData.damageRoll = damageRoll;
+        console.log("Evaluated damage roll:", damageRoll);
+      } catch (e) {
+        console.error("Error evaluating damage formula:", e);
+        rollData.damageFormula = rollData.arme.system.degats;
+      }
+    }
+
     let msg = await this.createChatWithRollMode(rollData.alias, {
       content: await renderTemplate(`systems/noc/templates/chat/chat-generic-result.hbs`, rollData)
     });

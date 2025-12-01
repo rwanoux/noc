@@ -325,7 +325,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     update.system.talents[dom] = {};
     update.system.talents[dom][tal] = {};
 
-    let value = this.actor._source.system.talents[dom][tal].niveau;
+    let value = this.actor.system.talents[dom][tal].niveau;
 
 
 

@@ -94,8 +94,16 @@
             {{#if arme.system.traits}}
               <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
             {{/if}}
-            <li>{{arme.system.degats}}</li>
-            <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] (- Constitution - Armure)</li>
+            {{#if damageRoll}}
+              <li class="rollResult arme">Dégats : {{damageRoll.total}} (formule: {{damageRoll.formula}}) (-
+                Constitution - Armure)</li>
+            {{else if damageFormula}}
+              <li class="rollResult arme">Dégats : [[{{damageFormula}}]] <em>(- Constitution - Armure)</em>
+              </li>
+            {{else}}
+              <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] <em>(- Constitution - Armure)</em>
+              </li>
+            {{/if}}
           {{/if}}
         {{else}}
           <li class="rollResult echec">Echec!! (Marge {{margin}})</li>
