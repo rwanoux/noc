@@ -554,4 +554,17 @@ export class nocActor extends Actor {
     });
   }
 
+  /* -------------------------------------------- */
+  getRollData() {
+    const data = { ...super.getRollData() };
+
+    // Copy the actor's system data for easy access
+    data.talents = this.system.talents;
+    data.domaines = this.system.domaines;
+    data.reserves = this.system.reserves;
+    data.perditions = this.system.perditions;
+
+    return data;
+  }
+
 }

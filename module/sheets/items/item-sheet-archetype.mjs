@@ -35,7 +35,7 @@ export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
     context.systemTemplate = game.system.template;
     // Opportunistic init
     if (!this.item.system.talentsMineurs["erudition"]) {
-      this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.templates.talents.talents)
+      this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.rouage.talents)
     }
     this.options.editable = (context.document.parent) ? false : true
     return context;

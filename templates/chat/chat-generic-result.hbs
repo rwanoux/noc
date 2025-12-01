@@ -91,7 +91,10 @@
         {{#if isReussite}}
           <li class="rollResult reussite">Réussite !! (Marge {{margin}})</li>
           {{#if (eq mode "arme")}}
-            <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
+            {{#if arme.system.traits}}
+              <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
+            {{/if}}
+            <li>{{arme.system.degats}}</li>
             <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] (- Constitution - Armure)</li>
           {{/if}}
         {{else}}

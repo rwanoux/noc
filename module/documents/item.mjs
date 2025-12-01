@@ -35,6 +35,9 @@ export class nocItem extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+    if (this.type == "arme") {
+      this.prepareArmeData();
+    }
   }
   async _onUpdate(update, options, userId) {
 
@@ -42,6 +45,11 @@ export class nocItem extends Item {
       await this.prepareEffect(update)
     }
     super._preUpdate(update, options, userId)
+
+  }
+  prepareArmeData() {
+    if ((this.type != "arme") && (this.parent.type != "actor")) { return }
+    this.getRollData = this.parent.getRollData();
 
   }
   async prepareEffect(update) {
@@ -54,8 +62,12 @@ export class nocItem extends Item {
       effect = await this.createEmbeddedDocuments('ActiveEffect', [
         {
           label: effectName,
+          name: effectName,
+          icon: this.img,
+          origin: this.uuid,
+          disabled: false,
+          changes: [],
           transfer: true,
-          disabled: false
         }
 
       ])
@@ -148,14 +160,6 @@ export class nocItem extends Item {
     }
     await this.updateEmbeddedDocuments('ActiveEffect', [{ _id: effectId, changes: updatedChanges }]);
 
-  }
-  getRollData() {
-    // If present, return the actor's roll data.
-    if (!this.actor) return null;
-    const rollData = {
-      value: 1
-    };
-    return rollData;
   }
 
   /**
