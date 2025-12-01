@@ -45,6 +45,9 @@
 
 
       <li>Dés de domaine utilisés : {{nbDesDomaine}}</li>
+      {{#if nbDesCabale}}
+        <li>Dés de cabale utilisés : {{nbDesCabale}} ({{cabaleData.name}})</li>
+      {{/if}}
       <li class="dicesResults flexrow">
         {{#each roll.terms as |term index|}}
           {{#each term.results as |dice index|}}

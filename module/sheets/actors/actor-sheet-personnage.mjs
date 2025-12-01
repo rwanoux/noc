@@ -268,6 +268,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
     // Talent manegement
     html.find('.roll-talent').click(ev => {
+      if (this.actor.type == "cabale") { return }
       let domaineId = $(ev.currentTarget).data("domaine-id");
       let talentId = $(ev.currentTarget).data("talent-id");
       this.actor.rollTalent(domaineId, talentId);

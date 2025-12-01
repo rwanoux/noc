@@ -243,7 +243,7 @@ export class nocUtility {
     }
 
     // Jetde base
-    rollData.nbDesTotal = rollData.nbDesDomaine + ((rollData.useEspoir) ? 3 : 0);
+    rollData.nbDesTotal = rollData.nbDesDomaine + rollData.nbDesCabale + ((rollData.useEspoir) ? 3 : 0);
     rollData.formula = `${rollData.nbDesTotal}d10cs>=8`
     let myRoll = await new Roll(rollData.formula, actor.system).roll()
     await this.showDiceSoNice(myRoll, game.settings.get("core", "rollMode"))
@@ -266,6 +266,17 @@ export class nocUtility {
     if (maxDiceValue == -1) maxDiceValue = 0;
     rollData.roll = myRoll
     rollData.nbSuccess = rollData.roll.total
+
+    // Consume cabale dice if used
+    if (rollData.nbDesCabale > 0 && rollData.cabaleData && rollData.domaineId) {
+      let cabale = game.actors.get(rollData.cabaleData.id);
+      if (cabale) {
+        let newValue = Math.max(0, cabale.system.domaines[rollData.domaineId].value - rollData.nbDesCabale);
+        let updateData = {};
+        updateData[`system.domaines.${rollData.domaineId}.value`] = newValue;
+        await cabale.update(updateData);
+      }
+    }
 
     await this.computeFinalResult(rollData)
 

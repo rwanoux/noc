@@ -462,7 +462,7 @@ export class nocActor extends Actor {
 
   /* -------------------------------------------- */
   buildGenericRollData() {
-    return {
+    let rollData = {
       actorId: this.id,
       img: this.img,
       name: this.name,
@@ -472,7 +472,23 @@ export class nocActor extends Actor {
       useVecu: false,
       nbBonusCollaboratif: 0,
       nbDesDomaine: 0,
+      nbDesCabale: 0,
+      cabaleData: null
     }
+
+    // Si le personnage a une cabale, ajouter les infos
+    if (this.type === "personnage" && this.system.cabale?.uuid) {
+      let cabale = game.actors.get(this.system.cabale.uuid);
+      if (cabale) {
+        rollData.cabaleData = {
+          id: cabale.id,
+          name: cabale.name,
+          domaines: foundry.utils.duplicate(cabale.system.domaines)
+        }
+      }
+    }
+
+    return rollData;
   }
   /* -------------------------------------------- */
   clearInitiative() {
@@ -496,8 +512,15 @@ export class nocActor extends Actor {
     rollData.title = "Talent"
     rollData.mode = "talent"
     rollData.combatData = combatData
+    rollData.domaineId = domaineId
     rollData.domaine = foundry.utils.duplicate(this.system.domaines[domaineId])
     rollData.talent = foundry.utils.duplicate(this.system.talents[domaineId][talentId])
+
+    // Add cabale domain if available
+    if (rollData.cabaleData && rollData.cabaleData.domaines[domaineId]) {
+      rollData.cabaleDomaine = foundry.utils.duplicate(rollData.cabaleData.domaines[domaineId]);
+    }
+
     this.startRoll(rollData)
   }
 
@@ -510,6 +533,7 @@ export class nocActor extends Actor {
       rollData.title = "Arme"
       rollData.mode = "arme"
       rollData.arme = foundry.utils.duplicate(item)
+      rollData.domaineId = 'action'
       rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
       rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
       rollData.niveauRequis = (item.system.adistance) ? 0 : 1
@@ -517,6 +541,12 @@ export class nocActor extends Actor {
       rollData.modCouvert = 0
       rollData.cibleAuSol = false
       rollData.modSupplement = 0
+
+      // Add cabale domain if available
+      if (rollData.cabaleData && rollData.cabaleData.domaines['action']) {
+        rollData.cabaleDomaine = foundry.utils.duplicate(rollData.cabaleData.domaines['action']);
+      }
+
       this.startRoll(rollData)
     } else {
       const speaker = ChatMessage.getSpeaker({ user: game.user });

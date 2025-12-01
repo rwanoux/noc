@@ -100,6 +100,9 @@ export class nocRollDialog extends Dialog {
     html.find('#nbDesDomaine').change((event) => {
       this.rollData.nbDesDomaine = Number(event.currentTarget.value)
     })
+    html.find('#nbDesCabale').change((event) => {
+      this.rollData.nbDesCabale = Number(event.currentTarget.value)
+    })
     html.find('#nbBonusCollaboratif').change((event) => {
       this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
     })
