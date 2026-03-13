@@ -74,6 +74,8 @@ Hooks.once('init', async function () {
     decimals: 2
   };
 
+  CONFIG.Combat.fallbackTurnMarker = "systems/noc/asset/default_icons/turnMarker.webp";
+
   // Define custom Document classes
   CONFIG.Actor.documentClass = nocActor;
   CONFIG.Item.documentClass = nocItem;
