@@ -81,7 +81,7 @@
                   fa-add"></a> <a class="fas fa-minus"></a>
               </span>
             </span>
-            <a class="rollable roll-talent"
+            <a class="rollable roll-talent" data-action="rollTalent"
               data-talent-id="{{talentId}}"
               data-domaine-id="{{domaineId}}">
               <label for="{{talent.label}}">{{talent.label}}</label>
@@ -161,7 +161,7 @@
 
             <ul class="item-list">
               <h3>{{groupIndex}}
-                <a class="fas fa-add item-create" data-tooltip="créer un
+                <a class="fas fa-add item-create" data-action="itemCreate" data-tooltip="créer un
                   item
                   :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
               </h3>
@@ -191,9 +191,9 @@
                   </h4>
                   <div class="item-control">
 
-                    <a class="fas fa-edit item-open"
+                    <a class="fas fa-edit item-open" data-action="itemOpen"
                       data-item-id="{{item.id}}"></a>
-                    <a class="fas fa-trash item-delete"
+                    <a class="fas fa-trash item-delete" data-action="itemDelete"
                       data-item-id="{{item.id}}"></a>
                     <a class="fas fa-star item-fav
                       {{#if item.flags.noc.favItem}}
@@ -229,7 +229,7 @@
           {{#each personnalisations as |perso id|}}
           <div class="perso flexrow">
             <h4>{{perso.label}} <a data-effect-id="{{perso.id}}"
-                class="fas fa-trash deletePersonnalisation"></a></h4>
+                class="fas fa-trash deletePersonnalisation" data-action="deletePersonnalisation"></a></h4>
             {{#each perso.flags.noc.personnalisation as |bonus
             label|}}
             <div class="bonus">{{label}}:{{bonus}} /</div>

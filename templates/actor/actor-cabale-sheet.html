@@ -78,7 +78,7 @@
 								{{#each groupTalent as |talent talentId|}}
 									<div class="flexrow">
 										<input name="system.talents.{{talentGroupName}}.{{talentId}}.niveau" value="{{talent.niveau}}" type="number">
-										<a class="rollable roll-talent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
+										<a class="rollable roll-talent" data-action="rollTalent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
 											<label for="{{talent.label}}">{{talent.label}}</label>
 										</a>
 									</div>

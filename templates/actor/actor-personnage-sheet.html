@@ -82,7 +82,7 @@
 												</span>
 											</span>
 											<a
-												class="rollable roll-talent"
+												class="rollable roll-talent" data-action="rollTalent"
 												data-talent-id="{{talentId}}"
 												data-domaine-id="{{domaineId}}"
 											>
@@ -210,11 +210,11 @@
 								<div class="item-name">{{archetype.name}}</div>
 								<div class="item-control">
 									<a
-										class="fas fa-trash item-delete"
+										class="fas fa-trash item-delete" data-action="itemDelete"
 										data-item-id="{{archetype.id}}"
 									></a>
 									<a
-										class="fas fa-edit item-open"
+										class="fas fa-edit item-open" data-action="itemOpen"
 										data-item-id="{{archetype.id}}"
 									></a>
 								</div>
@@ -231,11 +231,11 @@
 								</div>
 								<div class="item-control">
 									<a
-										class="fas fa-trash item-delete"
+										class="fas fa-trash item-delete" data-action="itemDelete"
 										data-item-id="{{thème.id}}"
 									></a>
 									<a
-										class="fas fa-edit item-open"
+										class="fas fa-edit item-open" data-action="itemOpen"
 										data-item-id="{{thème.id}}"
 									></a>
 								</div>
@@ -246,7 +246,7 @@
 					<div class="form-group">
 						<div>qualité :
 							<a
-								class="fas fa-add addQuality"
+								class="fas fa-add addQuality" data-action="addQuality"
 								data-type="qualite"
 							></a>
 						</div>
@@ -255,7 +255,7 @@
 								/{{actor.system.qualites.targetTalent}}
 								+1
 								<a
-									class="fas fa-trash deleteQuality"
+									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer la qualité"
 									data-type="qualite"
 								></a>
@@ -266,7 +266,7 @@
 					<div class="form-group">
 						<div>défaut :
 							<a
-								class="fas fa-add addQuality"
+								class="fas fa-add addQuality" data-action="addQuality"
 								data-type="defaut"
 							></a>
 						</div>
@@ -275,7 +275,7 @@
 								/{{actor.system.defauts.targetTalent}}
 								-1
 								<a
-									class="fas fa-trash deleteQuality"
+									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer le défaut"
 									data-type="defaut"
 								></a>
@@ -284,7 +284,7 @@
 					</div>
 					<h3>personnalisation
 						<a
-							class="fas fa-add addPersonnalisation"
+							class="fas fa-add addPersonnalisation" data-action="addPersonnalisation"
 							data-tooltip="ajouter un bonus de pesonnalisation"
 						></a>
 					</h3>
@@ -293,7 +293,7 @@
 							<h4>{{perso.label}}
 								<a
 									data-effect-id="{{perso.id}}"
-									class="fas fa-trash deletePersonnalisation"
+									class="fas fa-trash deletePersonnalisation" data-action="deletePersonnalisation"
 								></a>
 							</h4>
 							{{#each perso.flags.noc.personnalisation as |bonus
@@ -311,7 +311,7 @@
 						{{#if actor.system.cabale.nom}}
 							<div>
 								<a
-									class="fas fa-edit openCabale"
+									class="fas fa-edit openCabale" data-action="openCabale"
 									data-cabale-id="{{actor.system.cabale.uuid}}"
 								></a>
 							</div>
@@ -357,7 +357,7 @@
 								<h4 class="item-name">
 									<span>
 										<a
-											class="roll-item"
+											class="roll-item" data-action="rollItem"
 											data-item-id="{{item._id}}"
 										>{{item.name}}</a>
 									</span>
@@ -365,11 +365,11 @@
 								<div class="item-control">
 
 									<a
-										class="fas fa-edit item-open"
+										class="fas fa-edit item-open" data-action="itemOpen"
 										data-item-id="{{item._id}}"
 									></a>
 									<a
-										class="fas fa-trash item-delete"
+										class="fas fa-trash item-delete" data-action="itemDelete"
 										data-item-id="{{item._id}}"
 									></a>
 									<a
@@ -471,7 +471,7 @@
 							</div>
 							<a
 								class="fa-solid fa-arrows-rotate"
-								id="resetFaveurs"
+								id="resetFaveurs" data-action="resetFaveurs"
 								data-tooltip="ré-initialiser les faveurs des contacts"
 							></a>
 						</div>
@@ -501,7 +501,7 @@
 										<div class="contactControls">
 											<a
 												data-tooltip="supprimer ce contact"
-												class="unassignContact"
+												class="unassignContact" data-action="unassignContact"
 											>
 												<i class="fa-solid fa-close"></i>
 											</a>
@@ -521,7 +521,7 @@
 										class="empty-contact"
 										data-contact-index="{{contactIndex}}"
 									>Vide :
-										<i class="fas fa-add createContact"></i>
+										<i class="fas fa-add createContact" data-action="createContact"></i>
 									</h3>
 								{{/if}}
 							</div>
@@ -545,7 +545,7 @@
 							</div>
 							<div class="cabaleControls">
 								<a
-									class="openCabale"
+									class="openCabale" data-action="openCabale"
 									data-cabale-id="{{actor.system.cabale.uuid}}"
 									data-tooltip="ouvrir la fiche de cabale"
 								>
@@ -554,7 +554,7 @@
 								<a
 									data-tooltip="quitter cette cabale"
 									data-cabale-id="{{actor.system.cabale.uuid}}"
-									class="unassignCabale"
+									class="unassignCabale" data-action="unassignCabale"
 								>
 									<i class="fa-solid fa-right-from-bracket"></i>
 								</a>
@@ -623,7 +623,7 @@
 								<ul class="item-list">
 									<h3>{{localize (concat "ITEM.Type" (upperFirst groupIndex))}}
 										<a
-											class="fas fa-add item-create"
+											class="fas fa-add item-create" data-action="itemCreate"
 											data-tooltip="créer un item :{{groupIndex}}"
 											data-item-type="{{groupIndex}}"
 										></a>
@@ -648,7 +648,7 @@
 												<h4 class="item-name">
 													<span>
 														<a
-															class="roll-item"
+															class="roll-item" data-action="rollItem"
 															data-item-id="{{item._id}}"
 														>{{item.name}}</a>
 													</span>
@@ -664,11 +664,11 @@
 												<div class="item-control">
 
 													<a
-														class="fas fa-edit item-open"
+														class="fas fa-edit item-open" data-action="itemOpen"
 														data-item-id="{{item.id}}"
 													></a>
 													<a
-														class="fas fa-trash item-delete"
+														class="fas fa-trash item-delete" data-action="itemDelete"
 														data-item-id="{{item.id}}"
 													></a>
 													<a

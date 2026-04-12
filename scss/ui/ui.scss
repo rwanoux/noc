@@ -225,13 +225,6 @@ div.sidebar-popout {
         }
     }
 
-    .playlists-sidebar .sound-control {
-        color: rgb(47, 78, 47);
-
-        &.inactive {
-            color: rgb(134, 0, 0);
-        }
-    }
 
     .chat-sidebar .jump-to-bottom a {
         background-color: #d4d4d4;
@@ -645,4 +638,27 @@ div#hotbar {
     background: url(../asset/ui/fond_macros.png);
     background-size: 100% auto;
     background-position: center;
+}
+
+#playlists {
+
+    ol.playlist-sounds,
+    ol.directory-list {
+        button {
+            color: rgb(0, 225, 0);
+            background-color: white;
+            background: unset;
+            margin: 0;
+            box-shadow: 0px 0px 15px rgba(165, 165, 165, 0.4) inset;
+
+            &.inactive {
+                color: rgb(238, 5, 5);
+
+            }
+        }
+
+        li.sound.playing {
+            border: 1px solid rgb(0, 106, 255)
+        }
+    }
 }

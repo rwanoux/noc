@@ -47,7 +47,7 @@
                   fa-add"></a> <a class="fas fa-minus"></a>
               </span>
             </span>
-            <a class="rollable roll-talent"
+            <a class="rollable roll-talent" data-action="rollTalent"
               data-talent-id="{{talentId}}"
               data-domaine-id="{{domaineId}}">
               <label for="{{talent.label}}">{{talent.label}}</label>
@@ -127,7 +127,7 @@
 
             <ul class="item-list">
               <h3>{{groupIndex}}
-                <a class="fas fa-add item-create" data-tooltip="créer un
+                <a class="fas fa-add item-create" data-action="itemCreate" data-tooltip="créer un
                   item
                   :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
               </h3>
@@ -145,7 +145,7 @@
                       {{item.name}}">
                   </div>
                   <h4 class="item-name">
-                    <span><a class="roll-item" data-item-id="{{item._id}}">{{item.name}}</a></span>
+                    <span><a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a></span>
                     {{#if item.system.needQuantar}}
                     <img
                       src="systems/noc/asset/default_icons/quantar.webp"
@@ -157,9 +157,9 @@
                   </h4>
                   <div class="item-control">
 
-                    <a class="fas fa-edit item-open"
+                    <a class="fas fa-edit item-open" data-action="itemOpen"
                       data-item-id="{{item.id}}"></a>
-                    <a class="fas fa-trash item-delete"
+                    <a class="fas fa-trash item-delete" data-action="itemDelete"
                       data-item-id="{{item.id}}"></a>
                     <a class="fas fa-star item-fav
                       {{#if item.flags.noc.favItem}}
