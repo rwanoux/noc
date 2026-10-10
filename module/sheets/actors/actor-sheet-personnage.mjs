@@ -283,6 +283,9 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     // ROll d'item
     html.find('.roll-item').click(ev => {
       let itemId = $(ev.currentTarget).data("item-id");
+      const item = this.actor.items.get(itemId);
+      // objet usuel : le clic sur le nom ouvre sa fiche, comme le bouton d'édition
+      if (item?.type === "objetusuel") return item.sheet.render(true);
       this.actor.rollItem(itemId);
     })
 
