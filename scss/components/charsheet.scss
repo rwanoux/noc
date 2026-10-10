@@ -1721,4 +1721,28 @@ div.noc.sheet.actor.rouage .inventaire-rouage {
             }
         }
     }
+}
+
+// Fiche Rouage : jauges sur trois colonnes au-dessus de l'inventaire
+// (Espoir, Vécu | Blessures, Traque | Noirceur, Trauma)
+div.noc.sheet.actor.rouage .rouage-bas {
+    gap: 8px;
+
+    .rouage-jauges {
+        flex: none !important;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+        grid-auto-flow: column;
+        gap: 4px 12px;
+        text-align: center;
+
+        .reserve h4 {
+            margin: 2px 0;
+        }
+    }
+
+    .inventaire-rouage {
+        width: 100%;
+    }
 }

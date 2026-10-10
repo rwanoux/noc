@@ -110,8 +110,8 @@
         {{/each}}
 
       </div>
-      <div class="flexrow">
-        <div class="rouage-reserves">
+      <div class="flexcol rouage-bas">
+        <div class="rouage-reserves rouage-jauges">
           {{#each actor.system.reserves as |reserve reserveId|}}
           {{#ifnotequal reserveId "singularite"}}
           {{#ifnotequal reserveId "faveurs"}}
@@ -174,7 +174,7 @@
             </div>
             <div class="inventaire-colonne">
               {{> listeObjets titre="Armure" type="armure" objets=actor.itemTypes.armure}}
-              {{> listeObjets titre="Documents administratifs" type="document administratif" objets=(lookup actor.itemTypes "document administratif")}}
+              {{> listeObjets titre="Doc. admin." type="document administratif" objets=(lookup actor.itemTypes "document administratif")}}
             </div>
             <div class="inventaire-colonne">
               {{> listeObjets titre="Outils" type="outil" objets=actor.itemTypes.outil}}
