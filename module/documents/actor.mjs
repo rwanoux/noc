@@ -5,6 +5,7 @@ import { Quality } from "../qualite_default.mjs";
 import { nocNoirceurTraits } from '../dialogs/noc-noirceurTrait.js';
 import { appliquerArchetype } from "../archetypes.mjs";
 import { appliquerQualites } from "../qualites.mjs";
+import { appliquerAutre } from "../autres.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -247,7 +248,8 @@ export class nocActor extends Actor {
   _prepareAutreData() {
     if (this.type !== 'autre') return;
 
-    this.system.energieNoire.max = 8 - this.system.classeExo.value;
+    // Classe Exo, Énergie Noire, domaines et talents : voir module/autres.mjs
+    appliquerAutre(this);
 
   }
   prepareContacts() {

@@ -31,6 +31,7 @@ import { nocUtility } from './noc-utility.js';
 import { migrerArchetypes } from "./archetypes.mjs";
 import { migrerQualites } from "./qualites.mjs";
 import { migrerCreatures } from "./creatures.mjs";
+import { migrerAutres } from "./autres.mjs";
 
 
 
@@ -201,6 +202,7 @@ Hooks.once("ready", async function () {
   await migrerArchetypes();
   await migrerQualites();
   await migrerCreatures();
+  await migrerAutres();
 
   objetDieu.init();
 
