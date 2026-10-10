@@ -2404,3 +2404,118 @@ div.noc.sheet.actor .etats-actifs,
         }
     }
 }
+
+// Fiche de document administratif
+div.noc.item.sheet.document-administratif {
+    .form-group select.choix-formulaire,
+    .form-group select.large {
+        flex: 1 1 auto;
+    }
+
+    .bilan-document {
+        display: flex;
+        gap: 8px;
+        margin: 6px 0 2px;
+
+        .bilan-valeur {
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border: 1px solid #5c5c5c;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.08);
+
+            .bilan-chiffre {
+                font-size: 22px;
+                font-weight: bold;
+                min-width: 1.2em;
+                text-align: center;
+            }
+
+            .bilan-label {
+                font-size: 12px;
+                line-height: 1.1;
+            }
+
+            &.insuffisant {
+                border-color: #8a1c1c;
+                color: #8a1c1c;
+            }
+        }
+    }
+
+    ul.effets-bureau,
+    ul.nuisances {
+        margin: 2px 0 4px;
+        padding-left: 18px;
+        font-size: 12px;
+    }
+
+    p.avertissement-rang {
+        color: #8a1c1c;
+        font-size: 12px;
+        margin: 2px 0;
+    }
+
+    p.obtention,
+    p.regle-generale,
+    span.note-cout {
+        font-size: 11px;
+        opacity: 0.75;
+    }
+
+    span.note-cout {
+        flex: 1 1 auto;
+        text-align: right;
+    }
+
+    p.description-formulaire,
+    p.regle-specifique {
+        font-style: italic;
+        font-size: 12px;
+        margin: 4px 0;
+    }
+
+    .form-group.stacked {
+        flex-direction: column;
+        align-items: stretch;
+
+        .editor {
+            min-height: 90px;
+        }
+    }
+
+    .form-group.case label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex: 1 1 auto;
+    }
+
+    .liste-beneficiaires {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .ligne-beneficiaire {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            input {
+                flex: 1 1 auto;
+            }
+        }
+
+        a.ajouter-beneficiaire {
+            font-size: 12px;
+        }
+    }
+
+    .form-group.beneficiaires {
+        align-items: flex-start;
+    }
+}

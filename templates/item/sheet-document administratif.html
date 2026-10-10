@@ -1,47 +1,246 @@
 <form class="{{cssClass}}" autocomplete="off">
 
-
-
   {{!-- Sheet Body --}}
   <section class="sheet-body">
     <input class="item-name" name="name" type="text" value="{{document.name}}"
-      placeholder="Name"/>
+      placeholder="Nom du document"/>
     <img class="item-img" src="{{document.img}}" data-edit="img"
       title="{{document.name}}" />
 
     <div class="form-group">
-      <h4>description</h4>
+      <h4>type de formulaire</h4>
+      <select name="system.formulaire" class="choix-formulaire">
+        {{selectOptions formulaires selected=choix.formulaire}}
+      </select>
+    </div>
+
+    {{#if calc.formulaire}}
+    <div class="bilan-document">
+      <div class="bilan-valeur {{#if calc.rangInsuffisant}}insuffisant{{/if}}">
+        <span class="bilan-chiffre">{{calc.rangDocument}}</span>
+        <span class="bilan-label">Rang du document</span>
+      </div>
+      <div class="bilan-valeur">
+        <span class="bilan-chiffre">{{calc.niveauxBureau}}</span>
+        <span class="bilan-label">Niveaux de Bureau investis</span>
+      </div>
+    </div>
+    {{#if calc.effets.length}}
+    <ul class="effets-bureau">
+      {{#each calc.effets as |e|}}<li>{{e.label}} : {{e.niveaux}} niveau{{#ifequal e.niveaux 1}}{{else}}x{{/ifequal}}</li>{{/each}}
+    </ul>
+    {{/if}}
+    {{#if calc.rangInsuffisant}}
+    <p class="avertissement-rang">Le Rang du Héros ({{calc.rang}}) est inférieur au Rang du document : augmentez-le ci-dessous (2 niveaux de Bureau par point).</p>
+    {{/if}}
+    <p class="obtention">Obtention : {{calc.heures}} heures de démarches dans une Annexe · efficace {{calc.duree}} cycle{{#ifequal calc.duree 1}}{{else}}s{{/ifequal}}</p>
+    {{/if}}
+
+    <p class="description-formulaire">{{descriptionFormulaire}}</p>
+
+    <div class="form-group stacked">
+      <h4>spécificités du document</h4>
       {{editor document.system.description target="system.description"
       button=true editable=editable
       engine="prosemirror" collaborate=false}}
     </div>
 
+    {{#if calc.formulaire}}
+    <h3 class="titre-section">Options communes</h3>
+
+    <div class="form-group beneficiaires">
+      <h4>bénéficiaires</h4>
+      <div class="liste-beneficiaires">
+        {{#each beneficiaires as |b|}}
+        <div class="ligne-beneficiaire">
+          <input class="beneficiaire" data-index="{{b.index}}" type="text" value="{{b.nom}}" placeholder="Bénéficiaire {{b.numero}}" {{#unless @root.editable}}disabled{{/unless}}>
+          {{#if b.supprimable}}{{#if @root.editable}}<a class="retirer-beneficiaire fas fa-trash" data-index="{{b.index}}" title="Retirer ce bénéficiaire"></a>{{/if}}{{/if}}
+        </div>
+        {{/each}}
+        {{#if editable}}<a class="ajouter-beneficiaire"><i class="fas fa-plus"></i> Ajouter un bénéficiaire (+1 niveau)</a>{{/if}}
+      </div>
+    </div>
+
     <div class="form-group">
-      <h4>effets de bureau</h4>
-      {{editor document.system.effetsDeBureau
-      target="system.effetsDeBureau"
+      <h4>durée (cycles)</h4>
+      <span class="compteur-niveau">{{calc.duree}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.duree" data-min="1"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.duree" data-min="1"></a>
+        </span>
+        {{/if}}
+      </span>
+      <span class="note-cout">+1 niveau par cycle supplémentaire</span>
+    </div>
+
+    <div class="form-group">
+      <h4>rang du héros</h4>
+      <span class="compteur-niveau">{{calc.rang}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.rangSup"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.rangSup"></a>
+        </span>
+        {{/if}}
+      </span>
+      <span class="note-cout">{{#if calc.porteur}}Rang {{calc.rangBase}}{{else}}sans porteur : Rang 1{{/if}} ; +2 niveaux par point au-delà</span>
+    </div>
+
+    <h3 class="titre-section">{{lookup formulaires calc.type}}</h3>
+
+    {{#ifequal calc.type "port"}}
+    <div class="form-group">
+      <h4>objet autorisé</h4>
+      <input name="system.port.objet" type="text" value="{{document.system.port.objet}}" placeholder="ex. Revolver P23 Zmije">
+    </div>
+    <div class="form-group">
+      <h4>limité (X)</h4>
+      <span class="compteur-niveau">{{calc.limiteX}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.port.bonusX"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.port.bonusX"></a>
+        </span>
+        {{/if}}
+      </span>
+      <span class="note-cout">X = Rang du Héros ; +1 niveau par point en plus</span>
+    </div>
+    {{/ifequal}}
+
+    {{#ifequal calc.type "acces"}}
+    <div class="form-group">
+      <h4>zone</h4>
+      <select name="system.acces.zone" data-dtype="Number" class="large">
+        {{#each zonesAcces as |label rang|}}
+        <option value="{{rang}}" {{#ifequal rang @root.choix.zoneAcces}}selected{{/ifequal}}>{{label}} (Rang {{rang}})</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h4>motif</h4>
+      <input name="system.acces.motif" type="text" value="{{document.system.acces.motif}}">
+    </div>
+    <div class="form-group case">
+      <label><input name="system.acces.nonLimite" type="checkbox" data-dtype="Boolean" {{checked document.system.acces.nonLimite}}>
+        Circulation non limitée à un secteur</label><span class="note-cout">1 niveau</span>
+    </div>
+    <div class="form-group case">
+      <label><input name="system.acces.sansSurveillance" type="checkbox" data-dtype="Boolean" {{checked document.system.acces.sansSurveillance}}>
+        Circulation sans surveillance</label><span class="note-cout">2 niveaux</span>
+    </div>
+    {{/ifequal}}
+
+    {{#ifequal calc.type "sortie"}}
+    <div class="form-group">
+      <h4>zone</h4>
+      <select name="system.sortie.zone" data-dtype="Number" class="large">
+        {{#each zonesSortie as |label rang|}}
+        <option value="{{rang}}" {{#ifequal rang @root.choix.zoneSortie}}selected{{/ifequal}}>{{label}} (Rang {{rang}})</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h4>durée du séjour</h4>
+      <select name="system.sortie.duree" class="large">
+        {{selectOptions dureesSortie selected=choix.dureeSortie}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h4>motif</h4>
+      <input name="system.sortie.motif" type="text" value="{{document.system.sortie.motif}}">
+    </div>
+    <div class="form-group case">
+      <label><input name="system.sortie.exoneration" type="checkbox" data-dtype="Boolean" {{checked document.system.sortie.exoneration}}>
+        Exonération des examens de sortie</label><span class="note-cout">1 niveau</span>
+    </div>
+    {{/ifequal}}
+
+    {{#ifequal calc.type "requisition"}}
+    <div class="form-group">
+      <h4>ressource</h4>
+      <select name="system.requisition.mode" class="large">
+        {{selectOptions modesRequisition selected=choix.modeRequisition}}
+      </select>
+    </div>
+    <div class="form-group">
+      <h4>{{#ifequal choix.modeRequisition "expert"}}talent de l'expert{{else}}détail{{/ifequal}}</h4>
+      <input name="system.requisition.detail" type="text" value="{{document.system.requisition.detail}}">
+    </div>
+    <p class="regle-specifique">
+      {{#ifequal choix.modeRequisition "objet"}}Objet acquis légalement, de Valeur {{calc.valeurMax}} au plus. S'il n'est pas rendu, est très endommagé ou fortement diminué à la fin du formulaire : 1 séquelle de Traque par tranche de 2 niveaux de Valeur perdus.{{/ifequal}}
+      {{#ifequal choix.modeRequisition "capital"}}Capital emprunté (tickets de rationnement ou monnaie) de valeur {{calc.capital}}. S'il n'est pas rendu à la fin du formulaire : 1 séquelle de Traque par tranche de 2 niveaux de valeur perdus.{{/ifequal}}
+      {{#ifequal choix.modeRequisition "expert"}}Un professionnel du Bureau, avec un unique talent au niveau {{calc.niveauExpert}}. S'il est témoin d'événements ou de comportements suspects : 1 séquelle de Traque par bénéficiaire (ou plus, au choix de la Loi).{{/ifequal}}
+      {{#ifequal choix.modeRequisition "escorte"}}Escorte de {{calc.gardes}} Garde{{#ifequal calc.gardes 1}}{{else}}s{{/ifequal}} Noir{{#ifequal calc.gardes 1}}{{else}}s{{/ifequal}}. S'ils sont témoins d'événements ou de comportements suspects, ils réagissent : au minimum 1 séquelle de Traque par bénéficiaire.{{/ifequal}}
+    </p>
+    {{/ifequal}}
+
+    {{#ifequal calc.type "mandat"}}
+    <div class="form-group">
+      <h4>sujet</h4>
+      <input name="system.mandat.sujet" type="text" value="{{document.system.mandat.sujet}}">
+    </div>
+    <div class="form-group">
+      <h4>secteur</h4>
+      <input name="system.mandat.secteur" type="text" value="{{document.system.mandat.secteur}}">
+    </div>
+    <div class="form-group">
+      <h4>niveau d'autorité</h4>
+      <span class="compteur-niveau">{{calc.autorite}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.mandat.bonusAutorite"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.mandat.bonusAutorite"></a>
+        </span>
+        {{/if}}
+      </span>
+      <span class="note-cout">= Rang du Héros ; +2 niveaux par point en plus</span>
+    </div>
+    <div class="form-group">
+      <h4>citoyens visés</h4>
+      <span class="compteur-niveau">{{calc.citoyens}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.mandat.bonusCitoyens"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.mandat.bonusCitoyens"></a>
+        </span>
+        {{/if}}
+      </span>
+      <span class="note-cout">+1 niveau par citoyen en plus</span>
+    </div>
+    <p class="regle-specifique">Interrogatoire : citoyen de Rang {{calc.rangInterrogation}} ou moins. Fouille : citoyen de Rang {{calc.rangFouille}} ou moins.</p>
+    {{/ifequal}}
+
+    {{#ifequal calc.type "signalement"}}
+    <div class="form-group">
+      <h4>citoyen visé</h4>
+      <input name="system.signalement.cible" type="text" value="{{document.system.signalement.cible}}">
+    </div>
+    <div class="form-group case">
+      <label><input name="system.signalement.bonusStatut" type="checkbox" data-dtype="Boolean" {{checked document.system.signalement.bonusStatut}}>
+        +1 au Domaine Statut pour la confrontation</label><span class="note-cout">1 niveau</span>
+    </div>
+    <div class="form-group case">
+      <label><input name="system.signalement.priseRapide" type="checkbox" data-dtype="Boolean" {{checked document.system.signalement.priseRapide}}>
+        Prise d'effet en un quart</label><span class="note-cout">1 niveau</span>
+    </div>
+    <p class="regle-specifique">Confrontation des Rangs au bout d'{{calc.delai}}. Le gagnant inflige une nuisance par succès de marge ; pour les nuisances qui durent, 1 succès = un quart, 2 = un cycle, 3 = un mois, 4 = définitif.</p>
+    <ul class="nuisances">
+      {{#each nuisances as |n|}}<li><strong>{{n.nom}}</strong> : {{n.texte}}</li>{{/each}}
+    </ul>
+    {{/ifequal}}
+
+    <p class="regle-generale">Sans conséquence, un personnage peut demander par aventure autant de formulaires que son Rang ; chaque formulaire en plus lui vaut 1 séquelle de Traque.</p>
+    {{/if}}
+
+    {{#if document.system.effetsDeBureau}}
+    <div class="form-group stacked">
+      <h4>effets de bureau (notes)</h4>
+      {{editor document.system.effetsDeBureau target="system.effetsDeBureau"
       button=true editable=editable
       engine="prosemirror" collaborate=false}}
     </div>
-    <div class="form-group">
-      <h4>bénéficiaires</h4>
-      <input name="system.beneficiaires"
-        value="{{document.system.beneficiaires}}"
-        type="text">
-    </div>
-    <div class="form-group">
-      <h4>rang necessaire</h4>
-      <input name="system.utilisations"
-        value="{{document.system.rangNecessaire}}"
-        type="number">
-    </div>
-    <div class="form-group">
-      <h4>delai d'obtention</h4>
-      <input name="system.utilisations"
-        value="{{document.system.rangNecessaire}}"
-        type="number"><span> heures</span>
-    </div>
-
+    {{/if}}
 
   </section>
 </form>

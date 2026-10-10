@@ -667,10 +667,22 @@
         "longuePortee": false,
         "recurrent": false,
         "tranchant": false,
-        "contrainte": { "actif": false, "valeur": 0 },
-        "energieNoire": { "actif": false, "valeur": 0 },
-        "multiple": { "actif": false, "valeur": 0 },
-        "quantique": { "actif": false, "valeur": 0 }
+        "contrainte": {
+          "actif": false,
+          "valeur": 0
+        },
+        "energieNoire": {
+          "actif": false,
+          "valeur": 0
+        },
+        "multiple": {
+          "actif": false,
+          "valeur": 0
+        },
+        "quantique": {
+          "actif": false,
+          "valeur": 0
+        }
       },
       "traits": "",
       "munitions": {
@@ -683,9 +695,46 @@
         "base"
       ],
       "tempsObtention": 3,
-      "beneficiaires": "",
+      "beneficiaires": [
+        "",
+        ""
+      ],
       "effetsDeBureau": "",
-      "rangNecessaire": 1
+      "rangNecessaire": 1,
+      "formulaire": "autre",
+      "duree": 1,
+      "rangSup": 0,
+      "port": {
+        "objet": "",
+        "bonusX": 0
+      },
+      "acces": {
+        "zone": 1,
+        "motif": "",
+        "nonLimite": false,
+        "sansSurveillance": false
+      },
+      "sortie": {
+        "zone": 3,
+        "duree": "formulaire",
+        "motif": "",
+        "exoneration": false
+      },
+      "requisition": {
+        "mode": "objet",
+        "detail": ""
+      },
+      "mandat": {
+        "sujet": "",
+        "secteur": "",
+        "bonusAutorite": 0,
+        "bonusCitoyens": 0
+      },
+      "signalement": {
+        "cible": "",
+        "bonusStatut": false,
+        "priseRapide": false
+      }
     }
   }
 }
