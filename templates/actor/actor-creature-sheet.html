@@ -1,4 +1,53 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+		{{#*inline "listeObjets"}}
+			<ul class="item-list">
+				<h3 class="flexrow">
+					<span>{{titre}}</span>
+					<a
+						class="fas fa-add item-create" data-action="itemCreate"
+						data-tooltip="créer : {{titre}}"
+						data-item-type="{{type}}"
+					></a>
+				</h3>
+				{{#each objets as |item index|}}
+					<li
+						class="flexrow item flexcol ability
+							{{#if item.system.needQuantar}}
+							{{#unless item.system.quantar}}
+							unavalaible
+							{{/unless}}
+							{{/if}}"
+						data-item-id="{{item.id}}"
+					>
+						<div class="item-summary flexrow">
+							<div class="img">
+								<img src="{{item.img}}" alt="image de {{item.name}}">
+							</div>
+							<h4 class="item-name">
+								<span>
+									<a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a>
+								</span>
+								{{#if item.system.needQuantar}}
+									<img
+										src="systems/noc/asset/default_icons/quantar.webp"
+										alt
+										class="needQuantar {{#if item.system.quantar}} quantarUsed{{/if}}"
+									>
+								{{/if}}
+							</h4>
+							<div class="item-control">
+								<a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{item.id}}"></a>
+								<a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{item.id}}"></a>
+							</div>
+						</div>
+						<div class="item-details">
+							<p>{{{item.system.description}}}</p>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		{{/inline}}
+
   <section class="sheet-body">
     <header>
       <h1 class="form-group">
@@ -52,7 +101,11 @@
         {{/with}}
       </div>
 
-      <!-- colonne 2 : Espoir, Vécu, Blessures -->
+      <!-- colonne 2 : armes (attaques naturelles), puis Espoir, Vécu, Blessures -->
+      <div class="creature-colonne2">
+      <div class="creature-armes">
+        {{> listeObjets titre="Armes" type="arme" objets=actor.itemTypes.arme}}
+      </div>
       <div class="rouage-reserves creature-jauges">
         {{#each actor.system.reserves as |reserve reserveId|}}
         {{#if (or (equals reserveId "espoir") (equals reserveId "vecu"))}}
@@ -82,6 +135,7 @@
           {{/repeat}}
         </div>
         {{/with}}
+      </div>
       </div>
     </div>
   </section>

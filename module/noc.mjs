@@ -30,6 +30,7 @@ import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
 import { migrerArchetypes } from "./archetypes.mjs";
 import { migrerQualites } from "./qualites.mjs";
+import { migrerCreatures } from "./creatures.mjs";
 
 
 
@@ -199,6 +200,7 @@ Hooks.once("ready", async function () {
   // conversion unique des archétypes/thèmes à l'ancien format (MJ uniquement)
   await migrerArchetypes();
   await migrerQualites();
+  await migrerCreatures();
 
   objetDieu.init();
 

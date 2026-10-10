@@ -1777,4 +1777,29 @@ div.noc.sheet.actor.creature .creature-corps {
             margin: 2px 0;
         }
     }
+}
+
+div.noc.sheet.actor.creature .creature-corps .creature-colonne2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+
+    .creature-armes ul.item-list {
+        margin: 0;
+        padding: 6px;
+
+        > h3 {
+            align-items: center;
+            text-transform: uppercase;
+
+            span {
+                flex: 1 1 auto;
+            }
+
+            a.item-create {
+                flex: 0 0 auto;
+            }
+        }
+    }
 }

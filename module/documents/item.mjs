@@ -51,6 +51,11 @@ export class nocItem extends Item {
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
+    // Arme d'une créature : attaque naturelle, maîtrisée d'office
+    if (this.type === "arme" && this.parent?.type === "creature"
+      && foundry.utils.getProperty(data, "system.maitrise") === undefined) {
+      this.updateSource({ "system.maitrise": true });
+    }
     if (this.type === "archetype") {
       const conv = conversionArchetype(this.toObject()) ?? {};
       this.updateSource({ ...conv, effects: [] });

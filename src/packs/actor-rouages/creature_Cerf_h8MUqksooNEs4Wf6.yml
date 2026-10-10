@@ -270,7 +270,30 @@ prototypeToken:
     subject:
       scale: 1
       texture: null
-items: []
+items:
+- _id: ZI9jJGWJWtblNT61
+  name: Bois
+  type: arme
+  img: systems/noc/asset/default_icons/arme.webp
+  system:
+    description: ''
+    needQuantar: false
+    quantar: false
+    adistance: false
+    valeur: 0
+    limite: 0
+    degats: '3'
+    maitrise: true
+    traits: ''
+    munitions:
+      type: ''
+      quantite: 0
+  effects: []
+  flags: {}
+  sort: 0
+  ownership:
+    default: 0
+  _key: '!actors.items!h8MUqksooNEs4Wf6.ZI9jJGWJWtblNT61'
 effects: []
 flags:
   core:
@@ -293,4 +316,3 @@ folder: null
 sort: 0
 _id: h8MUqksooNEs4Wf6
 _key: '!actors!h8MUqksooNEs4Wf6'
-
