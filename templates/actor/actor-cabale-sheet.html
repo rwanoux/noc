@@ -63,71 +63,78 @@
 
 
 			</div>
-			<div class="stats">
-				<div class="fond"></div>
+			<div class="cabale-stats flexcol">
 				<!-- DOMAINES ET TALENTS -->
-				{{#each actor.system.domaines as |domaine domaineId|}}
-					<div class="domaine {{domaineId}}">
-						<h3 class="flexrow">
-							<input type="number" name="system.domaines.{{domaineId}}.value" value="{{domaine.value}}"/>
-							<span>{{domaine.label}}</span>
-						</h3>
-						{{#each ../actor.system.talents as |groupTalent
-          talentGroupName|}}
-							{{#ifequal talentGroupName domaineId}}
-								{{#each groupTalent as |talent talentId|}}
-									<div class="flexrow">
-										<input name="system.talents.{{talentGroupName}}.{{talentId}}.niveau" value="{{talent.niveau}}" type="number">
-										<a class="rollable roll-talent" data-action="rollTalent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
-											<label for="{{talent.label}}">{{talent.label}}</label>
-										</a>
-									</div>
-								{{/each}}
-							{{/ifequal}}
-						{{/each}}
-					</div>
-				{{/each}}
-				<!-- RESERVES-->
-				{{#each actor.system.reserves as |reserve reserveId|}}
-					<div class="reserve {{reserveId}}">
-						<h4>{{reserve.label}}
-							<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
-								<i class="fas fa-cog"></i>
-							</a>
-						</h4>
+				<div class="stats rouage">
+					{{#each actor.system.domaines as |domaine domaineId|}}
+						<div class="domaine {{domaineId}}">
+							<h3 class="flexrow">
+								<span class="domaine-niveau" data-key="system.domaines.{{domaineId}}.value">{{domaine.value}}
+									<span class="domaine-control">
+										<a class="fas fa-add"></a>
+										<a class="fas fa-minus"></a>
+									</span>
+								</span>
+								<span>{{domaine.label}}</span>
+							</h3>
+							{{#each ../actor.system.talents as |groupTalent talentGroupName|}}
+								{{#ifequal talentGroupName domaineId}}
+									{{#each groupTalent as |talent talentId|}}
+										<div class="flexrow">
+											<span class="talent-niveau" data-key="system.talents.{{talentGroupName}}.{{talentId}}.niveau">{{talent.niveau}}
+												<span class="talent-control">
+													<a class="fas fa-add"></a>
+													<a class="fas fa-minus"></a>
+												</span>
+											</span>
+											<a class="rollable roll-talent" data-action="rollTalent" data-talent-id="{{talentId}}" data-domaine-id="{{domaineId}}">
+												<label for="{{talent.label}}">{{talent.label}}</label>
+											</a>
+										</div>
+									{{/each}}
+								{{/ifequal}}
+							{{/each}}
+						</div>
+					{{/each}}
+				</div>
 
-						{{#repeat 10}}
-							<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value" class="
-								            {{#ifequal @index 4}}step{{/ifequal}}
-								            {{#ifequal @index 7}}step{{/ifequal}}
-								            {{#ifequal @index 9}}step{{/ifequal}}
-								            {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
-								            " {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
-						{{/repeat}}
-
-					</div>
-				{{/each}}
-				<!-- PERDITIONS-->
-				{{#each actor.system.perditions as |perdition perditionId|}}
-					<div class="reserve perdition {{perditionId}}">
-						<h4>{{perdition.label}}
-							<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{perdition.label}}" data-reserve-property="system.perditions.{{perditionId}}.max">
-								<i class="fas fa-cog"></i>
-							</a>
-						</h4>
-
-						{{#repeat 10}}
-							<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.{{perditionId}}.value" class="
-								            {{#ifequal @index 4}}step{{/ifequal}}
-								            {{#ifequal @index 7}}step{{/ifequal}}
-								            {{#ifequal @index 9}}step{{/ifequal}}
-								            {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
-								            " {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
-						{{/repeat}}
-
-					</div>
-				{{/each}}
-
+				<!-- RESERVES ET PERDITIONS -->
+				<div class="stats cabale-jauges">
+					{{#each actor.system.reserves as |reserve reserveId|}}
+						<div class="reserve {{reserveId}}">
+							<h4>{{reserve.label}}
+								<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
+									<i class="fas fa-cog"></i>
+								</a>
+							</h4>
+							{{#repeat 10}}
+								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value" class="
+									{{#ifequal @index 4}}step{{/ifequal}}
+									{{#ifequal @index 7}}step{{/ifequal}}
+									{{#ifequal @index 9}}step{{/ifequal}}
+									{{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
+									" {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
+							{{/repeat}}
+						</div>
+					{{/each}}
+					{{#each actor.system.perditions as |perdition perditionId|}}
+						<div class="reserve perdition {{perditionId}}">
+							<h4>{{perdition.label}}
+								<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{perdition.label}}" data-reserve-property="system.perditions.{{perditionId}}.max">
+									<i class="fas fa-cog"></i>
+								</a>
+							</h4>
+							{{#repeat 10}}
+								<input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.{{perditionId}}.value" class="
+									{{#ifequal @index 4}}step{{/ifequal}}
+									{{#ifequal @index 7}}step{{/ifequal}}
+									{{#ifequal @index 9}}step{{/ifequal}}
+									{{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
+									" {{#ifgt perdition.value @index}} checked {{/ifgt}}/>
+							{{/repeat}}
+						</div>
+					{{/each}}
+				</div>
 			</div>
 		</div>
 		<div class="tab members flexrow" data-group="primary" data-tab="members">

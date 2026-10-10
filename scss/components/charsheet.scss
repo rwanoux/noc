@@ -1071,6 +1071,67 @@ div.noc.sheet.actor {
     }
 
     &.cabale {
+        .cabale-stats {
+            flex: 1;
+            padding: 1%;
+            gap: 8px;
+
+            // domaines : grille de 4 colonnes, sans la roue de la fiche personnage
+            .stats.rouage {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: auto;
+                gap: 8px;
+                padding: 0;
+                line-height: 1em;
+
+                .domaine {
+                    grid-row: auto;
+                    grid-column: auto;
+                    position: relative;
+                    left: unset;
+                    top: unset;
+                    padding-top: 6px;
+
+                    h3 span.domaine-niveau {
+                        top: 0;
+                    }
+                }
+            }
+
+            // ronds des talents et domaines : toujours parfaitement ronds
+            span.talent-niveau,
+            span.domaine-niveau {
+                flex: 0 0 20px;
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                line-height: 20px;
+                padding: 0 !important;
+                top: 0 !important;
+                box-sizing: border-box;
+            }
+
+            // jauges : grille régulière, plus de positionnement en roue
+            .stats.cabale-jauges {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                grid-template-rows: auto !important;
+                gap: 6px;
+                padding: 0 !important;
+                line-height: 1em;
+
+                .reserve {
+                    grid-row: auto !important;
+                    grid-column: auto !important;
+                    left: 0 !important;
+                    top: 0 !important;
+                    max-width: none !important;
+                    margin: 0 !important;
+                }
+            }
+        }
+
         .members {
             ul.item-list {
                 display: grid;
