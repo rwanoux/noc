@@ -93,26 +93,13 @@
         <span class>{{talent.label}} ({{talent.niveau}})</span>
       </h2>
 
-      <div class="fexrow form-group">
-        <span class>Bonus collaboratif : </span>
-        <span data-display-range="nbBonusCollaboratif">0</span>
-        <input
-          class="noc-slider"
-          id="nbBonusCollaboratif"
-          value="{{nbBonusCollaboratif}}"
-          type="range"
-          step="1"
-          min="0"
-          max="10"
-          list="nbBonusCollaboratifList"
-        >
-        <datalist id="nbBonusCollaboratifList">
-          <option value="0">0</option>
-          {{#repeat 10}}
-            <option value="{{add @index 1}}">{{add @index 1}}</option>
-          {{/repeat}}
-        </datalist>
+      <div class="fexrow form-group bonus-collaboratif">
+        <span class="libelle-curseur">Bonus collaboratif : </span>
+        <span class="valeur-collaboratif" id="nbBonusCollaboratif">{{#if nbBonusCollaboratif}}+{{nbBonusCollaboratif}}{{else}}0{{/if}}</span>
+        <a class="bouton-collaboratif" data-ecart="-1" title="Retirer 1"><i class="fas fa-minus"></i></a>
+        <a class="bouton-collaboratif" data-ecart="1" title="Ajouter 1"><i class="fas fa-plus"></i></a>
       </div>
+      <p class="regle-collaboration">Collaboration : quand c'est matériellement possible, un personnage mène l'action et les autres l'assistent, avec les talents que la Loi juge utiles. Le meneur gagne +1 niveau par tranche de 2 niveaux obtenus par ses assistants. Meneur et assistants peuvent provoquer le destin et puiser dans leurs réserves.</p>
     {{/if}}
 
     <div class="fexrow form-group">

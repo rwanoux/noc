@@ -2519,3 +2519,45 @@ div.noc.item.sheet.document-administratif {
         align-items: flex-start;
     }
 }
+
+// Fenêtre de jet de talent : bonus collaboratif avec +/- et rappel de la règle
+.nocDialog .skill-roll-dialog {
+    .bonus-collaboratif {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .valeur-collaboratif {
+            flex: 0 0 auto;
+            min-width: 26px;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 50%;
+            border: 1px solid black;
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        a.bouton-collaboratif {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 10px;
+            border-radius: 50%;
+            color: white;
+            background-color: #5c5c5c;
+            cursor: pointer;
+        }
+    }
+
+    p.regle-collaboration {
+        font-size: 11px;
+        font-style: italic;
+        opacity: 0.8;
+        margin: 2px 0 8px;
+    }
+}

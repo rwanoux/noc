@@ -113,8 +113,12 @@ export class nocRollDialog extends Dialog {
       html.find('[data-display-range="nbDesCabale"]').html("0");
       html.find('.cabale-domaine-texte').html(`${domaine.label} (${domaine.value})`);
     })
-    html.find('#nbBonusCollaboratif').change((event) => {
-      this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
+    // bonus collaboratif : boutons +/- (minimum 0)
+    html.find('a.bouton-collaboratif').click((event) => {
+      const ecart = Number(event.currentTarget.dataset.ecart) || 0;
+      const valeur = Math.max(0, (Number(this.rollData.nbBonusCollaboratif) || 0) + ecart);
+      this.rollData.nbBonusCollaboratif = valeur;
+      html.find('#nbBonusCollaboratif').html(valeur > 0 ? `+${valeur}` : "0");
     })
     html.find('#modDistance, #modVisibilite').change(() => this.updateNiveauFinal())
     html.find('#modCouvert').change((event) => {
