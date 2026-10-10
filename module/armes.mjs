@@ -56,6 +56,22 @@ export const TRAITS_ARMES = {
   }
 };
 
+/** Traits rappelés dans le chat après une attaque réussie (résumés courts) */
+const TRAITS_EN_COMBAT = {
+  multiple: x => ({ nom: `Multiple (${x})`, texte: `l'arme touche ${x} fois : la 1re touche inflige les dégâts, chaque touche suivante 1 point de moins (les touches sous 1 sont ignorées). Arme à feu : les touches suivantes peuvent viser des cibles à moins de ${x} m de la première (dégâts réduits par leur couvert) ; le bonus de Précision ne s'applique qu'à la 1re touche.` }),
+  perforant: () => ({ nom: "Perforant", texte: "au moins 2 points de Blessures à une cible sans armure, même si sa Constitution ramène les dégâts à 1 ou moins." }),
+  tranchant: () => ({ nom: "Tranchant", texte: "au moins 1 point de Blessures à une cible sans armure, même si sa Constitution ramène les dégâts à 0 ou moins." }),
+  recurrent: () => ({ nom: "Récurrent", texte: "si la cible subit au moins 1 point de Blessures, elle doit consacrer son Action principale à s'en débarrasser (eau, couverture…), sinon elle subit à nouveau les Blessures du tour précédent, plus 1." })
+};
+
+export function traitsEnCombat(traitsArme) {
+  const liste = [];
+  const m = traitsArme?.multiple;
+  if (m?.actif) liste.push(TRAITS_EN_COMBAT.multiple(Number(m.valeur) || 0));
+  for (const cle of ["perforant", "tranchant", "recurrent"]) if (traitsArme?.[cle]) liste.push(TRAITS_EN_COMBAT[cle]());
+  return liste;
+}
+
 const CONSTITUTION = "@talents.action.constitution.niveau";
 
 export function traitsArmeVides() {
