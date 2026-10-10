@@ -1286,26 +1286,56 @@ div.noc.sheet.actor .form-group.bloc-cabales {
 
 div.noc.sheet.actor h3.progression {
     align-items: center;
-    gap: 6px;
 
     span:first-child {
         flex: 1;
     }
 
-    input[type="number"] {
-        flex: 0 0 3em;
-        max-width: 3em !important;
+    // rond de valeur, comme les talents et domaines
+    span.progression-niveau {
+        position: relative;
+        flex: 0 0 22px;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        margin-right: 18px;
+        border-radius: 50%;
+        border: 1px solid black;
+        background-color: white;
+        color: black;
+        text-shadow: none;
         text-align: center;
-    }
+        font-size: 12px;
+        cursor: pointer;
 
-    .progression-controls {
-        flex: 0 0 auto;
-        display: flex;
-        gap: 4px;
+        // boutons +/- empilés à droite, visibles au survol
+        .progression-controls {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            height: 100%;
+            margin-left: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1px;
+            opacity: 0;
+            transition: opacity 0.2s;
 
-        a {
-            font-size: 0.8em;
-            cursor: pointer;
+            a {
+                display: block;
+                font-size: 8px;
+                line-height: 8px;
+                padding: 2px;
+                color: white;
+                background-color: #5c5c5c;
+                border-radius: 50%;
+                box-shadow: 2px 3px 5px black inset, -1px -3px 3px black inset;
+            }
+        }
+
+        &:hover .progression-controls {
+            opacity: 1;
         }
     }
 }

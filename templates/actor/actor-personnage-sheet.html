@@ -294,14 +294,11 @@
 					<div class="form-group">
 						<h3 class="progression flexrow">
 							<span>progression</span>
-							<input
-								type="number"
-								value="{{actor.system.progression}}"
-								name="system.progression"
-							>
-							<span class="progression-controls">
-								<a class="fas fa-plus progression-plus" data-tooltip="+1 point de progression"></a>
-								<a class="fas fa-minus progression-moins" data-tooltip="-1 point de progression"></a>
+							<span class="progression-niveau">{{actor.system.progression}}
+								<span class="progression-controls">
+									<a class="fas fa-add progression-plus"></a>
+									<a class="fas fa-minus progression-moins"></a>
+								</span>
 							</span>
 						</h3>
 
