@@ -1681,4 +1681,44 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
             }
         }
     }
+}
+
+// Fiche Rouage : inventaire en trois colonnes
+div.noc.sheet.actor.rouage .inventaire-rouage {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    .inventaire-colonnes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        align-items: start;
+
+        .inventaire-colonne {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        ul.item-list {
+            margin: 0;
+            padding: 6px;
+
+            > h3 {
+                align-items: center;
+                text-transform: uppercase;
+                font-size: 100%;
+
+                span {
+                    flex: 1 1 auto;
+                }
+
+                a.item-create {
+                    flex: 0 0 auto;
+                    margin-left: 4px;
+                }
+            }
+        }
+    }
 }
