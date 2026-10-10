@@ -36,8 +36,8 @@ export class nocActor extends Actor {
 
     super(...args);
 
-    if (data.type == "cabale") { this.initCabale(data) }
-    if (data.type == "rouage") { this.initRouage(data) }
+    // Les valeurs initiales des rouages et cabales sont appliquées une seule fois,
+    // à la création (voir _preCreate), et non plus à chaque chargement.
 
   }
 
@@ -53,6 +53,30 @@ export class nocActor extends Actor {
       for (const domaine of Object.keys(this.system.domaines ?? {})) {
         if (foundry.utils.getProperty(data, `system.domaines.${domaine}.value`) === undefined) {
           updates[`system.domaines.${domaine}.value`] = 2;
+        }
+      }
+      // Réserves et perditions de départ d'un rouage
+      const defaut = (chemin, valeur) => {
+        if (foundry.utils.getProperty(data, chemin) === undefined) updates[chemin] = valeur;
+      };
+      for (const perd of Object.keys(this.system.perditions ?? {})) {
+        defaut(`system.perditions.${perd}.max`, 5);
+        defaut(`system.perditions.${perd}.value`, 0);
+      }
+      defaut("system.reserves.vecu.max", 5);
+      defaut("system.reserves.vecu.value", 1);
+      defaut("system.reserves.espoir.max", 5);
+      defaut("system.reserves.espoir.value", 1);
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
+
+    // Nouvelle cabale : noms propres de ses perditions
+    if (this.type === "cabale") {
+      const noms = { blessures: "dégradation", traque: "traque", noirceur: "noirceur", trauma: "division" };
+      const updates = {};
+      for (const [perd, label] of Object.entries(noms)) {
+        if (foundry.utils.getProperty(data, `system.perditions.${perd}.label`) === undefined) {
+          updates[`system.perditions.${perd}.label`] = label;
         }
       }
       if (Object.keys(updates).length) this.updateSource(updates);
