@@ -12,7 +12,14 @@ export function jetonParDefaut() {
   return Object.fromEntries(Object.entries(REGLAGES_JETON).map(([k, v]) => [`prototypeToken.${k}`, v]));
 }
 
-export const VERSION_MIGRATION_JETONS = 1;
+/** Tout jeton posé sur une scène est rond et ne tourne pas (modifiable ensuite jeton par jeton) */
+export function enregistrerJetons() {
+  Hooks.on("preCreateToken", (jeton) => {
+    jeton.updateSource(REGLAGES_JETON);
+  });
+}
+
+export const VERSION_MIGRATION_JETONS = 2;
 
 /** Conversion unique : acteurs du monde et jetons déjà posés (MJ uniquement) */
 export async function migrerJetons() {
