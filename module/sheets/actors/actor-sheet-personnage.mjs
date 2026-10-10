@@ -6,6 +6,7 @@
  */
 import NOCContact from "../../ContactClass.js";
 import { choisirTheme, libelleTalent } from "../../archetypes.mjs";
+import { choisirQualite, descriptionQualite, enregistrerQualite } from "../../qualites.mjs";
 import { nocPersonnalisation } from "../../dialogs/noc-personnalisation.js";
 import { Quality } from "../../qualite_default.mjs";
 
@@ -235,6 +236,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
   _preparePersonnageItems(context) {
     this.checkArchetype();
     this.prepareArchetype(context);
+    context.qualite = descriptionQualite(this.actor.system.qualites, "qualite");
+    context.defaut = descriptionQualite(this.actor.system.defauts, "defaut");
     this.prepareFavItems(context)
 
   }
@@ -308,7 +311,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     html.find(".contact i.createContact").click(this.createContact.bind(this))
 
 
-    html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
     html.find('.deletePersonnalisation').click(this.deletePersonnalisation.bind(this));
 
     html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this));
@@ -520,14 +522,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     })
   }
   async deleteQuality(ev) {
-    let type = ev.currentTarget.dataset.type;
-    let prop = this.actor.system.qualites
-    if (type === "defaut") {
-      prop = this.actor.system.defauts
-    }
-    let qual = await Quality.create(prop)
-    await qual.reset()
-
+    const type = ev.currentTarget.dataset.type === "defaut" ? "defaut" : "qualite";
+    await enregistrerQualite(this.actor, type, "");
   }
 
   checkArchetype() {
@@ -546,9 +542,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     } : null;
   }
   async addQuality(ev) {
-    let quality = new Quality(this.actor.id, ev.currentTarget.dataset.type);
-    await quality.creationDialog();
-
+    const type = ev.currentTarget.dataset.type === "defaut" ? "defaut" : "qualite";
+    await choisirQualite(this.actor, type);
   }
   async onClickMaxReserve(ev) {
     let reserveName = ev.currentTarget.dataset.reserveName;

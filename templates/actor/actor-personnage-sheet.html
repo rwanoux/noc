@@ -236,66 +236,44 @@
 					</div>
 
 					<div class="form-group">
-						<div>qualité :
-							<a
-								class="fas fa-add addQuality" data-action="addQuality"
-								data-type="qualite"
-							></a>
-						</div>
-						{{#if actor.system.qualites.label}}
-							<div>{{actor.system.qualites.label}}
-								/{{actor.system.qualites.targetTalent}}
-								+1
+						<div>Qualité :</div>
+						<div class="qualite-resume flexrow">
+							{{#if qualite}}
+								<span class="item-name">{{qualite}}</span>
 								<a
 									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer la qualité"
 									data-type="qualite"
 								></a>
-							</div>
-						{{/if}}
+							{{else}}
+								<a
+									class="fas fa-add addQuality" data-action="addQuality"
+									data-tooltip="choisir le talent augmenté de 1"
+									data-type="qualite"
+								></a>
+							{{/if}}
+						</div>
 					</div>
 
 					<div class="form-group">
-						<div>défaut :
-							<a
-								class="fas fa-add addQuality" data-action="addQuality"
-								data-type="defaut"
-							></a>
-						</div>
-						{{#if actor.system.defauts.label}}
-							<div>{{actor.system.defauts.label}}
-								/{{actor.system.defauts.targetTalent}}
-								-1
+						<div>Défaut :</div>
+						<div class="qualite-resume flexrow">
+							{{#if defaut}}
+								<span class="item-name">{{defaut}}</span>
 								<a
 									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer le défaut"
 									data-type="defaut"
 								></a>
-							</div>
-						{{/if}}
-					</div>
-					<h3>personnalisation
-						<a
-							class="fas fa-add addPersonnalisation" data-action="addPersonnalisation"
-							data-tooltip="ajouter un bonus de pesonnalisation"
-						></a>
-					</h3>
-					{{#each personnalisations as |perso id|}}
-						<div class="perso flexrow">
-							<h4>{{perso.label}}
+							{{else}}
 								<a
-									data-effect-id="{{perso.id}}"
-									class="fas fa-trash deletePersonnalisation" data-action="deletePersonnalisation"
+									class="fas fa-add addQuality" data-action="addQuality"
+									data-tooltip="choisir le talent réduit de 1"
+									data-type="defaut"
 								></a>
-							</h4>
-							{{#each perso.flags.noc.personnalisation as |bonus
-                        label|}}
-								<div class="bonus">{{label}}:{{bonus}}
-									/</div>
-							{{/each}}
+							{{/if}}
 						</div>
-
-					{{/each}}
+					</div>
 
 					<div class="form-group">
 						<h3>cabale</h3>

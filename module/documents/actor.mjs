@@ -4,6 +4,7 @@ import { NOC } from "../helpers/config.mjs";
 import { Quality } from "../qualite_default.mjs";
 import { nocNoirceurTraits } from '../dialogs/noc-noirceurTrait.js';
 import { appliquerArchetype } from "../archetypes.mjs";
+import { appliquerQualites } from "../qualites.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -128,6 +129,7 @@ export class nocActor extends Actor {
 
     // Bonus de l'archétype et du thème choisi (avant les calculs qui en dépendent)
     appliquerArchetype(this);
+    appliquerQualites(this);
 
     this._preparePersonnageData();
     this._prepareRouageData();
