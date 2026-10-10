@@ -20,116 +20,69 @@
       </div>
 
     </header>
-    <div class="flexrow creature-specials">
-      <div class="attaque">
-        <h3>Attaque <a class="fa-light fa-dice-d10" id="roll-creature-attaque"></a>
-        </h3>
-        <h4>nom</h4>
-        <input type="text" name="system.attaque.label"
-          value="{{actor.system.attaque.label}}">
-        <h4>degats</h4>
-        <input type="text" name="system.attaque.degats"
-          value="{{actor.system.attaque.degats}}">
-      </div>
-      <div class="special">
-        <h3>spécial</h3>
-        {{editor actor.system.special
-        target="system.special"
-        button=true editable=editable
-        engine="prosemirror" collaborate=false}}
-
-      </div>
-    </div>
-    <div class="tab principal ">
-      <div class="stats rouage">
-
-        <!-- DOMAINES ET TALENTS -->
-        {{#each actor.system.domaines as |domaine domaineId|}}
-        <div class="domaine {{domaineId}}">
+    <div class="tab principal creature-corps">
+      <!-- colonne 1 : domaine Action et ses talents -->
+      <div class="stats rouage creature-action">
+        {{#with actor.system.domaines.action as |domaine|}}
+        <div class="domaine action">
           <h3 class="flexrow">
-            <input type="number"
-              name="system.domaines.{{domaineId}}.value"
-              value="{{domaine.value}}" />
-
+            <span class="domaine-niveau" data-key="system.domaines.action.value">{{domaine.value}}
+              <span class="domaine-control">
+                <a class="fas fa-add"></a>
+                <a class="fas fa-minus"></a>
+              </span>
+            </span>
             <span>{{domaine.label}}</span>
           </h3>
-          {{#each ../actor.system.talents as |groupTalent
-          talentGroupName|}}
-          {{#ifequal talentGroupName domaineId}}
-          {{#each groupTalent as |talent talentId|}}
+          {{#each @root.actor.system.talents.action as |talent talentId|}}
           <div class="flexrow">
-            <input
-              name="system.talents.{{talentGroupName}}.{{talentId}}.niveau"
-              value="{{talent.niveau}}" type="number">
-            <a class="rollable roll-talent" data-tooltip="{{niveauTalent talentGroupName talentId talent.niveau}}" data-tooltip-direction="UP" data-action="rollTalent"
-              data-talent-id="{{talentId}}"
-              data-domaine-id="{{domaineId}}">
+            <span class="talent-niveau" data-key="system.talents.action.{{talentId}}.niveau">{{talent.niveau}}
+              <span class="talent-control">
+                <a class="fas fa-add"></a>
+                <a class="fas fa-minus"></a>
+              </span>
+            </span>
+            <a class="rollable roll-talent" data-tooltip="{{niveauTalent "action" talentId talent.niveau}}" data-tooltip-direction="UP" data-action="rollTalent"
+              data-talent-id="{{talentId}}" data-domaine-id="action">
               <label for="{{talent.label}}">{{talent.label}}</label>
             </a>
           </div>
           {{/each}}
-          {{/ifequal}}
-          {{/each}}
         </div>
-        {{/each}}
+        {{/with}}
       </div>
 
-      <div class="rouage-reserves">
+      <!-- colonne 2 : Espoir, Vécu, Blessures -->
+      <div class="rouage-reserves creature-jauges">
         {{#each actor.system.reserves as |reserve reserveId|}}
-        {{#ifnotequal reserveId "singularite"}}
-        {{#ifnotequal reserveId "faveurs"}}
+        {{#if (or (equals reserveId "espoir") (equals reserveId "vecu"))}}
         <div class="reserve {{reserveId}}">
           <h4>{{reserve.label}}
-
-            <a class="setMax"
-              data-tooltip="ajuster le max"
-              data-reserve-name="{{reserve.label}}"
-              data-reserve-property="system.reserves.{{reserveId}}.max">
+            <a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
               <i class="fas fa-cog"></i>
             </a>
           </h4>
-
           {{#repeat reserve.max}}
-          <input type="checkbox"
-            data-reserve-value="{{@index}}"
-            data-reserve-property="system.reserves.{{reserveId}}.value"
-            class="
-            {{#ifequal @index 4}}step{{/ifequal}}
-            {{#ifequal @index 7}}step{{/ifequal}}
-            {{#ifequal @index 9}}step{{/ifequal}}
-            {{#ifgteq @index reserve.max }}unavailable{{/ifgteq}}
-            "
-            {{#ifgt reserve.value @index}}checked{{/ifgt}} />
+          <input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.reserves.{{reserveId}}.value"
+            class="{{#ifequal @index 4}}step{{/ifequal}}" {{#ifgt reserve.value @index}}checked{{/ifgt}} />
           {{/repeat}}
-
         </div>
-        {{/ifnotequal}}
-        {{/ifnotequal}}
+        {{/if}}
         {{/each}}
-        <!-- PERDITIONS-->
-        {{#each actor.system.perditions as |perdition perditionId|}}
-        <div class="reserve perdition {{perditionId}}">
+        {{#with actor.system.perditions.blessures as |perdition|}}
+        <div class="reserve perdition blessures">
           <h4>{{perdition.label}}
-
+            <a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{perdition.label}}" data-reserve-property="system.perditions.blessures.max">
+              <i class="fas fa-cog"></i>
+            </a>
           </h4>
-
-          {{#repeat 5}}
-          <input type="checkbox"
-            data-reserve-value="{{@index}}"
-            data-reserve-property="system.perditions.{{perditionId}}.value"
-            class="
-            {{#ifequal @index 4}}step{{/ifequal}}
-            {{#ifequal @index 7}}step{{/ifequal}}
-            {{#ifequal @index 9}}step{{/ifequal}}
-            {{#ifgteq @index perdition.max }}unavailable{{/ifgteq}}
-            "
-            {{#ifgt perdition.value @index}}checked{{/ifgt}} />
+          {{#repeat perdition.max}}
+          <input type="checkbox" data-reserve-value="{{@index}}" data-reserve-property="system.perditions.blessures.value"
+            class="{{#ifequal @index 4}}step{{/ifequal}}" {{#ifgt perdition.value @index}}checked{{/ifgt}} />
           {{/repeat}}
-
         </div>
-        {{/each}}
+        {{/with}}
       </div>
-
     </div>
   </section>
 

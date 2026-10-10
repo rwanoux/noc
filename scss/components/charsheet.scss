@@ -1747,4 +1747,34 @@ div.noc.sheet.actor.rouage .rouage-bas {
     .inventaire-rouage {
         width: 100%;
     }
+}
+
+// Fiche Créature : Action en colonne 1, jauges en colonne 2
+div.noc.sheet.actor.creature .creature-corps {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 8px;
+
+    .creature-action {
+        display: block !important;
+        padding: 0 !important;
+
+        .domaine {
+            width: 100%;
+        }
+    }
+
+    .creature-jauges {
+        flex: none !important;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+
+        .reserve h4 {
+            margin: 2px 0;
+        }
+    }
 }
