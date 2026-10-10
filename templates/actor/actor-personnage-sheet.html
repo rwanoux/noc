@@ -430,24 +430,75 @@
 		</div>
 
 		{{!-- Owned Items Tab --}}
+
+		{{!-- liste d'objets d'un type, réutilisée pour chaque catégorie --}}
+		{{#*inline "listeObjets"}}
+			<ul class="item-list">
+				<h3 class="flexrow">
+					<span>{{titre}}</span>
+					<a
+						class="fas fa-add item-create" data-action="itemCreate"
+						data-tooltip="créer : {{titre}}"
+						data-item-type="{{type}}"
+					></a>
+				</h3>
+				{{#each objets as |item index|}}
+					<li
+						class="flexrow item flexcol ability
+							{{#if item.system.needQuantar}}
+							{{#unless item.system.quantar}}
+							unavalaible
+							{{/unless}}
+							{{/if}}"
+						data-item-id="{{item.id}}"
+					>
+						<div class="item-summary flexrow">
+							<div class="img">
+								<img src="{{item.img}}" alt="image de {{item.name}}">
+							</div>
+							<h4 class="item-name">
+								<span>
+									<a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a>
+								</span>
+								{{#if item.system.needQuantar}}
+									<img
+										src="systems/noc/asset/default_icons/quantar.webp"
+										alt
+										class="needQuantar {{#if item.system.quantar}} quantarUsed{{/if}}"
+									>
+								{{/if}}
+							</h4>
+							<div class="item-control">
+								<a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{item.id}}"></a>
+								<a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{item.id}}"></a>
+							</div>
+						</div>
+						<div class="item-details">
+							<p>{{{item.system.description}}}</p>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		{{/inline}}
+
 		<div
 			class="tab items flexcol"
 			data-group="primary"
 			data-tab="items"
 		>
-			<!--inventaire-->
-			<h3 class="flexrow quantarQty">
-				Quantars possédés :
-				<input
-					type="number"
-					name="system.quantars"
-					value="{{actor.system.quantars}}"
-				/>
+			<!-- quantars possédés, tout en haut -->
+			<h3 class="flexrow quantarQty quantars-ligne">
+				<span class="quantars-libelle">Quantars possédés :</span>
+				<span class="compteur-niveau">{{actor.system.quantars}}
+					<span class="compteur-controls">
+						<a class="fas fa-add quantars-plus"></a>
+						<a class="fas fa-minus quantars-moins"></a>
+					</span>
+				</span>
 				<div
-					class="flexrow "
+					class="flexrow quantars-images"
 					data-tooltip="faites glisser les quantars sur les objets qui en ont besoin"
 				>
-
 					{{#each quantarUsage as |item index| }}
 						<img
 							src="systems/noc/asset/default_icons/quantar.webp"
@@ -460,83 +511,20 @@
 				</div>
 			</h3>
 
-			<ul class="item-types flexrow">
-
-				{{#each actor.itemTypes as |group groupIndex|}}
-					{{#ifnotequal groupIndex "archetype"}}
-						{{#ifnotequal groupIndex "thème"}}
-							{{#ifnotequal groupIndex "base"}}
-
-								<ul class="item-list">
-									<h3>{{localize (concat "ITEM.Type" (upperFirst groupIndex))}}
-										<a
-											class="fas fa-add item-create" data-action="itemCreate"
-											data-tooltip="créer un item :{{groupIndex}}"
-											data-item-type="{{groupIndex}}"
-										></a>
-									</h3>
-									{{#each group as |item index|}}
-										<li
-											class="flexrow item flexcol ability
-												{{#if item.system.needQuantar}}
-												{{#unless item.system.quantar}}
-												unavalaible
-												{{/unless}}
-												{{/if}}"
-											data-item-id="{{item.id}}"
-										>
-											<div class="item-summary flexrow">
-												<div class="img">
-													<img
-														src="{{item.img}}"
-														alt="image de {{item.name}}"
-													>
-												</div>
-												<h4 class="item-name">
-													<span>
-														<a
-															class="roll-item" data-action="rollItem"
-															data-item-id="{{item._id}}"
-														>{{item.name}}</a>
-													</span>
-													{{#if item.system.needQuantar}}
-														<img
-															src="systems/noc/asset/default_icons/quantar.webp"
-															alt
-															class="needQuantar 
-															{{#if item.system.quantar}} quantarUsed{{/if}}"
-														>
-													{{/if}}
-												</h4>
-												<div class="item-control">
-
-													<a
-														class="fas fa-edit item-open" data-action="itemOpen"
-														data-item-id="{{item.id}}"
-													></a>
-													<a
-														class="fas fa-trash item-delete" data-action="itemDelete"
-														data-item-id="{{item.id}}"
-													></a>
-												</div>
-
-											</div>
-											<div class="item-details">
-												<p>{{{item.system.description}}}</p>
-												{{#ifequal item.type "outil"}}{{/ifequal}}
-
-											</div>
-
-										</li>
-									{{/each}}
-								</ul>
-
-							{{/ifnotequal}}
-						{{/ifnotequal}}
-					{{/ifnotequal}}
-				{{/each}}
-			</ul>
-
+			<!-- trois colonnes d'objets -->
+			<div class="inventaire-colonnes">
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Outils" type="outil" objets=actor.itemTypes.outil}}
+					{{> listeObjets titre="Objets usuels" type="objetusuel" objets=actor.itemTypes.objetusuel}}
+				</div>
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Armes" type="arme" objets=actor.itemTypes.arme}}
+					{{> listeObjets titre="Armure" type="armure" objets=actor.itemTypes.armure}}
+				</div>
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Documents administratifs" type="document administratif" objets=(lookup actor.itemTypes "document administratif")}}
+				</div>
+			</div>
 		</div>
 	</section>
 </form>
