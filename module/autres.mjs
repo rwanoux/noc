@@ -66,12 +66,34 @@ export function appliquerAutre(actor) {
 /*  Conversion des Autres existants              */
 /* -------------------------------------------- */
 
-export const VERSION_MIGRATION_AUTRES = 1;
+export const VERSION_MIGRATION_AUTRES = 2;
+
+/** Valeurs de base « neutres » d'un Autre : Classe Exo 7, aucune individualisation */
+function majAutreNeuf(src) {
+  const maj = { "system.classeExo.value": CLASSE_EXO_MAX, "system.energieNoire.forcee": null };
+  for (const dom of Object.keys(src.domaines ?? {})) maj[`system.domaines.${dom}.value`] = 0;
+  for (const [dom, liste] of Object.entries(src.talents ?? {})) {
+    for (const tal of Object.keys(liste ?? {})) maj[`system.talents.${dom}.${tal}.niveau`] = 0;
+  }
+  return maj;
+}
+
+/** Toutes les valeurs (domaines, talents) d'un Autre sont-elles égales à celles indiquées ? */
+function toutesValeurs(src, domaine, talent) {
+  const doms = Object.values(src.domaines ?? {}).every(d => (Number(d.value) || 0) === domaine);
+  const tals = Object.values(src.talents ?? {}).every(l => Object.values(l ?? {}).every(t => (Number(t.niveau) || 0) === talent));
+  return doms && tals;
+}
 
 /** Valeurs absolues → individualisations, scores affichés conservés */
 async function migrerAutre(actor) {
   if (actor.type !== "autre") return false;
   const src = actor._source.system;
+  // Autre jamais renseigné (ancienne Classe Exo par défaut 1, tout à 0) : on repart de la Classe Exo 7
+  if ((Number(src.classeExo?.value) || 1) === 1 && toutesValeurs(src, 0, 0)) {
+    await actor.update(majAutreNeuf(src));
+    return true;
+  }
   const en = energieNoireDeduite(src.classeExo?.value);
   const maj = { "system.classeExo.value": classeExo(src.classeExo?.value), "system.energieNoire.forcee": null };
 
@@ -100,15 +122,31 @@ async function migrerAutre(actor) {
   return true;
 }
 
+/**
+ * Version 2 : un Autre jamais renseigné, déjà converti avec l'ancienne Classe Exo 1
+ * (individualisations -9 sur les domaines et -7 sur les talents), repart de la Classe Exo 7.
+ */
+async function corrigerAutreConverti(actor) {
+  if (actor.type !== "autre") return false;
+  const src = actor._source.system;
+  if ((Number(src.classeExo?.value) || 1) !== 1 || !toutesValeurs(src, -9, -7)) return false;
+  await actor.update(majAutreNeuf(src));
+  return true;
+}
+
 /** Conversion unique des Autres du monde (MJ uniquement) */
 export async function migrerAutres() {
   if (!game.user.isGM) return;
   if ((game.settings.get("noc", "migrationAutres") ?? 0) >= VERSION_MIGRATION_AUTRES) return;
   const acteurs = [...game.actors];
   // les jetons non liés héritent de leur acteur, déjà converti ci-dessus
+  const version = game.settings.get("noc", "migrationAutres") ?? 0;
   const erreurs = [];
   for (const actor of acteurs) {
-    try { await migrerAutre(actor); }
+    try {
+      if (version < 1) await migrerAutre(actor);
+      else await corrigerAutreConverti(actor);
+    }
     catch (e) { erreurs.push(actor.name); console.error("NOC | conversion Autre", actor.name, e); }
   }
   if (erreurs.length) {
