@@ -91,6 +91,18 @@
       }
     },
     {
+      "name": "documents",
+      "label": "Documents administratifs",
+      "system": "noc",
+      "path": "packs/item-documents",
+      "type": "Item",
+      "ownership": {
+        "PLAYER": "NONE",
+        "TRUSTED": "OBSERVER",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
       "name": "rouages",
       "label": "Rouages",
       "system": "noc",

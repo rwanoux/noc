@@ -1,0 +1,50 @@
+name: 'Autorisation de détention d''arme P'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Le Diktat et la Sécurité encadrent strictement la détention et le port d''armes. Les citoyens de haut rang, les soldats, les milices et ceux dont l''activité l''exige peuvent en obtenir l''autorisation. La plus courante, l''autorisation P, couvre les armes de poing.</p>'
+  formulaire: 'port'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: 'Arme de poing (ex. P11 Mravenec, P23 Zmije)'
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: I3LsIvsvC9VjtQnj
+folder: null
+sort: 600000
+ownership:
+  default: 0
+_key: '!items!I3LsIvsvC9VjtQnj'

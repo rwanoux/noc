@@ -1,0 +1,50 @@
+name: 'Titre d''attribution'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Document officiel attestant le droit d''usage exclusif d''un lieu, d''un équipement ou d''une ressource. Il permet aux entreprises et aux citoyens de profiter de la redistribution des biens par l''Administration ; en pratique, il vaut titre de propriété.</p>'
+  formulaire: 'autre'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: E7tNL359ejhQ1gyx
+folder: null
+sort: 1500000
+ownership:
+  default: 0
+_key: '!items!E7tNL359ejhQ1gyx'

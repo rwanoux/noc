@@ -1,0 +1,50 @@
+name: 'Autorisation de mobilité MCP-300679'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Sésame rare, d''ordinaire réservé aux personnalités de haut rang : il lève toute restriction de déplacement dans le Bloc et donne libre accès au train interbloc. Vu les dangers de la route d''Ostrava par le Corridor de Hranice, il sert surtout à se rendre à Prague.</p>'
+  formulaire: 'acces'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 4
+    motif: 'Circulation totale dans le Bloc et accès au train interbloc'
+    nonLimite: true
+    sansSurveillance: true
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: yDogkFdK6FiguSI8
+folder: null
+sort: 800000
+ownership:
+  default: 0
+_key: '!items!yDogkFdK6FiguSI8'

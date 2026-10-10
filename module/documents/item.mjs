@@ -6,26 +6,17 @@ import { conversionArchetype } from "../archetypes.mjs";
  */
 export class nocItem extends Item {
   constructor(...args) {
-    let data = args[0];
-    switch (data.type) {
-      case "arme":
-        data.img = 'systems/noc/asset/default_icons/arme.webp';
-        break;
-      case "document administratif":
-        data.img = 'systems/noc/asset/default_icons/document_administratif.webp';
-        break;
-      case "outil":
-        data.img = 'systems/noc/asset/default_icons/outil.webp';
-        break;
-      case "armure":
-        data.img = 'systems/noc/asset/default_icons/armure.webp';
-        break;
-      default:
-        data.img = 'systems/noc/asset/default_icons/question_mark.webp';
-        break;
-
-
-
+    const data = args[0];
+    // Icône par défaut seulement pour un objet sans image (ou avec l'icône générique de Foundry) :
+    // une image choisie par l'utilisateur n'est plus jamais remplacée.
+    if (data && (!data.img || data.img === "icons/svg/item-bag.svg")) {
+      const icones = {
+        "arme": "arme.webp",
+        "document administratif": "document_administratif.webp",
+        "outil": "outil.webp",
+        "armure": "armure.webp"
+      };
+      data.img = `systems/noc/asset/default_icons/${icones[data.type] ?? "question_mark.webp"}`;
     }
     super(...args);
   }

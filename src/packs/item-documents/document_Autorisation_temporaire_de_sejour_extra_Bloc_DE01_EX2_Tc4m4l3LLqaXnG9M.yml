@@ -1,0 +1,50 @@
+name: 'Autorisation temporaire de séjour extra-Bloc DE01-EX2'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Autorisation de circulation permettant de séjourner un temps dans un autre Bloc. Elle n''est délivrée qu''avec un mandat de mobilité extra-Bloc DX21-A11 et un certificat de conformité sanitaire DI79-V8.</p>'
+  formulaire: 'sortie'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 4
+    duree: 'formulaire'
+    motif: 'Séjour temporaire dans un Bloc extérieur'
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: Tc4m4l3LLqaXnG9M
+folder: null
+sort: 900000
+ownership:
+  default: 0
+_key: '!items!Tc4m4l3LLqaXnG9M'
