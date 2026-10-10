@@ -241,7 +241,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     }));
     context.qualite = descriptionQualite(this.actor.system.qualites, "qualite");
     context.defaut = descriptionQualite(this.actor.system.defauts, "defaut");
-    this.prepareFavItems(context)
 
   }
 
@@ -269,13 +268,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       ev.preventDefault();
       item.sheet.render(true);
     });
-    html.find('.item-fav').click(async ev => {
-
-      let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
-      ev.preventDefault();
-      let isFav = await item.getFlag("noc", "favItem");
-      await item.setFlag("noc", "favItem", !isFav);
-    })
     html.find('li.item .img').click(ev => {
       ev.currentTarget.closest('li.item').classList.toggle('expanded');
       ev.stopPropagation()
@@ -705,11 +697,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       quantarUsage.splice(quantarUsage.length, 0, { unused: true });
     }
     context.quantarUsage = quantarUsage;
-  }
-
-  async prepareFavItems(context) {
-    let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
-    context.favItems = favItems;
   }
 
   async unassignContact(ev) {

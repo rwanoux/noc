@@ -307,70 +307,6 @@
 				</div>
 
 			</div>
-			{{!-- favItems --}}
-
-			<div class="favItems">
-				<h3>Objets Favoris</h3>
-				<ul class="item-list grid grid-6col">
-					{{#each favItems as |item index|}}
-						<li
-							class="item
-								{{#if item.system.needQuantar}}
-								{{#unless item.system.quantar}}
-								unavalaible
-								{{/unless}}
-								{{/if}}"
-							data-item-id="{{item._id}}"
-						>
-							<div class="item-summary flexrow">
-								<div class="img">
-									<img
-										src="{{item.img}}"
-										alt="image de {{item.name}}"
-									>
-								</div>
-								<h4 class="item-name">
-									<span>
-										<a
-											class="roll-item" data-action="rollItem"
-											data-item-id="{{item._id}}"
-										>{{item.name}}</a>
-									</span>
-								</h4>
-								<div class="item-control">
-
-									<a
-										class="fas fa-edit item-open" data-action="itemOpen"
-										data-item-id="{{item._id}}"
-									></a>
-									<a
-										class="fas fa-trash item-delete" data-action="itemDelete"
-										data-item-id="{{item._id}}"
-									></a>
-									<a
-										class="fas fa-star item-fav
-											{{#if item.flags.noc.favItem}}
-											itemIsFav
-											{{/if}}
-											"
-										data-item-id="{{item._id}}"
-									></a>
-								</div>
-
-							</div>
-							<div class="item-details">
-								<p>{{{item.system.description}}}</p>
-								{{#ifequal item.type "outil"}}{{/ifequal}}
-
-							</div>
-
-						</li>
-					{{else}}
-						<li class="fav-vide">Cliquez sur l'étoile d'un objet dans l'onglet Inventaire pour l'épingler ici et le lancer d'un clic.</li>
-					{{/each}}
-
-				</ul>
-			</div>
 		</div>
 
 		{{!-- signalement+cabale+contacts --}}
@@ -639,14 +575,6 @@
 													></a>
 													<a
 														class="fas fa-trash item-delete" data-action="itemDelete"
-														data-item-id="{{item.id}}"
-													></a>
-													<a
-														class="fas fa-star item-fav
-																{{#if item.flags.noc.favItem}}
-																itemIsFav
-																{{/if}}
-																"
 														data-item-id="{{item.id}}"
 													></a>
 												</div>

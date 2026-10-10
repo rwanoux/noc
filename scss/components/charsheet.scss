@@ -575,7 +575,8 @@ div.noc.sheet.actor {
                     padding: 6px;
                     box-shadow: -30px 0px 100px black;
                     max-height: 100vh;
-                    overflow: scroll;
+                    overflow-x: hidden;
+                    overflow-y: auto;
                     background: url(../asset/images/fondequipement.webp);
 
 
@@ -649,52 +650,6 @@ div.noc.sheet.actor {
                                 font-size: 14px;
                             }
                         }
-                    }
-                }
-
-                .favItems {
-
-
-                    h3 {
-
-                        background-size: 300%;
-                        background-position: center;
-                        padding: 0rem;
-                        width: 100%;
-                        transition: 0.3s;
-                        box-shadow: 0px 0px 30px 15px black;
-                        border-radius: 0 5rem 0.5rem 0;
-
-
-
-                        ul.item-list {
-                            position: relative;
-                            transition: 0.3s;
-                            padding: 0;
-                            top: 0;
-                            margin: 0;
-
-                            li {
-                                position: absolute;
-                                left: -100%
-                            }
-
-                            &:hover {
-                                max-height: 100%;
-                                overflow: hidden;
-                                top: 100%;
-
-
-                            }
-                        }
-
-
-
-
-                    }
-
-                    div.img img {
-                        min-width: 35%
                     }
                 }
             }
@@ -925,9 +880,6 @@ div.noc.sheet.actor {
                             right: 0;
                             ;
 
-                            .itemIsFav {
-                                color: rgb(0, 187, 0)
-                            }
                         }
 
                         img.needQuantar {
