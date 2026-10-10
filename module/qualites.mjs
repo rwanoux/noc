@@ -24,7 +24,8 @@ export function descriptionQualite(data, type) {
   const cle = cleTalent(data?.talentPath);
   if (!cle) return null;
   const v = TYPES[type].valeur;
-  return `${libelleTalent(cle)} (${v > 0 ? "+" : ""}${v})`;
+  const nom = libelleTalent(cle);
+  return `${nom.charAt(0).toUpperCase()}${nom.slice(1)} (${v > 0 ? "+" : ""}${v})`;
 }
 
 /** Applique qualité et défaut au personnage (appelé à la préparation) */
