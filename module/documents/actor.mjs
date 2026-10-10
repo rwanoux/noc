@@ -8,6 +8,7 @@ import { appliquerQualites } from "../qualites.mjs";
 import { appliquerAutre } from "../autres.mjs";
 import { appliquerArmures } from "../armures.mjs";
 import { appliquerEtats } from "../panneau-mj.mjs";
+import { jetonParDefaut } from "../jetons.mjs";
 import { appliquerEffetsFiel, aggravationsActives } from "../fiel/bibliotheque.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -49,6 +50,9 @@ export class nocActor extends Actor {
   async _preCreate(data, options, user) {
     const allowed = await super._preCreate(data, options, user);
     if (allowed === false) return false;
+
+    // Jeton rond, dessin qui ne tourne pas avec le déplacement
+    this.updateSource(jetonParDefaut());
 
     // Nouveau rouage : tous les domaines à 2 (sauf valeur déjà fournie,
     // par exemple lors d'une importation ou d'une copie)

@@ -2,6 +2,12 @@
 export function registerNocSettings() {
 
     // version de la conversion des archétypes et thèmes déjà appliquée au monde
+    game.settings.register("noc", "migrationJetons", {
+        scope: 'world',
+        config: false,
+        type: Number,
+        default: 0
+    })
     game.settings.register("noc", "migrationArmes", {
         scope: 'world',
         config: false,
