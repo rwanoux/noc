@@ -103,7 +103,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
           ui.notifications.warn("Vous n'avez pas de droits sur cette cabale ; demandez à la Loi de l'affecter.");
           return false;
         }
-        if (!ev.target.classList.contains("cabale")) { return }
+        if (!ev.target.closest(".cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
       case "personnage":
@@ -236,6 +236,9 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
   _preparePersonnageItems(context) {
     this.checkArchetype();
     this.prepareArchetype(context);
+    context.cabales = this.actor.cabalesActeurs.map(c => ({
+      id: c.id, nom: c.name, bloc: c.system.bloc, coordonnes: c.system.coordonnes, societe: c.system.societeEcran
+    }));
     context.qualite = descriptionQualite(this.actor.system.qualites, "qualite");
     context.defaut = descriptionQualite(this.actor.system.defauts, "defaut");
     this.prepareFavItems(context)
@@ -299,7 +302,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     for (let but of reserveSettingButtons) {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
-    html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this));
+    html.find('a.unassignCabale').click(this.leaveCabale.bind(this));
     html.find('a.openCabale')?.click(this.openCabale.bind(this));
 
     html.find(".addQuality").click(this.addQuality.bind(this))
@@ -653,33 +656,17 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
   }
 
   async openCabale(ev) {
-    let cabale = await Actor.get(ev.currentTarget.dataset.cabaleId)
-    return await cabale.sheet.render(true)
+    const cabale = game.actors.get(ev.currentTarget.dataset.cabaleId);
+    return cabale?.sheet.render(true);
   }
   async leaveCabale(ev) {
-    let cabaleId = ev.currentTarget.dataset.cabaleId;
-    let cabale = await game.actors.get(cabaleId);
-
-    let dial = new Dialog({
-      title: `Quitter la cabale : ${cabale.name}`,
-      content: 'Voulez-vous vraiment quitter la cabale ?',
-      buttons: {
-        ok: {
-          icon: '<i class="fas fa-check"></i>',
-          label: "quitter",
-          callback: async (html) => {
-            await this.actor.leaveCabale()
-          }
-        },
-        no: {
-          icon: '<i class="fas fa-times"></i>',
-          label: "Cancel"
-        }
-      },
-      default: "ok"
-    }, {
-
-    }).render(true);
+    const cabaleId = ev.currentTarget.dataset.cabaleId;
+    const cabale = game.actors.get(cabaleId);
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: `Quitter la cabale : ${cabale?.name ?? "?"}` },
+      content: "<p>Voulez-vous vraiment quitter cette cabale ?</p>"
+    });
+    if (ok) await this.actor.leaveCabale(cabaleId);
   };
   async setContact(actor) {
     if (!actor || !["personnage", "rouage"].includes(actor.type)) return;

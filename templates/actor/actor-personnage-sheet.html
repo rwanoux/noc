@@ -276,16 +276,17 @@
 					</div>
 
 					<div class="form-group">
-						<h3>cabale</h3>
-						<h4>{{actor.system.cabale.nom}}</h4>
-						{{#if actor.system.cabale.nom}}
-							<div>
+						<h3>cabale{{#ifgt cabales.length 1}}s{{/ifgt}}</h3>
+						{{#each cabales as |cabale|}}
+							<h4 class="flexrow">
+								<span>{{cabale.nom}}</span>
 								<a
 									class="fas fa-edit openCabale" data-action="openCabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
+									data-cabale-id="{{cabale.id}}"
+									data-tooltip="ouvrir la fiche de cabale"
 								></a>
-							</div>
-						{{/if}}
+							</h4>
+						{{/each}}
 
 					</div>
 					<div class="form-group">
@@ -498,31 +499,21 @@
 					</div>
 				</div>
 				<div class="cabale ">
-					<h2>Cabale</h2>
-					{{#unless actor.system.cabale.uuid}}
-						<h4>Aucune Cabale</h4>
-						<p>faites glisser un acteur de type "cabale" pour
-							affecter
-							ce
-							personnage à une cabale
-						</p>
-					{{/unless}}
-					{{#if actor.system.cabale.uuid}}
+					<h2>Cabales</h2>
+					{{#each cabales as |cabale|}}
 						<h3 class="flexrow">
-							<div>
-								{{actor.system.cabale.nom}}
-							</div>
+							<div>{{cabale.nom}}</div>
 							<div class="cabaleControls">
 								<a
 									class="openCabale" data-action="openCabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
+									data-cabale-id="{{cabale.id}}"
 									data-tooltip="ouvrir la fiche de cabale"
 								>
 									<i class="fa-solid fa-edit"></i>
 								</a>
 								<a
 									data-tooltip="quitter cette cabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
+									data-cabale-id="{{cabale.id}}"
 									class="unassignCabale" data-action="unassignCabale"
 								>
 									<i class="fa-solid fa-right-from-bracket"></i>
@@ -531,22 +522,22 @@
 						</h3>
 						<div class="flexcol">
 							<div class="flexrow">
-								<h4>bloc :
-								</h4>
-								<p>{{actor.system.cabale.bloc}}</p>
+								<h4>bloc :</h4>
+								<p>{{cabale.bloc}}</p>
 							</div>
 							<div class="flexrow">
 								<h4>coordonnées :</h4>
-								<p>{{actor.system.cabale.coordonnes}}</p>
+								<p>{{cabale.coordonnes}}</p>
 							</div>
 							<div class="flexrow">
-								<h4>société écran</h4>
-								<p>{{actor.system.cabale.societe}}</p>
+								<h4>société écran :</h4>
+								<p>{{cabale.societe}}</p>
 							</div>
 						</div>
-
-					{{/if}}
-
+					{{else}}
+						<h4>Aucune Cabale</h4>
+					{{/each}}
+					<p>Faites glisser un acteur de type « cabale » ici pour ajouter ce personnage à une cabale.</p>
 				</div>
 			</div>
 		</div>

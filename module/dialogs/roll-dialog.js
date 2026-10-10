@@ -103,6 +103,21 @@ export class nocRollDialog extends Dialog {
     html.find('#nbDesCabale').change((event) => {
       this.rollData.nbDesCabale = Number(event.currentTarget.value)
     })
+    // Choix de la cabale qui fournit les dés (personnage membre de plusieurs cabales)
+    html.find('#cabaleChoice').change((event) => {
+      const cabale = (this.rollData.cabales ?? []).find(c => c.id === event.currentTarget.value);
+      const domaine = cabale?.domaines?.[this.rollData.domaineId];
+      if (!cabale || !domaine) return;
+      this.rollData.cabaleData = cabale;
+      this.rollData.cabaleDomaine = foundry.utils.duplicate(domaine);
+      this.rollData.nbDesCabale = 0;
+      const max = Math.max(0, Number(domaine.value) || 0);
+      const slider = html.find('#nbDesCabale')[0];
+      if (slider) { slider.max = max; slider.value = 0; }
+      html.find('#nbDesCabaleList').html(Array.from({ length: max + 1 }, (_, i) => `<option value="${i}">${i}</option>`).join(""));
+      html.find('[data-display-range="nbDesCabale"]').html("0");
+      html.find('.cabale-domaine-texte').html(`${domaine.label} (${domaine.value})`);
+    })
     html.find('#nbBonusCollaboratif').change((event) => {
       this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
     })

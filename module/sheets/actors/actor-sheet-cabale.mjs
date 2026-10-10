@@ -77,15 +77,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
     if (!this.actor.isOwner || !membre.isOwner) {
       return ui.notifications.warn("Vous n'avez pas de droits sur ce personnage ; demandez à la Loi de l'ajouter.");
     }
-    const ancienne = membre.system.cabale?.uuid;
-    if (ancienne && ancienne !== this.actor.id) {
-      const ok = await foundry.applications.api.DialogV2.confirm({
-        window: { title: "Changer de cabale" },
-        content: `<p>${membre.name} fait déjà partie de la cabale « ${membre.system.cabale.nom} ». L'en retirer pour l'ajouter à « ${this.actor.name} » ?</p>`
-      });
-      if (!ok) return false;
-    }
-    await membre.setCabale(this.actor, { remplacer: true });
+    await membre.setCabale(this.actor);
     return this.render(false);
   }
   _onDropItem(ev, data) {
@@ -108,7 +100,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
 
   /* -------------------------------------------- */
   _preparePersonnageData(context) {
-    context.members = game.actors.filter(act => act.type == "personnage" && act.system.cabale && act.system.cabale.uuid == this.actor.id)
+    context.members = game.actors.filter(act => act.type == "personnage" && act.cabaleIds.includes(this.actor.id))
   }
   /* -------------------------------------------- */
 
@@ -126,7 +118,7 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
         window: { title: "Retirer un membre" },
         content: `<p>Retirer ${membre.name} de la cabale ?</p>`
       });
-      if (ok) await membre.leaveCabale();
+      if (ok) await membre.leaveCabale(this.actor.id);
       this.render(false);
     });
     html.find('.display-actor').click(ev => {

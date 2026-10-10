@@ -184,13 +184,20 @@
       <div class="fexrow form-group cabale-dice">
         <h4>
           <div class="nbrDes">
-            <span class>Dés de cabale ({{cabaleData.name}}) : </span>
+            {{#ifgt cabales.length 1}}
+              <span class>Dés de cabale
+                <select id="cabaleChoice">
+                  {{#each cabales as |c|}}<option value="{{c.id}}">{{c.name}}</option>{{/each}}
+                </select> : </span>
+            {{else}}
+              <span class>Dés de cabale ({{cabaleData.name}}) : </span>
+            {{/ifgt}}
             <span data-display-range="nbDesCabale">0</span>
             <i class="fa-light fa-dice-d10"></i>
           </div>
           <div>
             <span class>Domaine cabale : </span>
-            <span class>{{cabaleDomaine.label}} ({{cabaleDomaine.value}})</span>
+            <span class="cabale-domaine-texte">{{cabaleDomaine.label}} ({{cabaleDomaine.value}})</span>
           </div>
         </h4>
 

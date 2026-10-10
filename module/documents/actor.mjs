@@ -416,41 +416,45 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
-  /** Affecte ce personnage à une cabale (acteur ou données d'acteur) */
-  async setCabale(cabale, { remplacer = false } = {}) {
-    const id = cabale.id ?? cabale._id;
+  /** Identifiants des cabales du personnage (y compris l'ancienne cabale unique) */
+  get cabaleIds() {
+    const ids = [...(this.system.cabales ?? [])];
     const ancienne = this.system.cabale?.uuid;
-    if (ancienne === id) return ui.notifications.info(`${this.name} fait déjà partie de cette cabale.`);
-    if (ancienne && !remplacer) {
-      return ui.notifications.warn("Ce personnage est déjà affecté à une cabale")
-    }
+    if (ancienne && !ids.includes(ancienne)) ids.push(ancienne);
+    return ids;
+  }
+
+  /** Cabales du personnage (acteurs existants) */
+  get cabalesActeurs() {
+    return this.cabaleIds.map(id => game.actors.get(id)).filter(c => c?.type === "cabale");
+  }
+
+  async _enregistrerCabales(ids, aRafraichir) {
     await this.update({
-      "system.cabale": {
-        nom: cabale.name,
-        uuid: id,
-        bloc: cabale.system.bloc,
-        coordonnes: cabale.system.coordonnes,
-        societe: cabale.system.societeEcran
-      }
+      "system.cabales": ids,
+      "system.cabale": { nom: "", uuid: "", bloc: "", coordonnes: "", societe: "" }
     });
-    for (const cid of [ancienne, id]) {
-      const sheet = game.actors.get(cid)?.sheet;
+    for (const id of aRafraichir) {
+      const sheet = game.actors.get(id)?.sheet;
       if (sheet?.rendered) sheet.render(false);
     }
   }
-  async leaveCabale() {
-    const cabaleActor = game.actors.get(this.system.cabale?.uuid);
-    await this.update({
-      "system.cabale": {
-        nom: "",
-        uuid: "",
-        bloc: "",
-        coordonnes: "",
-        societe: ""
-      }
-    })
-    if (cabaleActor?.sheet.rendered) { cabaleActor.sheet.render(false) }
+
+  /** Ajoute ce personnage à une cabale (un personnage peut appartenir à plusieurs cabales) */
+  async setCabale(cabale) {
+    const id = cabale.id ?? cabale._id;
+    const ids = this.cabaleIds;
+    if (ids.includes(id)) return ui.notifications.info(`${this.name} fait déjà partie de la cabale ${cabale.name}.`);
+    return this._enregistrerCabales([...ids, id], [id]);
   }
+
+  /** Retire ce personnage d'une cabale */
+  async leaveCabale(cabaleId) {
+    const ids = this.cabaleIds;
+    if (!ids.includes(cabaleId)) return;
+    return this._enregistrerCabales(ids.filter(i => i !== cabaleId), [cabaleId]);
+  }
+
 
   /* -------------------------------------------- */
   incDecReserve(reserveKey, value) {
@@ -475,16 +479,14 @@ export class nocActor extends Actor {
       cabaleData: null
     }
 
-    // Si le personnage a une cabale, ajouter les infos
-    if (this.type === "personnage" && this.system.cabale?.uuid) {
-      let cabale = game.actors.get(this.system.cabale.uuid);
-      if (cabale) {
-        rollData.cabaleData = {
-          id: cabale.id,
-          name: cabale.name,
-          domaines: foundry.utils.duplicate(cabale.system.domaines)
-        }
-      }
+    // Cabales du personnage : la première est proposée par défaut, les autres au choix
+    if (this.type === "personnage") {
+      rollData.cabales = this.cabalesActeurs.map(cabale => ({
+        id: cabale.id,
+        name: cabale.name,
+        domaines: foundry.utils.duplicate(cabale.system.domaines)
+      }));
+      rollData.cabaleData = rollData.cabales[0] ?? null;
     }
 
     return rollData;
