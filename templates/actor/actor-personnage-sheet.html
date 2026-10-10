@@ -277,16 +277,18 @@
 
 					<div class="form-group">
 						<h3>cabale{{#ifgt cabales.length 1}}s{{/ifgt}}</h3>
-						{{#each cabales as |cabale|}}
-							<h4 class="flexrow">
-								<span>{{cabale.nom}}</span>
-								<a
-									class="fas fa-edit openCabale" data-action="openCabale"
-									data-cabale-id="{{cabale.id}}"
-									data-tooltip="ouvrir la fiche de cabale"
-								></a>
-							</h4>
-						{{/each}}
+						<div class="liste-cabales flexcol">
+							{{#each cabales as |cabale|}}
+								<h4 class="flexrow">
+									<span>{{cabale.nom}}</span>
+									<a
+										class="fas fa-edit openCabale" data-action="openCabale"
+										data-cabale-id="{{cabale.id}}"
+										data-tooltip="ouvrir la fiche de cabale"
+									></a>
+								</h4>
+							{{/each}}
+						</div>
 
 					</div>
 					<div class="form-group">
@@ -500,7 +502,9 @@
 				</div>
 				<div class="cabale ">
 					<h2>Cabales</h2>
+					<div class="liste-cabales flexcol">
 					{{#each cabales as |cabale|}}
+						<div class="cabale-entree flexcol">
 						<h3 class="flexrow">
 							<div>{{cabale.nom}}</div>
 							<div class="cabaleControls">
@@ -534,9 +538,11 @@
 								<p>{{cabale.societe}}</p>
 							</div>
 						</div>
+						</div>
 					{{else}}
 						<h4>Aucune Cabale</h4>
 					{{/each}}
+					</div>
 					<p>Faites glisser un acteur de type « cabale » ici pour ajouter ce personnage à une cabale.</p>
 				</div>
 			</div>
