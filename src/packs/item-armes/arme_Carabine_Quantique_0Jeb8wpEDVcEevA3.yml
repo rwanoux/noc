@@ -27,13 +27,13 @@ system:
     tranchant: false
     contrainte:
       actif: false
-      valeur: 1
+      valeur: 0
     energieNoire:
       actif: false
-      valeur: 1
+      valeur: 0
     multiple:
       actif: false
-      valeur: 1
+      valeur: 0
     quantique:
       actif: true
       valeur: 4

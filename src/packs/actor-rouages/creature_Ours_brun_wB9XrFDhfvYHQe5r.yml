@@ -300,16 +300,16 @@ items:
       tranchant: true
       contrainte:
         actif: false
-        valeur: 1
+        valeur: 0
       energieNoire:
         actif: false
-        valeur: 1
+        valeur: 0
       multiple:
         actif: false
-        valeur: 1
+        valeur: 0
       quantique:
         actif: false
-        valeur: 1
+        valeur: 0
   effects: []
   flags: {}
   sort: 0

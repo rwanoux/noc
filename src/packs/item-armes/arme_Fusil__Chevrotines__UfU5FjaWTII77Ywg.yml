@@ -27,16 +27,16 @@ system:
     tranchant: true
     contrainte:
       actif: false
-      valeur: 1
+      valeur: 0
     energieNoire:
       actif: false
-      valeur: 1
+      valeur: 0
     multiple:
       actif: true
       valeur: 1
     quantique:
       actif: false
-      valeur: 1
+      valeur: 0
   maitrise: true
 effects: []
 flags:

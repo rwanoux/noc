@@ -60,7 +60,7 @@ const CONSTITUTION = "@talents.action.constitution.niveau";
 
 export function traitsArmeVides() {
   const t = {};
-  for (const [cle, def] of Object.entries(TRAITS_ARMES)) t[cle] = def.chiffre ? { actif: false, valeur: 1 } : false;
+  for (const [cle, def] of Object.entries(TRAITS_ARMES)) t[cle] = def.chiffre ? { actif: false, valeur: 0 } : false;
   return t;
 }
 
@@ -102,7 +102,7 @@ export function conversionArme(src, constitution = null) {
       const autre = /(^|[^a-z])long([^a-z]|$)/i.exec(texte.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/longue\s+portee/ig, ""));
       if (!autre) continue;
     }
-    traitsArme[cle] = def.chiffre ? { actif: true, valeur: Number(m[1]) || 1 } : true;
+    traitsArme[cle] = def.chiffre ? { actif: true, valeur: Number(m[1]) || 0 } : true;
   }
   const limite = /limit[ée]e?\s*\(\s*(\d+)\s*\)/i.exec(texte);
   const degats = String(sys.degats ?? "");
@@ -123,10 +123,22 @@ export function conversionArme(src, constitution = null) {
 /*  Conversion des armes existantes              */
 /* -------------------------------------------- */
 
-export const VERSION_MIGRATION_ARMES = 1;
+export const VERSION_MIGRATION_ARMES = 2;
+
+/** Version 2 : valeur par défaut des traits chiffrés à 0 (au lieu de 1) pour les traits non cochés */
+function majValeursParDefaut(item) {
+  if (item.type !== "arme" || !item._source.system.formatV2) return null;
+  const maj = {};
+  for (const [cle, def] of Object.entries(TRAITS_ARMES)) {
+    const t = item._source.system.traitsArme?.[cle];
+    if (def.chiffre && t && !t.actif && Number(t.valeur) === 1) maj[`system.traitsArme.${cle}.valeur`] = 0;
+  }
+  return Object.keys(maj).length ? { _id: item.id, ...maj } : null;
+}
 
 function majArme(item) {
-  if (item.type !== "arme" || item._source.system.formatV2) return null;
+  if (item.type !== "arme") return null;
+  if (item._source.system.formatV2) return majValeursParDefaut(item);
   const constitution = item.parent?.type === "creature"
     ? item.parent._source.system?.talents?.action?.constitution?.niveau ?? 0 : null;
   return { _id: item.id, ...conversionArme(item._source, constitution) };

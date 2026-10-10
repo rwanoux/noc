@@ -30,13 +30,13 @@ system:
       valeur: 1
     energieNoire:
       actif: false
-      valeur: 1
+      valeur: 0
     multiple:
       actif: false
-      valeur: 1
+      valeur: 0
     quantique:
       actif: false
-      valeur: 1
+      valeur: 0
   maitrise: true
 effects: []
 flags:
