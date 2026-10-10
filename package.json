@@ -7,7 +7,8 @@
     "launch Foundry12": "cd C:/Program Files/Foundry Virtual Tabletop_V12/resources/app && node main.js",
     "watch": "gulp watch",
     "pushLDBtoYAML": "node ./tools/pushLDBtoYAML.mjs",
-    "pullYAMLtoLDB": "node ./tools/pullYAMLtoLDB.mjs"
+    "pullYAMLtoLDB": "node ./tools/pullYAMLtoLDB.mjs",
+    "compendiums": "node ./tools/pullYAMLtoLDB.mjs"
   },
   "browserslist": [
     "last 3 versions"
