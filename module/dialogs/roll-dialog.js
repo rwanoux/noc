@@ -57,25 +57,19 @@ export class nocRollDialog extends Dialog {
         this.rollData[input.id] = Number(input.value)
       } if (input.type === "checkbox") {
         this.rollData[input.id] = input.checked
-
       }
     }
-    this.rollData.niveauFinalRequis = this.rollData.niveauRequis + this.rollData.modCouvert + this.rollData.modSupplement
     if (this.rollData.arme) {
-      if (this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
-        this.rollData.niveauFinalRequis += 2
-      } else {
-        this.rollData.niveauFinalRequis += (this.rollData.arme.system.maitrise) ? 0 : 1
-      }
-      if (this.rollData.cibleAuSol) {
-        if (this.rollData.arme.system.adistance) {
-          this.rollData.niveauFinalRequis += 1
-        } else {
-          this.rollData.niveauFinalRequis -= 1
-        }
-      }
+      const r = this.rollData;
+      const distance = r.arme.system.adistance;
+      r.niveauFinalRequis = (Number(r.niveauBase) || 0) + (Number(r.modMaitrise) || 0)
+        + (distance ? (Number(r.modDistance) || 0) + (Number(r.modCouvert) || 0) : 0)
+        + (r.cibleAuSol ? (distance ? 1 : -1) : 0)
+        + (Number(r.modSupplement) || 0);
+    } else if (this.rollData.niveauRequis !== undefined) {
+      this.rollData.niveauFinalRequis = (Number(this.rollData.niveauRequis) || 0) + (Number(this.rollData.modCouvert) || 0) + (Number(this.rollData.modSupplement) || 0)
     }
-    $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
+    this._element.find('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
   }
   /* -------------------------------------------- */
   activateListeners(html) {
@@ -121,10 +115,7 @@ export class nocRollDialog extends Dialog {
     html.find('#nbBonusCollaboratif').change((event) => {
       this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
     })
-    html.find('#niveauRequis').change((event) => {
-      this.rollData.niveauRequis = Number(event.currentTarget.value)
-      this.updateNiveauFinal()
-    })
+    html.find('#modDistance, #malusVisibilite').change(() => this.updateNiveauFinal())
     html.find('#modCouvert').change((event) => {
       this.rollData.modCouvert = Number(event.currentTarget.value)
       this.updateNiveauFinal()

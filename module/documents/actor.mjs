@@ -565,11 +565,17 @@ export class nocActor extends Actor {
       rollData.domaineId = 'action'
       rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
       rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
-      rollData.niveauRequis = (item.system.adistance) ? 0 : 1
-      rollData.niveauFinalRequis = rollData.niveauRequis
+      // niveau requis : base (0 à distance, 1 au contact) + maîtrise + modificateurs
+      rollData.niveauBase = (item.system.adistance) ? 0 : 1
+      rollData.niveauRequis = rollData.niveauBase
+      rollData.modMaitrise = item.system.maitrise ? 0 : (item.system.traitsArme?.complexe ? 2 : 1)
+      rollData.longuePortee = !!item.system.traitsArme?.longuePortee
+      rollData.modDistance = 0
       rollData.modCouvert = 0
+      rollData.malusVisibilite = 0
       rollData.cibleAuSol = false
       rollData.modSupplement = 0
+      rollData.niveauFinalRequis = rollData.niveauBase + rollData.modMaitrise
 
       // Add cabale domain if available
       if (rollData.cabaleData && rollData.cabaleData.domaines['action']) {
