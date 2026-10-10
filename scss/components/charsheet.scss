@@ -2078,4 +2078,130 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
             line-height: 2em;
         }
     }
+}
+
+// États durables (Fatigue, Bouleversement administratif)
+div.noc.sheet.actor .etats-actifs,
+.panneau-mj .cible-ligne {
+    .etat {
+        display: inline-block;
+        margin: 2px 4px 2px 0;
+        padding: 1px 8px;
+        border-radius: 1em;
+        background: #8a1c1c;
+        color: white;
+        font-size: 0.85em;
+        text-shadow: none;
+        cursor: help;
+    }
+}
+
+// Panneau du MJ
+.panneau-mj {
+    .window-content {
+        padding: 8px;
+    }
+
+    .bloc {
+        margin-bottom: 10px;
+
+        h3 {
+            align-items: center;
+            margin: 0 0 4px;
+            gap: 6px;
+
+            span {
+                flex: 1;
+            }
+
+            a {
+                flex: 0 0 auto;
+            }
+
+            .aide {
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .liste-cibles {
+        max-height: 220px;
+        overflow-y: auto;
+
+        .cible-ligne {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 0;
+
+            img {
+                width: 24px;
+                height: 24px;
+                border: none;
+                object-fit: cover;
+            }
+
+            .nom {
+                font-weight: bold;
+                flex: 0 0 auto;
+            }
+
+            .resume {
+                flex: 1;
+                font-size: 0.85em;
+                color: #6b6b6b;
+            }
+        }
+    }
+
+    label.option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin: 4px 0;
+    }
+
+    .grille-perditions .perdition-ligne {
+        display: grid;
+        grid-template-columns: 1fr 4em 6em 6em;
+        gap: 6px;
+        align-items: center;
+        margin-bottom: 4px;
+
+        button {
+            margin: 0;
+        }
+    }
+
+    .ligne-fiel,
+    .etapes-mj,
+    .lever-etats {
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+
+        button {
+            margin: 0;
+        }
+    }
+
+    .ligne-fiel > span {
+        flex: 1 1 auto;
+    }
+
+    .ligne-fiel > button {
+        flex: 0 0 3em;
+    }
+
+    .grille-effets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        margin-bottom: 6px;
+
+        button {
+            margin: 0;
+        }
+    }
 }

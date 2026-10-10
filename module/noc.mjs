@@ -34,6 +34,7 @@ import { migrerCreatures } from "./creatures.mjs";
 import { migrerAutres } from "./autres.mjs";
 import { migrerArmures } from "./armures.mjs";
 import { migrerArmes } from "./armes.mjs";
+import { enregistrerBoutonPanneau, ouvrirPanneauMJ } from "./panneau-mj.mjs";
 
 
 
@@ -65,8 +66,10 @@ Hooks.once('init', async function () {
   game.noc = {
     nocActor,
     nocItem,
-    rollItemMacro
+    rollItemMacro,
+    panneauMJ: ouvrirPanneauMJ
   };
+  enregistrerBoutonPanneau();
 
   // Add custom constants for configuration.
   CONFIG.NOC = NOC;

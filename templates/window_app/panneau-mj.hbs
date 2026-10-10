@@ -1,0 +1,80 @@
+<div class="panneau-mj-contenu">
+
+  <!-- CIBLES -->
+  <section class="bloc">
+    <h3 class="flexrow">
+      <span>Personnages ciblés</span>
+      <a data-action="toutCocher" data-tous="1" data-tooltip="tout cocher"><i class="fa-solid fa-square-check"></i></a>
+      <a data-action="toutCocher" data-tous="0" data-tooltip="tout décocher"><i class="fa-regular fa-square"></i></a>
+    </h3>
+    <div class="liste-cibles">
+      {{#each personnages as |p|}}
+      <label class="cible-ligne">
+        <input type="checkbox" class="cible" data-actor-id="{{p.id}}" {{#if p.coche}}checked{{/if}}>
+        <img src="{{p.img}}" alt="">
+        <span class="nom">{{p.nom}}</span>
+        <span class="resume">{{#each p.perditions as |x|}}{{x.label}} {{x.valeur}}{{#unless @last}} · {{/unless}}{{/each}}</span>
+        {{#if p.fatigue}}<span class="etat" data-tooltip="Fatigué : −1 à tous les talents">fatigué</span>{{/if}}
+        {{#if p.bouleversement}}<span class="etat" data-tooltip="Bouleversement administratif">bouleversé</span>{{/if}}
+      </label>
+      {{else}}
+      <p>Aucun personnage dans le monde.</p>
+      {{/each}}
+    </div>
+    <label class="option">
+      <input type="checkbox" class="avec-selection">
+      Inclure aussi les jetons sélectionnés sur la scène ({{nbSelection}})
+    </label>
+  </section>
+
+  <!-- PERDITIONS -->
+  <section class="bloc">
+    <h3>Perditions</h3>
+    <label class="option">
+      <input type="checkbox" class="reductions" {{#if reductions}}checked{{/if}}>
+      Appliquer les réductions (Trauma − Folie, Noirceur − Lumière, Traque − Façade)
+    </label>
+    <div class="grille-perditions">
+      {{#each perditions as |p|}}
+      <div class="perdition-ligne">
+        <span class="libelle">{{p.label}}{{#if p.reduction}} <em>(− {{p.reduction}})</em>{{/if}}</span>
+        <input type="number" class="points" data-perdition="{{p.cle}}" value="1" min="0" max="10">
+        <button type="button" data-action="infliger" data-perdition="{{p.cle}}">Infliger</button>
+        <button type="button" data-action="soigner" data-perdition="{{p.cle}}">Soigner</button>
+      </div>
+      {{/each}}
+    </div>
+  </section>
+
+  <!-- FIEL ET MENACE -->
+  <section class="bloc">
+    <h3>Fiel et Menace</h3>
+    <div class="ligne-fiel flexrow">
+      <span>Gouttes : <strong>{{fiel.gouttes}}</strong> / 35</span>
+      <span>Menace : <strong>{{fiel.menace}}</strong></span>
+      <button type="button" data-action="fiel" data-delta="-5">−5</button>
+      <button type="button" data-action="fiel" data-delta="-1">−1</button>
+      <button type="button" data-action="fiel" data-delta="1">+1</button>
+      <button type="button" data-action="fiel" data-delta="5">+5</button>
+    </div>
+    <div class="etapes-mj flexrow">
+      <button type="button" data-action="etapeMJ" data-etape="calme" data-tooltip="Fiel −1">Moment de calme</button>
+      <button type="button" data-action="etapeMJ" data-etape="seance" data-tooltip="Menace −1 (Fiel −5)">Début de séance</button>
+      <button type="button" data-action="etapeMJ" data-etape="scenario" data-tooltip="Fiel et Menace à 0">Début de scénario</button>
+    </div>
+  </section>
+
+  <!-- EFFETS DE FIEL -->
+  <section class="bloc">
+    <h3>Effets de Fiel <em class="aide">(appliqués aux personnages ciblés ; message visible par tous)</em></h3>
+    <div class="grille-effets">
+      {{#each effetsFiel as |e|}}
+      <button type="button" data-action="effetFiel" data-effet="{{e.nom}}" data-tooltip="{{e.description}}">{{e.nom}}</button>
+      {{/each}}
+    </div>
+    <div class="lever-etats flexrow">
+      <button type="button" data-action="leverEtat" data-etat="fatigue">Lever la fatigue</button>
+      <button type="button" data-action="leverEtat" data-etat="bouleversement">Lever le bouleversement</button>
+    </div>
+  </section>
+</div>

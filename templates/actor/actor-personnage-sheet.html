@@ -201,6 +201,12 @@
 							value="{{actor.name}}"
 						>
 					</div>
+					{{#if (or actor.flags.noc.fatigue actor.flags.noc.bouleversement)}}
+					<div class="etats-actifs">
+						{{#if actor.flags.noc.fatigue}}<span class="etat" data-tooltip="−1 à tous les talents jusqu'au prochain moment de calme">Fatigué</span>{{/if}}
+						{{#if actor.flags.noc.bouleversement}}<span class="etat" data-tooltip="Talents de Statut −1 ; contacts inaccessibles">Bouleversement administratif</span>{{/if}}
+					</div>
+					{{/if}}
 					<div class="form-group bloc-empile">
 						<div>Archétype :</div>
 

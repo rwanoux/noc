@@ -7,6 +7,7 @@ import { appliquerArchetype } from "../archetypes.mjs";
 import { appliquerQualites } from "../qualites.mjs";
 import { appliquerAutre } from "../autres.mjs";
 import { appliquerArmures } from "../armures.mjs";
+import { appliquerEtats } from "../panneau-mj.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -158,6 +159,7 @@ export class nocActor extends Actor {
     appliquerQualites(this);
     appliquerAutre(this);
     appliquerArmures(this);
+    appliquerEtats(this);
 
     this._preparePersonnageData();
     this._prepareRouageData();
@@ -451,6 +453,10 @@ export class nocActor extends Actor {
           maj[`system.perditions.${perd}.value`] = nouvelle;
           lignes.push(`${p.label} : ${valeur} → ${nouvelle}`);
         }
+      }
+      if (this.flags?.noc?.fatigue) {
+        maj["flags.noc.-=fatigue"] = null;
+        lignes.push("Fatigue : levée");
       }
       const espoir = s.reserves.espoir;
       const gain = Math.max(0, 1 + nombre(s.talents?.ame?.extase?.niveau));
