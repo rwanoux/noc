@@ -1,6 +1,14 @@
 
 export function registerNocSettings() {
 
+    // version de la conversion des archétypes et thèmes déjà appliquée au monde
+    game.settings.register("noc", "migrationArchetypes", {
+        scope: 'world',
+        config: false,
+        type: Number,
+        default: 0
+    })
+
 
     // setting pour Fiel et menace
     game.settings.register("noc", "compteurFiel", {

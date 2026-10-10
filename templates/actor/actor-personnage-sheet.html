@@ -225,21 +225,13 @@
 					<div class="form-group">
 						<div>thème :</div>
 						<div class="theme-resume flexrow">
-							{{#each actor.itemTypes.thème as |thème|}}
-								<div class="item-name">
-									{{thème.name}}
+							{{#if themeChoisi}}
+								<div class="item-name" data-tooltip="{{themeChoisi.detail}}">
+									{{themeChoisi.nom}}
 								</div>
-								<div class="item-control">
-									<a
-										class="fas fa-trash item-delete" data-action="itemDelete"
-										data-item-id="{{thème.id}}"
-									></a>
-									<a
-										class="fas fa-edit item-open" data-action="itemOpen"
-										data-item-id="{{thème.id}}"
-									></a>
-								</div>
-							{{/each}}
+							{{else}}
+								<div class="item-name">—</div>
+							{{/if}}
 						</div>
 					</div>
 

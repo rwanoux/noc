@@ -91,18 +91,6 @@
       }
     },
     {
-      "name": "themes",
-      "label": "Thèmes",
-      "system": "noc",
-      "path": "packs/item-themes",
-      "type": "Item",
-      "ownership": {
-        "PLAYER": "NONE",
-        "TRUSTED": "OBSERVER",
-        "ASSISTANT": "OWNER"
-      }
-    },
-    {
       "name": "rouages",
       "label": "Rouages",
       "system": "noc",

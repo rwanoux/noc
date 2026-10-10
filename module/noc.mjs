@@ -28,6 +28,7 @@ import { SocketManager } from "./socketManager.mjs";
 import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
+import { migrerArchetypes } from "./archetypes.mjs";
 
 
 
@@ -194,6 +195,9 @@ Hooks.on("renderGamePause", (app, html, data, options) => {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
+  // conversion unique des archétypes/thèmes à l'ancien format (MJ uniquement)
+  await migrerArchetypes();
+
   objetDieu.init();
 
 

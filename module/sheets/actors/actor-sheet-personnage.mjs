@@ -5,6 +5,7 @@
  * @extends {ActorSheet}
  */
 import NOCContact from "../../ContactClass.js";
+import { choisirTheme, libelleTalent } from "../../archetypes.mjs";
 import { nocPersonnalisation } from "../../dialogs/noc-personnalisation.js";
 import { Quality } from "../../qualite_default.mjs";
 
@@ -118,29 +119,31 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   async _onDropItem(ev, data) {
     let dropItem = await Item.implementation.fromDropData(data);
-    if (dropItem.type == "thème") { return ui.notifications.warn("Les items THEMES doivent être glisser sur les fiches d'items ARCHETYPES") }
-    if (dropItem.type == "archetype") { this._onDropArchetype(ev, dropItem) }
+    if (!dropItem) return false;
+    if (dropItem.type == "thème") {
+      return ui.notifications.warn("Les thèmes font maintenant partie des archétypes : glissez l'archétype sur la fiche, le thème sera proposé au choix.")
+    }
+    if (dropItem.type == "archetype") { return this._onDropArchetype(ev, dropItem) }
 
-    super._onDropItem(ev, data);
+    return super._onDropItem(ev, data);
 
   }
   async _onDropArchetype(ev, item) {
-    let linkedThemes = await item.getFlag("noc", "linkedThemes");
-    if (linkedThemes) {
-      let theme = linkedThemes.find(th => th.choosed)
-      if (theme) {
-        let choosedThemeId = theme.id;
-        let themeItem = await Item.get(choosedThemeId);
-        if (themeItem) {
-          await this.actor.createEmbeddedDocuments("Item", [themeItem])
-        } else {
-          await this.actor.createEmbeddedDocuments("Item", [theme.itemData])
-        }
-      } else {
-        ui.notifications.warn("Thème non trouvé")
-      }
+    if (!this.actor.isOwner) return false;
+    // Un archétype déjà présent sur ce personnage : on ne fait rien (tri dans la fiche)
+    if (item.parent?.id === this.actor.id) return false;
+    if (this.actor.itemTypes.archetype.length) {
+      return ui.notifications.warn("Ce personnage a déjà un archétype. Supprimez-le d'abord si vous voulez en changer.");
     }
+    const itemData = item.toObject();
+    delete itemData._id;
+    itemData.effects = [];
 
+    const themeId = await choisirTheme(itemData);
+    if (themeId === null) return false; // fenêtre annulée
+    foundry.utils.setProperty(itemData, "system.themeChoisi", themeId);
+
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
   }
   async _onDropQuantar(ev, data) {
     let item = await this.actor.getEmbeddedDocument('Item', ev.currentTarget.dataset.itemId);
@@ -231,7 +234,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   _preparePersonnageItems(context) {
     this.checkArchetype();
-    this.checkTheme();
+    this.prepareArchetype(context);
     this.prepareFavItems(context)
 
   }
@@ -332,7 +335,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     update.system.talents[dom] = {};
     update.system.talents[dom][tal] = {};
 
-    let value = this.actor.system.talents[dom][tal].niveau;
+    // valeur de base (sans les bonus d'archétype et de thème)
+    let value = Number(this.actor._source.system.talents[dom][tal].niveau) || 0;
 
 
 
@@ -533,12 +537,13 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       `)
     }
   }
-  checkTheme() {
-    if (this.actor.itemTypes.thème.length > 1) {
-      return ui.notifications.warn(`
-      le personnage ${this.actor.name.toUpperCase()} possède plusieurs thème.... veuillez en supprimer
-      `)
-    }
+  prepareArchetype(context) {
+    const archetype = this.actor.itemTypes.archetype[0];
+    const theme = archetype?.system.themes?.find(t => t.id === archetype.system.themeChoisi);
+    context.themeChoisi = theme ? {
+      nom: theme.nom,
+      detail: theme.talents.map(t => `${libelleTalent(t.talent)} ${t.value > 0 ? "+" : ""}${t.value}`).join(", ")
+    } : null;
   }
   async addQuality(ev) {
     let quality = new Quality(this.actor.id, ev.currentTarget.dataset.type);

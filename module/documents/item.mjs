@@ -1,3 +1,4 @@
+import { conversionArchetype } from "../archetypes.mjs";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
@@ -41,12 +42,21 @@ export class nocItem extends Item {
   }
   async _onUpdate(update, options, userId) {
 
-    if ((this.type == "archetype") || (this.type == "thème")) {
-      await this.prepareEffect(update)
-    }
-    super._preUpdate(update, options, userId)
+    // Les archétypes et thèmes n'utilisent plus d'effets actifs :
+    // leurs bonus sont calculés directement par le personnage (module/archetypes.mjs).
+    super._onUpdate(update, options, userId)
 
   }
+  /** Un archétype ne transporte plus d'effets actifs ; ancien format converti à la volée */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+    if (this.type === "archetype") {
+      const conv = conversionArchetype(this.toObject()) ?? {};
+      this.updateSource({ ...conv, effects: [] });
+    }
+  }
+
   prepareArmeData() {
     if ((this.type != "arme") && (this.parent.type != "actor")) { return }
     this.getRollData = this.parent.getRollData();
