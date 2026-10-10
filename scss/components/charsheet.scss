@@ -1418,10 +1418,22 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
         min-height: 0;
 
         .form-group {
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
+            display: flex !important;
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            justify-content: flex-start !important;
             margin: 0;
+
+            // titre au-dessus, texte et barre d'édition dessous, depuis la gauche
+            > h2,
+            > .editor,
+            > prose-mirror {
+                width: auto !important;
+                max-width: none !important;
+                align-self: stretch !important;
+                text-align: left;
+            }
             padding: 4px 0 6px;
             background: url(../asset/images/fondidentiteconfidentiel.webp);
             background-position: center;
