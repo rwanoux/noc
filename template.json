@@ -656,6 +656,22 @@
       "limite": 0,
       "degats": "",
       "matrise": false,
+      "maitrise": true,
+      "formatV2": false,
+      "degatsBase": 0,
+      "traitsArme": {
+        "choc": false,
+        "complexe": false,
+        "long": false,
+        "perforant": false,
+        "longuePortee": false,
+        "recurrent": false,
+        "tranchant": false,
+        "contrainte": { "actif": false, "valeur": 1 },
+        "energieNoire": { "actif": false, "valeur": 1 },
+        "multiple": { "actif": false, "valeur": 1 },
+        "quantique": { "actif": false, "valeur": 1 }
+      },
       "traits": "",
       "munitions": {
         "type": "",

@@ -7,14 +7,37 @@ system:
   quantar: true
   adistance: true
   valeur: 2
-  limite: 0
+  limite: 3
   degats: '3'
   matrise: false
-  traits: Quantique (4), Limité (3)
+  traits: ''
   munitions:
     type: Quantar
     quantite: 15
   portee: 0
+  formatV2: true
+  degatsBase: 3
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: false
+    longuePortee: false
+    recurrent: false
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 1
+    energieNoire:
+      actif: false
+      valeur: 1
+    multiple:
+      actif: false
+      valeur: 1
+    quantique:
+      actif: true
+      valeur: 4
+  maitrise: true
 effects: []
 flags:
   core:
@@ -35,4 +58,3 @@ ownership:
   default: 0
   GqESxdGhOwgra802: 3
 _key: '!items!0Jeb8wpEDVcEevA3'
-

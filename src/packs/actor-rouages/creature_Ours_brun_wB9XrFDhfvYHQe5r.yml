@@ -284,10 +284,32 @@ items:
     limite: 0
     degats: '6'
     maitrise: true
-    traits: Tranchant
+    traits: ''
     munitions:
       type: ''
       quantite: 0
+    formatV2: true
+    degatsBase: 2
+    traitsArme:
+      choc: false
+      complexe: false
+      long: false
+      perforant: false
+      longuePortee: false
+      recurrent: false
+      tranchant: true
+      contrainte:
+        actif: false
+        valeur: 1
+      energieNoire:
+        actif: false
+        valeur: 1
+      multiple:
+        actif: false
+        valeur: 1
+      quantique:
+        actif: false
+        valeur: 1
   effects: []
   flags: {}
   sort: 0

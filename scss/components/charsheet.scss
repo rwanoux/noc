@@ -1948,4 +1948,34 @@ div.noc.item.sheet {
     .form-group select {
         flex: 0 0 8em;
     }
+}
+
+// Fiche d'arme : traits sur deux colonnes
+div.noc.item.sheet .traits-arme {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 12px;
+    margin: 4px 0 8px;
+
+    .trait-arme {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: help;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1 1 auto;
+        }
+
+        input[type="checkbox"] {
+            flex: 0 0 auto;
+        }
+    }
+
+    &.traits-chiffres .trait-arme {
+        justify-content: space-between;
+    }
 }

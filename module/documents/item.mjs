@@ -1,3 +1,4 @@
+import { conversionArme, deriverArme } from "../armes.mjs";
 import { conversionArchetype } from "../archetypes.mjs";
 /**
  * Extend the basic Item with some very simple modifications.
@@ -56,6 +57,12 @@ export class nocItem extends Item {
       && foundry.utils.getProperty(data, "system.maitrise") === undefined) {
       this.updateSource({ "system.maitrise": true });
     }
+    // Arme à l'ancien format (formule et traits en texte) : convertie à la création
+    if (this.type === "arme" && !this._source.system.formatV2) {
+      const constitution = this.parent?.type === "creature"
+        ? this.parent._source.system?.talents?.action?.constitution?.niveau ?? 0 : null;
+      this.updateSource(conversionArme(this._source, constitution));
+    }
     if (this.type === "archetype") {
       const conv = conversionArchetype(this.toObject()) ?? {};
       this.updateSource({ ...conv, effects: [] });
@@ -63,9 +70,8 @@ export class nocItem extends Item {
   }
 
   prepareArmeData() {
-    if ((this.type != "arme") && (this.parent.type != "actor")) { return }
-    this.getRollData = this.parent.getRollData();
-
+    // formule de dégâts et texte des traits recalculés (voir module/armes.mjs)
+    deriverArme(this);
   }
   async prepareEffect(update) {
     if (!update.system) { return }
