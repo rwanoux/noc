@@ -39,6 +39,24 @@ export class nocActor extends Actor {
 
   }
 
+  /** Valeurs par défaut appliquées à la création d'un nouvel acteur */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+
+    // Nouveau rouage : tous les domaines à 2 (sauf valeur déjà fournie,
+    // par exemple lors d'une importation ou d'une copie)
+    if (this.type === "rouage") {
+      const updates = {};
+      for (const domaine of Object.keys(this.system.domaines ?? {})) {
+        if (foundry.utils.getProperty(data, `system.domaines.${domaine}.value`) === undefined) {
+          updates[`system.domaines.${domaine}.value`] = 2;
+        }
+      }
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
+  }
+
   async _onUpdate(update, options, user) {
     console.log('onupdate', user)
     if (user == game.user._id && this.type == "personnage" && update.system?.perditions) {
