@@ -1373,7 +1373,11 @@ div.noc.sheet.actor.personnage section.window-content {
 
 // Fiche personnage, onglet Fiche de signalement
 div.noc.sheet.actor.personnage section.window-content > form.personnage > section.sheet-body > div.tab.description {
-    display: flex;
+    // « display » seulement quand l'onglet est actif, sinon il masquerait les autres onglets
+    &.active {
+        display: flex;
+    }
+
     flex-direction: column;
     gap: 8px;
     padding: 8px 10px 10px;
