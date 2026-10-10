@@ -1,4 +1,10 @@
+import { descriptionNiveauTalent } from "../talents-niveaux.mjs";
 export function registerHelpers() {
+
+    // Description du niveau d'un talent (infobulle sur les fiches)
+    Handlebars.registerHelper('niveauTalent', function (domaine, talent, niveau) {
+        return descriptionNiveauTalent(domaine, talent, niveau);
+    });
 
     Handlebars.registerHelper('repeat', function (n, block) {
         var accum = '';
