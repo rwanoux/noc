@@ -1130,22 +1130,17 @@ div.noc.sheet.actor {
                 }
             }
 
-            // jauges : grille régulière, plus de positionnement en roue
-            .stats.cabale-jauges {
-                display: grid !important;
-                grid-template-columns: repeat(4, 1fr) !important;
-                grid-template-rows: auto !important;
-                gap: 6px;
-                padding: 0 !important;
-                line-height: 1em;
+            // jauges : style des Rouages (sans cadre), sur trois colonnes
+            .rouage-reserves.cabale-jauges {
+                flex: none !important;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px 12px;
+                text-align: center;
+                margin-top: 8px;
 
-                .reserve {
-                    grid-row: auto !important;
-                    grid-column: auto !important;
-                    left: 0 !important;
-                    top: 0 !important;
-                    max-width: none !important;
-                    margin: 0 !important;
+                .reserve h4 {
+                    margin: 2px 0;
                 }
             }
         }

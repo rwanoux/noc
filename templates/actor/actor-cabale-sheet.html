@@ -99,8 +99,9 @@
 				</div>
 
 				<!-- RESERVES ET PERDITIONS -->
-				<div class="stats cabale-jauges">
+				<div class="rouage-reserves cabale-jauges">
 					{{#each actor.system.reserves as |reserve reserveId|}}
+					{{#ifnotequal reserveId "faveurs"}}
 						<div class="reserve {{reserveId}}">
 							<h4>{{reserve.label}}
 								<a class="setMax" data-tooltip="ajuster le max" data-reserve-name="{{reserve.label}}" data-reserve-property="system.reserves.{{reserveId}}.max">
@@ -116,6 +117,7 @@
 									" {{#ifgt reserve.value @index}} checked {{/ifgt}}/>
 							{{/repeat}}
 						</div>
+					{{/ifnotequal}}
 					{{/each}}
 					{{#each actor.system.perditions as |perdition perditionId|}}
 						<div class="reserve perdition {{perditionId}}">
