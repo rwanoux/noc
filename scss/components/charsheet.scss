@@ -531,7 +531,9 @@ div.noc.sheet.actor {
                         -webkit-appearance: none;
                         appearance: none;
                         cursor: pointer;
-                        z-index: -1;
+                        // au-dessus de leur bloc, sinon les clics ne les atteignent pas
+                        position: relative;
+                        z-index: 1;
 
 
 
