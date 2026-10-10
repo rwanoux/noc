@@ -1258,4 +1258,54 @@ div.noc.sheet.actor .liste-cabales {
     .cabale-entree {
         margin-bottom: 8px;
     }
+}
+
+// résumé du personnage : cabales sous leur titre, progression avec boutons
+div.noc.sheet.actor .form-group.bloc-cabales {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    > h3 {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .liste-cabales h4 {
+        margin: 2px 0;
+        justify-content: space-between;
+
+        span {
+            flex: 1;
+        }
+
+        a {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+div.noc.sheet.actor h3.progression {
+    align-items: center;
+    gap: 6px;
+
+    span:first-child {
+        flex: 1;
+    }
+
+    input[type="number"] {
+        flex: 0 0 3em;
+        max-width: 3em !important;
+        text-align: center;
+    }
+
+    .progression-controls {
+        flex: 0 0 auto;
+        display: flex;
+        gap: 4px;
+
+        a {
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+    }
 }

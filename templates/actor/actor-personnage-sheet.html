@@ -275,7 +275,7 @@
 						</div>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group bloc-cabales">
 						<h3>cabale{{#ifgt cabales.length 1}}s{{/ifgt}}</h3>
 						<div class="liste-cabales flexcol">
 							{{#each cabales as |cabale|}}
@@ -292,12 +292,17 @@
 
 					</div>
 					<div class="form-group">
-						<h3>progression
+						<h3 class="progression flexrow">
+							<span>progression</span>
 							<input
 								type="number"
 								value="{{actor.system.progression}}"
 								name="system.progression"
 							>
+							<span class="progression-controls">
+								<a class="fas fa-plus progression-plus" data-tooltip="+1 point de progression"></a>
+								<a class="fas fa-minus progression-moins" data-tooltip="-1 point de progression"></a>
+							</span>
 						</h3>
 
 					</div>

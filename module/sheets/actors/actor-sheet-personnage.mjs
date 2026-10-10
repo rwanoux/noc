@@ -303,6 +303,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
     html.find('a.unassignCabale').click(this.leaveCabale.bind(this));
+    html.find('a.progression-plus').click(() => this.changerProgression(1));
+    html.find('a.progression-moins').click(() => this.changerProgression(-1));
     html.find('a.openCabale')?.click(this.openCabale.bind(this));
 
     html.find(".addQuality").click(this.addQuality.bind(this))
@@ -655,6 +657,10 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     }
   }
 
+  async changerProgression(ecart) {
+    const valeur = Math.max(0, (Number(this.actor._source.system.progression) || 0) + ecart);
+    return this.actor.update({ "system.progression": valeur });
+  }
   async openCabale(ev) {
     const cabale = game.actors.get(ev.currentTarget.dataset.cabaleId);
     return cabale?.sheet.render(true);
