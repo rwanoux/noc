@@ -1369,4 +1369,83 @@ div.noc.sheet.actor.personnage section.window-content {
             }
         }
     }
+}
+
+// Fiche personnage, onglet Fiche de signalement
+div.noc.sheet.actor.personnage section.sheet-body div.tab.description {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 4px 6px;
+
+    .signalement-haut,
+    .signalement-bas {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        align-items: start;
+        padding: 0;
+    }
+
+    .signalement {
+        padding: 0;
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            margin: 0 0 6px 0;
+
+            h2 {
+                flex: 0 0 auto;
+                margin: 0 0 2px 0;
+                font-size: 130%;
+            }
+
+            .editor {
+                min-height: 0;
+            }
+        }
+
+        // une ou deux lignes
+        .editeur-court .editor,
+        .editeur-court .editor .editor-content {
+            min-height: 2.8em;
+        }
+
+        // deux ou trois lignes
+        .editeur-moyen .editor,
+        .editeur-moyen .editor .editor-content {
+            min-height: 4.2em;
+        }
+
+        // texte long : s'allonge avec son contenu
+        .editeur-long .editor,
+        .editeur-long .editor .editor-content {
+            min-height: 6em;
+        }
+    }
+
+    .colonne-contacts .contacts {
+        margin: 0;
+
+        .contact h3 {
+            align-items: center;
+
+            > span {
+                flex: 1 1 auto;
+            }
+
+            .faveurList {
+                flex: 0 1 auto;
+            }
+
+            // poubelle tout à droite
+            .contactControls {
+                flex: 0 0 auto;
+                margin-left: auto;
+                padding-left: 6px;
+            }
+        }
+    }
 }

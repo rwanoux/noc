@@ -311,179 +311,124 @@
 
 		{{!-- signalement+cabale+contacts --}}
 		<div
-			class="tab description flexrow"
+			class="tab description flexcol"
 			data-group="primary"
 			data-tab="description"
 		>
-			<div class="signalement flexcol">
-				<div class="form-group">
-					<h2>Signalement</h2>
-					{{editor actor.system.signalement
-                    target="system.signalement"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Description</h2>
-					{{editor actor.system.description
-                    target="system.description"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Implication</h2>
-					{{editor actor.system.implication
-                    target="system.implication"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Couverture</h2>
-					{{editor actor.system.couverture
-                    target="system.couverture"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Notes</h2>
-					{{editor actor.system.notes target="system.notes"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-
+			<!-- en haut : Implication et Couverture côte à côte -->
+			<div class="signalement signalement-haut">
+					<div class="form-group editeur-court">
+						<h2>Implication</h2>
+						{{editor actor.system.implication target="system.implication" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+					<div class="form-group editeur-court">
+						<h2>Couverture</h2>
+						{{editor actor.system.couverture target="system.couverture" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
 			</div>
 
-			<!--CONTACTS ET CABALE-->
+			<div class="signalement-bas">
+				<!-- colonne 1 : Signalement, Description, Notes -->
+				<div class="signalement flexcol">
+					<div class="form-group editeur-moyen">
+						<h2>Signalement</h2>
+						{{editor actor.system.signalement target="system.signalement" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+					<div class="form-group editeur-long">
+						<h2>Description</h2>
+						{{editor actor.system.description target="system.description" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+					<div class="form-group editeur-long">
+						<h2>Notes</h2>
+						{{editor actor.system.notes target="system.notes" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+				</div>
 
-			<div class=" flexcol">
+				<!-- colonne 2 : contacts -->
+				<div class="flexcol colonne-contacts">
+					<div class="contacts">
+						<h2>Contacts</h2>
 
-				<div class="contacts">
-					<h2>Contacts</h2>
-
-					{{#ifequal actor.system.talents.statut.contact.niveau
+						{{#ifequal actor.system.talents.statut.contact.niveau
                     -1}}
-						<h4>Ce personnage a un ennemi.</h4>
-					{{/ifequal}}
+							<h4>Ce personnage a un ennemi.</h4>
+						{{/ifequal}}
 
-					{{!-- réserve de jetons de faveur (limitée par le talent Contacts) --}}
-					{{#ifgt actor.system.reserves.faveurs.max 0}}
-						<div class="form-group">
-							<h4>faveurs à distribuer</h4>
-							<div class="faveurs-totales flexrow">
-								{{#repeat actor.system.reserves.faveurs.max}}
-									<div
-										class="faveur
-												{{#ifgt actor.system.reserves.faveurs.value
-												@index}}
-												faveur-used
-												{{/ifgt}}"
-										data-tooltip="faites glisser ce jeton sur un contact"
-									>
-									</div>
-								{{/repeat}}
-							</div>
-							<a
-								class="fa-solid fa-arrows-rotate"
-								id="resetFaveurs" data-action="resetFaveurs"
-								data-tooltip="ré-initialiser les faveurs des contacts"
-							></a>
-						</div>
-					{{/ifgt}}
-
-					<!-- pour chaque contact (nombre illimité) -->
-					{{#each actor.system.contacts as |contact
-                    contactIndex|}}
-						<div
-							class="contact"
-							data-contact-index="{{contactIndex}}"
-							data-contact-id="{{contact.id}}"
-						>
-							<h3 class="flexrow">
-								<span>{{contact.nom}}</span>
-								<div class="faveurList flexrow">
-									{{#repeat contact.faveurs}}
-										<div class="faveurContact
-													{{#ifgt contact.usedFaveurs
+						{{!-- réserve de jetons de faveur (limitée par le talent Contacts) --}}
+						{{#ifgt actor.system.reserves.faveurs.max 0}}
+							<div class="form-group">
+								<h4>faveurs à distribuer</h4>
+								<div class="faveurs-totales flexrow">
+									{{#repeat actor.system.reserves.faveurs.max}}
+										<div
+											class="faveur
+													{{#ifgt actor.system.reserves.faveurs.value
 													@index}}
 													faveur-used
-													{{/ifgt}}
-													">
+													{{/ifgt}}"
+											data-tooltip="faites glisser ce jeton sur un contact"
+										>
 										</div>
 									{{/repeat}}
 								</div>
-								<div class="contactControls">
-									<a
-										data-tooltip="supprimer ce contact"
-										class="unassignContact" data-action="unassignContact"
-									>
-										<i class="fa-solid fa-close"></i>
-									</a>
-								</div>
-							</h3>
-							<div class="flexrow">
-								<img
-									class="profile-img"
-									src="{{contact.img}}"
-								/>
-								<div>{{{contact.description}}}</div>
+								<a
+									class="fa-solid fa-arrows-rotate"
+									id="resetFaveurs" data-action="resetFaveurs"
+									data-tooltip="ré-initialiser les faveurs des contacts"
+								></a>
 							</div>
-						</div>
-					{{/each}}
+						{{/ifgt}}
 
-					{{!-- zone d'ajout, toujours visible --}}
-					<div class="contact">
-						<h3
-							data-tooltip="faites glisser un personnage ou un rouage ici, ou cliquez sur + pour en créer un"
-							class="empty-contact"
-						>Ajouter un contact :
-							<i class="fas fa-add createContact" data-action="createContact"></i>
-						</h3>
-					</div>
-				</div>
-				<div class="cabale ">
-					<h2>Cabales</h2>
-					<div class="liste-cabales flexcol">
-					{{#each cabales as |cabale|}}
-						<div class="cabale-entree flexcol">
-						<h3 class="flexrow">
-							<div>{{cabale.nom}}</div>
-							<div class="cabaleControls">
-								<a
-									class="openCabale" data-action="openCabale"
-									data-cabale-id="{{cabale.id}}"
-									data-tooltip="ouvrir la fiche de cabale"
-								>
-									<i class="fa-solid fa-edit"></i>
-								</a>
-								<a
-									data-tooltip="quitter cette cabale"
-									data-cabale-id="{{cabale.id}}"
-									class="unassignCabale" data-action="unassignCabale"
-								>
-									<i class="fa-solid fa-right-from-bracket"></i>
-								</a>
+						<!-- pour chaque contact (nombre illimité) -->
+						{{#each actor.system.contacts as |contact
+                    contactIndex|}}
+							<div
+								class="contact"
+								data-contact-index="{{contactIndex}}"
+								data-contact-id="{{contact.id}}"
+							>
+								<h3 class="flexrow">
+									<span>{{contact.nom}}</span>
+									<div class="faveurList flexrow">
+										{{#repeat contact.faveurs}}
+											<div class="faveurContact
+														{{#ifgt contact.usedFaveurs
+														@index}}
+														faveur-used
+														{{/ifgt}}
+														">
+											</div>
+										{{/repeat}}
+									</div>
+									<div class="contactControls">
+										<a
+											data-tooltip="supprimer ce contact"
+											class="unassignContact" data-action="unassignContact"
+										>
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</div>
+								</h3>
+								<div class="flexrow">
+									<img
+										class="profile-img"
+										src="{{contact.img}}"
+									/>
+									<div>{{{contact.description}}}</div>
+								</div>
 							</div>
-						</h3>
-						<div class="flexcol">
-							<div class="flexrow">
-								<h4>bloc :</h4>
-								<p>{{cabale.bloc}}</p>
-							</div>
-							<div class="flexrow">
-								<h4>coordonnées :</h4>
-								<p>{{cabale.coordonnes}}</p>
-							</div>
-							<div class="flexrow">
-								<h4>société écran :</h4>
-								<p>{{cabale.societe}}</p>
-							</div>
+						{{/each}}
+
+						{{!-- zone d'ajout, toujours visible --}}
+						<div class="contact">
+							<h3
+								data-tooltip="faites glisser un personnage ou un rouage ici, ou cliquez sur + pour en créer un"
+								class="empty-contact"
+							>Ajouter un contact :
+								<i class="fas fa-add createContact" data-action="createContact"></i>
+							</h3>
 						</div>
-						</div>
-					{{else}}
-						<h4>Aucune Cabale</h4>
-					{{/each}}
 					</div>
-					<p>Faites glisser un acteur de type « cabale » ici pour ajouter ce personnage à une cabale.</p>
 				</div>
 			</div>
 		</div>
