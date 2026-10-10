@@ -427,6 +427,75 @@ export class nocActor extends Actor {
     dial.render(true)
 
   }
+  /**
+   * Étapes de jeu (boutons de la fiche personnage) :
+   * - calme    : Blessures, Trauma, Traque, Noirceur -1 (sans descendre sous le minimum) ;
+   *              Espoir + 1 + Extase (sans dépasser le maximum)
+   * - seance   : Singularité au maximum ; Vécu +1 (sans dépasser le maximum)
+   * - scenario : Espoir au maximum ; faveurs des contacts rendues à la réserve
+   */
+  async etapeDeJeu(etape) {
+    if (this.type !== "personnage") return;
+    const s = this.system;
+    const maj = {};
+    const lignes = [];
+    const nombre = v => Number(v) || 0;
+
+    if (etape === "calme") {
+      for (const perd of ["blessures", "trauma", "traque", "noirceur"]) {
+        const p = s.perditions?.[perd];
+        if (!p) continue;
+        const valeur = nombre(p.value);
+        const nouvelle = Math.max(nombre(p.min), valeur - 1);
+        if (nouvelle !== valeur) {
+          maj[`system.perditions.${perd}.value`] = nouvelle;
+          lignes.push(`${p.label} : ${valeur} → ${nouvelle}`);
+        }
+      }
+      const espoir = s.reserves.espoir;
+      const gain = Math.max(0, 1 + nombre(s.talents?.ame?.extase?.niveau));
+      const nouvelEspoir = Math.min(nombre(espoir.max), nombre(espoir.value) + gain);
+      if (nouvelEspoir !== nombre(espoir.value)) {
+        maj["system.reserves.espoir.value"] = nouvelEspoir;
+        lignes.push(`Espoir : ${nombre(espoir.value)} → ${nouvelEspoir}`);
+      }
+    } else if (etape === "seance") {
+      const sing = s.reserves.singularite;
+      if (nombre(sing.value) !== nombre(sing.max)) {
+        maj["system.reserves.singularite.value"] = nombre(sing.max);
+        lignes.push(`Singularité : ${nombre(sing.value)} → ${nombre(sing.max)}`);
+      }
+      const vecu = s.reserves.vecu;
+      const nouveauVecu = Math.min(nombre(vecu.max), nombre(vecu.value) + 1);
+      if (nouveauVecu !== nombre(vecu.value)) {
+        maj["system.reserves.vecu.value"] = nouveauVecu;
+        lignes.push(`Vécu : ${nombre(vecu.value)} → ${nouveauVecu}`);
+      }
+    } else if (etape === "scenario") {
+      const espoir = s.reserves.espoir;
+      if (nombre(espoir.value) !== nombre(espoir.max)) {
+        maj["system.reserves.espoir.value"] = nombre(espoir.max);
+        lignes.push(`Espoir : ${nombre(espoir.value)} → ${nombre(espoir.max)}`);
+      }
+      const contacts = foundry.utils.deepClone(s.contacts ?? []).filter(c => c && typeof c === "object");
+      if (contacts.some(c => nombre(c.faveurs) || nombre(c.usedFaveurs)) || nombre(s.reserves.faveurs.value)) {
+        for (const c of contacts) { c.faveurs = 0; c.usedFaveurs = 0; }
+        maj["system.contacts"] = contacts;
+        maj["system.reserves.faveurs.value"] = 0;
+        lignes.push("Faveurs : toutes rendues à la réserve");
+      }
+    } else return;
+
+    const titres = { calme: "Moment de calme", seance: "Début de séance", scenario: "Début de scénario" };
+    if (Object.keys(maj).length) await this.update(maj);
+    return ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content: `<h3>${titres[etape]}</h3>` + (lignes.length
+        ? `<ul>${lignes.map(l => `<li>${l}</li>`).join("")}</ul>`
+        : "<p>Aucun changement.</p>")
+    });
+  }
+
   resetContactFaveurs() {
     if (this.type != "personnage") { return false }
     let contactList = foundry.utils.deepClone(this.system.contacts).filter(c => c && typeof c === "object");

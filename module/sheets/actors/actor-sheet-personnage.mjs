@@ -313,6 +313,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
     html.find('a.unassignCabale').click(this.leaveCabale.bind(this));
+    html.find('button.etape-jeu').click(ev => this.actor.etapeDeJeu(ev.currentTarget.dataset.etape));
     html.find('a.progression-plus').click(() => this.changerProgression(1));
     html.find('a.quantars-plus').click(() => this.changerQuantars(1));
     html.find('a.quantars-moins').click(() => this.changerQuantars(-1));

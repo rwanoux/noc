@@ -2054,4 +2054,16 @@ div.app.window-app.nocDialog .skill-roll-dialog,
             margin-left: 4px;
         }
     }
+}
+
+// Fiche personnage : boutons d'étapes de jeu
+div.noc.sheet.actor .etapes-jeu {
+    gap: 4px;
+    margin-top: 10px;
+
+    button.etape-jeu {
+        width: 100%;
+        line-height: 1.8em;
+        font-size: 0.95em;
+    }
 }
