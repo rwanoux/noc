@@ -64,6 +64,7 @@ export class nocRollDialog extends Dialog {
       const distance = r.arme.system.adistance;
       r.niveauFinalRequis = (Number(r.niveauBase) || 0) + (Number(r.modMaitrise) || 0)
         + (distance ? (Number(r.modDistance) || 0) + (Number(r.modCouvert) || 0) : 0)
+        + (Number(r.modVisibilite) || 0)
         + (r.cibleAuSol ? (distance ? 1 : -1) : 0)
         + (Number(r.modSupplement) || 0);
     } else if (this.rollData.niveauRequis !== undefined) {
@@ -115,7 +116,7 @@ export class nocRollDialog extends Dialog {
     html.find('#nbBonusCollaboratif').change((event) => {
       this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
     })
-    html.find('#modDistance, #malusVisibilite').change(() => this.updateNiveauFinal())
+    html.find('#modDistance, #modVisibilite').change(() => this.updateNiveauFinal())
     html.find('#modCouvert').change((event) => {
       this.rollData.modCouvert = Number(event.currentTarget.value)
       this.updateNiveauFinal()

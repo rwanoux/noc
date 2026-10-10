@@ -164,9 +164,10 @@ export class nocUtility {
   static async computeFinalResult(rollData) {
     let actor = game.actors.get(rollData.actorId);
 
-    // malus de visibilité (armes) : s'applique au niveau obtenu
-    rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif + (Number(rollData.malusVisibilite) || 0)
-    if (rollData.niveauFinalRequis !== undefined && rollData.niveauFinalRequis !== null) {
+    rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
+    // un niveau requis de 0 est un vrai niveau requis : la réussite est calculée
+    rollData.aNiveauRequis = rollData.niveauFinalRequis !== undefined && rollData.niveauFinalRequis !== null && rollData.niveauFinalRequis !== "";
+    if (rollData.aNiveauRequis) {
       rollData.margin = Number(rollData.niveauFinal) - Number(rollData.niveauFinalRequis)
       rollData.isReussite = (rollData.margin >= 0)
     }

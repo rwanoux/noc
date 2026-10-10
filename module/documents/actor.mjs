@@ -562,6 +562,9 @@ export class nocActor extends Actor {
       rollData.title = "Arme"
       rollData.mode = "arme"
       rollData.arme = foundry.utils.duplicate(item)
+      // valeurs calculées (formule de dégâts, texte des traits), absentes de la copie brute
+      rollData.arme.system.degats = item.system.degats
+      rollData.arme.system.traits = item.system.traits
       rollData.domaineId = 'action'
       rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
       rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
@@ -572,7 +575,7 @@ export class nocActor extends Actor {
       rollData.longuePortee = !!item.system.traitsArme?.longuePortee
       rollData.modDistance = 0
       rollData.modCouvert = 0
-      rollData.malusVisibilite = 0
+      rollData.modVisibilite = 0
       rollData.cibleAuSol = false
       rollData.modSupplement = 0
       rollData.niveauFinalRequis = rollData.niveauBase + rollData.modMaitrise
