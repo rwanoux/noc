@@ -202,53 +202,25 @@ export class nocActor extends Actor {
     this.system.energieNoire.max = 8 - this.system.classeExo.value;
 
   }
-  async prepareContacts() {
-    let length = 0;
+  prepareContacts() {
+    // Nombre de contacts illimité : on ne garde que les vrais contacts
+    // (les anciens emplacements "vide" sont ignorés).
+    let contacts = Array.isArray(this.system.contacts) ? this.system.contacts : [];
+    contacts = contacts.filter(c => c && typeof c === "object");
+
+    // Les jetons de faveur, eux, restent limités par le talent Contacts.
     let faveur = 0;
-    let contacts = this.system.contacts || [];
     switch (this.system.talents.statut.contact.niveau) {
-      case 0:
-      case -1:
-        length = 0;
-        faveur = 0
-        break;
-
-      case 1:
-        length = 2;
-        faveur = 2
-        break;
-      case 2:
-        length = 3;
-        faveur = 4
-        break;
-      case 3:
-        length = 4
-        faveur = 6
-        break;
-      case 4:
-        length = 5
-        faveur = 8
-        break;
-      case 5:
-        length = 5
-        faveur = 10
-        break;
-
-      default:
-        break;
-    }
-    if (length > contacts.length) {
-      for (let i = contacts.length; i < length; i++) {
-        contacts[i] = "vide";
-      };
-    } else {
-      contacts.splice(length, contacts.length - length + 1)
+      case 1: faveur = 2; break;
+      case 2: faveur = 4; break;
+      case 3: faveur = 6; break;
+      case 4: faveur = 8; break;
+      case 5: faveur = 10; break;
+      default: faveur = 0;
     }
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    this.system.contacts = contacts;
-
   };
   async checkPerditions(update) {
     for (let perd in update.system.perditions) {
@@ -405,9 +377,9 @@ export class nocActor extends Actor {
   }
   resetContactFaveurs() {
     if (this.type != "personnage") { return false }
-    let contactList = this.system.contacts;
+    let contactList = foundry.utils.deepClone(this.system.contacts).filter(c => c && typeof c === "object");
     for (let contact of contactList) {
-      if (contact != "vide") {
+      {
         contact.faveurs = 0;
         contact.usedFaveurs = 0;
       }

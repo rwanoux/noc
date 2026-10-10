@@ -22,8 +22,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
         { dragSelector: "img.quantarQty", dropSelector: "li.item" },
         { dragSelector: "img.quantarUsed", dropSelector: null },
         { dragSelector: ".actor", dropSelector: ".cabale" },
-        { dragSelector: ".actor", dropSelector: ".contact" },
-        { dragSelector: ".faveur", dropSelector: ".contact" },
+        { dragSelector: ".faveur", dropSelector: null },
 
       ],
 
@@ -91,19 +90,25 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   async _onDropActor(ev, data) {
     let dropActor = await Actor.implementation.fromDropData(data);
-    if (!this.actor.isOwner || !dropActor.isOwner) return () => {
-      ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
-      return false
-    };
+    if (!dropActor) return false;
+    if (!this.actor.isOwner) {
+      ui.notifications.warn("Vous n'avez pas de droits sur ce personnage.");
+      return false;
+    }
     switch (dropActor.type) {
       case "cabale":
+        if (!dropActor.isOwner) {
+          ui.notifications.warn("Vous n'avez pas de droits sur cette cabale ; demandez à la Loi de l'affecter.");
+          return false;
+        }
         if (!ev.target.classList.contains("cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
       case "personnage":
       case "rouage":
-        if (!ev.target.classList.contains("empty-contact")) { return };
-        this.setContact(dropActor, ev.target.dataset.contactIndex);
+        // On accepte le dépôt n'importe où dans la zone des contacts
+        if (!ev.target.closest(".contacts")) { return };
+        this.setContact(dropActor);
         break;
       default:
         return false
@@ -151,21 +156,22 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     })
   }
   async affectFaveur(ev, data) {
-    if (!ev.currentTarget.classList.contains("contact")) { return }
-    let contactIndex = ev.currentTarget.dataset.contactIndex;
-    let contactList = this.actor.system.contacts;
-    if (contactList[contactIndex] == "vide") { return };
+    const contactEl = ev.target.closest(".contact[data-contact-index]");
+    if (!contactEl) { return }
+    let contactIndex = contactEl.dataset.contactIndex;
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    if (!contactList[contactIndex]) { return };
     let sumFav = (acc, contact) => {
       let tot = acc + (contact.faveurs || 0);
       return tot;
     }
 
-    let totalFaveursContact = contactList.reduce(sumFav, 0);
-    if (totalFaveursContact >= this.actor.system.reserves.faveurs.max) {
+    // la réserve compte les jetons déjà distribués
+    if ((this.actor.system.reserves.faveurs.value || 0) >= this.actor.system.reserves.faveurs.max) {
       return ui.notifications.warn(`${this.actor.name} n'a plus de faveur disponibles`)
     }
     let newFav = this.actor.system.reserves.faveurs.value + 1
-    contactList[contactIndex].faveurs++;
+    contactList[contactIndex].faveurs = (contactList[contactIndex].faveurs || 0) + 1;
     await this.actor.update({
       "system.contacts": contactList,
       "system.reserves.faveurs.value": newFav
@@ -381,7 +387,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     effect.delete();
   }
   async createContact(ev) {
-    let contactIndex = ev.currentTarget.closest("h3.empty-contact").dataset.contactIndex;
     let dial = new Dialog({
       title: `nouveau contact`,
       content: `
@@ -416,7 +421,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
                 description: desc
               }
             });
-            return this.setContact(newContact, contactIndex)
+            return this.setContact(newContact)
 
           }
         },
@@ -499,10 +504,12 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     return ChatMessage.create(chatData);
   }
   async applyFaveurs(contactIndex, value) {
-    let contactList = this.actor.system.contacts;
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
     let contact = contactList[contactIndex];
-
-    contact.usedFaveurs += value;
+    if (!contact) return;
+    // la valeur saisie arrive sous forme de texte : on la convertit en nombre
+    let used = (Number(contact.usedFaveurs) || 0) + (Number(value) || 0);
+    contact.usedFaveurs = Math.min(used, contact.faveurs || 0);
 
     await this.actor.update({
       "system.contacts": contactList,
@@ -674,9 +681,24 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
     }).render(true);
   };
-  async setContact(actor, index) {
-    let contactList = this.actor.system.contacts;
-    contactList[index] = new NOCContact(actor.id);
+  async setContact(actor) {
+    if (!actor || !["personnage", "rouage"].includes(actor.type)) return;
+    if (actor.id === this.actor.id) {
+      return ui.notifications.warn("Un personnage ne peut pas être son propre contact.");
+    }
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    if (contactList.some(c => c.id === actor.id)) {
+      return ui.notifications.info(`${actor.name} fait déjà partie des contacts.`);
+    }
+    contactList.push({
+      id: actor.id,
+      uuid: actor.uuid,
+      nom: actor.name,
+      img: actor.img,
+      description: actor.system.description ?? "",
+      faveurs: 0,
+      usedFaveurs: 0
+    });
     await this.actor.update({
       "system.contacts": contactList
     })
@@ -699,9 +721,13 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
-    let contactList = this.actor.system.contacts;
-    let newFav = this.actor.system.reserves.faveurs.value - contactList[contactIndex].faveurs
-    contactList[contactIndex] = "vide";
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    let removed = contactList[contactIndex];
+    if (!removed) return;
+    // les jetons non encore utilisés retournent dans la réserve
+    let rendus = (removed.faveurs || 0) - (removed.usedFaveurs || 0);
+    let newFav = Math.max(0, this.actor.system.reserves.faveurs.value - rendus);
+    contactList.splice(contactIndex, 1);
     await this.actor.update({
       "system.contacts": contactList,
       "system.reserves.faveurs.value": newFav
