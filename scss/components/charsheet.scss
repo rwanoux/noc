@@ -1378,7 +1378,8 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
     gap: 8px;
     padding: 8px 10px 10px;
     overflow: hidden;
-    background-position: 0% 50%;
+    // la bande noire de l'image de fond, au centre, sert de séparation
+    background-position: 50% 50%;
 
     // titres de bloc : discrets et alignés à gauche
     h2 {
@@ -1396,7 +1397,7 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
     .signalement-bas {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 10px;
+        gap: 8px 30px; // espace central pour la bande noire
         padding: 0;
     }
 
