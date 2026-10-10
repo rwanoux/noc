@@ -1338,4 +1338,29 @@ div.noc.sheet.actor h3.progression {
             opacity: 1;
         }
     }
+}
+
+// résumé du personnage : libellé au-dessus, valeur en dessous
+div.noc.sheet.actor .form-group.bloc-empile {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    > div {
+        width: 100%;
+        flex: 0 0 auto !important;
+    }
+
+    .archetype-resume,
+    .theme-resume {
+        justify-content: space-between;
+        padding-left: 0.5em;
+
+        .item-name {
+            flex: 1;
+        }
+
+        .item-control {
+            flex: 0 0 auto;
+        }
+    }
 }
