@@ -13,6 +13,7 @@
  * tant qu'elle n'a pas été modifiée, la liste par défaut ci-dessous est utilisée.
  * Les effets actifs sont enregistrés par niveau de Menace dans noc.compteurFiel.effetActif.
  */
+import { talentsDuSysteme, domainesDuSysteme } from "../archetypes.mjs";
 
 const m = (talent, valeur = -1, portee = "tous") => ({ talent, valeur, portee });
 const tous = (...talents) => talents.map(t => m(t));
@@ -232,9 +233,8 @@ const majuscule = t => String(t ?? "").charAt(0).toUpperCase() + String(t ?? "")
 
 /** Domaines et talents proposés dans l'éditeur ("domaine.action" vise le domaine lui-même) */
 export function listeTalents() {
-  const modele = game.system.template?.Actor?.personnage ?? {};
-  const talents = modele.talents ?? {};
-  const domaines = modele.domaines ?? {};
+  const talents = talentsDuSysteme();
+  const domaines = domainesDuSysteme();
   return Object.entries(talents).map(([dom, liste]) => {
     const nomDomaine = majuscule(domaines[dom]?.label ?? dom);
     return {

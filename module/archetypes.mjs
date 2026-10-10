@@ -13,8 +13,17 @@
 
 /** Liste des talents du système : { domaine: { talent: {label} } } */
 export function talentsDuSysteme() {
-  return game.system.template?.Actor?.personnage?.talents
-    ?? game.model?.Actor?.personnage?.talents
+  return game.model?.Actor?.personnage?.talents
+    ?? game.system.template?.Actor?.templates?.talents?.talents
+    ?? game.actors?.find(a => a.type === "personnage")?.system.talents
+    ?? {};
+}
+
+/** Domaines du système (avec leur libellé) */
+export function domainesDuSysteme() {
+  return game.model?.Actor?.personnage?.domaines
+    ?? game.system.template?.Actor?.templates?.domaines?.domaines
+    ?? game.actors?.find(a => a.type === "personnage")?.system.domaines
     ?? {};
 }
 
