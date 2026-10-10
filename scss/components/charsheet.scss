@@ -2056,14 +2056,26 @@ div.app.window-app.nocDialog .skill-roll-dialog,
     }
 }
 
-// Fiche personnage : boutons d'étapes de jeu
-div.noc.sheet.actor .etapes-jeu {
-    gap: 4px;
-    margin-top: 10px;
+// Fiche personnage : boutons d'étapes de jeu, barre en bas de l'onglet principal
+div.noc.sheet.actor.personnage section.window-content > form.personnage > section.sheet-body > .tab.principal.active {
+    display: flex;
+    flex-direction: column;
 
-    button.etape-jeu {
-        width: 100%;
-        line-height: 1.8em;
-        font-size: 0.95em;
+    > .flexrow {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    > .etapes-jeu {
+        flex: 0 0 auto;
+        gap: 6px;
+        padding: 4px 8px 6px;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
+
+        button.etape-jeu {
+            flex: 1 1 0;
+            margin: 0;
+            line-height: 2em;
+        }
     }
 }
