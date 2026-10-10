@@ -35,6 +35,12 @@ export class nocItemSheetOutil extends foundry.appv1.sheets.ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Roll handlers, click handlers, etc. would go here.
+    html.find("a.limite-plus").click(() => this.changerLimite(1));
+    html.find("a.limite-moins").click(() => this.changerLimite(-1));
+  }
+
+  async changerLimite(ecart) {
+    const valeur = Math.max(0, (Number(this.item._source.system.limite) || 0) + ecart);
+    return this.item.update({ "system.limite": valeur });
   }
 }

@@ -146,6 +146,19 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
     return this.actor.createEmbeddedDocuments("Item", [itemData]);
   }
+  async _onClickQuantarObjet(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const itemId = ev.currentTarget.closest("[data-item-id]")?.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    if (!item) return;
+    if (item.system.quantar) return item.update({ "system.quantar": false });
+    const utilises = this.actor.items.filter(i => i.system.quantar).length;
+    if (utilises >= (Number(this.actor.system.quantars) || 0)) {
+      return ui.notifications.warn("Aucun quantar disponible : libérez-en un sur un autre objet ou augmentez le nombre de quantars possédés.");
+    }
+    return item.update({ "system.quantar": true });
+  }
   async _onDropQuantar(ev, data) {
     let item = await this.actor.getEmbeddedDocument('Item', ev.currentTarget.dataset.itemId);
     if (!item) { return false };
@@ -281,6 +294,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       this.actor.rollTalent(domaineId, talentId);
     })
     // ROll d'item
+    // icône de quantar d'un objet : un clic l'équipe ou le libère
+    html.find('img.needQuantar').click(this._onClickQuantarObjet.bind(this));
     html.find('.roll-item').click(ev => {
       let itemId = $(ev.currentTarget).data("item-id");
       const item = this.actor.items.get(itemId);

@@ -1585,7 +1585,7 @@ div.noc.sheet.actor.personnage section.window-content > form.personnage > sectio
 }
 
 // rond de valeur avec boutons +/- au survol (quantars)
-div.noc.sheet.actor span.compteur-niveau {
+div.noc.sheet span.compteur-niveau {
     position: relative;
     flex: 0 0 22px;
     width: 22px;
@@ -1886,4 +1886,42 @@ div.noc.sheet.actor.autre {
             }
         }
     }
+}
+
+// Quantars : état bien visible sur les objets qui en ont besoin
+div.noc.sheet.actor {
+    li.item img.needQuantar {
+        cursor: pointer;
+        max-height: 1.6em !important;
+        border-radius: 50% !important;
+        filter: grayscale(1) brightness(0.7) !important;
+        opacity: 0.6;
+        box-shadow: 0 0 0 2px #8a1c1c, 0 0 6px #8a1c1c !important;
+        transition: all 0.2s;
+
+        &.quantarUsed {
+            filter: none !important;
+            opacity: 1;
+            box-shadow: 0 0 0 2px #d2ce01, 0 0 10px 2px #f5e663 !important;
+        }
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
+
+    // objet inutilisable faute de quantar : grisé, nom barré
+    li.item.unavalaible {
+        opacity: 0.65;
+
+        .item-name a {
+            text-decoration: line-through;
+            text-decoration-color: #8a1c1c;
+        }
+    }
+}
+
+// Fiches d'objets : compteur aligné dans sa ligne
+div.noc.item.sheet .form-group span.compteur-niveau {
+    flex: 0 0 22px;
 }
