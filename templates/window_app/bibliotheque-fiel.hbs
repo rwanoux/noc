@@ -1,0 +1,98 @@
+<div class="bibliotheque-contenu">
+  <!-- LISTE -->
+  <aside class="liste-effets">
+    <div class="barre flexrow">
+      <button type="button" data-action="ajouter"><i class="fa-solid fa-plus"></i> Nouvel effet</button>
+    </div>
+    {{#each groupes as |g|}}
+    <h4>{{g.categorie}}</h4>
+    <ul>
+      {{#each g.effets as |e|}}
+      <li class="{{#if e.actif}}actif{{/if}}"><a data-action="choisir" data-id="{{e.id}}">{{e.nom}}</a></li>
+      {{/each}}
+    </ul>
+    {{/each}}
+  </aside>
+
+  <!-- ÉDITION -->
+  <section class="edition">
+    {{#if effet}}
+    <div class="ligne flexrow">
+      <label>Nom</label>
+      <input type="text" data-champ="nom" value="{{effet.nom}}">
+    </div>
+    <div class="ligne flexrow">
+      <label>Catégorie</label>
+      <input type="text" data-champ="categorie" value="{{effet.categorie}}" list="noc-categories-fiel">
+      <datalist id="noc-categories-fiel">
+        {{#each categories as |c|}}<option value="{{c}}">{{/each}}
+        <option value="Scénario">
+      </datalist>
+    </div>
+    <label>Description <em>(affichée aux joueurs)</em></label>
+    <textarea data-champ="description" rows="5">{{effet.description}}</textarea>
+
+    <h4 class="flexrow"><span>Malus et bonus de talents (tant que l'effet est actif)</span>
+      <a data-action="ajouterModificateur" data-tooltip="ajouter"><i class="fa-solid fa-plus"></i></a></h4>
+    {{#each modificateurs as |mod|}}
+    <div class="ligne-modificateur flexrow">
+      <select data-champ="talent">
+        {{#each @root.talents as |g|}}
+        <optgroup label="{{g.domaine}}">
+          {{#each g.talents as |t|}}<option value="{{t.cle}}" {{#if (eq t.cle mod.talent)}}selected{{/if}}>{{t.label}}</option>{{/each}}
+        </optgroup>
+        {{/each}}
+      </select>
+      <input type="number" data-champ="valeur" value="{{mod.valeur}}">
+      <select data-champ="portee">
+        {{#each @root.portees as |label cle|}}<option value="{{cle}}" {{#if (eq cle mod.portee)}}selected{{/if}}>{{label}}</option>{{/each}}
+      </select>
+      <a data-action="retirerLigne" data-liste="modificateurs" data-index="{{mod.index}}"><i class="fa-solid fa-trash"></i></a>
+    </div>
+    {{else}}<p class="vide">Aucun</p>{{/each}}
+
+    <h4 class="flexrow"><span>Effets immédiats (sur les Héros ciblés, à l'activation)</span>
+      <a data-action="ajouterImmediat" data-tooltip="ajouter"><i class="fa-solid fa-plus"></i></a></h4>
+    {{#each immediats as |imm|}}
+    <div class="ligne-immediat flexrow">
+      <select data-champ="type">
+        {{#each @root.types as |def cle|}}<option value="{{cle}}" {{#if (eq cle imm.type)}}selected{{/if}}>{{def.label}}</option>{{/each}}
+      </select>
+      {{#if imm.avecCle}}
+      <select data-champ="cle">
+        {{#each imm.cles as |label cle|}}<option value="{{cle}}" {{#if (eq cle imm.cle)}}selected{{/if}}>{{label}}</option>{{/each}}
+      </select>
+      {{/if}}
+      {{#if imm.avecValeur}}<input type="number" data-champ="valeur" value="{{imm.valeur}}">{{/if}}
+      {{#if imm.avecReduction}}
+      <label class="petit"><input type="checkbox" data-champ="reduction" {{#if imm.reduction}}checked{{/if}}> réduction</label>
+      {{/if}}
+      <a data-action="retirerLigne" data-liste="immediats" data-index="{{imm.index}}"><i class="fa-solid fa-trash"></i></a>
+    </div>
+    {{else}}<p class="vide">Aucun</p>{{/each}}
+
+    <h4>Aggravations (+1 quand un Héros en subit au moins 1, tant que l'effet est actif)</h4>
+    <div class="aggravations flexrow">
+      <label><input type="checkbox" data-champ="aggravation" data-cle="blessures" {{#if effet.aggravations.blessures}}checked{{/if}}> Blessures</label>
+      <label><input type="checkbox" data-champ="aggravation" data-cle="trauma" {{#if effet.aggravations.trauma}}checked{{/if}}> Trauma</label>
+      <label><input type="checkbox" data-champ="aggravation" data-cle="noirceur" {{#if effet.aggravations.noirceur}}checked{{/if}}> Noirceur</label>
+      <label><input type="checkbox" data-champ="aggravation" data-cle="traque" {{#if effet.aggravations.traque}}checked{{/if}}> Traque</label>
+    </div>
+
+    <label>Notes pour le MJ <em>(effets à gérer à la main)</em></label>
+    <textarea data-champ="notes" rows="2">{{effet.notes}}</textarea>
+
+    <div class="barre flexrow">
+      <button type="button" data-action="dupliquer"><i class="fa-solid fa-copy"></i> Dupliquer</button>
+      <button type="button" data-action="supprimer"><i class="fa-solid fa-trash"></i> Supprimer</button>
+    </div>
+    {{else}}
+    <p>Choisissez un effet dans la liste, ou créez-en un.</p>
+    {{/if}}
+  </section>
+
+  <footer class="pied flexrow">
+    <button type="button" data-action="retablir"><i class="fa-solid fa-rotate-left"></i> Rétablir la liste par défaut</button>
+    <button type="button" data-action="enregistrer" class="{{#if modifie}}a-enregistrer{{/if}}"><i class="fa-solid fa-floppy-disk"></i> Enregistrer{{#if modifie}} les modifications{{/if}}</button>
+  </footer>
+</div>

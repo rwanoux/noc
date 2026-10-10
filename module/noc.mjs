@@ -34,7 +34,8 @@ import { migrerCreatures } from "./creatures.mjs";
 import { migrerAutres } from "./autres.mjs";
 import { migrerArmures } from "./armures.mjs";
 import { migrerArmes } from "./armes.mjs";
-import { enregistrerBoutonPanneau, ouvrirPanneauMJ } from "./panneau-mj.mjs";
+import { enregistrerBoutonPanneau, enregistrerSuiviMenace, ouvrirPanneauMJ } from "./panneau-mj.mjs";
+import { ouvrirBibliothequeFiel } from "./fiel/editeur-bibliotheque.mjs";
 
 
 
@@ -67,9 +68,11 @@ Hooks.once('init', async function () {
     nocActor,
     nocItem,
     rollItemMacro,
-    panneauMJ: ouvrirPanneauMJ
+    panneauMJ: ouvrirPanneauMJ,
+    bibliothequeFiel: ouvrirBibliothequeFiel
   };
   enregistrerBoutonPanneau();
+  enregistrerSuiviMenace();
 
   // Add custom constants for configuration.
   CONFIG.NOC = NOC;

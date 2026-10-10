@@ -72,10 +72,12 @@ export default class CompteurFiel extends FormApplication {
     }
     caclculMenace() {
         let oldValue = this.object.menace
-        this.object.menace = Math.trunc(this.object.gouttes / 5);
         this.object.gouttes = Math.max(0, Math.min(35, this.object.gouttes));
-        if (oldValue < this.object.menace) {
-            new effetFielCreator().render(true)
+        this.object.menace = Math.trunc(this.object.gouttes / 5);
+        // nouvelle Menace : le MJ choisit l'effet de Fiel dans son panneau
+        if (oldValue < this.object.menace && game.user.isGM) {
+            ui.notifications.info(`Menace ${this.object.menace} : choisissez un effet de Fiel dans le panneau du MJ.`);
+            game.noc?.panneauMJ?.();
         }
 
     }
@@ -98,7 +100,8 @@ export default class CompteurFiel extends FormApplication {
 
     }
     async openEffectCreator(ev) {
-        new effetFielCreator().render(true)
+        // les effets de Fiel se gèrent désormais depuis le panneau du MJ
+        game.noc?.panneauMJ?.();
     }
 
 }

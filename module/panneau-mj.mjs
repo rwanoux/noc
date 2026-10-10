@@ -3,6 +3,9 @@
  * Fenêtre réservée au MJ (ApplicationV2), ouverte depuis la barre d'outils.
  */
 
+import { bibliotheque, effetParId, effetsActifs } from "./fiel/bibliotheque.mjs";
+import { ouvrirBibliothequeFiel } from "./fiel/editeur-bibliotheque.mjs";
+
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /** Perditions et talent qui en réduit l'effet (d'après le livre de base) */
@@ -11,17 +14,6 @@ export const PERDITIONS = {
   trauma: { label: "Trauma", reduction: { domaine: "ame", talent: "folie", label: "Folie" } },
   noirceur: { label: "Noirceur", reduction: { domaine: "vie", talent: "lumiere", label: "Lumière" } },
   traque: { label: "Traque", reduction: { domaine: "statut", talent: "façade", label: "Façade" } }
-};
-
-/** Effets de Fiel (CONFIG.NOC.effetsFiel) et leur application mécanique */
-const EFFETS_FIEL = {
-  "Fatigue": { cle: "fatigue" },
-  "Intervention de l’Artefact": { cle: "artefact", perdition: "noirceur", points: 2 },
-  "Tension": { cle: "tension", perdition: "trauma", points: 2 },
-  "Traque": { cle: "traque", perdition: "traque", points: 2 },
-  "Bouleversement administratif": { cle: "bouleversement" },
-  "Coup du sort": { cle: "coupDuSort" },
-  "Événement inattendu": { cle: "evenement" }
 };
 
 const nombre = v => Number(v) || 0;
@@ -49,6 +41,88 @@ export async function fixerFiel(gouttes) {
 export function etatFiel() {
   const fiel = game.settings.get("noc", "compteurFiel") ?? {};
   return { gouttes: nombre(fiel.gouttes), menace: nombre(fiel.menace) };
+}
+
+/* -------------------------------------------- */
+/*  Effets de Fiel actifs par niveau de Menace   */
+/* -------------------------------------------- */
+
+async function enregistrerEffetsActifs(modifier) {
+  const fiel = foundry.utils.deepClone(game.settings.get("noc", "compteurFiel") ?? {});
+  fiel.effetActif = fiel.effetActif && typeof fiel.effetActif === "object" ? fiel.effetActif : {};
+  modifier(fiel.effetActif);
+  await game.settings.set("noc", "compteurFiel", fiel);
+  if (ui.compteur) { ui.compteur.object = fiel; ui.compteur.render(true); }
+  game.socketManager?.launchSocket("renderCompteur", {});
+}
+
+/** Arrête l'effet de Fiel d'un niveau de Menace */
+export async function arreterEffet(niveau, raison = "") {
+  const actif = effetsActifs().find(e => e.niveau === Number(niveau));
+  if (!actif) return;
+  await enregistrerEffetsActifs(liste => { delete liste[`niveau${niveau}`]; });
+  await message(`Fin de l'effet de Fiel : ${actif.effet.nom}`, [], { public: true, texte: raison });
+}
+
+/** Arrête les effets dont le niveau dépasse la Menace actuelle */
+export async function arreterEffetsAuDessus(menace) {
+  for (const { niveau } of effetsActifs()) {
+    if (niveau > menace) await arreterEffet(niveau, `La Menace est redescendue sous le niveau ${niveau}.`);
+  }
+}
+
+/** Active un effet de la bibliothèque au niveau donné et applique ses effets immédiats */
+export async function activerEffet(niveau, effet, heros) {
+  if (effetsActifs().some(e => e.niveau === Number(niveau))) await arreterEffet(niveau, "Remplacé par un nouvel effet.");
+  const copie = foundry.utils.deepClone(effet);
+  await enregistrerEffetsActifs(liste => {
+    liste[`niveau${niveau}`] = {
+      id: `niveau${niveau}`, niveau: Number(niveau), name: `${copie.nom} (Menace ${niveau})`,
+      description: copie.description, gmNotes: copie.notes ?? "", effet: copie
+    };
+  });
+  const lignes = [];
+  for (const imm of copie.immediats ?? []) {
+    if (imm.type === "perdition") {
+      for (const a of heros) lignes.push(await modifierPerdition(a, imm.cle, Math.abs(nombre(imm.valeur)), { soigner: nombre(imm.valeur) < 0, reduire: imm.reduction !== false }));
+    } else if (imm.type === "reserve") {
+      for (const a of heros) {
+        const r = a.system.reserves?.[imm.cle];
+        if (!r) continue;
+        const avant = nombre(r.value);
+        const apres = Math.max(0, Math.min(nombre(r.max) || 10, avant + nombre(imm.valeur)));
+        if (apres !== avant) await a.update({ [`system.reserves.${imm.cle}.value`]: apres });
+        lignes.push(`${a.name} — ${r.label ?? imm.cle} : ${avant} → ${apres}`);
+      }
+    } else if (imm.type === "fatigue") {
+      for (const a of heros) {
+        const espoir = nombre(a.system.reserves?.espoir?.value);
+        if (espoir > 0) {
+          await a.update({ "system.reserves.espoir.value": espoir - 1 });
+          lignes.push(`${a.name} — Espoir : ${espoir} → ${espoir - 1}`);
+        } else {
+          await a.setFlag("noc", "fatigue", true);
+          lignes.push(`${a.name} — fatigué : −1 à tous ses talents jusqu'au prochain moment de calme`);
+        }
+      }
+    } else if (imm.type === "cabale") {
+      const cabales = new Map();
+      for (const a of heros) for (const c of a.cabalesActeurs ?? []) cabales.set(c.id, c);
+      for (const c of cabales.values()) {
+        const p = c.system.perditions?.[imm.cle];
+        if (!p) continue;
+        const avant = nombre(p.value);
+        const apres = Math.max(nombre(p.min), Math.min(nombre(p.max) || 10, avant + nombre(imm.valeur)));
+        if (apres !== avant) await c.update({ [`system.perditions.${imm.cle}.value`]: apres });
+        lignes.push(`${c.name} — ${p.label} : ${avant} → ${apres}`);
+      }
+    } else if (imm.type === "menace") {
+      const { avant, apres } = await fixerFiel(etatFiel().gouttes + 5 * nombre(imm.valeur));
+      lignes.push(`Menace : ${avant.menace} → ${apres.menace}`);
+    }
+  }
+  await message(`Effet de Fiel (Menace ${niveau}) : ${copie.nom}`, lignes, { public: true, texte: copie.description });
+  if (copie.notes) await message(`Notes pour la Loi : ${copie.nom}`, [copie.notes]);
 }
 
 /* -------------------------------------------- */
@@ -119,12 +193,16 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     classes: ["noc", "panneau-mj"],
     tag: "div",
     window: { title: "Panneau du MJ", icon: "fa-solid fa-sliders", resizable: true },
-    position: { width: 560, height: "auto" },
+    position: { width: 620, height: "auto" },
     actions: {
       infliger: PanneauMJ.#onInfliger,
       soigner: PanneauMJ.#onSoigner,
+      points: PanneauMJ.#onPoints,
       fiel: PanneauMJ.#onFiel,
-      effetFiel: PanneauMJ.#onEffetFiel,
+      tirerEffet: PanneauMJ.#onTirerEffet,
+      appliquerEffet: PanneauMJ.#onAppliquerEffet,
+      arreterEffet: PanneauMJ.#onArreterEffet,
+      bibliotheque: () => ouvrirBibliothequeFiel(),
       leverEtat: PanneauMJ.#onLeverEtat,
       etapeMJ: PanneauMJ.#onEtapeMJ,
       toutCocher: PanneauMJ.#onToutCocher
@@ -138,6 +216,10 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
   /** identifiants des acteurs cochés (par défaut : tous les personnages) */
   cibles = null;
   reductions = true;
+  points = { blessures: 1, trauma: 1, noirceur: 1, traque: 1 };
+  /** effet choisi (non encore appliqué) pour chaque niveau de Menace */
+  choix = {};
+  categorie = "";
 
   _personnages() {
     return game.actors.filter(a => a.type === "personnage");
@@ -147,6 +229,26 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     const personnages = this._personnages();
     if (this.cibles === null) this.cibles = new Set(personnages.map(a => a.id));
     const selection = canvas?.tokens?.controlled?.map(t => t.actor).filter(Boolean) ?? [];
+    const fiel = etatFiel();
+    const biblio = bibliotheque();
+    const categories = [...new Set(biblio.map(e => e.categorie || "Sans catégorie"))];
+    const actifs = effetsActifs();
+    const niveaux = [];
+    for (let n = 1; n <= 7; n++) {
+      const actif = actifs.find(e => e.niveau === n)?.effet ?? null;
+      const choisi = this.choix[n] ?? "";
+      niveaux.push({
+        niveau: n,
+        atteint: fiel.menace >= n,
+        actif: actif ? { nom: actif.nom, description: actif.description, notes: actif.notes } : null,
+        choisi,
+        groupes: categories.map(c => ({
+          categorie: c,
+          effets: biblio.filter(e => (e.categorie || "Sans catégorie") === c)
+            .map(e => ({ id: e.id, nom: e.nom, selectionne: e.id === choisi }))
+        }))
+      });
+    }
     return {
       personnages: personnages.map(a => ({
         id: a.id, nom: a.name, img: a.img,
@@ -156,10 +258,12 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
         bouleversement: !!a.flags?.noc?.bouleversement
       })),
       nbSelection: selection.length,
-      perditions: Object.entries(PERDITIONS).map(([cle, d]) => ({ cle, label: d.label, reduction: d.reduction?.label })),
+      perditions: Object.entries(PERDITIONS).map(([cle, d]) => ({ cle, label: d.label, reduction: d.reduction?.label, points: this.points[cle] ?? 1 })),
       reductions: this.reductions,
-      fiel: etatFiel(),
-      effetsFiel: (CONFIG.NOC.effetsFiel ?? []).map(e => ({ nom: e.name, description: e.description, connu: !!EFFETS_FIEL[e.name] }))
+      fiel,
+      niveaux,
+      categories,
+      categorie: this.categorie
     };
   }
 
@@ -171,29 +275,34 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
       if (ev.currentTarget.checked) this.cibles.add(id); else this.cibles.delete(id);
     }));
     html.querySelector("input.reductions")?.addEventListener("change", ev => { this.reductions = ev.currentTarget.checked; });
+    html.querySelectorAll("select.choix-effet").forEach(sel => sel.addEventListener("change", ev => {
+      this.choix[ev.currentTarget.dataset.niveau] = ev.currentTarget.value;
+    }));
+    html.querySelector("select.categorie-tirage")?.addEventListener("change", ev => { this.categorie = ev.currentTarget.value; });
   }
 
   /** Acteurs ciblés : cochés, plus les jetons sélectionnés si demandé */
-  _cibles() {
+  _cibles({ avertir = true } = {}) {
     const acteurs = [...(this.cibles ?? [])].map(id => game.actors.get(id)).filter(Boolean);
     const avecSelection = this.element.querySelector("input.avec-selection")?.checked;
     if (avecSelection) {
       for (const t of canvas?.tokens?.controlled ?? []) if (t.actor && !acteurs.includes(t.actor)) acteurs.push(t.actor);
     }
-    if (!acteurs.length) ui.notifications.warn("Aucun personnage ciblé.");
+    if (!acteurs.length && avertir) ui.notifications.warn("Aucun personnage ciblé.");
     return acteurs;
   }
 
-  _valeur(perdition) {
-    return nombre(this.element.querySelector(`input.points[data-perdition="${perdition}"]`)?.value);
+  static #onPoints(event, target) {
+    const cle = target.dataset.perdition;
+    this.points[cle] = Math.max(1, Math.min(10, (this.points[cle] ?? 1) + nombre(target.dataset.delta)));
+    this.render();
   }
 
   static async #onInfliger(event, target) { return this._perditions(target.dataset.perdition, false); }
   static async #onSoigner(event, target) { return this._perditions(target.dataset.perdition, true); }
 
   async _perditions(perdition, soigner) {
-    const points = this._valeur(perdition);
-    if (!points) return ui.notifications.warn("Indiquez un nombre de points.");
+    const points = this.points[perdition] ?? 1;
     const lignes = [];
     for (const a of this._cibles()) lignes.push(await modifierPerdition(a, perdition, points, { soigner, reduire: this.reductions }));
     if (!lignes.length) return;
@@ -218,33 +327,27 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     this.render();
   }
 
-  static async #onEffetFiel(event, target) {
-    const nom = target.dataset.effet;
-    const def = EFFETS_FIEL[nom];
-    const config = (CONFIG.NOC.effetsFiel ?? []).find(e => e.name === nom);
-    const lignes = [];
-    const acteurs = def?.cle === "coupDuSort" || def?.cle === "evenement" ? [] : this._cibles();
-    if (def?.perdition) {
-      for (const a of acteurs) lignes.push(await modifierPerdition(a, def.perdition, def.points, { reduire: this.reductions }));
-    } else if (def?.cle === "fatigue") {
-      for (const a of acteurs) {
-        const espoir = nombre(a.system.reserves?.espoir?.value);
-        if (espoir > 0) {
-          await a.update({ "system.reserves.espoir.value": espoir - 1 });
-          lignes.push(`${a.name} — Espoir : ${espoir} → ${espoir - 1}`);
-        } else {
-          await a.setFlag("noc", "fatigue", true);
-          lignes.push(`${a.name} — fatigué : −1 à tous ses talents jusqu'au prochain moment de calme`);
-        }
-      }
-    } else if (def?.cle === "bouleversement") {
-      for (const a of acteurs) {
-        await a.setFlag("noc", "bouleversement", true);
-        lignes.push(`${a.name} — talents de Statut −1, contacts inaccessibles`);
-      }
-    }
-    // effets de Fiel : message visible par tous
-    await message(`Effet de Fiel : ${nom}`, lignes, { public: true, texte: config?.description ?? "" });
+  static #onTirerEffet(event, target) {
+    const n = target.dataset.niveau;
+    const candidats = bibliotheque().filter(e => !this.categorie || (e.categorie || "Sans catégorie") === this.categorie);
+    if (!candidats.length) return ui.notifications.warn("Aucun effet dans cette catégorie.");
+    const effet = candidats[Math.floor(Math.random() * candidats.length)];
+    this.choix[n] = effet.id;
+    this.render();
+  }
+
+  static async #onAppliquerEffet(event, target) {
+    const n = Number(target.dataset.niveau);
+    const effet = effetParId(this.choix[n]);
+    if (!effet) return ui.notifications.warn("Choisissez ou tirez d'abord un effet.");
+    const heros = this._cibles({ avertir: false }).filter(a => a.type === "personnage");
+    await activerEffet(n, effet, heros);
+    delete this.choix[n];
+    this.render();
+  }
+
+  static async #onArreterEffet(event, target) {
+    await arreterEffet(Number(target.dataset.niveau), "Arrêté par la Loi.");
     this.render();
   }
 
@@ -274,6 +377,15 @@ export function ouvrirPanneauMJ() {
   if (!game.user.isGM) return ui.notifications.warn("Le panneau est réservé au MJ.");
   ui.nocPanneauMJ ??= new PanneauMJ();
   return ui.nocPanneauMJ.render({ force: true });
+}
+
+/** Le MJ arrête automatiquement les effets au-dessus de la Menace quand elle baisse */
+export function enregistrerSuiviMenace() {
+  Hooks.on("updatedFiel", async () => {
+    if (!game.user.isGM) return;
+    await arreterEffetsAuDessus(etatFiel().menace);
+    if (ui.nocPanneauMJ?.rendered) ui.nocPanneauMJ.render();
+  });
 }
 
 /** Bouton dans la barre d'outils des jetons (MJ uniquement) */

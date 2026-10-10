@@ -38,7 +38,11 @@
       {{#each perditions as |p|}}
       <div class="perdition-ligne">
         <span class="libelle">{{p.label}}{{#if p.reduction}} <em>(− {{p.reduction}})</em>{{/if}}</span>
-        <input type="number" class="points" data-perdition="{{p.cle}}" value="1" min="0" max="10">
+        <span class="points-ligne">
+          <a data-action="points" data-perdition="{{p.cle}}" data-delta="-1" data-tooltip="−1"><i class="fa-solid fa-minus"></i></a>
+          <strong class="points">{{p.points}}</strong>
+          <a data-action="points" data-perdition="{{p.cle}}" data-delta="1" data-tooltip="+1"><i class="fa-solid fa-plus"></i></a>
+        </span>
         <button type="button" data-action="infliger" data-perdition="{{p.cle}}">Infliger</button>
         <button type="button" data-action="soigner" data-perdition="{{p.cle}}">Soigner</button>
       </div>
@@ -66,15 +70,43 @@
 
   <!-- EFFETS DE FIEL -->
   <section class="bloc">
-    <h3>Effets de Fiel <em class="aide">(appliqués aux personnages ciblés ; message visible par tous)</em></h3>
-    <div class="grille-effets">
-      {{#each effetsFiel as |e|}}
-      <button type="button" data-action="effetFiel" data-effet="{{e.nom}}" data-tooltip="{{e.description}}">{{e.nom}}</button>
+    <h3 class="flexrow">
+      <span>Effets de Fiel par niveau de Menace</span>
+      <a data-action="bibliotheque" data-tooltip="ouvrir la bibliothèque des effets"><i class="fa-solid fa-book"></i> Bibliothèque</a>
+    </h3>
+    <label class="option">
+      Tirage au sort parmi :
+      <select class="categorie-tirage">
+        <option value="" {{#unless categorie}}selected{{/unless}}>toutes les catégories</option>
+        {{#each categories as |c|}}<option value="{{c}}" {{#if (eq c @root.categorie)}}selected{{/if}}>{{c}}</option>{{/each}}
+      </select>
+    </label>
+    <div class="niveaux-menace">
+      {{#each niveaux as |n|}}
+      <div class="niveau-ligne {{#unless n.atteint}}non-atteint{{/unless}} {{#if n.actif}}avec-effet{{/if}}">
+        <span class="niveau" data-tooltip="{{#if n.atteint}}niveau de Menace atteint{{else}}niveau de Menace non atteint{{/if}}">{{n.niveau}}</span>
+        {{#if n.actif}}
+          <span class="effet-actif" data-tooltip="{{n.actif.description}}">{{n.actif.nom}}</span>
+          <button type="button" data-action="arreterEffet" data-niveau="{{n.niveau}}">Arrêter</button>
+        {{else}}
+          <select class="choix-effet" data-niveau="{{n.niveau}}" {{#unless n.atteint}}disabled{{/unless}}>
+            <option value="">— choisir un effet —</option>
+            {{#each n.groupes as |g|}}
+            <optgroup label="{{g.categorie}}">
+              {{#each g.effets as |e|}}<option value="{{e.id}}" {{#if e.selectionne}}selected{{/if}}>{{e.nom}}</option>{{/each}}
+            </optgroup>
+            {{/each}}
+          </select>
+          <button type="button" data-action="tirerEffet" data-niveau="{{n.niveau}}" {{#unless n.atteint}}disabled{{/unless}} data-tooltip="tirer un effet au hasard"><i class="fa-solid fa-dice"></i></button>
+          <button type="button" data-action="appliquerEffet" data-niveau="{{n.niveau}}" {{#unless n.atteint}}disabled{{/unless}}>Appliquer</button>
+        {{/if}}
+      </div>
       {{/each}}
     </div>
+    <p class="aide">Un effet s'arrête automatiquement quand la Menace redescend sous son niveau. Les effets immédiats touchent les personnages cochés ; les malus de talents s'appliquent tant que l'effet est actif.</p>
     <div class="lever-etats flexrow">
       <button type="button" data-action="leverEtat" data-etat="fatigue">Lever la fatigue</button>
-      <button type="button" data-action="leverEtat" data-etat="bouleversement">Lever le bouleversement</button>
+      <button type="button" data-action="leverEtat" data-etat="bouleversement">Lever l'ancien bouleversement</button>
     </div>
   </section>
 </div>

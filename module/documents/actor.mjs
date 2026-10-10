@@ -8,6 +8,7 @@ import { appliquerQualites } from "../qualites.mjs";
 import { appliquerAutre } from "../autres.mjs";
 import { appliquerArmures } from "../armures.mjs";
 import { appliquerEtats } from "../panneau-mj.mjs";
+import { appliquerEffetsFiel, aggravationsActives } from "../fiel/bibliotheque.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -86,6 +87,24 @@ export class nocActor extends Actor {
     }
   }
 
+  /** Effets de Fiel « aggravants » : un héros qui subit au moins 1 point en reçoit 1 de plus */
+  async _preUpdate(changed, options, user) {
+    const allowed = await super._preUpdate(changed, options, user);
+    if (allowed === false) return false;
+    if (this.type !== "personnage") return;
+    const aggravations = aggravationsActives();
+    const aggravees = [];
+    for (const cle of Object.keys(aggravations)) {
+      const nouvelle = foundry.utils.getProperty(changed, `system.perditions.${cle}.value`);
+      if (nouvelle === undefined) continue;
+      const p = this._source.system.perditions?.[cle];
+      if (!p || Number(nouvelle) <= (Number(p.value) || 0)) continue;
+      foundry.utils.setProperty(changed, `system.perditions.${cle}.value`, Math.min(Number(p.max) || 10, Number(nouvelle) + 1));
+      aggravees.push(p.label ?? cle);
+    }
+    if (aggravees.length) ui.notifications.info(`${this.name} : effet de Fiel, +1 en ${aggravees.join(", ")}.`);
+  }
+
   async _onUpdate(update, options, user) {
     console.log('onupdate', user)
     if (user == game.user._id && this.type == "personnage" && update.system?.perditions) {
@@ -160,6 +179,7 @@ export class nocActor extends Actor {
     appliquerAutre(this);
     appliquerArmures(this);
     appliquerEtats(this);
+    appliquerEffetsFiel(this);
 
     this._preparePersonnageData();
     this._prepareRouageData();

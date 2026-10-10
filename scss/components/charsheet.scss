@@ -2164,7 +2164,7 @@ div.noc.sheet.actor .etats-actifs,
 
     .grille-perditions .perdition-ligne {
         display: grid;
-        grid-template-columns: 1fr 4em 6em 6em;
+        grid-template-columns: 1fr 5em 6em 6em;
         gap: 6px;
         align-items: center;
         margin-bottom: 4px;
@@ -2202,6 +2202,205 @@ div.noc.sheet.actor .etats-actifs,
 
         button {
             margin: 0;
+        }
+    }
+}
+
+// Panneau du MJ : points +/- et niveaux de Menace
+.panneau-mj {
+    .points-ligne {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        .points {
+            min-width: 1.5em;
+            text-align: center;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    }
+
+    .niveaux-menace {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        .niveau-ligne {
+            display: grid;
+            grid-template-columns: 2em 1fr auto auto;
+            gap: 6px;
+            align-items: center;
+
+            .niveau {
+                width: 1.8em;
+                height: 1.8em;
+                line-height: 1.8em;
+                border-radius: 50%;
+                text-align: center;
+                font-weight: bold;
+                background: #5c5c5c;
+                color: white;
+            }
+
+            &.avec-effet {
+                grid-template-columns: 2em 1fr auto;
+
+                .niveau {
+                    background: #8a1c1c;
+                }
+            }
+
+            &.non-atteint {
+                opacity: 0.45;
+            }
+
+            .effet-actif {
+                font-weight: bold;
+                cursor: help;
+            }
+
+            button {
+                margin: 0;
+            }
+        }
+    }
+
+    .aide {
+        font-size: 0.85em;
+        color: #6b6b6b;
+        margin: 4px 0;
+    }
+}
+
+// Bibliothèque des effets de Fiel
+.bibliotheque-fiel {
+    .window-content {
+        padding: 0;
+    }
+
+    .bibliotheque-contenu {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        grid-template-rows: 1fr auto;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .liste-effets {
+        overflow-y: auto;
+        padding: 6px;
+        border-right: 1px solid rgba(0, 0, 0, 0.3);
+
+        h4 {
+            margin: 8px 0 2px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                padding: 1px 4px;
+
+                &.actif {
+                    background: rgba(138, 28, 28, 0.25);
+                    font-weight: bold;
+                }
+
+                a {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .edition {
+        overflow-y: auto;
+        padding: 8px 10px;
+
+        .ligne {
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+
+            label {
+                flex: 0 0 6em;
+            }
+        }
+
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+        h4 {
+            align-items: center;
+            margin: 10px 0 4px;
+
+            span {
+                flex: 1;
+            }
+
+            a {
+                flex: 0 0 auto;
+                cursor: pointer;
+            }
+        }
+
+        .ligne-modificateur,
+        .ligne-immediat {
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 3px;
+
+            input[type="number"] {
+                flex: 0 0 4em;
+            }
+
+            a {
+                flex: 0 0 auto;
+                cursor: pointer;
+            }
+
+            .petit {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+        }
+
+        .aggravations label {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .vide {
+            color: #6b6b6b;
+            font-style: italic;
+            margin: 0 0 4px;
+        }
+    }
+
+    .barre {
+        gap: 6px;
+        margin: 6px 0;
+    }
+
+    .pied {
+        grid-column: 1 / 3;
+        gap: 8px;
+        padding: 6px 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+
+        .a-enregistrer {
+            box-shadow: 0 0 8px 2px #d2ce01;
         }
     }
 }

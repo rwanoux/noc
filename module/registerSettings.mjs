@@ -41,10 +41,24 @@ export function registerNocSettings() {
 
 
     // setting pour Fiel et menace
+    // bibliothèque des effets de Fiel (vide = liste par défaut)
+    game.settings.register("noc", "bibliothequeFiel", {
+        scope: 'world',
+        config: false,
+        type: Array,
+        default: []
+    })
     game.settings.register("noc", "compteurFiel", {
         scope: 'world',
         config: false,
         type: Object,
+        // les effets de Fiel actifs modifient les talents : on recalcule les acteurs
+        onChange: () => {
+            for (const actor of game.actors ?? []) {
+                actor.reset();
+                if (actor.sheet?.rendered) actor.sheet.render(false);
+            }
+        },
         default: {
             gouttes: 0,
             menace: 0,
