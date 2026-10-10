@@ -1355,12 +1355,20 @@ div.noc.sheet.actor .form-group.bloc-empile {
         justify-content: space-between;
         padding-left: 0.5em;
 
+        flex-wrap: nowrap;
+
+        // le nom tient sur une ligne et ne passe à la ligne que faute de place
         .item-name {
-            flex: 1;
+            flex: 1 1 auto !important;
+            min-width: 0;
+            white-space: normal;
+            word-break: normal;
+            overflow-wrap: break-word;
         }
 
         .item-control {
-            flex: 0 0 auto;
+            flex: 0 0 auto !important;
+            white-space: nowrap;
         }
     }
 }
