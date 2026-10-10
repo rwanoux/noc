@@ -556,23 +556,42 @@ export class nocActor extends Actor {
   /* -------------------------------------------- */
   rollItem(itemId) {
     let item = this.items.get(itemId)
-    if (item && item.type == "arme") {
+    // un outil s'utilise comme une arme improvisée : jamais maîtrisée, toujours complexe
+    let arme = null
+    if (item?.type == "arme") {
+      arme = foundry.utils.duplicate(item)
+      // valeurs calculées (formule de dégâts, texte des traits), absentes de la copie brute
+      arme.system.degats = item.system.degats
+      arme.system.traits = item.system.traits
+    } else if (item?.type == "outil") {
+      const imp = item.system.improvisee ?? {}
+      const distance = imp.mode === "distance"
+      const n = Number(imp.degats) || 0
+      arme = {
+        _id: item.id, name: item.name, img: item.img, type: "outil",
+        system: {
+          adistance: distance,
+          maitrise: false,
+          traitsArme: { complexe: true },
+          degats: distance ? `${n}` : `@talents.action.constitution.niveau + ${n}`,
+          traits: "Arme improvisée, Complexe"
+        }
+      }
+    }
+    if (item && arme) {
       let rollData = this.buildGenericRollData()
       // Specific stuff
       rollData.title = "Arme"
       rollData.mode = "arme"
-      rollData.arme = foundry.utils.duplicate(item)
-      // valeurs calculées (formule de dégâts, texte des traits), absentes de la copie brute
-      rollData.arme.system.degats = item.system.degats
-      rollData.arme.system.traits = item.system.traits
+      rollData.arme = arme
       rollData.domaineId = 'action'
       rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
       rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
       // niveau requis : base (0 à distance, 1 au contact) + maîtrise + modificateurs
-      rollData.niveauBase = (item.system.adistance) ? 0 : 1
+      rollData.niveauBase = (arme.system.adistance) ? 0 : 1
       rollData.niveauRequis = rollData.niveauBase
-      rollData.modMaitrise = item.system.maitrise ? 0 : (item.system.traitsArme?.complexe ? 2 : 1)
-      rollData.longuePortee = !!item.system.traitsArme?.longuePortee
+      rollData.modMaitrise = arme.system.maitrise ? 0 : (arme.system.traitsArme?.complexe ? 2 : 1)
+      rollData.longuePortee = !!arme.system.traitsArme?.longuePortee
       rollData.modDistance = 0
       rollData.modCouvert = 0
       rollData.modVisibilite = 0

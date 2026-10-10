@@ -18,7 +18,7 @@
     {{#if (eq mode "arme")}}
       <h2 class="titre-arme">{{arme.name}}</h2>
       <div class="ligne-grise">
-        Combat : {{talent.niveau}} — {{#if arme.system.maitrise}}Arme maîtrisée : +0{{else}}{{#if arme.system.traitsArme.complexe}}Arme non maîtrisée et complexe : +2{{else}}Arme non maîtrisée : +1{{/if}}{{/if}}
+        Combat : {{talent.niveau}} — {{#if (eq arme.type "outil")}}Arme improvisée (non maîtrisée et complexe) : +2{{else}}{{#if arme.system.maitrise}}Arme maîtrisée : +0{{else}}{{#if arme.system.traitsArme.complexe}}Arme non maîtrisée et complexe : +2{{else}}Arme non maîtrisée : +1{{/if}}{{/if}}{{/if}}
       </div>
       <div class="fexrow form-group">
         <span>Niveau requis de base : </span>
