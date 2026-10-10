@@ -2009,4 +2009,49 @@ div.noc.item.sheet .traits-arme {
         gap: 6px;
         flex: 0 0 auto;
     }
+}
+
+// Fenêtre de jet : vraies cases à cocher (Cible au sol, Espoir, Vécu)
+div.app.window-app.nocDialog .skill-roll-dialog,
+.nocDialog .skill-roll-dialog {
+    #cibleAuSol,
+    #useEspoir,
+    #useVecu {
+        -webkit-appearance: checkbox !important;
+        appearance: auto !important;
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        flex: 0 0 auto;
+        box-shadow: none !important;
+        filter: none !important;
+        transform: none !important;
+        cursor: pointer;
+
+        &::after {
+            content: none !important;
+            display: none !important;
+        }
+    }
+
+    .options-jet {
+        gap: 4px;
+        margin-top: 6px;
+    }
+
+    label.case-option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+
+        &.indisponible {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .ligne-grise {
+            margin-left: 4px;
+        }
+    }
 }

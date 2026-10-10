@@ -190,33 +190,17 @@
       </div>
     {{/if}}
 
-    <div class="flexrow">
-      {{#if espoir}}
-        <h5 class="flexrow">
-          <span> Utiliser 1 Point d'Espoir ? (+3
-            dés)?</span>
-
-          <input
-            type="checkbox"
-            id="useEspoir"
-            name="useEspoir"
-            {{checked useEspoir}}
-          />
-        </h5>
-      {{/if}}
-      {{#if vecu}}
-        <h5 class="flexrow">
-          <span> Utiliser 1 Point de Vécu ? (+1
-            niveau
-            de Talent)?</span>
-          <input
-            type="checkbox"
-            id="useVecu"
-            name="useVecu"
-            {{checked useVecu}}
-          />
-        </h5>
-      {{/if}}
+    <div class="flexcol options-jet">
+      <label class="case-option {{#unless espoir}}indisponible{{/unless}}">
+        <input type="checkbox" id="useEspoir" name="useEspoir" {{checked useEspoir}} {{#unless espoir}}disabled{{/unless}}/>
+        <span>Utiliser 1 point d'Espoir (+3 dés)</span>
+        <span class="ligne-grise">({{#if espoir}}{{espoir}}{{else}}0{{/if}} disponible{{#ifgt espoir 1}}s{{/ifgt}})</span>
+      </label>
+      <label class="case-option {{#unless vecu}}indisponible{{/unless}}">
+        <input type="checkbox" id="useVecu" name="useVecu" {{checked useVecu}} {{#unless vecu}}disabled{{/unless}}/>
+        <span>Utiliser 1 point de Vécu (+1 niveau de talent)</span>
+        <span class="ligne-grise">({{#if vecu}}{{vecu}}{{else}}0{{/if}} disponible{{#ifgt vecu 1}}s{{/ifgt}})</span>
+      </label>
     </div>
   </div>
 
