@@ -1924,4 +1924,28 @@ div.noc.sheet.actor {
 // Fiches d'objets : compteur aligné dans sa ligne
 div.noc.item.sheet .form-group span.compteur-niveau {
     flex: 0 0 22px;
+}
+
+// Fiche d'outil : section Arme improvisée
+div.noc.item.sheet {
+    h3.titre-section {
+        margin: 10px 0 4px;
+        padding: 2px 6px;
+        font-size: 120%;
+    }
+
+    .degats-improvises {
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 4px;
+
+        .prefixe {
+            flex: 0 0 auto;
+            font-weight: bold;
+        }
+    }
+
+    .form-group select {
+        flex: 0 0 8em;
+    }
 }

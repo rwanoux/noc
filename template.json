@@ -629,7 +629,11 @@
         "niveau": 0
       },
       "effetSpecial": "",
-      "portee": ""
+      "portee": "",
+      "improvisee": {
+        "mode": "contact",
+        "degats": 0
+      }
     },
     "armure": {
       "templates": [

@@ -35,12 +35,13 @@ export class nocItemSheetOutil extends foundry.appv1.sheets.ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    html.find("a.limite-plus").click(() => this.changerLimite(1));
-    html.find("a.limite-moins").click(() => this.changerLimite(-1));
+    // boutons +/- génériques : data-champ = chemin de la valeur (minimum 0)
+    html.find("a.compteur-plus").click(ev => this.changerChamp(ev.currentTarget.dataset.champ, 1));
+    html.find("a.compteur-moins").click(ev => this.changerChamp(ev.currentTarget.dataset.champ, -1));
   }
 
-  async changerLimite(ecart) {
-    const valeur = Math.max(0, (Number(this.item._source.system.limite) || 0) + ecart);
-    return this.item.update({ "system.limite": valeur });
+  async changerChamp(champ, ecart) {
+    const valeur = Math.max(0, (Number(foundry.utils.getProperty(this.item._source, champ)) || 0) + ecart);
+    return this.item.update({ [champ]: valeur });
   }
 }

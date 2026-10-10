@@ -27,17 +27,22 @@
       <span class="compteur-niveau">{{#if document.system.limite}}{{document.system.limite}}{{else}}0{{/if}}
         {{#if editable}}
         <span class="compteur-controls">
-          <a class="fas fa-add limite-plus"></a>
-          <a class="fas fa-minus limite-moins"></a>
+          <a class="fas fa-add compteur-plus" data-champ="system.limite"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.limite"></a>
         </span>
         {{/if}}
       </span>
     </div>
     <div class="form-group">
       <h4>utilisations</h4>
-      <input name="system.utilisations"
-        value="{{document.system.utilisations}}"
-        type="number">
+      <span class="compteur-niveau">{{#if document.system.utilisations}}{{document.system.utilisations}}{{else}}0{{/if}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.utilisations"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.utilisations"></a>
+        </span>
+        {{/if}}
+      </span>
     </div>
     <div class="form-group">
       <h4>portée</h4>
@@ -46,13 +51,38 @@
     </div>
     <div class="form-group">
       <h4>valeur</h4>
-      <input name="system.valeur" value="{{document.system.valeur}}"
-        type="number">
+      <span class="compteur-niveau">{{#if document.system.valeur}}{{document.system.valeur}}{{else}}0{{/if}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.valeur"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.valeur"></a>
+        </span>
+        {{/if}}
+      </span>
+    </div>
+
+    <h3 class="titre-section">Arme improvisée</h3>
+    <div class="form-group">
+      <h4>type</h4>
+      <select name="system.improvisee.mode">
+        <option value="contact" {{#ifequal document.system.improvisee.mode "contact"}}selected{{/ifequal}}>Contact</option>
+        <option value="distance" {{#ifequal document.system.improvisee.mode "distance"}}selected{{/ifequal}}>Distance</option>
+      </select>
     </div>
     <div class="form-group">
-      <h4 data-tooltip="dégâts infligés si l'outil sert d'arme improvisée (ex. 2, contondant)">dégâts</h4>
-      <input name="system.degats" value="{{document.system.degats}}"
-        type="text" placeholder="aucun"> </div>
+      <h4>dégâts</h4>
+      <span class="degats-improvises flexrow">
+        {{#ifequal document.system.improvisee.mode "distance"}}{{else}}<span class="prefixe">Const. +</span>{{/ifequal}}
+        <span class="compteur-niveau">{{#if document.system.improvisee.degats}}{{document.system.improvisee.degats}}{{else}}0{{/if}}
+        {{#if editable}}
+        <span class="compteur-controls">
+          <a class="fas fa-add compteur-plus" data-champ="system.improvisee.degats"></a>
+          <a class="fas fa-minus compteur-moins" data-champ="system.improvisee.degats"></a>
+        </span>
+        {{/if}}
+      </span>
+      </span>
+    </div>
     <div class="form-group">
       <h4>effet spécial</h4>
       {{editor document.system.effetSpecial target="system.effetSpecial"
