@@ -201,6 +201,14 @@ export function appliquerEffetsFiel(actor) {
     for (const mod of effet.modificateurs ?? []) {
       if (!concerne(actor, mod.portee)) continue;
       const [dom, tal] = String(mod.talent).split(".");
+      // modificateur de domaine
+      if (dom === "domaine") {
+        const d = actor.system.domaines?.[tal];
+        if (!d) continue;
+        d.value = (Number(d.value) || 0) + (Number(mod.valeur) || 0);
+        foundry.utils.setProperty(actor.overrides, `system.domaines.${tal}.value`, d.value);
+        continue;
+      }
       const t = actor.system.talents?.[dom]?.[tal];
       if (!t) continue;
       t.niveau = (Number(t.niveau) || 0) + (Number(mod.valeur) || 0);
@@ -220,13 +228,23 @@ export function aggravationsActives() {
   return res;
 }
 
-/** Talents proposés dans l'éditeur */
+const majuscule = t => String(t ?? "").charAt(0).toUpperCase() + String(t ?? "").slice(1);
+
+/** Domaines et talents proposés dans l'éditeur ("domaine.action" vise le domaine lui-même) */
 export function listeTalents() {
-  const talents = game.system.template?.Actor?.personnage?.talents ?? {};
-  return Object.entries(talents).map(([dom, liste]) => ({
-    domaine: dom,
-    talents: Object.entries(liste).map(([tal, t]) => ({ cle: `${dom}.${tal}`, label: t.label }))
-  }));
+  const modele = game.system.template?.Actor?.personnage ?? {};
+  const talents = modele.talents ?? {};
+  const domaines = modele.domaines ?? {};
+  return Object.entries(talents).map(([dom, liste]) => {
+    const nomDomaine = majuscule(domaines[dom]?.label ?? dom);
+    return {
+      domaine: nomDomaine,
+      options: [
+        { cle: `domaine.${dom}`, label: `Domaine ${nomDomaine}` },
+        ...Object.entries(liste).map(([tal, t]) => ({ cle: `${dom}.${tal}`, label: majuscule(t.label) }))
+      ]
+    };
+  });
 }
 
 export function nouvelEffet() {

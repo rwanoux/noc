@@ -32,14 +32,14 @@
     <label>Description <em>(affichée aux joueurs)</em></label>
     <textarea data-champ="description" rows="5">{{effet.description}}</textarea>
 
-    <h4 class="flexrow"><span>Malus et bonus de talents (tant que l'effet est actif)</span>
+    <h4 class="flexrow"><span>Malus et bonus de domaines et de talents (tant que l'effet est actif)</span>
       <a data-action="ajouterModificateur" data-tooltip="ajouter"><i class="fa-solid fa-plus"></i></a></h4>
     {{#each modificateurs as |mod|}}
     <div class="ligne-modificateur flexrow">
       <select data-champ="talent">
         {{#each @root.talents as |g|}}
         <optgroup label="{{g.domaine}}">
-          {{#each g.talents as |t|}}<option value="{{t.cle}}" {{#if (eq t.cle mod.talent)}}selected{{/if}}>{{t.label}}</option>{{/each}}
+          {{#each g.options as |t|}}<option value="{{t.cle}}" {{#if (eq t.cle mod.talent)}}selected{{/if}}>{{t.label}}</option>{{/each}}
         </optgroup>
         {{/each}}
       </select>
