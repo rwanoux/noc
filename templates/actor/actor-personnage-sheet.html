@@ -328,7 +328,7 @@
 			</div>
 
 			<div class="signalement-bas">
-				<!-- colonne 1 : Signalement, Description, Notes -->
+				<!-- colonne 1 : Signalement, Description -->
 				<div class="signalement flexcol">
 					<div class="form-group editeur-moyen">
 						<h2>Signalement</h2>
@@ -337,10 +337,6 @@
 					<div class="form-group editeur-long">
 						<h2>Description</h2>
 						{{editor actor.system.description target="system.description" button=true editable=editable engine="prosemirror" collaborate=false}}
-					</div>
-					<div class="form-group editeur-long">
-						<h2>Notes</h2>
-						{{editor actor.system.notes target="system.notes" button=true editable=editable engine="prosemirror" collaborate=false}}
 					</div>
 				</div>
 
