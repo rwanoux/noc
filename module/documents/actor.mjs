@@ -416,26 +416,30 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
-  async setCabale(cabale) {
-    if (this.system.cabale.uuid) {
+  /** Affecte ce personnage à une cabale (acteur ou données d'acteur) */
+  async setCabale(cabale, { remplacer = false } = {}) {
+    const id = cabale.id ?? cabale._id;
+    const ancienne = this.system.cabale?.uuid;
+    if (ancienne === id) return ui.notifications.info(`${this.name} fait déjà partie de cette cabale.`);
+    if (ancienne && !remplacer) {
       return ui.notifications.warn("Ce personnage est déjà affecté à une cabale")
     }
-    let update = {
-      nom: cabale.name,
-      uuid: cabale._id,
-      bloc: cabale.system.bloc,
-      coordonnes: cabale.system.coordonnes,
-      societe: cabale.system.societeEcran
-    };
     await this.update({
-      "system.cabale": update
+      "system.cabale": {
+        nom: cabale.name,
+        uuid: id,
+        bloc: cabale.system.bloc,
+        coordonnes: cabale.system.coordonnes,
+        societe: cabale.system.societeEcran
+      }
     });
-    let cabaleActor = await Actor.get(cabale._id)
-    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
+    for (const cid of [ancienne, id]) {
+      const sheet = game.actors.get(cid)?.sheet;
+      if (sheet?.rendered) sheet.render(false);
+    }
   }
   async leaveCabale() {
-    let oldCabale = this.system.cabale;
-    let cabaleActor = await Actor.get(oldCabale._id);
+    const cabaleActor = game.actors.get(this.system.cabale?.uuid);
     await this.update({
       "system.cabale": {
         nom: "",
@@ -445,8 +449,7 @@ export class nocActor extends Actor {
         societe: ""
       }
     })
-    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
-
+    if (cabaleActor?.sheet.rendered) { cabaleActor.sheet.render(false) }
   }
 
   /* -------------------------------------------- */

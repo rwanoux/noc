@@ -139,7 +139,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="tab members flexrow" data-group="primary" data-tab="members">
+		<div class="tab members flexcol" data-group="primary" data-tab="members">
+			<p class="members-hint">Glissez ici un personnage depuis l'onglet Acteurs pour l'ajouter à la cabale.</p>
 			<ul class="item-list">
 				{{#each members as |member key|}}
 					<li class="item" data-actor-id="{{member._id}}">
@@ -151,6 +152,9 @@
 								<span>
 									<a class="display-actor" data-actor-id="{{member._id}}">{{member.name}}</a>
 								</span>
+								{{#if member.isOwner}}
+									<a class="fas fa-user-minus remove-member" data-actor-id="{{member._id}}" data-tooltip="retirer de la cabale"></a>
+								{{/if}}
 							</h4>
 						</div>
 					</li>

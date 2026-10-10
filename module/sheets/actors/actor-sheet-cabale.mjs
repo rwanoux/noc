@@ -67,17 +67,26 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
   }
   async _onDropActor(ev, data) {
     let dropActor = await Actor.implementation.fromDropData(data);
-    if (!this.actor.isOwner || !dropActor.isOwner) return () => {
-      ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
-      return false
-    };
-    // Activer la cabale chez cet acteur
-    if (dropActor.type == "personnage") {
-      return dropActor.setCabale(foundry.utils.duplicate(this.object))
-    }
-    else {
+    if (!dropActor) return false;
+    if (dropActor.type != "personnage") {
       return ui.notifications.warn("Vous ne pouvez ajouter que des personnages aux cabales");
     }
+    // un personnage du monde (pas une copie de compendium ni un jeton non lié)
+    const membre = game.actors.get(dropActor.id);
+    if (!membre) return ui.notifications.warn("Glissez un personnage depuis l'onglet Acteurs.");
+    if (!this.actor.isOwner || !membre.isOwner) {
+      return ui.notifications.warn("Vous n'avez pas de droits sur ce personnage ; demandez à la Loi de l'ajouter.");
+    }
+    const ancienne = membre.system.cabale?.uuid;
+    if (ancienne && ancienne !== this.actor.id) {
+      const ok = await foundry.applications.api.DialogV2.confirm({
+        window: { title: "Changer de cabale" },
+        content: `<p>${membre.name} fait déjà partie de la cabale « ${membre.system.cabale.nom} ». L'en retirer pour l'ajouter à « ${this.actor.name} » ?</p>`
+      });
+      if (!ok) return false;
+    }
+    await membre.setCabale(this.actor, { remplacer: true });
+    return this.render(false);
   }
   _onDropItem(ev, data) {
   }
@@ -109,6 +118,17 @@ export class nocActorSheetCabale extends nocActorSheetPersonnage {
   activateListeners(html) {
     super.activateListeners(html);
 
+    html.find('.remove-member').click(async ev => {
+      const membre = game.actors.get(ev.currentTarget.dataset.actorId);
+      if (!membre) return;
+      if (!membre.isOwner) return ui.notifications.warn("Vous n'avez pas de droits sur ce personnage.");
+      const ok = await foundry.applications.api.DialogV2.confirm({
+        window: { title: "Retirer un membre" },
+        content: `<p>Retirer ${membre.name} de la cabale ?</p>`
+      });
+      if (ok) await membre.leaveCabale();
+      this.render(false);
+    });
     html.find('.display-actor').click(ev => {
       const actorId = $(ev.currentTarget).data("actor-id")
       let actor = game.actors.get(actorId);
