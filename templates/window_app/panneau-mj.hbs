@@ -3,22 +3,27 @@
   <!-- CIBLES -->
   <section class="bloc">
     <h3 class="flexrow">
-      <span>Personnages ciblés</span>
-      <a data-action="toutCocher" data-tous="1" data-tooltip="tout cocher"><i class="fa-solid fa-square-check"></i></a>
-      <a data-action="toutCocher" data-tous="0" data-tooltip="tout décocher"><i class="fa-regular fa-square"></i></a>
+      <span>Personnages</span>
+      <a data-action="toutCocher" data-tous="1" data-groupe="personnages" data-tooltip="tout cocher"><i class="fa-solid fa-square-check"></i></a>
+      <a data-action="toutCocher" data-tous="0" data-groupe="personnages" data-tooltip="tout décocher"><i class="fa-regular fa-square"></i></a>
     </h3>
     <div class="liste-cibles">
       {{#each personnages as |p|}}
-      <label class="cible-ligne">
-        <input type="checkbox" class="cible" data-actor-id="{{p.id}}" {{#if p.coche}}checked{{/if}}>
-        <img src="{{p.img}}" alt="">
-        <span class="nom">{{p.nom}}</span>
-        <span class="resume">{{#each p.perditions as |x|}}{{x.label}} {{x.valeur}}{{#unless @last}} · {{/unless}}{{/each}}</span>
-        {{#if p.fatigue}}<span class="etat" data-tooltip="Fatigué : −1 à tous les talents">fatigué</span>{{/if}}
-        {{#if p.bouleversement}}<span class="etat" data-tooltip="Bouleversement administratif">bouleversé</span>{{/if}}
-      </label>
+      {{> ligneCibleMJ p}}
       {{else}}
       <p>Aucun personnage dans le monde.</p>
+      {{/each}}
+    </div>
+    <h3 class="flexrow">
+      <span>Sur la scène (rouages, créatures, Autres)</span>
+      <a data-action="toutCocher" data-tous="1" data-groupe="adversaires" data-tooltip="tout cocher"><i class="fa-solid fa-square-check"></i></a>
+      <a data-action="toutCocher" data-tous="0" data-groupe="adversaires" data-tooltip="tout décocher"><i class="fa-regular fa-square"></i></a>
+    </h3>
+    <div class="liste-cibles">
+      {{#each adversaires as |p|}}
+      {{> ligneCibleMJ p}}
+      {{else}}
+      <p>Aucun rouage, créature ou Autre sur la scène affichée.</p>
       {{/each}}
     </div>
     <label class="option">

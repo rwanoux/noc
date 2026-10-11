@@ -213,7 +213,7 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     main: { template: "systems/noc/templates/window_app/panneau-mj.hbs" }
   };
 
-  /** identifiants des acteurs cochés (par défaut : tous les personnages) */
+  /** uuid des acteurs cochés (par défaut : tous les personnages) */
   cibles = null;
   reductions = true;
   points = { blessures: 1, trauma: 1, noirceur: 1, traque: 1 };
@@ -225,9 +225,34 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     return game.actors.filter(a => a.type === "personnage");
   }
 
+  /** Rouages, créatures et Autres présents sur la scène affichée (un par acteur de jeton) */
+  _adversaires() {
+    const vus = new Set();
+    const liste = [];
+    for (const t of canvas?.scene?.tokens ?? []) {
+      const a = t.actor;
+      if (!a || !["rouage", "creature", "autre"].includes(a.type) || vus.has(a.uuid)) continue;
+      vus.add(a.uuid);
+      liste.push({ actor: a, nom: t.name || a.name, img: t.texture?.src || a.img });
+    }
+    return liste;
+  }
+
+  /** Données d'affichage d'une ligne de cible */
+  _ligne(a, nom, img) {
+    return {
+      uuid: a.uuid, nom, img,
+      coche: this.cibles.has(a.uuid),
+      perditions: Object.keys(PERDITIONS).filter(k => a.system.perditions?.[k])
+        .map(k => ({ label: PERDITIONS[k].label, valeur: nombre(a.system.perditions[k].value) })),
+      fatigue: !!a.flags?.noc?.fatigue,
+      bouleversement: !!a.flags?.noc?.bouleversement
+    };
+  }
+
   async _prepareContext() {
     const personnages = this._personnages();
-    if (this.cibles === null) this.cibles = new Set(personnages.map(a => a.id));
+    if (this.cibles === null) this.cibles = new Set(personnages.map(a => a.uuid));
     const selection = canvas?.tokens?.controlled?.map(t => t.actor).filter(Boolean) ?? [];
     const fiel = etatFiel();
     const biblio = bibliotheque();
@@ -250,13 +275,8 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
       });
     }
     return {
-      personnages: personnages.map(a => ({
-        id: a.id, nom: a.name, img: a.img,
-        coche: this.cibles.has(a.id),
-        perditions: Object.keys(PERDITIONS).map(k => ({ label: PERDITIONS[k].label, valeur: nombre(a.system.perditions?.[k]?.value) })),
-        fatigue: !!a.flags?.noc?.fatigue,
-        bouleversement: !!a.flags?.noc?.bouleversement
-      })),
+      personnages: personnages.map(a => this._ligne(a, a.name, a.img)),
+      adversaires: this._adversaires().map(x => this._ligne(x.actor, x.nom, x.img)),
       nbSelection: selection.length,
       perditions: Object.entries(PERDITIONS).map(([cle, d]) => ({ cle, label: d.label, reduction: d.reduction?.label, points: this.points[cle] ?? 1 })),
       reductions: this.reductions,
@@ -271,7 +291,7 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     super._onRender?.(context, options);
     const html = this.element;
     html.querySelectorAll("input.cible").forEach(c => c.addEventListener("change", ev => {
-      const id = ev.currentTarget.dataset.actorId;
+      const id = ev.currentTarget.dataset.uuid;
       if (ev.currentTarget.checked) this.cibles.add(id); else this.cibles.delete(id);
     }));
     html.querySelector("input.reductions")?.addEventListener("change", ev => { this.reductions = ev.currentTarget.checked; });
@@ -283,12 +303,12 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
 
   /** Acteurs ciblés : cochés, plus les jetons sélectionnés si demandé */
   _cibles({ avertir = true } = {}) {
-    const acteurs = [...(this.cibles ?? [])].map(id => game.actors.get(id)).filter(Boolean);
+    const acteurs = [...(this.cibles ?? [])].map(uuid => fromUuidSync(uuid)).filter(a => a?.system);
     const avecSelection = this.element.querySelector("input.avec-selection")?.checked;
     if (avecSelection) {
       for (const t of canvas?.tokens?.controlled ?? []) if (t.actor && !acteurs.includes(t.actor)) acteurs.push(t.actor);
     }
-    if (!acteurs.length && avertir) ui.notifications.warn("Aucun personnage ciblé.");
+    if (!acteurs.length && avertir) ui.notifications.warn("Aucune cible cochée.");
     return acteurs;
   }
 
@@ -367,7 +387,9 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async #onToutCocher(event, target) {
     const tous = target.dataset.tous === "1";
-    this.cibles = new Set(tous ? this._personnages().map(a => a.id) : []);
+    const groupe = target.dataset.groupe === "adversaires"
+      ? this._adversaires().map(x => x.actor.uuid) : this._personnages().map(a => a.uuid);
+    for (const uuid of groupe) { if (tous) this.cibles.add(uuid); else this.cibles.delete(uuid); }
     this.render();
   }
 }
@@ -381,6 +403,18 @@ export function ouvrirPanneauMJ() {
 
 /** Le MJ arrête automatiquement les effets au-dessus de la Menace quand elle baisse */
 export function enregistrerSuiviMenace() {
+  // ligne d'une cible dans le panneau (personnage ou adversaire)
+  Handlebars.registerPartial("ligneCibleMJ", `<label class="cible-ligne">
+        <input type="checkbox" class="cible" data-uuid="{{uuid}}" {{#if coche}}checked{{/if}}>
+        <img src="{{img}}" alt="">
+        <span class="nom">{{nom}}</span>
+        <span class="resume">{{#each perditions as |x|}}{{x.label}} {{x.valeur}}{{#unless @last}} · {{/unless}}{{/each}}</span>
+        {{#if fatigue}}<span class="etat" data-tooltip="Fatigué : −1 à tous les talents">fatigué</span>{{/if}}
+        {{#if bouleversement}}<span class="etat" data-tooltip="Bouleversement administratif">bouleversé</span>{{/if}}
+      </label>`);
+  // la liste des cibles suit la scène et les jetons
+  const rafraichir = () => { if (ui.nocPanneauMJ?.rendered) ui.nocPanneauMJ.render(); };
+  for (const h of ["canvasReady", "createToken", "deleteToken", "updateToken", "updateActor"]) Hooks.on(h, rafraichir);
   Hooks.on("updatedFiel", async () => {
     if (!game.user.isGM) return;
     await arreterEffetsAuDessus(etatFiel().menace);
