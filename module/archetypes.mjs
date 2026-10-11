@@ -219,7 +219,14 @@ async function migrerPersonnage(actor) {
       ancien[ch.key] = (ancien[ch.key] ?? 0) + (Number(ch.value) || 0);
     }
   };
-  for (const item of [...archetypes, ...themes]) for (const eff of item.effects) if (eff.transfer !== false) compter(eff);
+  // Ancien transfert des effets (« legacy ») : à la création de l'objet, ses effets étaient
+  // copiés sur l'acteur et seules ces copies s'appliquaient. On ne compte donc les effets
+  // d'un objet que s'il n'en existe aucune copie sur l'acteur (sinon : double comptage).
+  for (const item of [...archetypes, ...themes]) {
+    const copies = actor.effects.some(e => e.origin?.includes(item.id));
+    if (copies) continue;
+    for (const eff of item.effects) if (eff.transfer !== false) compter(eff);
+  }
   effetsActeur.forEach(compter);
 
   // 2. Nouvelles données de l'archétype
