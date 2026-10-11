@@ -1,7 +1,7 @@
 // Import document classes.
 import { nocActor } from "./documents/actor.mjs";
 import { nocItem } from "./documents/item.mjs";
-import { nocCombat } from "./helpers/noc-combat.js";
+import { nocCombat, enregistrerAjoutJetonsCombat } from "./helpers/noc-combat.js";
 
 // Import sheet classes.__ACTORS (fiches V1, en attendant la migration V2)
 import { nocActorSheetPersonnage } from "./sheets/actors/actor-sheet-personnage.mjs";
@@ -81,6 +81,7 @@ Hooks.once('init', async function () {
   enregistrerBoutonPanneau();
   enregistrerSuiviMenace();
   enregistrerJetons();
+  enregistrerAjoutJetonsCombat();
 
   // Add custom constants for configuration.
   CONFIG.NOC = NOC;

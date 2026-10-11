@@ -35,3 +35,20 @@ export class nocCombat extends Combat {
   }
 
 }
+
+/**
+ * Une nouvelle rencontre reçoit d'office tous les jetons de sa scène
+ * (seulement chez l'utilisateur qui l'a créée, pour ne pas les ajouter plusieurs fois).
+ */
+export function enregistrerAjoutJetonsCombat() {
+  Hooks.on("createCombat", async (combat, options, userId) => {
+    if (userId !== game.user.id) return;
+    const scene = combat.scene ?? canvas.scene;
+    if (!scene) return;
+    const presents = new Set(combat.combatants.map(c => c.tokenId));
+    const donnees = scene.tokens
+      .filter(t => t.actor && !presents.has(t.id))
+      .map(t => ({ tokenId: t.id, sceneId: scene.id, actorId: t.actorId, hidden: t.hidden }));
+    if (donnees.length) await combat.createEmbeddedDocuments("Combatant", donnees);
+  });
+}
