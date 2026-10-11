@@ -15,7 +15,7 @@
       {{/each}}
     </div>
     <h3 class="flexrow">
-      <span>Sur la scène (rouages, créatures, Autres)</span>
+      <span>Sur la scène (PNJ, rouages, créatures, Autres)</span>
       <a data-action="toutCocher" data-tous="1" data-groupe="adversaires" data-tooltip="tout cocher"><i class="fa-solid fa-square-check"></i></a>
       <a data-action="toutCocher" data-tous="0" data-groupe="adversaires" data-tooltip="tout décocher"><i class="fa-regular fa-square"></i></a>
     </h3>
@@ -23,7 +23,7 @@
       {{#each adversaires as |p|}}
       {{> ligneCibleMJ p}}
       {{else}}
-      <p>Aucun rouage, créature ou Autre sur la scène affichée.</p>
+      <p>Aucun jeton de PNJ sur la scène affichée.</p>
       {{/each}}
     </div>
     <label class="option">

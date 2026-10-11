@@ -225,13 +225,17 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     return game.actors.filter(a => a.type === "personnage");
   }
 
-  /** Rouages, créatures et Autres présents sur la scène affichée (un par acteur de jeton) */
+  /**
+   * Jetons de la scène affichée, hors personnages liés (déjà dans la première liste) :
+   * PNJ non liés (même de type personnage), rouages, créatures, Autres.
+   */
   _adversaires() {
     const vus = new Set();
     const liste = [];
     for (const t of canvas?.scene?.tokens ?? []) {
       const a = t.actor;
-      if (!a || !["rouage", "creature", "autre"].includes(a.type) || vus.has(a.uuid)) continue;
+      if (!a || a.type === "cabale" || vus.has(a.uuid)) continue;
+      if (a.type === "personnage" && t.actorLink) continue;
       vus.add(a.uuid);
       liste.push({ actor: a, nom: t.name || a.name, img: t.texture?.src || a.img });
     }
