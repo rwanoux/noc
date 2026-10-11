@@ -2561,3 +2561,9 @@ div.noc.item.sheet.document-administratif {
         margin: 2px 0 8px;
     }
 }
+
+// Fiche personnage : bouton pour changer de thème
+div.noc.sheet .theme-resume a.changerTheme {
+    flex: 0 0 auto !important;
+    margin-left: 4px;
+}
