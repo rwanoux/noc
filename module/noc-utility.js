@@ -188,7 +188,11 @@ export class nocUtility {
       }
       rollData.quantique = { nbDes: nbQuantique, des, succes: roll.total, fiel };
     }
-    rollData.degatsTotaux = rollData.degatsArme + (rollData.quantique?.succes ?? 0);
+    // énergie noire : X points de Blessures supplémentaires (valeur fixe)
+    const en = sys.traitsArme?.energieNoire;
+    rollData.energieNoire = en?.actif ? Number(en.valeur) || 0 : 0;
+    rollData.reduitParLumiere = !!rollData.quantique || rollData.energieNoire > 0;
+    rollData.degatsTotaux = rollData.degatsArme + (rollData.quantique?.succes ?? 0) + rollData.energieNoire;
     rollData.traitsCombat = traitsEnCombat(sys.traitsArme);
   }
 

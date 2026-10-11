@@ -126,9 +126,12 @@
             </div>
             {{#if quantique.fiel}}<p class="note-combat">Gouttes de Fiel ajoutées : {{quantique.fiel}}</p>{{/if}}
           {{/if}}
+          {{#if energieNoire}}
+            <p class="titre-bloc-combat">Énergie noire : +{{energieNoire}}</p>
+          {{/if}}
           <p class="degats-combat">Dégâts totaux : {{degatsTotaux}}</p>
           <p class="note-combat">
-            {{#if quantique}}Arme {{degatsArme}} + quantique {{quantique.succes}}. {{/if}}La cible retranche sa Constitution et son Armure.{{#if quantique}} La part quantique est réduite par la Lumière de la cible et de ses alliés à portée d'aura (minimum 0).{{/if}}
+            {{#if reduitParLumiere}}Arme {{degatsArme}}{{#if quantique}} + quantique {{quantique.succes}}{{/if}}{{#if energieNoire}} + énergie noire {{energieNoire}}{{/if}}. {{/if}}La cible retranche sa Constitution et son Armure.{{#if reduitParLumiere}} La part {{#if quantique}}quantique{{#if energieNoire}} et d'énergie noire{{/if}}{{else}}d'énergie noire{{/if}} est réduite par la Lumière de la cible et de ses alliés à portée d'aura (minimum 0).{{/if}}
           </p>
 
           {{#if traitsCombat.length}}
