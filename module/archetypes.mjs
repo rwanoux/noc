@@ -161,14 +161,14 @@ export function appliquerArchetype(actor) {
 /* -------------------------------------------- */
 
 /** Fenêtre de choix du thème. Renvoie l'id du thème, ou null si annulé. */
-export async function choisirTheme(archetypeData) {
+export async function choisirTheme(archetypeData, actuel = null) {
   const themes = archetypeData.system?.themes ?? [];
   if (!themes.length) return "";
   const esc = foundry.utils.escapeHTML ?? (s => s);
   const lignes = themes.map((t, i) => {
     const detail = t.talents.map(x => `${libelleTalent(x.talent)} ${x.value > 0 ? "+" : ""}${x.value}`).join(", ");
     return `<label class="noc-choix-theme flexrow">
-        <input type="radio" name="theme" value="${t.id}" ${i === 0 ? "checked" : ""} style="flex:0 0 2em">
+        <input type="radio" name="theme" value="${t.id}" ${(actuel ? t.id === actuel : i === 0) ? "checked" : ""} style="flex:0 0 2em">
         <span><strong>${esc(t.nom)}</strong><br><small>${esc(detail || "aucun talent")}</small></span>
       </label>`;
   }).join("");
@@ -176,7 +176,7 @@ export async function choisirTheme(archetypeData) {
   return foundry.applications.api.DialogV2.wait({
     window: { title: `Thème de l'archétype ${archetypeData.name}` },
     classes: ["nocDialog"],
-    content: `<p>Choisissez le thème du personnage. Ce choix est définitif.</p>${lignes}`,
+    content: `<p>Choisissez le thème du personnage. Il pourra être changé plus tard depuis la fiche.</p>${lignes}`,
     buttons: [
       { action: "ok", label: "Valider", icon: "fa-solid fa-check", default: true,
         callback: (event, button) => button.form.elements.theme.value },

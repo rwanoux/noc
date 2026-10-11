@@ -321,6 +321,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     html.find('a.openCabale')?.click(this.openCabale.bind(this));
 
     html.find(".addQuality").click(this.addQuality.bind(this))
+    html.find(".changerTheme").click(this.changerTheme.bind(this))
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
 
     html.find(".unassignContact").click(this.unassignContact.bind(this))
@@ -554,10 +555,20 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
   prepareArchetype(context) {
     const archetype = this.actor.itemTypes.archetype[0];
     const theme = archetype?.system.themes?.find(t => t.id === archetype.system.themeChoisi);
+    context.themesDisponibles = (archetype?.system.themes?.length ?? 0) > 0;
     context.themeChoisi = theme ? {
       nom: theme.nom,
       detail: theme.talents.map(t => `${libelleTalent(t.talent)} ${t.value > 0 ? "+" : ""}${t.value}`).join(", ")
     } : null;
+  }
+  /** Changer de thème : les bonus suivent automatiquement le nouveau thème */
+  async changerTheme(ev) {
+    ev.preventDefault();
+    const archetype = this.actor.itemTypes.archetype[0];
+    if (!archetype) return;
+    const themeId = await choisirTheme(archetype.toObject(), archetype.system.themeChoisi);
+    if (!themeId || themeId === archetype.system.themeChoisi) return;
+    return archetype.update({ "system.themeChoisi": themeId });
   }
   async addQuality(ev) {
     const type = ev.currentTarget.dataset.type === "defaut" ? "defaut" : "qualite";
