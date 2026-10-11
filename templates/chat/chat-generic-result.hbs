@@ -134,6 +134,17 @@
             {{#if reduitParLumiere}}Arme {{degatsArme}}{{#if quantique}} + quantique {{quantique.succes}}{{/if}}{{#if energieNoire}} + énergie noire {{energieNoire}}{{/if}}. {{/if}}La cible retranche sa Constitution et son Armure.{{#if reduitParLumiere}} La part {{#if quantique}}quantique{{#if energieNoire}} et d'énergie noire{{/if}}{{else}}d'énergie noire{{/if}} est réduite par la Lumière de la cible et de ses alliés à portée d'aura (minimum 0).{{/if}}
           </p>
 
+          {{#if blessures.length}}
+            <hr>
+            <p class="titre-bloc-combat">Blessures infligées</p>
+            <ul class="blessures-combat">
+              {{#each blessures as |b|}}
+                <li><strong>{{b.nom}}</strong> : {{#if b.points}}+{{b.points}} ({{b.avant}} → {{b.apres}} / {{b.max}}){{else}}aucune{{/if}}
+                  <br><small>{{b.detail}}</small></li>
+              {{/each}}
+            </ul>
+          {{/if}}
+
           {{#if traitsCombat.length}}
             <hr>
             <ul class="traits-combat">

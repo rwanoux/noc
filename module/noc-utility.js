@@ -1,3 +1,4 @@
+import { calculerBlessures, appliquerBlessures, ciblesActuelles } from "./combat-blessures.mjs";
 import { traitsEnCombat } from "./armes.mjs";
 /* -------------------------------------------- */
 
@@ -194,6 +195,11 @@ export class nocUtility {
     rollData.reduitParLumiere = !!rollData.quantique || rollData.energieNoire > 0;
     rollData.degatsTotaux = rollData.degatsArme + (rollData.quantique?.succes ?? 0) + rollData.energieNoire;
     rollData.traitsCombat = traitsEnCombat(sys.traitsArme);
+    // cibles visées : Blessures calculées (et reportées une seule fois)
+    if (!rollData.blessuresAppliquees) {
+      rollData.cibles ??= ciblesActuelles();
+      rollData.blessures = rollData.cibles.length ? calculerBlessures(rollData, rollData.cibles) : null;
+    }
   }
 
   /* -------------------------------------------- */
@@ -220,7 +226,10 @@ export class nocUtility {
     if (rollData.rollBonus) {
       rollData.rollBonus = foundry.utils.duplicate(rollData.rollBonus);
     }
+    const aAppliquer = rollData.blessures && !rollData.blessuresAppliquees;
+    if (aAppliquer) rollData.blessuresAppliquees = true;
     msg.setFlag("world", "rolldata", rollData)
+    if (aAppliquer) await appliquerBlessures(rollData.blessures);
 
     if (rollData.useEspoir && !rollData.espoirApplied) {
       rollData.espoirApplied = true
