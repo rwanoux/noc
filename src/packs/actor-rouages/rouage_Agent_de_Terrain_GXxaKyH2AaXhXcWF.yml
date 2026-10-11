@@ -170,25 +170,25 @@ system:
       label: blessures
       value: 0
       min: 0
-      max: 10
+      max: 5
       statut: {}
     traque:
       label: traque
       value: 0
       min: 0
-      max: 10
+      max: 5
       statut: {}
     noirceur:
       label: noirceur
       value: 0
       min: 0
-      max: 10
+      max: 5
       statut: {}
     trauma:
       label: trauma
       value: 0
       min: 0
-      max: 10
+      max: 5
       statut: {}
   isMineur: true
   description: '<p>Note : 8 points en Faveurs</p>'

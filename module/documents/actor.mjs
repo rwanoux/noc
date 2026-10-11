@@ -56,6 +56,14 @@ export class nocActor extends Actor {
 
     // Nouveau rouage : tous les domaines à 2 (sauf valeur déjà fournie,
     // par exemple lors d'une importation ou d'une copie)
+    // Nouvel Autre : jauges de perdition à 5 cases, comme sur sa fiche
+    if (this.type === "autre") {
+      const updates = {};
+      for (const perd of Object.keys(this.system.perditions ?? {})) {
+        if (foundry.utils.getProperty(data, `system.perditions.${perd}.max`) === undefined) updates[`system.perditions.${perd}.max`] = 5;
+      }
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
     if (this.type === "rouage") {
       const updates = {};
       for (const domaine of Object.keys(this.system.domaines ?? {})) {

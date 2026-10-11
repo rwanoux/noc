@@ -170,3 +170,36 @@ export async function migrerAutres() {
   }
   await game.settings.set("noc", "migrationAutres", VERSION_MIGRATION_AUTRES);
 }
+
+/* -------------------------------------------- */
+/*  Jauges de perdition des rouages et des Autres */
+/* -------------------------------------------- */
+
+export const VERSION_MIGRATION_JAUGES = 1;
+
+/**
+ * Les fiches de rouage et d'Autre affichent 5 cases par perdition : un maximum resté à 10
+ * (valeur d'origine) empêchait d'atteindre le maximum (et donc le statut Mort).
+ */
+export async function migrerJauges() {
+  if (!game.user.isGM) return;
+  if ((game.settings.get("noc", "migrationJauges") ?? 0) >= VERSION_MIGRATION_JAUGES) return;
+  const erreurs = [];
+  for (const actor of game.actors) {
+    if (!["rouage", "autre"].includes(actor.type)) continue;
+    const maj = {};
+    for (const [cle, p] of Object.entries(actor._source.system?.perditions ?? {})) {
+      if ((Number(p.max) || 0) <= 5) continue;
+      maj[`system.perditions.${cle}.max`] = 5;
+      if ((Number(p.value) || 0) > 5) maj[`system.perditions.${cle}.value`] = 5;
+    }
+    if (!Object.keys(maj).length) continue;
+    try { await actor.update(maj); }
+    catch (e) { erreurs.push(actor.name); console.error("NOC | jauges", actor.name, e); }
+  }
+  if (erreurs.length) {
+    ui.notifications.error(`NOC : conversion des jauges incomplète pour ${erreurs.join(", ")}. Voir la console (F12).`, { permanent: true });
+    return;
+  }
+  await game.settings.set("noc", "migrationJauges", VERSION_MIGRATION_JAUGES);
+}

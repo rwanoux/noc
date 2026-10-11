@@ -31,7 +31,7 @@ import { nocUtility } from './noc-utility.js';
 import { migrerArchetypes } from "./archetypes.mjs";
 import { migrerQualites } from "./qualites.mjs";
 import { migrerCreatures } from "./creatures.mjs";
-import { migrerAutres } from "./autres.mjs";
+import { migrerAutres, migrerJauges } from "./autres.mjs";
 import { migrerArmures } from "./armures.mjs";
 import { migrerArmes } from "./armes.mjs";
 import { migrerJetons, enregistrerJetons, enregistrerStatutMort } from "./jetons.mjs";
@@ -224,6 +224,7 @@ Hooks.once("ready", async function () {
   await migrerArmures();
   await migrerArmes();
   await migrerJetons();
+  await migrerJauges();
 
   objetDieu.init();
 
