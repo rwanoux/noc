@@ -46,6 +46,12 @@ import { ouvrirBibliothequeFiel } from "./fiel/editeur-bibliotheque.mjs";
 /* -------------------------------------------- */
 
 Hooks.once('init', async function () {
+  // Polices du système proposées dans l'éditeur de texte (menu des styles > polices)
+  Object.assign(CONFIG.fontDefinitions, {
+    "Adler": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/adler.ttf"] }] },
+    "The Bold Font": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/theboldfont.ttf"] }] },
+    "Raleway SemiBold": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/Raleway-SemiBold.ttf"] }] }
+  });
   game.socketManager = new SocketManager;
 
   // Special NOC settings
