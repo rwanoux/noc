@@ -1,0 +1,50 @@
+name: Bois
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: '<p>Arme naturelle : Cerf.</p>'
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 0
+  limite: 0
+  degats: '@talents.action.constitution.niveau + 1'
+  traits: ''
+  munitions:
+    type: ''
+    quantite: 1
+  portee: 0
+  formatV2: true
+  degatsBase: 1
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: false
+    longuePortee: false
+    recurrent: false
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: false
+      valeur: 0
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: b1U6WH93pqpmAOsA
+folder: null
+sort: 10000000
+ownership:
+  default: 0
+_key: '!items!b1U6WH93pqpmAOsA'
