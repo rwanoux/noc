@@ -147,10 +147,14 @@
           {{#each actor.system.perditions as |perdition perditionId|}}
           <div class="reserve perdition {{perditionId}}">
             <h4>{{perdition.label}}
-
+              {{#if @root.editable}}
+              <a class="basculerJauges" data-tooltip="Jauges de perdition sur {{#ifequal perdition.max 10}}5{{else}}10{{/ifequal}} (toutes)">
+                <i class="fas fa-arrows-left-right"></i> {{perdition.max}}
+              </a>
+              {{/if}}
             </h4>
 
-            {{#repeat 5}}
+            {{#repeat perdition.max}}
             <input type="checkbox"
               data-reserve-value="{{@index}}"
               data-reserve-property="system.perditions.{{perditionId}}.value"

@@ -2567,3 +2567,11 @@ div.noc.sheet .theme-resume a.changerTheme {
     flex: 0 0 auto !important;
     margin-left: 4px;
 }
+
+// Rouage / Autre : bascule des jauges de perdition 5 <-> 10
+div.noc.sheet .reserve.perdition h4 a.basculerJauges {
+    font-size: 10px;
+    margin-left: 6px;
+    opacity: 0.7;
+    &:hover { opacity: 1; }
+}

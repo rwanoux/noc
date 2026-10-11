@@ -322,6 +322,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
     html.find(".addQuality").click(this.addQuality.bind(this))
     html.find(".changerTheme").click(this.changerTheme.bind(this))
+    html.find("a.basculerJauges").click(this.basculerJauges.bind(this))
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
 
     html.find(".unassignContact").click(this.unassignContact.bind(this))
@@ -561,6 +562,20 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       detail: theme.talents.map(t => `${libelleTalent(t.talent)} ${t.value > 0 ? "+" : ""}${t.value}`).join(", ")
     } : null;
   }
+  /** Rouage / Autre : toutes les jauges de perdition passent de 5 à 10 cases (ou l'inverse) */
+  async basculerJauges(ev) {
+    ev.preventDefault();
+    const perditions = this.actor.system.perditions ?? {};
+    const actuel = Math.max(...Object.values(perditions).map(p => Number(p.max) || 0));
+    const max = actuel >= 10 ? 5 : 10;
+    const maj = {};
+    for (const [cle, p] of Object.entries(perditions)) {
+      maj[`system.perditions.${cle}.max`] = max;
+      if ((Number(p.value) || 0) > max) maj[`system.perditions.${cle}.value`] = max;
+    }
+    return this.actor.update(maj);
+  }
+
   /** Changer de thème : les bonus suivent automatiquement le nouveau thème */
   async changerTheme(ev) {
     ev.preventDefault();
