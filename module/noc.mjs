@@ -34,7 +34,7 @@ import { migrerCreatures } from "./creatures.mjs";
 import { migrerAutres } from "./autres.mjs";
 import { migrerArmures } from "./armures.mjs";
 import { migrerArmes } from "./armes.mjs";
-import { migrerJetons, enregistrerJetons } from "./jetons.mjs";
+import { migrerJetons, enregistrerJetons, enregistrerStatutMort } from "./jetons.mjs";
 import { enregistrerBoutonPanneau, enregistrerSuiviMenace, ouvrirPanneauMJ } from "./panneau-mj.mjs";
 import { ouvrirBibliothequeFiel } from "./fiel/editeur-bibliotheque.mjs";
 
@@ -81,6 +81,7 @@ Hooks.once('init', async function () {
   enregistrerBoutonPanneau();
   enregistrerSuiviMenace();
   enregistrerJetons();
+  enregistrerStatutMort();
   enregistrerAjoutJetonsCombat();
 
   // Add custom constants for configuration.
