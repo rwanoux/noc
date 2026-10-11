@@ -1,4 +1,4 @@
-import { calculerBlessures, ciblesActuelles, messageMJCibles } from "./combat-blessures.mjs";
+import { calculerBlessures, ciblesActuelles, messageMJCibles, texteBlessures } from "./combat-blessures.mjs";
 import { traitsEnCombat } from "./armes.mjs";
 /* -------------------------------------------- */
 
@@ -199,6 +199,8 @@ export class nocUtility {
     if (!rollData.blessuresAppliquees) {
       rollData.cibles ??= ciblesActuelles();
       rollData.blessures = rollData.cibles.length ? calculerBlessures(rollData, rollData.cibles) : null;
+      // la marge de succès (Précision) s'ajoute à la 1re cible touchée
+      (rollData.blessures ?? []).forEach((b, i) => { b.texte = texteBlessures(b, i === 0 ? rollData.margin : 0); });
     }
   }
 

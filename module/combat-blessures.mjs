@@ -24,7 +24,7 @@ function armureDe(actor) {
 export function calculerBlessures(rollData, cibles) {
   const traits = rollData.arme?.system?.traitsArme ?? {};
   if (traits.choc || traits.contrainte?.actif) {
-    return cibles.map(c => ({ ...c, points: 0, detail: traits.choc ? "Choc : pas de Blessures" : "Contrainte : pas de Blessures" }));
+    return cibles.slice(0, 1).map(c => ({ ...c, points: 0, sansBlessures: true, detail: traits.choc ? "Choc : pas de Blessures" : "Contrainte : pas de Blessures" }));
   }
   const nbTouches = traits.multiple?.actif ? Math.max(1, nombre(traits.multiple.valeur)) : 1;
   const resultats = cibles.map(c => ({ ...c, points: 0, touches: [] }));
@@ -91,13 +91,21 @@ export async function appliquerBlessures(resultats) {
   }
 }
 
+/** Texte des Blessures : « 3 + 6 = 9 » (Blessures + marge de succès utilisée en Précision) */
+export function texteBlessures(b, marge) {
+  if (b.sansBlessures) return b.detail;
+  const m = Math.max(0, Number(marge) || 0);
+  return m > 0 ? `${b.points} + ${m} = ${b.points + m}` : `${b.points}`;
+}
+
 /** Message réservé au MJ : Constitution, Armure et Lumière des cibles touchées */
 export async function messageMJCibles(rollData) {
   const gms = ChatMessage.getWhisperRecipients("GM");
   if (!gms.length || !rollData.blessures?.length) return;
   const lignes = rollData.blessures.map(b =>
-    `<li><strong>${b.nom}</strong> : Constitution ${b.cons ?? "—"}, Armure ${b.armure ?? "—"}, Lumière ${b.lumiere ?? "—"}`
-    + (b.detail ? `<br><small>${b.detail}</small>` : "") + `</li>`).join("");
+    `<li><span style="font-weight:bold">${b.nom}</span> : Constitution ${b.cons ?? "—"}, Armure ${b.armure ?? "—"}, Lumière ${b.lumiere ?? "—"}`
+    + `<br>Blessures : ${b.texte ?? b.points}`
+    + (b.detail && !b.sansBlessures ? `<br><small>${b.detail}</small>` : "") + `</li>`).join("");
   await ChatMessage.create({
     content: `<div class="nocRoll"><h4>Cibles de ${rollData.alias ?? ""} — ${rollData.arme?.name ?? ""}</h4><ul class="cibles-mj">${lignes}</ul></div>`,
     whisper: gms.map(u => u.id),

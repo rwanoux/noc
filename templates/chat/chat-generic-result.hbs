@@ -91,7 +91,6 @@
 
       {{#unless (eq mode "arme")}}
       {{#if aNiveauRequis}}
-        <li>Niveau final requis : {{niveauFinalRequis}} </li>
         {{#if isReussite}}
           <li class="rollResult reussite">Réussite !! (Marge {{margin}})</li>
         {{else}}
@@ -105,16 +104,14 @@
     {{#if aNiveauRequis}}
       <div class="resultat-combat">
         <hr>
-        <p class="requis-combat">Niveau final requis : {{niveauFinalRequis}}</p>
         {{#if isReussite}}
           <p class="verdict-combat reussite">Réussite</p>
         {{else}}
           <p class="verdict-combat echec">Échec</p>
         {{/if}}
-        <p class="marge-combat {{#if isReussite}}reussite{{else}}echec{{/if}}">Marge de succès : {{margin}}</p>
+        <p class="marge-combat {{#if isReussite}}reussite{{else}}echec{{/if}}">{{#if isReussite}}Marge de succès : {{margin}}{{else}}Marge d'échec : {{margin}}{{/if}}</p>
 
         {{#if isReussite}}
-          <hr>
           {{#if quantique}}
             <p class="titre-bloc-combat">Effet quantique ({{quantique.nbDes}} dé{{#ifequal quantique.nbDes 1}}{{else}}s{{/ifequal}}) : +{{quantique.succes}}</p>
             <div class="dicesResults flexrow">
@@ -129,17 +126,12 @@
           {{#if energieNoire}}
             <p class="titre-bloc-combat">Énergie noire : +{{energieNoire}}</p>
           {{/if}}
-          <p class="degats-combat">Dégâts totaux : {{degatsTotaux}}</p>
-          <p class="note-combat">
-            {{#if reduitParLumiere}}Arme {{degatsArme}}{{#if quantique}} + quantique {{quantique.succes}}{{/if}}{{#if energieNoire}} + énergie noire {{energieNoire}}{{/if}}. {{/if}}La cible retranche sa Constitution et son Armure.{{#if reduitParLumiere}} La part {{#if quantique}}quantique{{#if energieNoire}} et d'énergie noire{{/if}}{{else}}d'énergie noire{{/if}} est réduite par la Lumière de la cible et de ses alliés à portée d'aura (minimum 0).{{/if}}
-          </p>
-
           {{#if blessures.length}}
             <hr>
             <p class="titre-bloc-combat">Blessures à infliger</p>
             <ul class="blessures-combat">
               {{#each blessures as |b|}}
-                <li><strong>{{b.nom}}</strong> : {{#if b.points}}{{b.points}}{{else}}aucune{{/if}}</li>
+                <li><strong>{{b.nom}}</strong> : {{b.texte}}</li>
               {{/each}}
             </ul>
           {{/if}}
