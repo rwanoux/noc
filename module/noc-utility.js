@@ -1,4 +1,4 @@
-import { calculerBlessures, appliquerBlessures, ciblesActuelles, messageMJCibles } from "./combat-blessures.mjs";
+import { calculerBlessures, ciblesActuelles, messageMJCibles } from "./combat-blessures.mjs";
 import { traitsEnCombat } from "./armes.mjs";
 /* -------------------------------------------- */
 
@@ -229,10 +229,8 @@ export class nocUtility {
     const aAppliquer = rollData.blessures && !rollData.blessuresAppliquees;
     if (aAppliquer) rollData.blessuresAppliquees = true;
     msg.setFlag("world", "rolldata", rollData)
-    if (aAppliquer) {
-      await appliquerBlessures(rollData.blessures);
-      await messageMJCibles(rollData);
-    }
+    // pas de report automatique : le MJ reporte les Blessures (panneau du MJ)
+    if (aAppliquer) await messageMJCibles(rollData);
 
     if (rollData.useEspoir && !rollData.espoirApplied) {
       rollData.espoirApplied = true

@@ -1,5 +1,6 @@
 /**
- * Report automatique des Blessures sur les cibles d'une attaque réussie.
+ * Calcul des Blessures infligées aux cibles d'une attaque réussie
+ * (affiché dans le chat ; le MJ les reporte lui-même, sans report automatique).
  *
  * Règles (livre p. 251-252) :
  * - Blessures = dégâts de l'arme − Constitution − Armure de la cible

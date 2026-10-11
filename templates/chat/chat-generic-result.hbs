@@ -136,10 +136,10 @@
 
           {{#if blessures.length}}
             <hr>
-            <p class="titre-bloc-combat">Blessures infligées</p>
+            <p class="titre-bloc-combat">Blessures à infliger</p>
             <ul class="blessures-combat">
               {{#each blessures as |b|}}
-                <li><strong>{{b.nom}}</strong> : {{#if b.points}}+{{b.points}} ({{b.avant}} → {{b.apres}} / {{b.max}}){{else}}aucune{{/if}}</li>
+                <li><strong>{{b.nom}}</strong> : {{#if b.points}}{{b.points}}{{else}}aucune{{/if}}</li>
               {{/each}}
             </ul>
           {{/if}}
