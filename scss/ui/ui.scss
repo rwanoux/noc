@@ -344,6 +344,11 @@ div.sidebar-popout {
 
                 }
 
+                &[data-tab="placeables"] {
+                    background: url("../asset/ui/placeables_tab.png");
+                    background-size: 100% 100%;
+                }
+
 
             }
         }
