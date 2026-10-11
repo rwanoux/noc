@@ -139,8 +139,7 @@
             <p class="titre-bloc-combat">Blessures infligées</p>
             <ul class="blessures-combat">
               {{#each blessures as |b|}}
-                <li><strong>{{b.nom}}</strong> : {{#if b.points}}+{{b.points}} ({{b.avant}} → {{b.apres}} / {{b.max}}){{else}}aucune{{/if}}
-                  <br><small>{{b.detail}}</small></li>
+                <li><strong>{{b.nom}}</strong> : {{#if b.points}}+{{b.points}} ({{b.avant}} → {{b.apres}} / {{b.max}}){{else}}aucune{{/if}}</li>
               {{/each}}
             </ul>
           {{/if}}

@@ -49,6 +49,7 @@ export function calculerBlessures(rollData, cibles) {
       if (points < 1) break;
     }
     r.touches.push(points);
+    r.cons ??= cons; r.armure ??= armure; r.lumiere ??= lumiere;
     r.points += points;
     r.detail = `dégâts ${rollData.degatsArme} − Const. ${cons} − Armure ${armure}`
       + (surnaturel > 0 ? ` ; quantique/énergie noire ${surnaturel} − Lumière ${lumiere}` : "")
@@ -87,6 +88,20 @@ export async function appliquerBlessures(resultats) {
     else if (game.users.activeGM) game.socketManager.launchSocket("appliquerBlessures", { actorUuid: r.actorUuid, points: r.points });
     else ui.notifications.warn(`Aucun MJ connecté : les Blessures de ${r.nom} n'ont pas pu être reportées.`);
   }
+}
+
+/** Message réservé au MJ : Constitution, Armure et Lumière des cibles touchées */
+export async function messageMJCibles(rollData) {
+  const gms = ChatMessage.getWhisperRecipients("GM");
+  if (!gms.length || !rollData.blessures?.length) return;
+  const lignes = rollData.blessures.map(b =>
+    `<li><strong>${b.nom}</strong> : Constitution ${b.cons ?? "—"}, Armure ${b.armure ?? "—"}, Lumière ${b.lumiere ?? "—"}`
+    + (b.detail ? `<br><small>${b.detail}</small>` : "") + `</li>`).join("");
+  await ChatMessage.create({
+    content: `<div class="nocRoll"><h4>Cibles de ${rollData.alias ?? ""} — ${rollData.arme?.name ?? ""}</h4><ul class="cibles-mj">${lignes}</ul></div>`,
+    whisper: gms.map(u => u.id),
+    speaker: ChatMessage.getSpeaker({ alias: "Loi" })
+  });
 }
 
 /** Cibles actuelles de l'utilisateur (jetons ciblés) */
