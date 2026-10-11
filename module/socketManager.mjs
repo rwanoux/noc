@@ -1,4 +1,3 @@
-import { ajouterBlessures } from "./combat-blessures.mjs";
 import { objetDieu } from "./objectDieu.mjs";
 
 
@@ -35,13 +34,6 @@ export class SocketManager {
                 this.launchSocket("dispayDroplet", {})
                 ui.compteur.gouttePlus(socketMsg.data.qt)
                 break;
-            case "appliquerBlessures": {
-                // un seul MJ applique les Blessures demandées par un joueur
-                if (!game.users.activeGM?.isSelf) return;
-                const actor = await fromUuid(socketMsg.data.actorUuid);
-                if (actor) await ajouterBlessures(actor, Number(socketMsg.data.points) || 0);
-                break;
-            }
             case "renderCompteur":
                 ui.compteur.render(true);
                 break;

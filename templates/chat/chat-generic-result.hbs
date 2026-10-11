@@ -126,14 +126,6 @@
           {{#if energieNoire}}
             <p class="titre-bloc-combat">Énergie noire : +{{energieNoire}}</p>
           {{/if}}
-          {{#if blessures.length}}
-            <p class="titre-bloc-combat">Blessures à infliger</p>
-            <ul class="blessures-combat">
-              {{#each blessures as |b|}}
-                <li><strong>{{b.nom}}</strong> : {{b.texte}}</li>
-              {{/each}}
-            </ul>
-          {{/if}}
 
           {{#if traitsCombat.length}}
             <hr>
