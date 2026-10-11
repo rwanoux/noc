@@ -5,7 +5,8 @@
  * - Énergie Noire déduite = 8 - Classe Exo, sauf si le MJ la force
  *   (system.energieNoire.forcee).
  * - Domaine = 2 + Énergie Noire + individualisation du MJ ;
- *   Talent  = Énergie Noire + individualisation du MJ.
+ *   Talent  = Énergie Noire + individualisation du MJ, sauf Lumière
+ *   (livre p. 280 : l'Énergie noire s'ajoute à tout sauf à la Lumière).
  *   Les valeurs enregistrées des domaines et talents sont ces individualisations,
  *   qui restent donc appliquées quand l'Énergie Noire change.
  */
@@ -56,7 +57,7 @@ export function appliquerAutre(actor) {
   for (const [dom, liste] of Object.entries(s.talents ?? {})) {
     for (const [tal, t] of Object.entries(liste ?? {})) {
       t.individualisation = Number(t.niveau) || 0;
-      t.niveau = en + t.individualisation;
+      t.niveau = (dom === "vie" && tal === "lumiere" ? 0 : en) + t.individualisation;
       set(`system.talents.${dom}.${tal}.niveau`, t.niveau);
     }
   }
@@ -66,7 +67,7 @@ export function appliquerAutre(actor) {
 /*  Conversion des Autres existants              */
 /* -------------------------------------------- */
 
-export const VERSION_MIGRATION_AUTRES = 2;
+export const VERSION_MIGRATION_AUTRES = 3;
 
 /** Valeurs de base « neutres » d'un Autre : Classe Exo 7, aucune individualisation */
 function majAutreNeuf(src) {
@@ -134,6 +135,19 @@ async function corrigerAutreConverti(actor) {
   return true;
 }
 
+/**
+ * Version 3 : la Lumière ne reçoit plus l'Énergie noire. Une individualisation négative
+ * (héritée de la conversion) est ramenée au score qui s'affichait ; sinon elle est gardée telle quelle.
+ */
+async function corrigerLumiere(actor) {
+  if (actor.type !== "autre") return false;
+  const src = actor._source.system;
+  const n = Number(src.talents?.vie?.lumiere?.niveau) || 0;
+  if (n >= 0) return false;
+  await actor.update({ "system.talents.vie.lumiere.niveau": n + energieNoire(src) });
+  return true;
+}
+
 /** Conversion unique des Autres du monde (MJ uniquement) */
 export async function migrerAutres() {
   if (!game.user.isGM) return;
@@ -145,7 +159,8 @@ export async function migrerAutres() {
   for (const actor of acteurs) {
     try {
       if (version < 1) await migrerAutre(actor);
-      else await corrigerAutreConverti(actor);
+      else if (version < 2) await corrigerAutreConverti(actor);
+      if (version < 3) await corrigerLumiere(actor);
     }
     catch (e) { erreurs.push(actor.name); console.error("NOC | conversion Autre", actor.name, e); }
   }
