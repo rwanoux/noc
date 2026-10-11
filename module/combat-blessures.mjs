@@ -13,6 +13,7 @@
  */
 
 const nombre = v => Number(v) || 0;
+const signe = n => (n < 0 ? `−${-n}` : `${n}`);
 
 /** Score d'armure de la cible (la meilleure armure qu'elle porte) */
 function armureDe(actor) {
@@ -39,11 +40,19 @@ export function calculerBlessures(rollData, cibles) {
     }
     const arme = nombre(rollData.degatsArme);
     const marge = i === 0 ? Math.max(0, nombre(rollData.margin)) : 0;
-    let physique = Math.max(0, arme + marge - r.cons - r.armure);
-    let minimum = "";
-    if (r.armure === 0 && traits.perforant && physique < 2) { physique = 2; minimum = " (minimum Perforant)"; }
-    if (r.armure === 0 && traits.tranchant && physique < 1) { physique = 1; minimum = " (minimum Tranchant)"; }
-    r.lignes.push(`Dégâts ${arme} (arme)${marge ? ` + ${marge} (marge)` : ""} − ${r.cons} (Const.) − ${r.armure} (Armure) = ${physique}${minimum}`);
+    // Perforant / Tranchant : le minimum s'applique avant l'ajout de la marge
+    const brut = arme - r.cons - r.armure;
+    let base = brut;
+    let releve = "";
+    if (r.armure === 0 && (traits.perforant || traits.tranchant)) {
+      const min = traits.perforant ? 2 : 1;
+      const nom = traits.perforant ? "Perforant" : "Tranchant";
+      r.lignes.push(`${nom} : cible sans armure, au moins ${min} Blessure${min > 1 ? "s" : ""} avant la marge`);
+      if (brut < min) { base = min; releve = `, porté à ${min} (${nom})`; }
+    }
+    const physique = Math.max(0, base + marge);
+    r.lignes.push(`Dégâts ${arme} (arme) − ${signe(r.cons)} (Const.) − ${r.armure} (Armure) = ${signe(brut)}${releve}`
+      + (marge ? ` + ${marge} (marge) = ${physique}` : (!releve && brut < 0 ? ` → ${physique}` : "")));
     let total = physique;
     if (surnaturel > 0) {
       const reduit = Math.max(0, surnaturel - r.lumiere);
