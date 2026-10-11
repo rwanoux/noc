@@ -101,8 +101,17 @@ export function texteBlessures(b, marge) {
 /** Message réservé au MJ : Constitution, Armure et Lumière des cibles touchées */
 export async function messageMJCibles(rollData) {
   const gms = ChatMessage.getWhisperRecipients("GM");
-  if (!gms.length || !rollData.blessures?.length) return;
-  const lignes = rollData.blessures.map(b =>
+  if (!gms.length) return;
+  let lignes;
+  if (!rollData.blessures?.length) {
+    // personne n'a été ciblé : dégâts bruts de l'arme, à réduire par la Loi
+    const parts = [`arme ${Number(rollData.degatsArme) || 0}`];
+    if (rollData.quantique?.succes) parts.push(`quantique ${rollData.quantique.succes}`);
+    if (rollData.energieNoire) parts.push(`énergie noire ${rollData.energieNoire}`);
+    const marge = Math.max(0, Number(rollData.margin) || 0);
+    lignes = `<li><span style="font-weight:bold">Cible inconnue</span><br>Dégâts : ${parts.join(" + ")}${marge ? ` + marge ${marge}` : ""}`
+      + `<br><small>À réduire par la Constitution et l'Armure de la cible (quantique et énergie noire : par sa Lumière).</small></li>`;
+  } else lignes = rollData.blessures.map(b =>
     `<li><span style="font-weight:bold">${b.nom}</span> : Constitution ${b.cons ?? "—"}, Armure ${b.armure ?? "—"}, Lumière ${b.lumiere ?? "—"}`
     + `<br>Blessures : ${b.texte ?? b.points}`
     + (b.detail && !b.sansBlessures ? `<br><small>${b.detail}</small>` : "") + `</li>`).join("");

@@ -228,7 +228,8 @@ export class nocUtility {
     if (rollData.rollBonus) {
       rollData.rollBonus = foundry.utils.duplicate(rollData.rollBonus);
     }
-    const aAppliquer = rollData.blessures && !rollData.blessuresAppliquees;
+    // message au MJ une seule fois par attaque réussie (avec ou sans cible)
+    const aAppliquer = rollData.mode === "arme" && rollData.isReussite && !rollData.blessuresAppliquees;
     if (aAppliquer) rollData.blessuresAppliquees = true;
     msg.setFlag("world", "rolldata", rollData)
     // pas de report automatique : le MJ reporte les Blessures (panneau du MJ)
