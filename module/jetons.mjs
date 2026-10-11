@@ -43,15 +43,18 @@ export async function migrerJetons() {
  * Statut « mort » posé automatiquement quand les Blessures atteignent leur maximum,
  * et retiré quand elles redescendent. Exécuté par un seul MJ (le MJ actif).
  */
+const enCours = new Set();
 async function verifierMort(actor) {
-  if (!actor || !game.users.activeGM?.isSelf) return;
+  if (!actor || !game.users.activeGM?.isSelf || enCours.has(actor.uuid)) return;
   const b = actor.system?.perditions?.blessures;
   if (!b) return;
   const max = Number(b.max) || 0;
   const mort = max > 0 && (Number(b.value) || 0) >= max;
   const statut = CONFIG.specialStatusEffects?.DEFEATED ?? "dead";
   if (mort === actor.statuses?.has(statut)) return;
-  await actor.toggleStatusEffect(statut, { active: mort, overlay: true });
+  enCours.add(actor.uuid);
+  try { await actor.toggleStatusEffect(statut, { active: mort, overlay: true }); }
+  finally { enCours.delete(actor.uuid); }
 }
 
 export function enregistrerStatutMort() {
