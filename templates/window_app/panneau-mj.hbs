@@ -1,5 +1,11 @@
 <div class="panneau-mj-contenu">
 
+  <nav class="onglets-mj flexrow">
+    <a class="onglet-lien {{#if (eq onglet "individus")}}actif{{/if}}" data-onglet="individus"><i class="fa-solid fa-users"></i> Individus et perditions</a>
+    <a class="onglet-lien {{#if (eq onglet "fiel")}}actif{{/if}}" data-onglet="fiel"><i class="fa-solid fa-droplet"></i> Menace et effets de Fiel</a>
+  </nav>
+
+  <div class="onglet-mj {{#if (eq onglet "individus")}}actif{{/if}}" data-onglet="individus">
   <!-- CIBLES -->
   <section class="bloc">
     <h3 class="flexrow">
@@ -55,6 +61,9 @@
     </div>
   </section>
 
+  </div>
+
+  <div class="onglet-mj {{#if (eq onglet "fiel")}}actif{{/if}}" data-onglet="fiel">
   <!-- FIEL ET MENACE -->
   <section class="bloc">
     <h3>Fiel et Menace</h3>
@@ -114,4 +123,5 @@
       <button type="button" data-action="leverEtat" data-etat="bouleversement">Lever l'ancien bouleversement</button>
     </div>
   </section>
+  </div>
 </div>

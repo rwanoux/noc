@@ -2575,3 +2575,37 @@ div.noc.sheet .reserve.perdition h4 a.basculerJauges {
     opacity: 0.7;
     &:hover { opacity: 1; }
 }
+
+// Panneau du MJ : deux onglets
+.panneau-mj {
+    nav.onglets-mj {
+        gap: 4px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #5c5c5c;
+
+        a.onglet-lien {
+            flex: 1 1 0;
+            text-align: center;
+            padding: 4px 6px;
+            border-radius: 4px 4px 0 0;
+            opacity: 0.6;
+            cursor: pointer;
+
+            &.actif {
+                opacity: 1;
+                font-weight: bold;
+                background: rgba(0, 0, 0, 0.12);
+                border: 1px solid #5c5c5c;
+                border-bottom: none;
+            }
+        }
+    }
+
+    div.onglet-mj {
+        display: none;
+
+        &.actif {
+            display: block;
+        }
+    }
+}

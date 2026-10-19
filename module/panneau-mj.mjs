@@ -220,6 +220,8 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
   /** effet choisi (non encore appliqué) pour chaque niveau de Menace */
   choix = {};
   categorie = "";
+  /** onglet affiché : "individus" ou "fiel" */
+  onglet = "individus";
 
   _personnages() {
     return game.actors.filter(a => a.type === "personnage");
@@ -287,7 +289,8 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
       fiel,
       niveaux,
       categories,
-      categorie: this.categorie
+      categorie: this.categorie,
+      onglet: this.onglet
     };
   }
 
@@ -297,6 +300,12 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     html.querySelectorAll("input.cible").forEach(c => c.addEventListener("change", ev => {
       const id = ev.currentTarget.dataset.uuid;
       if (ev.currentTarget.checked) this.cibles.add(id); else this.cibles.delete(id);
+    }));
+    // onglets : bascule sans redessiner (les cases cochées restent en place)
+    html.querySelectorAll("a.onglet-lien").forEach(lien => lien.addEventListener("click", ev => {
+      this.onglet = ev.currentTarget.dataset.onglet;
+      html.querySelectorAll("a.onglet-lien, div.onglet-mj").forEach(el =>
+        el.classList.toggle("actif", el.dataset.onglet === this.onglet));
     }));
     html.querySelector("input.reductions")?.addEventListener("change", ev => { this.reductions = ev.currentTarget.checked; });
     html.querySelectorAll("select.choix-effet").forEach(sel => sel.addEventListener("change", ev => {
