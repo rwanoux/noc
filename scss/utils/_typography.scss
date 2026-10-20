@@ -124,6 +124,16 @@ body.system-noc {
         padding: 0.15em 0.4em;
     }
 
+    // même retrait du texte pour les autres niveaux de titre
+    @each $h in h2, h3, h4, h5, h6 {
+        .editor-content #{$h},
+        .prosemirror #{$h},
+        .journal-page-content #{$h} {
+            padding-left: 0.4em;
+            padding-right: 0.4em;
+        }
+    }
+
     .editor-content > h1:first-child,
     .prosemirror .editor-content > h1:first-child,
     .journal-page-content > h1:first-child {
