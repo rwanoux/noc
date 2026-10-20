@@ -1,6 +1,7 @@
+// Special Elite (Astigmatic, licence Apache 2.0 : asset/fonts/SpecialElite-LICENSE.txt)
 @font-face {
-    font-family: "adler";
-    src: url("../asset/fonts/adler.ttf");
+    font-family: "Special Elite";
+    src: url("../asset/fonts/SpecialElite-Regular.woff") format("woff");
 }
 
 @font-face {
@@ -15,7 +16,7 @@
 
 $font-primary: 'raleway',
 sans-serif;
-$font-secondary: 'adler',
+$font-secondary: 'Special Elite',
 sans-serif;
 $font-bold:'bold',
 sans-serif;
@@ -23,7 +24,7 @@ sans-serif;
 :root {
     --font-primary: 'bold',
         sans-serif;
-    --font-secondary: 'adler',
+    --font-secondary: 'Special Elite',
         sans-serif;
 
 }
