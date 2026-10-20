@@ -135,10 +135,14 @@ export function bonusArchetype(systemArchetype, domainesActeur) {
 
 /** Applique les bonus de l'archétype au personnage (appelé à la préparation) */
 export function appliquerArchetype(actor) {
-  if (actor.type !== "personnage") return;
+  if (!["personnage", "rouage"].includes(actor.type)) return;
   const archetype = actor.items.find(i => i.type === "archetype");
   if (!archetype) return;
   const bonus = bonusArchetype(archetype.system, actor.system.domaines);
+  // Rouage : ses domaines partent déjà de 2 ; seules les affinités au-delà de 2 s'ajoutent
+  if (actor.type === "rouage") {
+    for (const dom of Object.keys(bonus.domaines)) bonus.domaines[dom] = Math.max(0, bonus.domaines[dom] - 2);
+  }
   actor.overrides ??= {};
 
   for (const [dom, v] of Object.entries(bonus.domaines)) {

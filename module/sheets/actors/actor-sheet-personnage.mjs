@@ -124,7 +124,12 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     if (dropItem.type == "thème") {
       return ui.notifications.warn("Les thèmes font maintenant partie des archétypes : glissez l'archétype sur la fiche, le thème sera proposé au choix.")
     }
-    if (dropItem.type == "archetype") { return this._onDropArchetype(ev, dropItem) }
+    if (dropItem.type == "archetype") {
+      if (!["personnage", "rouage"].includes(this.actor.type)) {
+        return ui.notifications.warn("Les archétypes sont réservés aux personnages et aux rouages.");
+      }
+      return this._onDropArchetype(ev, dropItem);
+    }
 
     return super._onDropItem(ev, data);
 

@@ -2609,3 +2609,25 @@ div.noc.sheet .reserve.perdition h4 a.basculerJauges {
         }
     }
 }
+
+// Fiche de rouage : archétype et thème
+div.noc.sheet .archetype-rouage {
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    margin: 2px 0 4px;
+    flex: 0 0 auto;
+
+    .libelle {
+        flex: 0 0 auto;
+        font-weight: bold;
+    }
+
+    .item-name {
+        flex: 0 1 auto;
+    }
+
+    a {
+        flex: 0 0 auto;
+    }
+}

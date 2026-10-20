@@ -70,6 +70,17 @@
       </div>
 
     </header>
+    {{#each actor.itemTypes.archetype as |archetype|}}
+    <div class="archetype-rouage flexrow">
+      <span class="libelle">Archétype :</span>
+      <span class="item-name">{{archetype.name}}</span>
+      <a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{archetype.id}}" data-tooltip="Ouvrir l'archétype"></a>
+      <a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{archetype.id}}" data-tooltip="Retirer l'archétype"></a>
+      <span class="libelle">Thème :</span>
+      <span class="item-name" {{#if @root.themeChoisi}}data-tooltip="{{@root.themeChoisi.detail}}"{{/if}}>{{#if @root.themeChoisi}}{{@root.themeChoisi.nom}}{{else}}—{{/if}}</span>
+      {{#if @root.themesDisponibles}}{{#if @root.editable}}<a class="fas fa-rotate changerTheme" data-tooltip="Changer de thème"></a>{{/if}}{{/if}}
+    </div>
+    {{/each}}
     <div class="tab principal ">
       <div class="stats rouage">
 
