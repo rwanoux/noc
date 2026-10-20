@@ -194,7 +194,9 @@ export async function choisirTheme(archetypeData, actuel = null) {
 /*  Conversion des données existantes            */
 /* -------------------------------------------- */
 
-export const VERSION_MIGRATION_ARCHETYPES = 1;
+// v2 : les rouages munis d'un archétype sont aussi convertis (les personnages déjà
+// convertis ne sont pas retouchés : ils n'ont plus d'anciens effets)
+export const VERSION_MIGRATION_ARCHETYPES = 2;
 
 function estAjout(change) {
   const m = change.mode ?? change.type;
@@ -204,7 +206,7 @@ const CLE_BONUS = /^system\.(domaines\.[^.]+\.value|talents\.[^.]+\.[^.]+\.nivea
 
 /** Convertit un personnage en conservant exactement ses scores affichés */
 async function migrerPersonnage(actor) {
-  if (actor.type !== "personnage") return false;
+  if (!["personnage", "rouage"].includes(actor.type)) return false;
   const archetypes = actor.items.filter(i => i.type === "archetype");
   const themes = actor.items.filter(i => i.type === "thème");
   const idsSources = new Set([...archetypes, ...themes].map(i => i.id));
@@ -252,7 +254,9 @@ async function migrerPersonnage(actor) {
     nouveauBonus = bonusArchetype({ ...source.system, themes: listeThemes, themeChoisi }, actor._source.system.domaines);
   }
   const nouveau = {};
-  for (const [d, v] of Object.entries(nouveauBonus.domaines)) nouveau[`system.domaines.${d}.value`] = v;
+  // rouage : domaines de base à 2 déjà comptés (voir appliquerArchetype)
+  const baseDomaine = actor.type === "rouage" ? 2 : 0;
+  for (const [d, v] of Object.entries(nouveauBonus.domaines)) nouveau[`system.domaines.${d}.value`] = Math.max(0, v - baseDomaine);
   for (const [c, v] of Object.entries(nouveauBonus.talents)) {
     const [d, t] = c.split(".");
     nouveau[`system.talents.${d}.${t}.niveau`] = v;
