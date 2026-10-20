@@ -259,7 +259,6 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
   async _prepareContext() {
     const personnages = this._personnages();
     if (this.cibles === null) this.cibles = new Set(personnages.map(a => a.uuid));
-    const selection = canvas?.tokens?.controlled?.map(t => t.actor).filter(Boolean) ?? [];
     const fiel = etatFiel();
     const biblio = bibliotheque();
     const categories = [...new Set(biblio.map(e => e.categorie || "Sans catégorie"))];
@@ -283,7 +282,6 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     return {
       personnages: personnages.map(a => this._ligne(a, a.name, a.img)),
       adversaires: this._adversaires().map(x => this._ligne(x.actor, x.nom, x.img)),
-      nbSelection: selection.length,
       perditions: Object.entries(PERDITIONS).map(([cle, d]) => ({ cle, label: d.label, reduction: d.reduction?.label, points: this.points[cle] ?? 1 })),
       reductions: this.reductions,
       fiel,
@@ -314,13 +312,9 @@ export class PanneauMJ extends HandlebarsApplicationMixin(ApplicationV2) {
     html.querySelector("select.categorie-tirage")?.addEventListener("change", ev => { this.categorie = ev.currentTarget.value; });
   }
 
-  /** Acteurs ciblés : cochés, plus les jetons sélectionnés si demandé */
+  /** Acteurs ciblés : ceux cochés dans les deux listes */
   _cibles({ avertir = true } = {}) {
     const acteurs = [...(this.cibles ?? [])].map(uuid => fromUuidSync(uuid)).filter(a => a?.system);
-    const avecSelection = this.element.querySelector("input.avec-selection")?.checked;
-    if (avecSelection) {
-      for (const t of canvas?.tokens?.controlled ?? []) if (t.actor && !acteurs.includes(t.actor)) acteurs.push(t.actor);
-    }
     if (!acteurs.length && avertir) ui.notifications.warn("Aucune cible cochée.");
     return acteurs;
   }
