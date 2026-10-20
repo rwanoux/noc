@@ -150,3 +150,29 @@ body.system-noc .journal-page-header {
         padding: 0;
     }
 }
+
+// Textes rédigés : titres mieux distingués
+// Heading 1 plus grand ; Heading 3 et 4 en Modesto Condensed (police de Foundry), agrandis
+body.system-noc {
+    .editor-content,
+    .prosemirror,
+    .journal-page-content {
+        h1 {
+            font-size: 240%;
+        }
+
+        h3,
+        h4 {
+            font-family: "Modesto Condensed", "bold", sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        h3 {
+            font-size: 170%;
+        }
+
+        h4 {
+            font-size: 145%;
+        }
+    }
+}
