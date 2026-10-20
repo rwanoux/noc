@@ -140,3 +140,12 @@ body.system-noc {
         margin-top: 0.3em;
     }
 }
+
+// Journaux : titre de la page centré, sans image de fond
+body.system-noc .journal-page-header {
+    h1, h2, h3, h4 {
+        background: none;
+        text-align: center;
+        padding: 0;
+    }
+}
