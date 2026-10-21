@@ -117,5 +117,68 @@ div.noc.item.sheet {
         }
       }
     }
+
+    .archetype-themes {
+      margin-top: 10px;
+
+      .hint {
+        font-size: 11px;
+        font-style: italic;
+        margin: 2px 0 6px;
+      }
+
+      .archetype-theme {
+        box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.307);
+        padding: 4px 8px;
+        margin-bottom: 6px;
+
+        &.theme-choisi {
+          box-shadow: 0px 0px 8px #408340 inset;
+        }
+
+        input.theme-nom {
+          font-weight: bold;
+        }
+
+        .theme-badge {
+          flex: 0 0 1.5em;
+          color: #408340;
+        }
+
+        .theme-delete {
+          flex: 0 0 1.5em;
+          text-align: center;
+        }
+
+        .theme-talents {
+          flex-wrap: wrap;
+          gap: 4px;
+          margin: 4px 0;
+          align-items: center;
+
+          .theme-talent {
+            flex: 0 0 auto;
+            padding: 1px 6px;
+            border-radius: 1em;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.5);
+
+            .theme-talent-valeur {
+              font-weight: bold;
+              margin: 0 3px;
+            }
+          }
+
+          select.theme-ajout-talent {
+            flex: 0 0 9em;
+          }
+        }
+
+        textarea.theme-description {
+          width: 100%;
+          resize: vertical;
+        }
+      }
+    }
   }
 }

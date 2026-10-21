@@ -1,3 +1,4 @@
+import { activerCompteurs } from "../../armures.mjs";
 
 export class nocItemSheetArmure extends foundry.appv1.sheets.ItemSheet {
 
@@ -35,6 +36,6 @@ export class nocItemSheetArmure extends foundry.appv1.sheets.ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Roll handlers, click handlers, etc. would go here.
+    activerCompteurs(html, this.item);
   }
 }

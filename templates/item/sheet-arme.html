@@ -17,48 +17,90 @@
       </div>
 
       <div class="form-group">
-        <h4>Arme maitrisée ?</h4>
+        <h4>Arme maîtrisée</h4>
         <input name="system.maitrise" type="checkbox" data-dtype="Boolean"
           {{checked document.system.maitrise}}>
       </div>
 
       <div class="form-group">
-        <h4>Nécessite un quantar ?</h4>
+        <h4>Nécessite un quantar</h4>
         <input name="system.needQuantar" type="checkbox" data-dtype="Boolean"
           {{checked document.system.needQuantar}}>
       </div>
 
       <div class="form-group">
-        <h4>A distance ?</h4>
-        <input name="system.adistance" type="checkbox" data-dtype="Boolean"
-          {{checked document.system.adistance}}>
+        <h4>Type</h4>
+        <select class="type-arme" {{#unless editable}}disabled{{/unless}}>
+          <option value="contact" {{#unless document.system.adistance}}selected{{/unless}}>Contact</option>
+          <option value="distance" {{#if document.system.adistance}}selected{{/if}}>Distance</option>
+        </select>
       </div>
+
       <div class="form-group">
         <h4>Valeur</h4>
-        <input name="system.valeur" value="{{document.system.valeur}}"
-          type="number">
+        <span class="compteur-niveau">{{#if document.system.valeur}}{{document.system.valeur}}{{else}}0{{/if}}
+          {{#if @root.editable}}
+          <span class="compteur-controls">
+            <a class="fas fa-add compteur-plus" data-champ="system.valeur"></a>
+            <a class="fas fa-minus compteur-moins" data-champ="system.valeur"></a>
+          </span>
+          {{/if}}
+        </span>
       </div>
+
       <div class="form-group">
-        <h4>Dégats</h4>
-        <input name="system.degats" value="{{document.system.degats}}"
-          type="String">
+        <h4>Dégâts</h4>
+        <span class="degats-improvises flexrow">
+          {{#unless document.system.adistance}}<span class="prefixe">Const. +</span>{{/unless}}
+          <span class="compteur-niveau">{{#if document.system.degatsBase}}{{document.system.degatsBase}}{{else}}0{{/if}}
+            {{#if @root.editable}}
+            <span class="compteur-controls">
+              <a class="fas fa-add compteur-plus" data-champ="system.degatsBase"></a>
+              <a class="fas fa-minus compteur-moins" data-champ="system.degatsBase"></a>
+            </span>
+            {{/if}}
+          </span>
+        </span>
       </div>
+
       <div class="form-group">
-        <h4>Traits</h4>
-        <input name="system.traits" value="{{document.system.traits}}"
-          type="String">
+        <h4>Quantité de munitions</h4>
+        <span class="compteur-niveau">{{#if document.system.munitions.quantite}}{{document.system.munitions.quantite}}{{else}}0{{/if}}
+          {{#if @root.editable}}
+          <span class="compteur-controls">
+            <a class="fas fa-add compteur-plus" data-champ="system.munitions.quantite"></a>
+            <a class="fas fa-minus compteur-moins" data-champ="system.munitions.quantite"></a>
+          </span>
+          {{/if}}
+        </span>
       </div>
-      <div class="form-group">
-        <h4>Type de munitions</h4>
-        <input name="system.munitions.type"
-          value="{{document.system.munitions.type}}"
-          type="String">
+
+      <h3 class="titre-section">Traits de l'arme</h3>
+      <div class="traits-arme">
+        {{#each traitsSimples as |t|}}
+        <label class="trait-arme" data-tooltip="{{t.description}}">
+          <input type="checkbox" name="system.traitsArme.{{t.cle}}" data-dtype="Boolean" {{checked t.actif}}>
+          <span>{{t.label}}</span>
+        </label>
+        {{/each}}
       </div>
-      <div class="form-group">
-        <h4>Quantité de munition</h4>
-        <input name="system.munitions.quantite"
-          value="{{document.system.munitions.quantite}}"
-          type="Number">
+      <div class="traits-arme traits-chiffres">
+        {{#each traitsChiffres as |t|}}
+        <div class="trait-arme flexrow" data-tooltip="{{t.description}}">
+          <label>
+            <input type="checkbox" name="system.traitsArme.{{t.cle}}.actif" data-dtype="Boolean" {{checked t.actif}}>
+            <span>{{t.label}}</span>
+          </label>
+          <span class="compteur-niveau">{{t.valeur}}
+            {{#if @root.editable}}
+            <span class="compteur-controls">
+              <a class="fas fa-add compteur-plus" data-champ="system.traitsArme.{{t.cle}}.valeur"></a>
+              <a class="fas fa-minus compteur-moins" data-champ="system.traitsArme.{{t.cle}}.valeur"></a>
+            </span>
+            {{/if}}
+          </span>
+        </div>
+        {{/each}}
       </div>
     </div>
 

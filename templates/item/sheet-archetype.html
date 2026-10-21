@@ -52,20 +52,6 @@
 						</div>
 					{{/each}}
 				</div>
-				<div class="themes drop-area">
-					<h4>thèmes possibles</h4>
-					{{#each item.flags.noc.linkedThemes as |theme index|}}
-						<div class="flexrow">
-							<input data-tooltip="choisir ce theme" type="checkbox" data-action="choose-theme" data-theme-id="{{theme.id}}" {{checked theme.choosed}}>
-							<span>{{theme.name}}</span>
-							<div class="controls">
-								<a class="fas fa-trash" data-tooltip="supprimer ce theme de l'archétype" data-action="delete-theme" data-theme-id="{{theme.id}}"></a>
-								<a class="fa-solid fa-edit" data-tooltip="ouvrir les details du thème" data-action="open-theme" data-theme-id="{{theme.id}}"></a>
-							</div>
-						</div>
-					{{/each}}
-
-				</div>
 			</div>
 			<div class="talents-mineurs">
 
@@ -90,5 +76,48 @@
 		</div>
 
 
+		<div class="archetype-themes drop-area">
+			<h4>thèmes
+				<a class="fas fa-add" data-action="add-theme" data-tooltip="ajouter un thème"></a>
+			</h4>
+			<p class="hint">Le joueur choisit l'un de ces thèmes en glissant l'archétype sur sa fiche. Cliquez sur la valeur d'un talent pour la changer (+1, +2, -1).</p>
+			{{#each themes as |theme|}}
+				<div class="archetype-theme {{#if theme.choisi}}theme-choisi{{/if}}" data-theme-id="{{theme.id}}">
+					<div class="flexrow">
+						{{#if theme.choisi}}<span class="theme-badge" data-tooltip="thème choisi par le personnage">✔</span>{{/if}}
+						<input class="theme-nom" type="text" value="{{theme.nom}}" placeholder="nom du thème" {{#unless @root.editable}}disabled{{/unless}}/>
+						{{#if @root.editable}}
+							<a class="fas fa-trash theme-delete" data-action="delete-theme" data-tooltip="supprimer ce thème"></a>
+						{{/if}}
+					</div>
+					<div class="theme-talents flexrow">
+						{{#each theme.talents as |t|}}
+							<span class="theme-talent">
+								{{t.label}}
+								<a class="theme-talent-valeur" data-action="cycle-theme-talent" data-talent="{{t.talent}}">{{t.signe}}</a>
+								{{#if @root.editable}}
+									<a class="fas fa-times" data-action="remove-theme-talent" data-talent="{{t.talent}}" data-tooltip="retirer ce talent"></a>
+								{{/if}}
+							</span>
+						{{/each}}
+						{{#if @root.editable}}
+							<select class="theme-ajout-talent">
+								<option value="">+ talent…</option>
+								{{#each @root.listeTalents as |groupe|}}
+									<optgroup label="{{groupe.domaine}}">
+										{{#each groupe.talents as |tal|}}
+											<option value="{{tal.cle}}">{{tal.label}}</option>
+										{{/each}}
+									</optgroup>
+								{{/each}}
+							</select>
+						{{/if}}
+					</div>
+					<textarea class="theme-description" rows="2" placeholder="description (facultative)" {{#unless @root.editable}}disabled{{/unless}}>{{theme.description}}</textarea>
+				</div>
+			{{else}}
+				<p>Aucun thème. Cliquez sur + pour en ajouter.</p>
+			{{/each}}
+		</div>
 	</section>
 </form>

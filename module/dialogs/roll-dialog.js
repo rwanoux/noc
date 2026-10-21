@@ -57,25 +57,20 @@ export class nocRollDialog extends Dialog {
         this.rollData[input.id] = Number(input.value)
       } if (input.type === "checkbox") {
         this.rollData[input.id] = input.checked
-
       }
     }
-    this.rollData.niveauFinalRequis = this.rollData.niveauRequis + this.rollData.modCouvert + this.rollData.modSupplement
     if (this.rollData.arme) {
-      if (this.rollData.arme.system.traits.toLowerCase().includes('complexe') && this.rollData.arme.system.maitrise) {
-        this.rollData.niveauFinalRequis += 2
-      } else {
-        this.rollData.niveauFinalRequis += (this.rollData.arme.system.maitrise) ? 0 : 1
-      }
-      if (this.rollData.cibleAuSol) {
-        if (this.rollData.arme.system.adistance) {
-          this.rollData.niveauFinalRequis += 1
-        } else {
-          this.rollData.niveauFinalRequis -= 1
-        }
-      }
+      const r = this.rollData;
+      const distance = r.arme.system.adistance;
+      r.niveauFinalRequis = (Number(r.niveauBase) || 0) + (Number(r.modMaitrise) || 0)
+        + (distance ? (Number(r.modDistance) || 0) + (Number(r.modCouvert) || 0) : 0)
+        + (Number(r.modVisibilite) || 0)
+        + (r.cibleAuSol ? (distance ? 1 : -1) : 0)
+        + (Number(r.modSupplement) || 0);
+    } else if (this.rollData.niveauRequis !== undefined) {
+      this.rollData.niveauFinalRequis = (Number(this.rollData.niveauRequis) || 0) + (Number(this.rollData.modCouvert) || 0) + (Number(this.rollData.modSupplement) || 0)
     }
-    $('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
+    this._element.find('#niveauFinalRequis').html(this.rollData.niveauFinalRequis);
   }
   /* -------------------------------------------- */
   activateListeners(html) {
@@ -103,13 +98,29 @@ export class nocRollDialog extends Dialog {
     html.find('#nbDesCabale').change((event) => {
       this.rollData.nbDesCabale = Number(event.currentTarget.value)
     })
-    html.find('#nbBonusCollaboratif').change((event) => {
-      this.rollData.nbBonusCollaboratif = Number(event.currentTarget.value)
+    // Choix de la cabale qui fournit les dés (personnage membre de plusieurs cabales)
+    html.find('#cabaleChoice').change((event) => {
+      const cabale = (this.rollData.cabales ?? []).find(c => c.id === event.currentTarget.value);
+      const domaine = cabale?.domaines?.[this.rollData.domaineId];
+      if (!cabale || !domaine) return;
+      this.rollData.cabaleData = cabale;
+      this.rollData.cabaleDomaine = foundry.utils.duplicate(domaine);
+      this.rollData.nbDesCabale = 0;
+      const max = Math.max(0, Number(domaine.value) || 0);
+      const slider = html.find('#nbDesCabale')[0];
+      if (slider) { slider.max = max; slider.value = 0; }
+      html.find('#nbDesCabaleList').html(Array.from({ length: max + 1 }, (_, i) => `<option value="${i}">${i}</option>`).join(""));
+      html.find('[data-display-range="nbDesCabale"]').html("0");
+      html.find('.cabale-domaine-texte').html(`${domaine.label} (${domaine.value})`);
     })
-    html.find('#niveauRequis').change((event) => {
-      this.rollData.niveauRequis = Number(event.currentTarget.value)
-      this.updateNiveauFinal()
+    // bonus collaboratif : boutons +/- (minimum 0)
+    html.find('a.bouton-collaboratif').click((event) => {
+      const ecart = Number(event.currentTarget.dataset.ecart) || 0;
+      const valeur = Math.max(0, (Number(this.rollData.nbBonusCollaboratif) || 0) + ecart);
+      this.rollData.nbBonusCollaboratif = valeur;
+      html.find('#nbBonusCollaboratif').html(valeur > 0 ? `+${valeur}` : "0");
     })
+    html.find('#modDistance, #modVisibilite').change(() => this.updateNiveauFinal())
     html.find('#modCouvert').change((event) => {
       this.rollData.modCouvert = Number(event.currentTarget.value)
       this.updateNiveauFinal()

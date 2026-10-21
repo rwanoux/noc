@@ -80,39 +80,65 @@
         <li>Bonus collaboratif : {{nbBonusCollaboratif}}</li>
       {{/if}}
       {{#if useEspoir}}
-        <li>Un point d'Espoir utilisé</li>
+        <li>Un point d'Espoir a été utilisé</li>
       {{/if}}
       {{#if useVecu}}
-        <li>Un point de vécu a été utilisé</li>
+        <li>Un point de Vécu a été utilisé</li>
       {{/if}}
       <li>Gouttes de Fiel ajoutées : {{nbFiel}}</li>
       <li style="font-weight: bold; color: var(--color-text);">Nombre de succès : {{nbSuccess}}</li>
-      <li class="rollResult">Niveau final obtenu : {{niveauFinal}}</li>
+      <li class="rollResult">Niveau final obtenu : <strong>{{niveauFinal}}</strong></li>
 
-      {{#if niveauFinalRequis}}
-        <li>Niveau final requis : {{niveauFinalRequis}} </li>
+      {{#unless (eq mode "arme")}}
+      {{#if aNiveauRequis}}
         {{#if isReussite}}
           <li class="rollResult reussite">Réussite !! (Marge {{margin}})</li>
-          {{#if (eq mode "arme")}}
-            {{#if arme.system.traits}}
-              <li class="rollResult arme">Traits de l'arme : {{arme.system.traits}}</li>
-            {{/if}}
-            {{#if damageRoll}}
-              <li class="rollResult arme">Dégats : {{damageRoll.total}} (formule: {{damageRoll.formula}}) (-
-                Constitution - Armure)</li>
-            {{else if damageFormula}}
-              <li class="rollResult arme">Dégats : [[{{damageFormula}}]] <em>(- Constitution - Armure)</em>
-              </li>
-            {{else}}
-              <li class="rollResult arme">Dégats : [[{{arme.system.degats}}]] <em>(- Constitution - Armure)</em>
-              </li>
-            {{/if}}
-          {{/if}}
         {{else}}
           <li class="rollResult echec">Echec!! (Marge {{margin}})</li>
         {{/if}}
       {{/if}}
+      {{/unless}}
     </ul>
+
+    {{#if (eq mode "arme")}}
+    {{#if aNiveauRequis}}
+      <div class="resultat-combat">
+        <hr>
+        {{#if isReussite}}
+          <p class="verdict-combat reussite">Réussite</p>
+        {{else}}
+          <p class="verdict-combat echec">Échec</p>
+        {{/if}}
+        <p class="marge-combat {{#if isReussite}}reussite{{else}}echec{{/if}}">{{#if isReussite}}Marge de succès : {{margin}}{{else}}Marge d'échec : {{margin}}{{/if}}</p>
+
+        {{#if isReussite}}
+          {{#if quantique}}
+            <p class="titre-bloc-combat">Effet quantique ({{quantique.nbDes}} dé{{#ifequal quantique.nbDes 1}}{{else}}s{{/ifequal}}) : +{{quantique.succes}}</p>
+            <div class="dicesResults flexrow">
+              {{#each quantique.des as |dice|}}
+                <div class="dice{{#if dice.success}} success{{/if}}{{#ifequal dice.result 1}} fiel{{/ifequal}}{{#ifequal dice.result 10}} relance{{/ifequal}}">
+                  {{dice.result}} <i class="fa-light fa-dice-d10"></i>
+                </div>
+              {{/each}}
+            </div>
+            {{#if quantique.fiel}}<p class="note-combat">Gouttes de Fiel ajoutées : {{quantique.fiel}}</p>{{/if}}
+          {{/if}}
+          {{#if energieNoire}}
+            <p class="titre-bloc-combat">Énergie noire : +{{energieNoire}}</p>
+          {{/if}}
+
+          {{#if traitsCombat.length}}
+            <hr>
+            <ul class="traits-combat">
+              {{#each traitsCombat as |t|}}
+                <li><strong>{{t.nom}}</strong> : {{t.texte}}</li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
+    {{/if}}
 
     {{#if nbAddDice}}
       <section>

@@ -1,0 +1,50 @@
+name: 'Autorisation d''accès et de libre circulation dans les laboratoires du Progrès IB0021'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Document officiel ouvrant l''accès aux laboratoires de l''Institut de Biologie d''Olomóc. Qui ne peut le présenter s''expose le plus souvent à quelques coups de matraque, voire à un séjour en cellule à la caserne de Sécurité la plus proche.</p>'
+  formulaire: 'acces'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 2
+    motif: 'Laboratoires de l''Institut de Biologie d''Olomóc'
+    nonLimite: true
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: hGlZsuIh8e0F041O
+folder: null
+sort: 700000
+ownership:
+  default: 0
+_key: '!items!hGlZsuIh8e0F041O'

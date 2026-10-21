@@ -1,0 +1,50 @@
+name: 'Autorisation de port'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Formulaire vierge : précisez l''objet autorisé.</p>'
+  formulaire: 'port'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: FzatdWW94eM4AjbY
+folder: null
+sort: 0
+ownership:
+  default: 0
+_key: '!items!FzatdWW94eM4AjbY'

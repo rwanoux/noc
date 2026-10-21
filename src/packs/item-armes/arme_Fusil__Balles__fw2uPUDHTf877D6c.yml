@@ -7,14 +7,37 @@ system:
   quantar: false
   adistance: true
   valeur: 1
-  limite: 0
+  limite: 1
   degats: '4'
   matrise: false
-  traits: Perforant, Limité (1), Longue portée
+  traits: ''
   munitions:
     type: Balles
     quantite: 2
   portee: 0
+  formatV2: true
+  degatsBase: 4
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: true
+    longuePortee: true
+    recurrent: false
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: false
+      valeur: 0
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
 effects: []
 flags:
   core:
@@ -35,4 +58,3 @@ ownership:
   default: 0
   GqESxdGhOwgra802: 3
 _key: '!items!fw2uPUDHTf877D6c'
-

@@ -3,6 +3,13 @@ import { nocRollDialog } from "../dialogs/roll-dialog.js";
 import { NOC } from "../helpers/config.mjs";
 import { Quality } from "../qualite_default.mjs";
 import { nocNoirceurTraits } from '../dialogs/noc-noirceurTrait.js';
+import { appliquerArchetype } from "../archetypes.mjs";
+import { appliquerQualites } from "../qualites.mjs";
+import { appliquerAutre } from "../autres.mjs";
+import { appliquerArmures } from "../armures.mjs";
+import { appliquerEtats } from "../panneau-mj.mjs";
+import { jetonParDefaut } from "../jetons.mjs";
+import { appliquerEffetsFiel, aggravationsActives } from "../fiel/bibliotheque.mjs";
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -34,9 +41,80 @@ export class nocActor extends Actor {
 
     super(...args);
 
-    if (data.type == "cabale") { this.initCabale(data) }
-    if (data.type == "rouage") { this.initRouage(data) }
+    // Les valeurs initiales des rouages et cabales sont appliquées une seule fois,
+    // à la création (voir _preCreate), et non plus à chaque chargement.
 
+  }
+
+  /** Valeurs par défaut appliquées à la création d'un nouvel acteur */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+
+    // Jeton rond, dessin qui ne tourne pas avec le déplacement
+    this.updateSource(jetonParDefaut());
+
+    // Nouveau rouage : tous les domaines à 2 (sauf valeur déjà fournie,
+    // par exemple lors d'une importation ou d'une copie)
+    // Nouvel Autre : jauges de perdition à 5 cases, comme sur sa fiche
+    if (this.type === "autre") {
+      const updates = {};
+      for (const perd of Object.keys(this.system.perditions ?? {})) {
+        if (foundry.utils.getProperty(data, `system.perditions.${perd}.max`) === undefined) updates[`system.perditions.${perd}.max`] = 5;
+      }
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
+    if (this.type === "rouage") {
+      const updates = {};
+      for (const domaine of Object.keys(this.system.domaines ?? {})) {
+        if (foundry.utils.getProperty(data, `system.domaines.${domaine}.value`) === undefined) {
+          updates[`system.domaines.${domaine}.value`] = 2;
+        }
+      }
+      // Réserves et perditions de départ d'un rouage
+      const defaut = (chemin, valeur) => {
+        if (foundry.utils.getProperty(data, chemin) === undefined) updates[chemin] = valeur;
+      };
+      for (const perd of Object.keys(this.system.perditions ?? {})) {
+        defaut(`system.perditions.${perd}.max`, 5);
+        defaut(`system.perditions.${perd}.value`, 0);
+      }
+      defaut("system.reserves.vecu.max", 5);
+      defaut("system.reserves.vecu.value", 1);
+      defaut("system.reserves.espoir.max", 5);
+      defaut("system.reserves.espoir.value", 1);
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
+
+    // Nouvelle cabale : noms propres de ses perditions
+    if (this.type === "cabale") {
+      const noms = { blessures: "dégradation", traque: "traque", noirceur: "noirceur", trauma: "division" };
+      const updates = {};
+      for (const [perd, label] of Object.entries(noms)) {
+        if (foundry.utils.getProperty(data, `system.perditions.${perd}.label`) === undefined) {
+          updates[`system.perditions.${perd}.label`] = label;
+        }
+      }
+      if (Object.keys(updates).length) this.updateSource(updates);
+    }
+  }
+
+  /** Effets de Fiel « aggravants » : un héros qui subit au moins 1 point en reçoit 1 de plus */
+  async _preUpdate(changed, options, user) {
+    const allowed = await super._preUpdate(changed, options, user);
+    if (allowed === false) return false;
+    if (this.type !== "personnage") return;
+    const aggravations = aggravationsActives();
+    const aggravees = [];
+    for (const cle of Object.keys(aggravations)) {
+      const nouvelle = foundry.utils.getProperty(changed, `system.perditions.${cle}.value`);
+      if (nouvelle === undefined) continue;
+      const p = this._source.system.perditions?.[cle];
+      if (!p || Number(nouvelle) <= (Number(p.value) || 0)) continue;
+      foundry.utils.setProperty(changed, `system.perditions.${cle}.value`, Math.min(Number(p.max) || 10, Number(nouvelle) + 1));
+      aggravees.push(p.label ?? cle);
+    }
+    if (aggravees.length) ui.notifications.info(`${this.name} : effet de Fiel, +1 en ${aggravees.join(", ")}.`);
   }
 
   async _onUpdate(update, options, user) {
@@ -106,6 +184,14 @@ export class nocActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
+
+    // Bonus de l'archétype et du thème choisi (avant les calculs qui en dépendent)
+    appliquerArchetype(this);
+    appliquerQualites(this);
+    appliquerAutre(this);
+    appliquerArmures(this);
+    appliquerEtats(this);
+    appliquerEffetsFiel(this);
 
     this._preparePersonnageData();
     this._prepareRouageData();
@@ -199,56 +285,28 @@ export class nocActor extends Actor {
   _prepareAutreData() {
     if (this.type !== 'autre') return;
 
-    this.system.energieNoire.max = 8 - this.system.classeExo.value;
+    // Classe Exo, Énergie Noire, domaines et talents : voir module/autres.mjs (appliqué plus haut)
 
   }
-  async prepareContacts() {
-    let length = 0;
+  prepareContacts() {
+    // Nombre de contacts illimité : on ne garde que les vrais contacts
+    // (les anciens emplacements "vide" sont ignorés).
+    let contacts = Array.isArray(this.system.contacts) ? this.system.contacts : [];
+    contacts = contacts.filter(c => c && typeof c === "object");
+
+    // Les jetons de faveur, eux, restent limités par le talent Contacts.
     let faveur = 0;
-    let contacts = this.system.contacts || [];
     switch (this.system.talents.statut.contact.niveau) {
-      case 0:
-      case -1:
-        length = 0;
-        faveur = 0
-        break;
-
-      case 1:
-        length = 2;
-        faveur = 2
-        break;
-      case 2:
-        length = 3;
-        faveur = 4
-        break;
-      case 3:
-        length = 4
-        faveur = 6
-        break;
-      case 4:
-        length = 5
-        faveur = 8
-        break;
-      case 5:
-        length = 5
-        faveur = 10
-        break;
-
-      default:
-        break;
-    }
-    if (length > contacts.length) {
-      for (let i = contacts.length; i < length; i++) {
-        contacts[i] = "vide";
-      };
-    } else {
-      contacts.splice(length, contacts.length - length + 1)
+      case 1: faveur = 2; break;
+      case 2: faveur = 4; break;
+      case 3: faveur = 6; break;
+      case 4: faveur = 8; break;
+      case 5: faveur = 10; break;
+      default: faveur = 0;
     }
 
     this.system.contacts = contacts;
     this.system.reserves.faveurs.max = faveur;
-    this.system.contacts = contacts;
-
   };
   async checkPerditions(update) {
     for (let perd in update.system.perditions) {
@@ -403,11 +461,84 @@ export class nocActor extends Actor {
     dial.render(true)
 
   }
+  /**
+   * Étapes de jeu (boutons de la fiche personnage) :
+   * - calme    : Blessures, Trauma, Traque, Noirceur -1 (sans descendre sous le minimum) ;
+   *              Espoir + 1 + Extase (sans dépasser le maximum)
+   * - seance   : Singularité au maximum ; Vécu +1 (sans dépasser le maximum)
+   * - scenario : Espoir au maximum ; faveurs des contacts rendues à la réserve
+   */
+  async etapeDeJeu(etape) {
+    if (this.type !== "personnage") return;
+    const s = this.system;
+    const maj = {};
+    const lignes = [];
+    const nombre = v => Number(v) || 0;
+
+    if (etape === "calme") {
+      for (const perd of ["blessures", "trauma", "traque", "noirceur"]) {
+        const p = s.perditions?.[perd];
+        if (!p) continue;
+        const valeur = nombre(p.value);
+        const nouvelle = Math.max(nombre(p.min), valeur - 1);
+        if (nouvelle !== valeur) {
+          maj[`system.perditions.${perd}.value`] = nouvelle;
+          lignes.push(`${p.label} : ${valeur} → ${nouvelle}`);
+        }
+      }
+      if (this.flags?.noc?.fatigue) {
+        maj["flags.noc.-=fatigue"] = null;
+        lignes.push("Fatigue : levée");
+      }
+      const espoir = s.reserves.espoir;
+      const gain = Math.max(0, 1 + nombre(s.talents?.ame?.extase?.niveau));
+      const nouvelEspoir = Math.min(nombre(espoir.max), nombre(espoir.value) + gain);
+      if (nouvelEspoir !== nombre(espoir.value)) {
+        maj["system.reserves.espoir.value"] = nouvelEspoir;
+        lignes.push(`Espoir : ${nombre(espoir.value)} → ${nouvelEspoir}`);
+      }
+    } else if (etape === "seance") {
+      const sing = s.reserves.singularite;
+      if (nombre(sing.value) !== nombre(sing.max)) {
+        maj["system.reserves.singularite.value"] = nombre(sing.max);
+        lignes.push(`Singularité : ${nombre(sing.value)} → ${nombre(sing.max)}`);
+      }
+      const vecu = s.reserves.vecu;
+      const nouveauVecu = Math.min(nombre(vecu.max), nombre(vecu.value) + 1);
+      if (nouveauVecu !== nombre(vecu.value)) {
+        maj["system.reserves.vecu.value"] = nouveauVecu;
+        lignes.push(`Vécu : ${nombre(vecu.value)} → ${nouveauVecu}`);
+      }
+    } else if (etape === "scenario") {
+      const espoir = s.reserves.espoir;
+      if (nombre(espoir.value) !== nombre(espoir.max)) {
+        maj["system.reserves.espoir.value"] = nombre(espoir.max);
+        lignes.push(`Espoir : ${nombre(espoir.value)} → ${nombre(espoir.max)}`);
+      }
+      const contacts = foundry.utils.deepClone(s.contacts ?? []).filter(c => c && typeof c === "object");
+      if (contacts.some(c => nombre(c.faveurs) || nombre(c.usedFaveurs)) || nombre(s.reserves.faveurs.value)) {
+        for (const c of contacts) { c.faveurs = 0; c.usedFaveurs = 0; }
+        maj["system.contacts"] = contacts;
+        maj["system.reserves.faveurs.value"] = 0;
+        lignes.push("Faveurs : toutes rendues à la réserve");
+      }
+    } else return;
+
+    const titres = { calme: "Moment de calme", seance: "Début de séance", scenario: "Début de scénario" };
+    if (Object.keys(maj).length) await this.update(maj);
+    return ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: this }),
+      content: `<h3>${titres[etape]}</h3>` + (lignes.length
+        ? `<ul>${lignes.map(l => `<li>${l}</li>`).join("")}</ul>`
+        : "<p>Aucun changement.</p>")
+    });
+  }
+
   resetContactFaveurs() {
     if (this.type != "personnage") { return false }
-    let contactList = this.system.contacts;
+    let contactList = foundry.utils.deepClone(this.system.contacts).filter(c => c && typeof c === "object");
     for (let contact of contactList) {
-      if (contact != "vide") {
+      {
         contact.faveurs = 0;
         contact.usedFaveurs = 0;
       }
@@ -420,38 +551,45 @@ export class nocActor extends Actor {
   }
 
   /* -------------------------------------------- */
-  async setCabale(cabale) {
-    if (this.system.cabale.uuid) {
-      return ui.notifications.warn("Ce personnage est déjà affecté à une cabale")
-    }
-    let update = {
-      nom: cabale.name,
-      uuid: cabale._id,
-      bloc: cabale.system.bloc,
-      coordonnes: cabale.system.coordonnes,
-      societe: cabale.system.societeEcran
-    };
-    await this.update({
-      "system.cabale": update
-    });
-    let cabaleActor = await Actor.get(cabale._id)
-    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
+  /** Identifiants des cabales du personnage (y compris l'ancienne cabale unique) */
+  get cabaleIds() {
+    const ids = [...(this.system.cabales ?? [])];
+    const ancienne = this.system.cabale?.uuid;
+    if (ancienne && !ids.includes(ancienne)) ids.push(ancienne);
+    return ids;
   }
-  async leaveCabale() {
-    let oldCabale = this.system.cabale;
-    let cabaleActor = await Actor.get(oldCabale._id);
-    await this.update({
-      "system.cabale": {
-        nom: "",
-        uuid: "",
-        bloc: "",
-        coordonnes: "",
-        societe: ""
-      }
-    })
-    if (cabaleActor.sheet.rendered) { cabaleActor.sheet.render(true) }
 
+  /** Cabales du personnage (acteurs existants) */
+  get cabalesActeurs() {
+    return this.cabaleIds.map(id => game.actors.get(id)).filter(c => c?.type === "cabale");
   }
+
+  async _enregistrerCabales(ids, aRafraichir) {
+    await this.update({
+      "system.cabales": ids,
+      "system.cabale": { nom: "", uuid: "", bloc: "", coordonnes: "", societe: "" }
+    });
+    for (const id of aRafraichir) {
+      const sheet = game.actors.get(id)?.sheet;
+      if (sheet?.rendered) sheet.render(false);
+    }
+  }
+
+  /** Ajoute ce personnage à une cabale (un personnage peut appartenir à plusieurs cabales) */
+  async setCabale(cabale) {
+    const id = cabale.id ?? cabale._id;
+    const ids = this.cabaleIds;
+    if (ids.includes(id)) return ui.notifications.info(`${this.name} fait déjà partie de la cabale ${cabale.name}.`);
+    return this._enregistrerCabales([...ids, id], [id]);
+  }
+
+  /** Retire ce personnage d'une cabale */
+  async leaveCabale(cabaleId) {
+    const ids = this.cabaleIds;
+    if (!ids.includes(cabaleId)) return;
+    return this._enregistrerCabales(ids.filter(i => i !== cabaleId), [cabaleId]);
+  }
+
 
   /* -------------------------------------------- */
   incDecReserve(reserveKey, value) {
@@ -476,16 +614,14 @@ export class nocActor extends Actor {
       cabaleData: null
     }
 
-    // Si le personnage a une cabale, ajouter les infos
-    if (this.type === "personnage" && this.system.cabale?.uuid) {
-      let cabale = game.actors.get(this.system.cabale.uuid);
-      if (cabale) {
-        rollData.cabaleData = {
-          id: cabale.id,
-          name: cabale.name,
-          domaines: foundry.utils.duplicate(cabale.system.domaines)
-        }
-      }
+    // Cabales du personnage : la première est proposée par défaut, les autres au choix
+    if (this.type === "personnage") {
+      rollData.cabales = this.cabalesActeurs.map(cabale => ({
+        id: cabale.id,
+        name: cabale.name,
+        domaines: foundry.utils.duplicate(cabale.system.domaines)
+      }));
+      rollData.cabaleData = rollData.cabales[0] ?? null;
     }
 
     return rollData;
@@ -527,20 +663,48 @@ export class nocActor extends Actor {
   /* -------------------------------------------- */
   rollItem(itemId) {
     let item = this.items.get(itemId)
-    if (item && item.type == "arme") {
+    // un outil s'utilise comme une arme improvisée : jamais maîtrisée, toujours complexe
+    let arme = null
+    if (item?.type == "arme") {
+      arme = foundry.utils.duplicate(item)
+      // valeurs calculées (formule de dégâts, texte des traits), absentes de la copie brute
+      arme.system.degats = item.system.degats
+      arme.system.traits = item.system.traits
+    } else if (item?.type == "outil") {
+      const imp = item.system.improvisee ?? {}
+      const distance = imp.mode === "distance"
+      const n = Number(imp.degats) || 0
+      arme = {
+        _id: item.id, name: item.name, img: item.img, type: "outil",
+        system: {
+          adistance: distance,
+          maitrise: false,
+          traitsArme: { complexe: true },
+          degats: distance ? `${n}` : `@talents.action.constitution.niveau + ${n}`,
+          traits: "Arme improvisée, Complexe"
+        }
+      }
+    }
+    if (item && arme) {
       let rollData = this.buildGenericRollData()
       // Specific stuff
       rollData.title = "Arme"
       rollData.mode = "arme"
-      rollData.arme = foundry.utils.duplicate(item)
+      rollData.arme = arme
       rollData.domaineId = 'action'
       rollData.domaine = foundry.utils.duplicate(this.system.domaines['action'])
       rollData.talent = foundry.utils.duplicate(this.system.talents['action']['combat'])
-      rollData.niveauRequis = (item.system.adistance) ? 0 : 1
-      rollData.niveauFinalRequis = rollData.niveauRequis
+      // niveau requis : base (0 à distance, 1 au contact) + maîtrise + modificateurs
+      rollData.niveauBase = (arme.system.adistance) ? 0 : 1
+      rollData.niveauRequis = rollData.niveauBase
+      rollData.modMaitrise = arme.system.maitrise ? 0 : (arme.system.traitsArme?.complexe ? 2 : 1)
+      rollData.longuePortee = !!arme.system.traitsArme?.longuePortee
+      rollData.modDistance = 0
       rollData.modCouvert = 0
+      rollData.modVisibilite = 0
       rollData.cibleAuSol = false
       rollData.modSupplement = 0
+      rollData.niveauFinalRequis = rollData.niveauBase + rollData.modMaitrise
 
       // Add cabale domain if available
       if (rollData.cabaleData && rollData.cabaleData.domaines['action']) {

@@ -5,8 +5,8 @@
   "version": "replaced at release",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.350",
-    "maximum": "13"
+    "verified": "14",
+    "maximum": "14"
   },
   "authors": [
     {
@@ -91,10 +91,10 @@
       }
     },
     {
-      "name": "themes",
-      "label": "Thèmes",
+      "name": "documents",
+      "label": "Documents administratifs",
       "system": "noc",
-      "path": "packs/item-themes",
+      "path": "packs/item-documents",
       "type": "Item",
       "ownership": {
         "PLAYER": "NONE",

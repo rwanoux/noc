@@ -19,20 +19,41 @@
 
 
       <div class="form-group">
-        <h4>traits</h4>
-        <textarea name="system.traits" placeholder="{{document.system.traits}}">{{document.system.traits}}</textarea>
+        <h4>score d'armure</h4>
+        <span class="compteur-niveau">{{#if document.system.armure}}{{document.system.armure}}{{else}}0{{/if}}
+          {{#if editable}}
+          <span class="compteur-controls">
+            <a class="fas fa-add compteur-plus" data-champ="system.armure"></a>
+            <a class="fas fa-minus compteur-moins" data-champ="system.armure"></a>
+          </span>
+          {{/if}}
+        </span>
       </div>
       <div class="form-group">
-        <h4>score d'armure</h4>
-        <input name="system.armure"
-          value="{{document.system.armure}}"
-          type="number">
+        <h4 data-tooltip="si coché, le talent Déplacement du porteur est réduit de 1">encombrant</h4>
+        <input name="system.encombrant" type="checkbox" data-dtype="Boolean" {{checked document.system.encombrant}}>
       </div>
-
+      <div class="form-group">
+        <h4>limitée</h4>
+        <span class="compteur-niveau">{{#if document.system.limite}}{{document.system.limite}}{{else}}0{{/if}}
+          {{#if editable}}
+          <span class="compteur-controls">
+            <a class="fas fa-add compteur-plus" data-champ="system.limite"></a>
+            <a class="fas fa-minus compteur-moins" data-champ="system.limite"></a>
+          </span>
+          {{/if}}
+        </span>
+      </div>
       <div class="form-group">
         <h4>valeur</h4>
-        <input name="system.valeur" value="{{document.system.valeur}}"
-          type="number">
+        <span class="compteur-niveau">{{#if document.system.valeur}}{{document.system.valeur}}{{else}}0{{/if}}
+          {{#if editable}}
+          <span class="compteur-controls">
+            <a class="fas fa-add compteur-plus" data-champ="system.valeur"></a>
+            <a class="fas fa-minus compteur-moins" data-champ="system.valeur"></a>
+          </span>
+          {{/if}}
+        </span>
       </div>
 
     </div>

@@ -1,29 +1,22 @@
+import { conversionArme, deriverArme } from "../armes.mjs";
+import { conversionArchetype } from "../archetypes.mjs";
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
 export class nocItem extends Item {
   constructor(...args) {
-    let data = args[0];
-    switch (data.type) {
-      case "arme":
-        data.img = 'systems/noc/asset/default_icons/arme.webp';
-        break;
-      case "document administratif":
-        data.img = 'systems/noc/asset/default_icons/document_administratif.webp';
-        break;
-      case "outil":
-        data.img = 'systems/noc/asset/default_icons/outil.webp';
-        break;
-      case "armure":
-        data.img = 'systems/noc/asset/default_icons/armure.webp';
-        break;
-      default:
-        data.img = 'systems/noc/asset/default_icons/question_mark.webp';
-        break;
-
-
-
+    const data = args[0];
+    // Icône par défaut seulement pour un objet sans image (ou avec l'icône générique de Foundry) :
+    // une image choisie par l'utilisateur n'est plus jamais remplacée.
+    if (data && (!data.img || data.img === "icons/svg/item-bag.svg")) {
+      const icones = {
+        "arme": "arme.webp",
+        "document administratif": "document_administratif.webp",
+        "outil": "outil.webp",
+        "armure": "armure.webp"
+      };
+      data.img = `systems/noc/asset/default_icons/${icones[data.type] ?? "question_mark.webp"}`;
     }
     super(...args);
   }
@@ -41,16 +34,35 @@ export class nocItem extends Item {
   }
   async _onUpdate(update, options, userId) {
 
-    if ((this.type == "archetype") || (this.type == "thème")) {
-      await this.prepareEffect(update)
-    }
-    super._preUpdate(update, options, userId)
+    // Les archétypes et thèmes n'utilisent plus d'effets actifs :
+    // leurs bonus sont calculés directement par le personnage (module/archetypes.mjs).
+    super._onUpdate(update, options, userId)
 
   }
-  prepareArmeData() {
-    if ((this.type != "arme") && (this.parent.type != "actor")) { return }
-    this.getRollData = this.parent.getRollData();
+  /** Un archétype ne transporte plus d'effets actifs ; ancien format converti à la volée */
+  async _preCreate(data, options, user) {
+    const allowed = await super._preCreate(data, options, user);
+    if (allowed === false) return false;
+    // Arme d'une créature : attaque naturelle, maîtrisée d'office
+    if (this.type === "arme" && this.parent?.type === "creature"
+      && foundry.utils.getProperty(data, "system.maitrise") === undefined) {
+      this.updateSource({ "system.maitrise": true });
+    }
+    // Arme à l'ancien format (formule et traits en texte) : convertie à la création
+    if (this.type === "arme" && !this._source.system.formatV2) {
+      const constitution = this.parent?.type === "creature"
+        ? this.parent._source.system?.talents?.action?.constitution?.niveau ?? 0 : null;
+      this.updateSource(conversionArme(this._source, constitution));
+    }
+    if (this.type === "archetype") {
+      const conv = conversionArchetype(this.toObject()) ?? {};
+      this.updateSource({ ...conv, effects: [] });
+    }
+  }
 
+  prepareArmeData() {
+    // formule de dégâts et texte des traits recalculés (voir module/armes.mjs)
+    deriverArme(this);
   }
   async prepareEffect(update) {
     if (!update.system) { return }

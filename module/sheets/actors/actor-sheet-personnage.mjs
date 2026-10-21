@@ -5,6 +5,8 @@
  * @extends {ActorSheet}
  */
 import NOCContact from "../../ContactClass.js";
+import { choisirTheme, libelleTalent } from "../../archetypes.mjs";
+import { choisirQualite, descriptionQualite, enregistrerQualite } from "../../qualites.mjs";
 import { nocPersonnalisation } from "../../dialogs/noc-personnalisation.js";
 import { Quality } from "../../qualite_default.mjs";
 
@@ -22,8 +24,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
         { dragSelector: "img.quantarQty", dropSelector: "li.item" },
         { dragSelector: "img.quantarUsed", dropSelector: null },
         { dragSelector: ".actor", dropSelector: ".cabale" },
-        { dragSelector: ".actor", dropSelector: ".contact" },
-        { dragSelector: ".faveur", dropSelector: ".contact" },
+        { dragSelector: ".faveur", dropSelector: null },
 
       ],
 
@@ -91,19 +92,25 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   async _onDropActor(ev, data) {
     let dropActor = await Actor.implementation.fromDropData(data);
-    if (!this.actor.isOwner || !dropActor.isOwner) return () => {
-      ui.notifications.warn("Vous n'avez pas de droits sur l'acteur ; demandez à la Loi d'affecter le contact");
-      return false
-    };
+    if (!dropActor) return false;
+    if (!this.actor.isOwner) {
+      ui.notifications.warn("Vous n'avez pas de droits sur ce personnage.");
+      return false;
+    }
     switch (dropActor.type) {
       case "cabale":
-        if (!ev.target.classList.contains("cabale")) { return }
+        if (!dropActor.isOwner) {
+          ui.notifications.warn("Vous n'avez pas de droits sur cette cabale ; demandez à la Loi de l'affecter.");
+          return false;
+        }
+        if (!ev.target.closest(".cabale")) { return }
         this.actor.setCabale(dropActor)
         break;
       case "personnage":
       case "rouage":
-        if (!ev.target.classList.contains("empty-contact")) { return };
-        this.setContact(dropActor, ev.target.dataset.contactIndex);
+        // On accepte le dépôt n'importe où dans la zone des contacts
+        if (!ev.target.closest(".contacts")) { return };
+        this.setContact(dropActor);
         break;
       default:
         return false
@@ -113,29 +120,49 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   async _onDropItem(ev, data) {
     let dropItem = await Item.implementation.fromDropData(data);
-    if (dropItem.type == "thème") { return ui.notifications.warn("Les items THEMES doivent être glisser sur les fiches d'items ARCHETYPES") }
-    if (dropItem.type == "archetype") { this._onDropArchetype(ev, dropItem) }
+    if (!dropItem) return false;
+    if (dropItem.type == "thème") {
+      return ui.notifications.warn("Les thèmes font maintenant partie des archétypes : glissez l'archétype sur la fiche, le thème sera proposé au choix.")
+    }
+    if (dropItem.type == "archetype") {
+      if (!["personnage", "rouage"].includes(this.actor.type)) {
+        return ui.notifications.warn("Les archétypes sont réservés aux personnages et aux rouages.");
+      }
+      return this._onDropArchetype(ev, dropItem);
+    }
 
-    super._onDropItem(ev, data);
+    return super._onDropItem(ev, data);
 
   }
   async _onDropArchetype(ev, item) {
-    let linkedThemes = await item.getFlag("noc", "linkedThemes");
-    if (linkedThemes) {
-      let theme = linkedThemes.find(th => th.choosed)
-      if (theme) {
-        let choosedThemeId = theme.id;
-        let themeItem = await Item.get(choosedThemeId);
-        if (themeItem) {
-          await this.actor.createEmbeddedDocuments("Item", [themeItem])
-        } else {
-          await this.actor.createEmbeddedDocuments("Item", [theme.itemData])
-        }
-      } else {
-        ui.notifications.warn("Thème non trouvé")
-      }
+    if (!this.actor.isOwner) return false;
+    // Un archétype déjà présent sur ce personnage : on ne fait rien (tri dans la fiche)
+    if (item.parent?.id === this.actor.id) return false;
+    if (this.actor.itemTypes.archetype.length) {
+      return ui.notifications.warn("Ce personnage a déjà un archétype. Supprimez-le d'abord si vous voulez en changer.");
     }
+    const itemData = item.toObject();
+    delete itemData._id;
+    itemData.effects = [];
 
+    const themeId = await choisirTheme(itemData);
+    if (themeId === null) return false; // fenêtre annulée
+    foundry.utils.setProperty(itemData, "system.themeChoisi", themeId);
+
+    return this.actor.createEmbeddedDocuments("Item", [itemData]);
+  }
+  async _onClickQuantarObjet(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const itemId = ev.currentTarget.closest("[data-item-id]")?.dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    if (!item) return;
+    if (item.system.quantar) return item.update({ "system.quantar": false });
+    const utilises = this.actor.items.filter(i => i.system.quantar).length;
+    if (utilises >= (Number(this.actor.system.quantars) || 0)) {
+      return ui.notifications.warn("Aucun quantar disponible : libérez-en un sur un autre objet ou augmentez le nombre de quantars possédés.");
+    }
+    return item.update({ "system.quantar": true });
   }
   async _onDropQuantar(ev, data) {
     let item = await this.actor.getEmbeddedDocument('Item', ev.currentTarget.dataset.itemId);
@@ -151,21 +178,22 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     })
   }
   async affectFaveur(ev, data) {
-    if (!ev.currentTarget.classList.contains("contact")) { return }
-    let contactIndex = ev.currentTarget.dataset.contactIndex;
-    let contactList = this.actor.system.contacts;
-    if (contactList[contactIndex] == "vide") { return };
+    const contactEl = ev.target.closest(".contact[data-contact-index]");
+    if (!contactEl) { return }
+    let contactIndex = contactEl.dataset.contactIndex;
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    if (!contactList[contactIndex]) { return };
     let sumFav = (acc, contact) => {
       let tot = acc + (contact.faveurs || 0);
       return tot;
     }
 
-    let totalFaveursContact = contactList.reduce(sumFav, 0);
-    if (totalFaveursContact >= this.actor.system.reserves.faveurs.max) {
+    // la réserve compte les jetons déjà distribués
+    if ((this.actor.system.reserves.faveurs.value || 0) >= this.actor.system.reserves.faveurs.max) {
       return ui.notifications.warn(`${this.actor.name} n'a plus de faveur disponibles`)
     }
     let newFav = this.actor.system.reserves.faveurs.value + 1
-    contactList[contactIndex].faveurs++;
+    contactList[contactIndex].faveurs = (contactList[contactIndex].faveurs || 0) + 1;
     await this.actor.update({
       "system.contacts": contactList,
       "system.reserves.faveurs.value": newFav
@@ -225,8 +253,12 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
 
   _preparePersonnageItems(context) {
     this.checkArchetype();
-    this.checkTheme();
-    this.prepareFavItems(context)
+    this.prepareArchetype(context);
+    context.cabales = this.actor.cabalesActeurs.map(c => ({
+      id: c.id, nom: c.name, bloc: c.system.bloc, coordonnes: c.system.coordonnes, societe: c.system.societeEcran
+    }));
+    context.qualite = descriptionQualite(this.actor.system.qualites, "qualite");
+    context.defaut = descriptionQualite(this.actor.system.defauts, "defaut");
 
   }
 
@@ -254,13 +286,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       ev.preventDefault();
       item.sheet.render(true);
     });
-    html.find('.item-fav').click(async ev => {
-
-      let item = await this.actor.getEmbeddedDocument("Item", ev.currentTarget.dataset.itemId);
-      ev.preventDefault();
-      let isFav = await item.getFlag("noc", "favItem");
-      await item.setFlag("noc", "favItem", !isFav);
-    })
     html.find('li.item .img').click(ev => {
       ev.currentTarget.closest('li.item').classList.toggle('expanded');
       ev.stopPropagation()
@@ -274,8 +299,13 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       this.actor.rollTalent(domaineId, talentId);
     })
     // ROll d'item
+    // icône de quantar d'un objet : un clic l'équipe ou le libère
+    html.find('img.needQuantar').click(this._onClickQuantarObjet.bind(this));
     html.find('.roll-item').click(ev => {
       let itemId = $(ev.currentTarget).data("item-id");
+      const item = this.actor.items.get(itemId);
+      // objet usuel, document administratif, armure : le clic sur le nom ouvre sa fiche
+      if (["objetusuel", "document administratif", "armure"].includes(item?.type)) return item.sheet.render(true);
       this.actor.rollItem(itemId);
     })
 
@@ -287,10 +317,17 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     for (let but of reserveSettingButtons) {
       but.addEventListener('click', this.onClickMaxReserve.bind(this))
     }
-    html.find('a.unassignCabale')[0]?.addEventListener('click', this.leaveCabale.bind(this));
+    html.find('a.unassignCabale').click(this.leaveCabale.bind(this));
+    html.find('button.etape-jeu').click(ev => this.actor.etapeDeJeu(ev.currentTarget.dataset.etape));
+    html.find('a.progression-plus').click(() => this.changerProgression(1));
+    html.find('a.quantars-plus').click(() => this.changerQuantars(1));
+    html.find('a.quantars-moins').click(() => this.changerQuantars(-1));
+    html.find('a.progression-moins').click(() => this.changerProgression(-1));
     html.find('a.openCabale')?.click(this.openCabale.bind(this));
 
     html.find(".addQuality").click(this.addQuality.bind(this))
+    html.find(".changerTheme").click(this.changerTheme.bind(this))
+    html.find("a.basculerJauges").click(this.basculerJauges.bind(this))
     html.find(".deleteQuality").click(this.deleteQuality.bind(this))
 
     html.find(".unassignContact").click(this.unassignContact.bind(this))
@@ -299,7 +336,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     html.find(".contact i.createContact").click(this.createContact.bind(this))
 
 
-    html.find('.addPersonnalisation').click(this._onClickPerso.bind(this));
     html.find('.deletePersonnalisation').click(this.deletePersonnalisation.bind(this));
 
     html.find('.delete-perdition-effect').click(this.deletePerditionEffect.bind(this));
@@ -326,7 +362,8 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     update.system.talents[dom] = {};
     update.system.talents[dom][tal] = {};
 
-    let value = this.actor.system.talents[dom][tal].niveau;
+    // valeur de base (sans les bonus d'archétype et de thème)
+    let value = Number(this.actor._source.system.talents[dom][tal].niveau) || 0;
 
 
 
@@ -381,7 +418,6 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     effect.delete();
   }
   async createContact(ev) {
-    let contactIndex = ev.currentTarget.closest("h3.empty-contact").dataset.contactIndex;
     let dial = new Dialog({
       title: `nouveau contact`,
       content: `
@@ -416,7 +452,7 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
                 description: desc
               }
             });
-            return this.setContact(newContact, contactIndex)
+            return this.setContact(newContact)
 
           }
         },
@@ -499,24 +535,20 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     return ChatMessage.create(chatData);
   }
   async applyFaveurs(contactIndex, value) {
-    let contactList = this.actor.system.contacts;
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
     let contact = contactList[contactIndex];
-
-    contact.usedFaveurs += value;
+    if (!contact) return;
+    // la valeur saisie arrive sous forme de texte : on la convertit en nombre
+    let used = (Number(contact.usedFaveurs) || 0) + (Number(value) || 0);
+    contact.usedFaveurs = Math.min(used, contact.faveurs || 0);
 
     await this.actor.update({
       "system.contacts": contactList,
     })
   }
   async deleteQuality(ev) {
-    let type = ev.currentTarget.dataset.type;
-    let prop = this.actor.system.qualites
-    if (type === "defaut") {
-      prop = this.actor.system.defauts
-    }
-    let qual = await Quality.create(prop)
-    await qual.reset()
-
+    const type = ev.currentTarget.dataset.type === "defaut" ? "defaut" : "qualite";
+    await enregistrerQualite(this.actor, type, "");
   }
 
   checkArchetype() {
@@ -526,17 +558,41 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
       `)
     }
   }
-  checkTheme() {
-    if (this.actor.itemTypes.thème.length > 1) {
-      return ui.notifications.warn(`
-      le personnage ${this.actor.name.toUpperCase()} possède plusieurs thème.... veuillez en supprimer
-      `)
+  prepareArchetype(context) {
+    const archetype = this.actor.itemTypes.archetype[0];
+    const theme = archetype?.system.themes?.find(t => t.id === archetype.system.themeChoisi);
+    context.themesDisponibles = (archetype?.system.themes?.length ?? 0) > 0;
+    context.themeChoisi = theme ? {
+      nom: theme.nom,
+      detail: theme.talents.map(t => `${libelleTalent(t.talent)} ${t.value > 0 ? "+" : ""}${t.value}`).join(", ")
+    } : null;
+  }
+  /** Rouage / Autre : toutes les jauges de perdition passent de 5 à 10 cases (ou l'inverse) */
+  async basculerJauges(ev) {
+    ev.preventDefault();
+    const perditions = this.actor.system.perditions ?? {};
+    const actuel = Math.max(...Object.values(perditions).map(p => Number(p.max) || 0));
+    const max = actuel >= 10 ? 5 : 10;
+    const maj = {};
+    for (const [cle, p] of Object.entries(perditions)) {
+      maj[`system.perditions.${cle}.max`] = max;
+      if ((Number(p.value) || 0) > max) maj[`system.perditions.${cle}.value`] = max;
     }
+    return this.actor.update(maj);
+  }
+
+  /** Changer de thème : les bonus suivent automatiquement le nouveau thème */
+  async changerTheme(ev) {
+    ev.preventDefault();
+    const archetype = this.actor.itemTypes.archetype[0];
+    if (!archetype) return;
+    const themeId = await choisirTheme(archetype.toObject(), archetype.system.themeChoisi);
+    if (!themeId || themeId === archetype.system.themeChoisi) return;
+    return archetype.update({ "system.themeChoisi": themeId });
   }
   async addQuality(ev) {
-    let quality = new Quality(this.actor.id, ev.currentTarget.dataset.type);
-    await quality.creationDialog();
-
+    const type = ev.currentTarget.dataset.type === "defaut" ? "defaut" : "qualite";
+    await choisirQualite(this.actor, type);
   }
   async onClickMaxReserve(ev) {
     let reserveName = ev.currentTarget.dataset.reserveName;
@@ -645,38 +701,45 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     }
   }
 
+  async changerQuantars(ecart) {
+    const valeur = Math.max(0, (Number(this.actor._source.system.quantars) || 0) + ecart);
+    return this.actor.update({ "system.quantars": valeur });
+  }
+  async changerProgression(ecart) {
+    const valeur = Math.max(0, (Number(this.actor._source.system.progression) || 0) + ecart);
+    return this.actor.update({ "system.progression": valeur });
+  }
   async openCabale(ev) {
-    let cabale = await Actor.get(ev.currentTarget.dataset.cabaleId)
-    return await cabale.sheet.render(true)
+    const cabale = game.actors.get(ev.currentTarget.dataset.cabaleId);
+    return cabale?.sheet.render(true);
   }
   async leaveCabale(ev) {
-    let cabaleId = ev.currentTarget.dataset.cabaleId;
-    let cabale = await game.actors.get(cabaleId);
-
-    let dial = new Dialog({
-      title: `Quitter la cabale : ${cabale.name}`,
-      content: 'Voulez-vous vraiment quitter la cabale ?',
-      buttons: {
-        ok: {
-          icon: '<i class="fas fa-check"></i>',
-          label: "quitter",
-          callback: async (html) => {
-            await this.actor.leaveCabale()
-          }
-        },
-        no: {
-          icon: '<i class="fas fa-times"></i>',
-          label: "Cancel"
-        }
-      },
-      default: "ok"
-    }, {
-
-    }).render(true);
+    const cabaleId = ev.currentTarget.dataset.cabaleId;
+    const cabale = game.actors.get(cabaleId);
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: `Quitter la cabale : ${cabale?.name ?? "?"}` },
+      content: "<p>Voulez-vous vraiment quitter cette cabale ?</p>"
+    });
+    if (ok) await this.actor.leaveCabale(cabaleId);
   };
-  async setContact(actor, index) {
-    let contactList = this.actor.system.contacts;
-    contactList[index] = new NOCContact(actor.id);
+  async setContact(actor) {
+    if (!actor || !["personnage", "rouage"].includes(actor.type)) return;
+    if (actor.id === this.actor.id) {
+      return ui.notifications.warn("Un personnage ne peut pas être son propre contact.");
+    }
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    if (contactList.some(c => c.id === actor.id)) {
+      return ui.notifications.info(`${actor.name} fait déjà partie des contacts.`);
+    }
+    contactList.push({
+      id: actor.id,
+      uuid: actor.uuid,
+      nom: actor.name,
+      img: actor.img,
+      description: actor.system.description ?? "",
+      faveurs: 0,
+      usedFaveurs: 0
+    });
     await this.actor.update({
       "system.contacts": contactList
     })
@@ -692,16 +755,15 @@ export class nocActorSheetPersonnage extends foundry.appv1.sheets.ActorSheet {
     context.quantarUsage = quantarUsage;
   }
 
-  async prepareFavItems(context) {
-    let favItems = this.actor.collections.items.toObject().filter(it => it.flags.noc?.favItem);
-    context.favItems = favItems;
-  }
-
   async unassignContact(ev) {
     let contactIndex = ev.currentTarget.closest('div.contact').dataset.contactIndex;
-    let contactList = this.actor.system.contacts;
-    let newFav = this.actor.system.reserves.faveurs.value - contactList[contactIndex].faveurs
-    contactList[contactIndex] = "vide";
+    let contactList = foundry.utils.deepClone(this.actor.system.contacts);
+    let removed = contactList[contactIndex];
+    if (!removed) return;
+    // les jetons non encore utilisés retournent dans la réserve
+    let rendus = (removed.faveurs || 0) - (removed.usedFaveurs || 0);
+    let newFav = Math.max(0, this.actor.system.reserves.faveurs.value - rendus);
+    contactList.splice(contactIndex, 1);
     await this.actor.update({
       "system.contacts": contactList,
       "system.reserves.faveurs.value": newFav

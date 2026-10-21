@@ -1,0 +1,50 @@
+name: 'Certificat de conformité sanitaire DI79-V8'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Justificatif médical délivré par l''Intégrité, souvent exigé et obligatoire pour toute sortie hors du Bloc. Il s''obtient après un examen en dispensaire et reste valable un mois.</p>'
+  formulaire: 'autre'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: UEZrjJAHwRvmd4TR
+folder: null
+sort: 1100000
+ownership:
+  default: 0
+_key: '!items!UEZrjJAHwRvmd4TR'

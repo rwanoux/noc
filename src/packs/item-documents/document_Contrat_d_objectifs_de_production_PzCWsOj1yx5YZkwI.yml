@@ -1,0 +1,50 @@
+name: 'Contrat d''objectifs de production'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Document essentiel à toute activité agricole, artisanale ou industrielle : il fixe la quantité de biens à livrer à l''Administration en échange de ressources et de moyens de production.</p>'
+  formulaire: 'autre'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 3
+    duree: 'formulaire'
+    motif: ''
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: PzCWsOj1yx5YZkwI
+folder: null
+sort: 1300000
+ownership:
+  default: 0
+_key: '!items!PzCWsOj1yx5YZkwI'

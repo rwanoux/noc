@@ -82,7 +82,7 @@
 												</span>
 											</span>
 											<a
-												class="rollable roll-talent" data-action="rollTalent"
+												class="rollable roll-talent" data-tooltip="{{niveauTalent talentGroupName talentId talent.niveau}}" data-tooltip-direction="UP" data-action="rollTalent"
 												data-talent-id="{{talentId}}"
 												data-domaine-id="{{domaineId}}"
 											>
@@ -201,8 +201,14 @@
 							value="{{actor.name}}"
 						>
 					</div>
-					<div class="form-group">
-						<div>archetype :</div>
+					{{#if (or actor.flags.noc.fatigue actor.flags.noc.bouleversement)}}
+					<div class="etats-actifs">
+						{{#if actor.flags.noc.fatigue}}<span class="etat" data-tooltip="−1 à tous les talents jusqu'au prochain moment de calme">Fatigué</span>{{/if}}
+						{{#if actor.flags.noc.bouleversement}}<span class="etat" data-tooltip="Talents de Statut −1 ; contacts inaccessibles">Bouleversement administratif</span>{{/if}}
+					</div>
+					{{/if}}
+					<div class="form-group bloc-empile">
+						<div>Archétype :</div>
 
 						<div class="archetype-resume flexrow">
 							{{#each actor.itemTypes.archetype as
@@ -222,109 +228,87 @@
 							{{/each}}
 						</div>
 					</div>
-					<div class="form-group">
-						<div>thème :</div>
+					<div class="form-group bloc-empile">
+						<div>Thème :</div>
 						<div class="theme-resume flexrow">
-							{{#each actor.itemTypes.thème as |thème|}}
-								<div class="item-name">
-									{{thème.name}}
+							{{#if themeChoisi}}
+								<div class="item-name" data-tooltip="{{themeChoisi.detail}}">
+									{{themeChoisi.nom}}
 								</div>
-								<div class="item-control">
-									<a
-										class="fas fa-trash item-delete" data-action="itemDelete"
-										data-item-id="{{thème.id}}"
-									></a>
-									<a
-										class="fas fa-edit item-open" data-action="itemOpen"
-										data-item-id="{{thème.id}}"
-									></a>
-								</div>
-							{{/each}}
+							{{else}}
+								<div class="item-name">—</div>
+							{{/if}}
+							{{#if themesDisponibles}}{{#if editable}}
+								<a class="fas fa-rotate changerTheme" data-tooltip="Changer de thème"></a>
+							{{/if}}{{/if}}
 						</div>
 					</div>
 
-					<div class="form-group">
-						<div>qualité :
-							<a
-								class="fas fa-add addQuality" data-action="addQuality"
-								data-type="qualite"
-							></a>
-						</div>
-						{{#if actor.system.qualites.label}}
-							<div>{{actor.system.qualites.label}}
-								/{{actor.system.qualites.targetTalent}}
-								+1
+					<div class="form-group bloc-empile">
+						<div>Qualité :</div>
+						<div class="qualite-resume flexrow">
+							{{#if qualite}}
+								<span class="item-name">{{qualite}}</span>
 								<a
 									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer la qualité"
 									data-type="qualite"
 								></a>
-							</div>
-						{{/if}}
+							{{else}}
+								<a
+									class="fas fa-add addQuality" data-action="addQuality"
+									data-tooltip="choisir le talent augmenté de 1"
+									data-type="qualite"
+								></a>
+							{{/if}}
+						</div>
 					</div>
 
-					<div class="form-group">
-						<div>défaut :
-							<a
-								class="fas fa-add addQuality" data-action="addQuality"
-								data-type="defaut"
-							></a>
-						</div>
-						{{#if actor.system.defauts.label}}
-							<div>{{actor.system.defauts.label}}
-								/{{actor.system.defauts.targetTalent}}
-								-1
+					<div class="form-group bloc-empile">
+						<div>Défaut :</div>
+						<div class="qualite-resume flexrow">
+							{{#if defaut}}
+								<span class="item-name">{{defaut}}</span>
 								<a
 									class="fas fa-trash deleteQuality" data-action="deleteQuality"
 									data-tooltip="supprimer le défaut"
 									data-type="defaut"
 								></a>
-							</div>
-						{{/if}}
-					</div>
-					<h3>personnalisation
-						<a
-							class="fas fa-add addPersonnalisation" data-action="addPersonnalisation"
-							data-tooltip="ajouter un bonus de pesonnalisation"
-						></a>
-					</h3>
-					{{#each personnalisations as |perso id|}}
-						<div class="perso flexrow">
-							<h4>{{perso.label}}
+							{{else}}
 								<a
-									data-effect-id="{{perso.id}}"
-									class="fas fa-trash deletePersonnalisation" data-action="deletePersonnalisation"
+									class="fas fa-add addQuality" data-action="addQuality"
+									data-tooltip="choisir le talent réduit de 1"
+									data-type="defaut"
 								></a>
-							</h4>
-							{{#each perso.flags.noc.personnalisation as |bonus
-                        label|}}
-								<div class="bonus">{{label}}:{{bonus}}
-									/</div>
+							{{/if}}
+						</div>
+					</div>
+
+					<div class="form-group bloc-cabales">
+						<h3>cabale{{#ifgt cabales.length 1}}s{{/ifgt}}</h3>
+						<div class="liste-cabales flexcol">
+							{{#each cabales as |cabale|}}
+								<h4 class="flexrow">
+									<span>{{cabale.nom}}</span>
+									<a
+										class="fas fa-edit openCabale" data-action="openCabale"
+										data-cabale-id="{{cabale.id}}"
+										data-tooltip="ouvrir la fiche de cabale"
+									></a>
+								</h4>
 							{{/each}}
 						</div>
 
-					{{/each}}
-
-					<div class="form-group">
-						<h3>cabale</h3>
-						<h4>{{actor.system.cabale.nom}}</h4>
-						{{#if actor.system.cabale.nom}}
-							<div>
-								<a
-									class="fas fa-edit openCabale" data-action="openCabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
-								></a>
-							</div>
-						{{/if}}
-
 					</div>
 					<div class="form-group">
-						<h3>progression
-							<input
-								type="number"
-								value="{{actor.system.progression}}"
-								name="system.progression"
-							>
+						<h3 class="progression flexrow">
+							<span>progression</span>
+							<span class="progression-niveau">{{actor.system.progression}}
+								<span class="progression-controls">
+									<a class="fas fa-add progression-plus"></a>
+									<a class="fas fa-minus progression-moins"></a>
+								</span>
+							</span>
 						</h3>
 
 					</div>
@@ -332,275 +316,207 @@
 				</div>
 
 			</div>
-			{{!-- favItems --}}
-
-			<div class="favItems">
-				<h3>Objets Favoris</h3>
-				<ul class="item-list grid grid-6col">
-					{{#each favItems as |item index|}}
-						<li
-							class="item
-								{{#if item.system.needQuantar}}
-								{{#unless item.system.quantar}}
-								unavalaible
-								{{/unless}}
-								{{/if}}"
-							data-item-id="{{item._id}}"
-						>
-							<div class="item-summary flexrow">
-								<div class="img">
-									<img
-										src="{{item.img}}"
-										alt="image de {{item.name}}"
-									>
-								</div>
-								<h4 class="item-name">
-									<span>
-										<a
-											class="roll-item" data-action="rollItem"
-											data-item-id="{{item._id}}"
-										>{{item.name}}</a>
-									</span>
-								</h4>
-								<div class="item-control">
-
-									<a
-										class="fas fa-edit item-open" data-action="itemOpen"
-										data-item-id="{{item._id}}"
-									></a>
-									<a
-										class="fas fa-trash item-delete" data-action="itemDelete"
-										data-item-id="{{item._id}}"
-									></a>
-									<a
-										class="fas fa-star item-fav
-											{{#if item.flags.noc.favItem}}
-											itemIsFav
-											{{/if}}
-											"
-										data-item-id="{{item._id}}"
-									></a>
-								</div>
-
-							</div>
-							<div class="item-details">
-								<p>{{{item.system.description}}}</p>
-								{{#ifequal item.type "outil"}}{{/ifequal}}
-
-							</div>
-
-						</li>
-					{{/each}}
-
-				</ul>
+			<!-- étapes de jeu -->
+			<div class="etapes-jeu flexrow">
+				<button type="button" class="etape-jeu" data-etape="calme"
+					data-tooltip="Blessures, Trauma, Traque et Noirceur -1 ; Espoir +1 + Extase (dans la limite du maximum)">Moment de calme</button>
+				<button type="button" class="etape-jeu" data-etape="seance"
+					data-tooltip="Singularité au maximum ; Vécu +1 (dans la limite du maximum)">Début de séance</button>
+				<button type="button" class="etape-jeu" data-etape="scenario"
+					data-tooltip="Espoir au maximum ; les faveurs placées sur les contacts reviennent dans la réserve">Début de scénario</button>
 			</div>
 		</div>
 
 		{{!-- signalement+cabale+contacts --}}
 		<div
-			class="tab description flexrow"
+			class="tab description flexcol"
 			data-group="primary"
 			data-tab="description"
 		>
-			<div class="signalement flexcol">
-				<div class="form-group">
-					<h2>Signalement</h2>
-					{{editor actor.system.signalement
-                    target="system.signalement"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Description</h2>
-					{{editor actor.system.description
-                    target="system.description"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Implication</h2>
-					{{editor actor.system.implication
-                    target="system.implication"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Couverture</h2>
-					{{editor actor.system.couverture
-                    target="system.couverture"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-				<div class="form-group">
-					<h2>Notes</h2>
-					{{editor actor.system.notes target="system.notes"
-                    button=true editable=editable
-                    engine="prosemirror" collaborate=false}}
-				</div>
-
+			<!-- en haut : Implication et Couverture côte à côte -->
+			<div class="signalement signalement-haut">
+					<div class="form-group editeur-court">
+						<h2>Implication</h2>
+						{{editor actor.system.implication target="system.implication" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+					<div class="form-group editeur-court">
+						<h2>Couverture</h2>
+						{{editor actor.system.couverture target="system.couverture" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
 			</div>
 
-			<!--CONTACTS ET CABALE-->
+			<div class="signalement-bas">
+				<!-- colonne 1 : Signalement, Description -->
+				<div class="signalement flexcol">
+					<div class="form-group editeur-moyen">
+						<h2>Signalement</h2>
+						{{editor actor.system.signalement target="system.signalement" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+					<div class="form-group editeur-long">
+						<h2>Description</h2>
+						{{editor actor.system.description target="system.description" button=true editable=editable engine="prosemirror" collaborate=false}}
+					</div>
+				</div>
 
-			<div class=" flexcol">
+				<!-- colonne 2 : contacts -->
+				<div class="flexcol colonne-contacts">
+					<div class="contacts">
+						<h2>Contacts</h2>
 
-				<div class="contacts">
-					<h2>Contacts</h2>
-
-					{{#ifequal actor.system.talents.statut.contact.niveau
+						{{#ifequal actor.system.talents.statut.contact.niveau
                     -1}}
-						<h4>Ce personnage a un ennemi.</h4>
-					{{/ifequal}}
-					{{#ifequal actor.system.talents.statut.contact.niveau
-                    0}}
-						<h4>Ce personnage ne possède aucun contacts</h4>
-					{{/ifequal}}
-					{{#ifgt actor.system.contacts.length 0}}
-						<div class="form-group">
-							<h4>faveurs
-							</h4>
-							<div class="faveurs-totales flexrow">
-								{{#repeat actor.system.reserves.faveurs.max}}
-									<div class="faveur
-												{{#ifgt actor.system.reserves.faveurs.value
-												@index}}
-												faveur-used
-												{{/ifgt}}">
-									</div>
-								{{/repeat}}
-							</div>
-							<a
-								class="fa-solid fa-arrows-rotate"
-								id="resetFaveurs" data-action="resetFaveurs"
-								data-tooltip="ré-initialiser les faveurs des contacts"
-							></a>
-						</div>
-						<!-- pour chaque contact-->
+							<h4>Ce personnage a un ennemi.</h4>
+						{{/ifequal}}
 
+						{{!-- réserve de jetons de faveur (limitée par le talent Contacts) --}}
+						{{#ifgt actor.system.reserves.faveurs.max 0}}
+							<div class="form-group">
+								<h4>faveurs à distribuer</h4>
+								<div class="faveurs-totales flexrow">
+									{{#repeat actor.system.reserves.faveurs.max}}
+										<div
+											class="faveur
+													{{#ifgt actor.system.reserves.faveurs.value
+													@index}}
+													faveur-used
+													{{/ifgt}}"
+											data-tooltip="faites glisser ce jeton sur un contact"
+										>
+										</div>
+									{{/repeat}}
+								</div>
+								<a
+									class="fa-solid fa-arrows-rotate"
+									id="resetFaveurs" data-action="resetFaveurs"
+									data-tooltip="ré-initialiser les faveurs des contacts"
+								></a>
+							</div>
+						{{/ifgt}}
+
+						<!-- pour chaque contact (nombre illimité) -->
 						{{#each actor.system.contacts as |contact
                     contactIndex|}}
 							<div
 								class="contact"
 								data-contact-index="{{contactIndex}}"
-								dataset-contact-id="{{contact.id}}"
+								data-contact-id="{{contact.id}}"
 							>
-								{{#if contact.nom }}
-									<h3 class="flexrow">
-										<span>{{contact.nom}}</span>
-										<div class="faveurList flexrow">
-											{{#repeat contact.faveurs}}
-												<div class="faveurContact
-															{{#ifgt contact.usedFaveurs
-															@index}}
-															faveur-used
-															{{/ifgt}}
-															">
-												</div>
-											{{/repeat}}
-										</div>
-										<div class="contactControls">
-											<a
-												data-tooltip="supprimer ce contact"
-												class="unassignContact" data-action="unassignContact"
-											>
-												<i class="fa-solid fa-close"></i>
-											</a>
-										</div>
-									</h3>
-									<div class="flexrow">
-										<img
-											class="profile-img"
-											src="{{contact.img}}"
-										/>
-										<div>{{{contact.description}}}</div>
+								<h3 class="flexrow">
+									<span>{{contact.nom}}</span>
+									<div class="faveurList flexrow">
+										{{#repeat contact.faveurs}}
+											<div class="faveurContact
+														{{#ifgt contact.usedFaveurs
+														@index}}
+														faveur-used
+														{{/ifgt}}
+														">
+											</div>
+										{{/repeat}}
 									</div>
-
-								{{else}}
-									<h3
-										data-tooltip="faites glisser un personnage ou un rouage pour affecter ce contact"
-										class="empty-contact"
-										data-contact-index="{{contactIndex}}"
-									>Vide :
-										<i class="fas fa-add createContact" data-action="createContact"></i>
-									</h3>
-								{{/if}}
+									<div class="contactControls">
+										<a
+											data-tooltip="supprimer ce contact"
+											class="unassignContact" data-action="unassignContact"
+										>
+											<i class="fa-solid fa-trash"></i>
+										</a>
+									</div>
+								</h3>
+								<div class="flexrow">
+									<img
+										class="profile-img"
+										src="{{contact.img}}"
+									/>
+									<div>{{{contact.description}}}</div>
+								</div>
 							</div>
 						{{/each}}
-					{{/ifgt}}
-				</div>
-				<div class="cabale ">
-					<h2>Cabale</h2>
-					{{#unless actor.system.cabale.uuid}}
-						<h4>Aucune Cabale</h4>
-						<p>faites glisser un acteur de type "cabale" pour
-							affecter
-							ce
-							personnage à une cabale
-						</p>
-					{{/unless}}
-					{{#if actor.system.cabale.uuid}}
-						<h3 class="flexrow">
-							<div>
-								{{actor.system.cabale.nom}}
-							</div>
-							<div class="cabaleControls">
-								<a
-									class="openCabale" data-action="openCabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
-									data-tooltip="ouvrir la fiche de cabale"
-								>
-									<i class="fa-solid fa-edit"></i>
-								</a>
-								<a
-									data-tooltip="quitter cette cabale"
-									data-cabale-id="{{actor.system.cabale.uuid}}"
-									class="unassignCabale" data-action="unassignCabale"
-								>
-									<i class="fa-solid fa-right-from-bracket"></i>
-								</a>
-							</div>
-						</h3>
-						<div class="flexcol">
-							<div class="flexrow">
-								<h4>bloc :
-								</h4>
-								<p>{{actor.system.cabale.bloc}}</p>
-							</div>
-							<div class="flexrow">
-								<h4>coordonnées :</h4>
-								<p>{{actor.system.cabale.coordonnes}}</p>
-							</div>
-							<div class="flexrow">
-								<h4>société écran</h4>
-								<p>{{actor.system.cabale.societe}}</p>
-							</div>
+
+						{{!-- zone d'ajout, toujours visible --}}
+						<div class="contact">
+							<h3
+								data-tooltip="faites glisser un personnage ou un rouage ici, ou cliquez sur + pour en créer un"
+								class="empty-contact"
+							>Ajouter un contact :
+								<i class="fas fa-add createContact" data-action="createContact"></i>
+							</h3>
 						</div>
-
-					{{/if}}
-
+					</div>
 				</div>
 			</div>
 		</div>
 
 		{{!-- Owned Items Tab --}}
+
+		{{!-- liste d'objets d'un type, réutilisée pour chaque catégorie --}}
+		{{#*inline "listeObjets"}}
+			<ul class="item-list">
+				<h3 class="flexrow">
+					<span>{{titre}}</span>
+					<a
+						class="fas fa-add item-create" data-action="itemCreate"
+						data-tooltip="créer : {{titre}}"
+						data-item-type="{{type}}"
+					></a>
+				</h3>
+				{{#each objets as |item index|}}
+					<li
+						class="flexrow item flexcol ability
+							{{#if item.system.needQuantar}}
+							{{#unless item.system.quantar}}
+							unavalaible
+							{{/unless}}
+							{{/if}}"
+						data-item-id="{{item.id}}"
+					>
+						<div class="item-summary flexrow">
+							<div class="img">
+								<img src="{{item.img}}" alt="image de {{item.name}}">
+							</div>
+							<h4 class="item-name">
+								<span>
+									<a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a>
+								</span>
+								{{#if item.system.needQuantar}}
+									<img
+										src="systems/noc/asset/default_icons/quantar.webp"
+										alt
+										class="needQuantar {{#if item.system.quantar}} quantarUsed{{/if}}" data-tooltip="{{#if item.system.quantar}}quantar en place : cliquez pour le libérer{{else}}sans quantar, inutilisable : cliquez pour en placer un{{/if}}"
+									>
+								{{/if}}
+							</h4>
+							<div class="item-control">
+								<a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{item.id}}"></a>
+								<a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{item.id}}"></a>
+							</div>
+						</div>
+						<div class="item-details">
+							<p>{{{item.system.description}}}</p>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		{{/inline}}
+
 		<div
 			class="tab items flexcol"
 			data-group="primary"
 			data-tab="items"
 		>
-			<!--inventaire-->
-			<h3 class="flexrow quantarQty">
-				Quantars possédés :
-				<input
-					type="number"
-					name="system.quantars"
-					value="{{actor.system.quantars}}"
-				/>
+			<!-- quantars possédés, tout en haut -->
+			<h3 class="flexrow quantarQty quantars-ligne">
+				<span class="quantars-libelle">Quantars possédés :</span>
+				<span class="compteur-niveau">{{actor.system.quantars}}
+					<span class="compteur-controls">
+						<a class="fas fa-add quantars-plus"></a>
+						<a class="fas fa-minus quantars-moins"></a>
+					</span>
+				</span>
 				<div
-					class="flexrow "
+					class="flexrow quantars-images"
 					data-tooltip="faites glisser les quantars sur les objets qui en ont besoin"
 				>
-
 					{{#each quantarUsage as |item index| }}
 						<img
 							src="systems/noc/asset/default_icons/quantar.webp"
@@ -613,91 +529,20 @@
 				</div>
 			</h3>
 
-			<ul class="item-types flexrow">
-
-				{{#each actor.itemTypes as |group groupIndex|}}
-					{{#ifnotequal groupIndex "archetype"}}
-						{{#ifnotequal groupIndex "thème"}}
-							{{#ifnotequal groupIndex "base"}}
-
-								<ul class="item-list">
-									<h3>{{localize (concat "ITEM.Type" (upperFirst groupIndex))}}
-										<a
-											class="fas fa-add item-create" data-action="itemCreate"
-											data-tooltip="créer un item :{{groupIndex}}"
-											data-item-type="{{groupIndex}}"
-										></a>
-									</h3>
-									{{#each group as |item index|}}
-										<li
-											class="flexrow item flexcol ability
-												{{#if item.system.needQuantar}}
-												{{#unless item.system.quantar}}
-												unavalaible
-												{{/unless}}
-												{{/if}}"
-											data-item-id="{{item.id}}"
-										>
-											<div class="item-summary flexrow">
-												<div class="img">
-													<img
-														src="{{item.img}}"
-														alt="image de {{item.name}}"
-													>
-												</div>
-												<h4 class="item-name">
-													<span>
-														<a
-															class="roll-item" data-action="rollItem"
-															data-item-id="{{item._id}}"
-														>{{item.name}}</a>
-													</span>
-													{{#if item.system.needQuantar}}
-														<img
-															src="systems/noc/asset/default_icons/quantar.webp"
-															alt
-															class="needQuantar 
-															{{#if item.system.quantar}} quantarUsed{{/if}}"
-														>
-													{{/if}}
-												</h4>
-												<div class="item-control">
-
-													<a
-														class="fas fa-edit item-open" data-action="itemOpen"
-														data-item-id="{{item.id}}"
-													></a>
-													<a
-														class="fas fa-trash item-delete" data-action="itemDelete"
-														data-item-id="{{item.id}}"
-													></a>
-													<a
-														class="fas fa-star item-fav
-																{{#if item.flags.noc.favItem}}
-																itemIsFav
-																{{/if}}
-																"
-														data-item-id="{{item.id}}"
-													></a>
-												</div>
-
-											</div>
-											<div class="item-details">
-												<p>{{{item.system.description}}}</p>
-												{{#ifequal item.type "outil"}}{{/ifequal}}
-
-											</div>
-
-										</li>
-									{{/each}}
-								</ul>
-
-							{{/ifnotequal}}
-						{{/ifnotequal}}
-					{{/ifnotequal}}
-				{{/each}}
-			</ul>
-
+			<!-- trois colonnes d'objets -->
+			<div class="inventaire-colonnes">
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Outils" type="outil" objets=actor.itemTypes.outil}}
+					{{> listeObjets titre="Objets usuels" type="objetusuel" objets=actor.itemTypes.objetusuel}}
+				</div>
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Armes" type="arme" objets=actor.itemTypes.arme}}
+					{{> listeObjets titre="Armure" type="armure" objets=actor.itemTypes.armure}}
+				</div>
+				<div class="inventaire-colonne">
+					{{> listeObjets titre="Documents administratifs" type="document administratif" objets=(lookup actor.itemTypes "document administratif")}}
+				</div>
+			</div>
 		</div>
 	</section>
 </form>

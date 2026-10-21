@@ -1,6 +1,4 @@
-
-import { nocItem } from "../../documents/item.mjs";
-import { nocItemSheetTheme } from "./item-sheet-theme.mjs";
+import { creerTheme, libelleTalent, talentsDuSysteme, themeDepuisItem } from "../../archetypes.mjs";
 
 export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
 
@@ -8,12 +6,8 @@ export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       classes: ["noc", "sheet", "item"],
       width: 750,
-      height: 500,
-      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }],
-      dragdrop: [{
-        dragSelector: ".item-list .item",
-        dropSelector: ".dop-area"
-      }]
+      height: 650,
+      tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "description" }]
     });
   }
 
@@ -24,20 +18,32 @@ export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
   }
 
   /* -------------------------------------------- */
-  _canDragDrop(selector) {
-    return this.isEditable;
-  }
 
   /** @override */
   getData() {
-    // Retrieve base data structure.
     const context = super.getData();
     context.systemTemplate = game.system.template;
-    // Opportunistic init
+    // Initialisation des talents mineurs si besoin
     if (!this.item.system.talentsMineurs["erudition"]) {
-      this.item.system.talentsMineurs = duplicate(context.systemTemplate.Actor.rouage.talents)
+      this.item.system.talentsMineurs = foundry.utils.deepClone(context.systemTemplate.Actor.rouage.talents)
     }
-    this.options.editable = (context.document.parent) ? false : true
+    // Un archétype déjà posé sur un personnage n'est plus modifiable
+    this.options.editable = (context.document.parent) ? false : true;
+    context.editable = this.isEditable;
+
+    context.themes = (this.item.system.themes ?? []).map(t => ({
+      ...t,
+      choisi: t.id === this.item.system.themeChoisi,
+      talents: t.talents.map(x => ({
+        ...x,
+        label: libelleTalent(x.talent),
+        signe: x.value > 0 ? `+${x.value}` : `${x.value}`
+      }))
+    }));
+    context.listeTalents = Object.entries(talentsDuSysteme()).map(([dom, talents]) => ({
+      domaine: dom,
+      talents: Object.entries(talents).map(([tal, t]) => ({ cle: `${dom}.${tal}`, label: t.label }))
+    }));
     return context;
   }
 
@@ -49,7 +55,8 @@ export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
 
     let checks = html.find('a.talent-check');
     for (let check of checks) {
-      let talObject = this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent]
+      let talObject = this.item.system.talentsMineurs[check.dataset.domaine]?.[check.dataset.talent];
+      if (!talObject) continue;
       check.dataset.value = talObject.niveau;
       switch (Number(talObject.niveau)) {
         case -1:
@@ -66,145 +73,115 @@ export class nocItemSheetArchetype extends foundry.appv1.sheets.ItemSheet {
       }
     }
 
-    // Everything below here is only needed if the sheet is editable
+    // Tout ce qui suit n'est utile que si la fiche est modifiable
     if (!this.isEditable) return;
 
     checks.click(this.cycleTalent.bind(this));
-
     this.form.ondrop = ev => this._onDrop(ev);
-    let checksTheme = html.find('[data-action="addTheme"]');
-    if (checksTheme) {
-      for (let ch of checksTheme) {
-        ch.addEventListener("click", this.changeThemes.bind(this))
-      }
 
-    }
-    let deleteThemes = html.find('[data-action="delete-theme"]');
-    if (deleteThemes) {
-      for (let but of deleteThemes) {
-
-        but.addEventListener("click", this.deleteThemes.bind(this))
-      }
-    }
-    let openThemes = html.find('[data-action="open-theme"]');
-    if (openThemes) {
-      for (let but of openThemes) {
-        but.addEventListener("click", this.openThemes.bind(this))
-      }
-    }
-    let chooseThemes = html.find('[data-action="choose-theme"]');
-    if (chooseThemes) {
-      for (let ck of chooseThemes) {
-
-        ck.addEventListener("click", this.chooseThemes.bind(this))
-      }
-    }
-
-    // Roll handlers, click handlers, etc. would go here.
+    // Thèmes
+    html.find('[data-action="add-theme"]').click(this.ajouterTheme.bind(this));
+    html.find('[data-action="delete-theme"]').click(this.supprimerTheme.bind(this));
+    html.find('[data-action="remove-theme-talent"]').click(this.retirerTalentTheme.bind(this));
+    html.find('[data-action="cycle-theme-talent"]').click(this.cyclerTalentTheme.bind(this));
+    html.find('input.theme-nom').change(ev => this.modifierTheme(ev, t => { t.nom = ev.currentTarget.value.trim() || t.nom }));
+    html.find('textarea.theme-description').change(ev => this.modifierTheme(ev, t => { t.description = ev.currentTarget.value }));
+    html.find('select.theme-ajout-talent').change(ev => this.modifierTheme(ev, t => {
+      const cle = ev.currentTarget.value;
+      if (!cle || t.talents.some(x => x.talent === cle)) return;
+      t.talents.push({ talent: cle, value: 1 });
+    }));
   }
+
   async cycleTalent(ev) {
     let val = ev.currentTarget.dataset.value;
     val++;
     if (val > 1) { val = -1 };
     ev.currentTarget.dataset.value = val;
 
-    let talentsMineurs = this.item.system.talentsMineurs
+    let talentsMineurs = foundry.utils.deepClone(this.item.system.talentsMineurs)
     let dom = ev.currentTarget.dataset.domaine
     let tal = ev.currentTarget.dataset.talent
 
     talentsMineurs[dom][tal].niveau = val
 
     await this.item.update({
-      "system.talentsMineurs": duplicate(talentsMineurs)
+      "system.talentsMineurs": talentsMineurs
     });
-    this.render(true);
-
   }
 
+  /* -------------------------------------------- */
+  /*  Gestion des thèmes                          */
+  /* -------------------------------------------- */
 
-  checkingTalentsMineurs(check) {
-    this.item.system.talentsMineurs[check.dataset.domaine][check.dataset.talent] = true
-    /*if (this.item.system.talentsMineurs.indexOf(check.dataset.talent) > -1) {
-      check.setAttributes("checked", true)
-    }*/
-  }
-  async chooseThemes(ev) {
-    let themes = await this.item.getFlag("noc", "linkedThemes");
-    let targetThemeId = ev.target.dataset.themeId;
-    if (ev.currentTarget.checked) {
-      for (let th of themes) {
-        th.choosed = false
-      }
-    }
-
-    let targetTheme = themes.find(th => th.id == targetThemeId);
-    targetTheme.choosed = ev.currentTarget.checked
-    await this.item.setFlag("noc", "linkedThemes", themes);
-    this.render(true)
-  }
-  async openThemes(ev) {
-    let themes = await this.item.getFlag("noc", "linkedThemes");
-    let targetThemeId = ev.target.dataset.themeId;
-    let targetTheme = themes.find(th => th.id == targetThemeId);
-    let theme = await Item.create(targetTheme.itemData, { temporary: true });
-    theme.system.origin = "embeddedItem";
-    let themeForm = await new nocItemSheetTheme(theme).render(true);
-    return themeForm;
-  }
-  async deleteThemes(ev) {
-    let themes = await this.item.getFlag("noc", "linkedThemes");
-    let targetThemeId = ev.target.dataset.themeId;
-    let targetTheme = themes.find(th => th.id == targetThemeId);
-    themes.splice(themes.indexOf(targetTheme), 1);
-    await this.item.setFlag("noc", "linkedThemes", themes);
-    this.render(true)
+  _themes() {
+    return foundry.utils.deepClone(this.item.system.themes ?? []);
   }
 
-  async changeThemes(ev) {
-    let themes = await this.item.getFlag("noc", "linkedThemes");
-    let targetThemeId = ev.target.dataset.themeId;
-    let targetTheme = themes.find(th => th.id == targetThemeId);
-    targetTheme.choosed = true;
-    await this.item.setFlag("noc", "linkedThemes", themes)
-
+  async _enregistrerThemes(themes) {
+    return this.item.update({ "system.themes": themes });
   }
-  async updateTalentsMineurs(ev) {
-    let check = ev.currentTarget;
-    let domain = duplicate(this.item.system.talentsMineurs);
-    domain[check.dataset.domaine][check.dataset.talent].checked = check.checked
-    await this.item.update({ 'system.talentsMineurs': domain });
 
+  async modifierTheme(ev, modification) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const id = ev.currentTarget.closest("[data-theme-id]")?.dataset.themeId;
+    const themes = this._themes();
+    const theme = themes.find(t => t.id === id);
+    if (!theme) return;
+    modification(theme);
+    return this._enregistrerThemes(themes);
   }
+
+  async ajouterTheme(ev) {
+    ev.preventDefault();
+    const themes = this._themes();
+    themes.push(creerTheme({ nom: "Nouveau thème" }));
+    return this._enregistrerThemes(themes);
+  }
+
+  async supprimerTheme(ev) {
+    ev.preventDefault();
+    const id = ev.currentTarget.closest("[data-theme-id]")?.dataset.themeId;
+    const themes = this._themes();
+    const theme = themes.find(t => t.id === id);
+    if (!theme) return;
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: { title: "Supprimer un thème" },
+      content: `<p>Supprimer le thème « ${theme.nom} » de cet archétype ?</p>`
+    });
+    if (!ok) return;
+    return this._enregistrerThemes(themes.filter(t => t.id !== id));
+  }
+
+  async retirerTalentTheme(ev) {
+    const cle = ev.currentTarget.dataset.talent;
+    return this.modifierTheme(ev, t => { t.talents = t.talents.filter(x => x.talent !== cle) });
+  }
+
+  /** Clic sur la valeur d'un talent : +1 → +2 → -1 → +1 */
+  async cyclerTalentTheme(ev) {
+    const cle = ev.currentTarget.dataset.talent;
+    return this.modifierTheme(ev, t => {
+      const x = t.talents.find(x => x.talent === cle);
+      if (x) x.value = x.value === 1 ? 2 : (x.value === 2 ? -1 : 1);
+    });
+  }
+
+  /* -------------------------------------------- */
+  /*  Glisser un ancien objet « thème »            */
+  /* -------------------------------------------- */
+
   async _onDrop(event) {
     let data;
     try {
       data = JSON.parse(event.dataTransfer.getData('text/plain'));
     } catch (err) { return false; }
-    if (!data) return false;
-    if (data.type === "Item") return this.onDropItem(data.uuid);
-    if (data.type === "Actor") return false;
-  }
-
-  async onDropItem(id) {
-    let droppedItem = await fromUuid(id);
-    if (droppedItem.type != "thème") {
-      return false
-    }
-    else { this.addTheme(droppedItem) }
-  }
-
-  async addTheme(item) {
-    let linkedThemes = await this.item.getFlag("noc", "linkedThemes") || [];
-    linkedThemes.push(
-      {
-        id: item._id,
-        name: item.name,
-        itemData: duplicate(item),
-        //talents: item.system.talents,
-        choosed: false
-      }
-    );
-    await this.item.setFlag("noc", "linkedThemes", duplicate(linkedThemes));
-    this.render(true)
+    if (data?.type !== "Item") return false;
+    const droppedItem = await fromUuid(data.uuid);
+    if (droppedItem?.type !== "thème") return false;
+    const themes = this._themes();
+    themes.push(themeDepuisItem(droppedItem));
+    return this._enregistrerThemes(themes);
   }
 }

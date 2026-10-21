@@ -73,6 +73,9 @@
 }
 
 aside#tooltip {
+    max-width: 380px;
+    text-align: left;
+    line-height: 1.35;
     font-size: 12px;
 }
 
@@ -339,6 +342,11 @@ div.sidebar-popout {
                     background: url("../asset/ui/macro_tab.png");
                     background-size: 100% 100%;
 
+                }
+
+                &[data-tab="placeables"] {
+                    background: url("../asset/ui/placeables_tab.png");
+                    background-size: 100% 100%;
                 }
 
 
@@ -659,6 +667,63 @@ div#hotbar {
 
         li.sound.playing {
             border: 1px solid rgb(0, 106, 255)
+        }
+    }
+}
+// Message de combat : verdict, dégâts et traits
+li.chat-message .nocRoll .resultat-combat {
+    text-align: center;
+
+    hr {
+        margin: 6px 0;
+    }
+
+    p {
+        margin: 2px 0;
+    }
+
+    .requis-combat,
+    .note-combat {
+        font-size: 11px;
+        opacity: 0.8;
+    }
+
+    .verdict-combat {
+        font-size: 1.8rem;
+        font-weight: bold;
+        line-height: 1.2;
+    }
+
+    .marge-combat {
+        font-size: 1rem;
+        font-weight: bold;
+    }
+
+    .titre-bloc-combat {
+        font-weight: bold;
+    }
+
+    .dicesResults {
+        justify-content: center;
+    }
+
+    .degats-combat {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #935e4b;
+        margin-top: 4px;
+    }
+
+    ul.traits-combat,
+    ul.blessures-combat {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-align: left;
+        font-size: 12px;
+
+        li {
+            margin-bottom: 3px;
         }
     }
 }

@@ -1,0 +1,50 @@
+name: 'Mandat de mobilité extra-Bloc DX21-A11'
+type: document administratif
+img: systems/noc/asset/default_icons/document_administratif.webp
+system:
+  description: '<p>Ce mandat autorise à quitter le Bloc et à prendre le train, sur présentation d''un certificat de conformité sanitaire. Il se demande en général auprès de la Direction de tutelle, avec une justification professionnelle.</p>'
+  formulaire: 'sortie'
+  beneficiaires:
+    - ''
+    - ''
+  duree: 1
+  rangSup: 0
+  port:
+    objet: ''
+    bonusX: 0
+  acces:
+    zone: 1
+    motif: ''
+    nonLimite: false
+    sansSurveillance: false
+  sortie:
+    zone: 4
+    duree: 'formulaire'
+    motif: 'Sortie du Bloc et voyage en train'
+    exoneration: false
+  requisition:
+    mode: 'objet'
+    detail: ''
+  mandat:
+    sujet: ''
+    secteur: ''
+    bonusAutorite: 0
+    bonusCitoyens: 0
+  signalement:
+    cible: ''
+    bonusStatut: false
+    priseRapide: false
+  tempsObtention: 3
+  effetsDeBureau: ''
+  rangNecessaire: 1
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: 1NEAAqT2bSUS9xst
+folder: null
+sort: 1400000
+ownership:
+  default: 0
+_key: '!items!1NEAAqT2bSUS9xst'

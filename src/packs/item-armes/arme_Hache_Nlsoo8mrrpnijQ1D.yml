@@ -10,11 +10,34 @@ system:
   limite: 0
   degats: ' @talents.action.constitution.niveau + 4'
   matrise: false
-  traits: Tranchant, Complexe
+  traits: ''
   munitions:
     type: ''
     quantite: null
   portee: 0
+  formatV2: true
+  degatsBase: 4
+  traitsArme:
+    choc: false
+    complexe: true
+    long: false
+    perforant: false
+    longuePortee: false
+    recurrent: false
+    tranchant: true
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: false
+      valeur: 0
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
 effects: []
 flags:
   core:
@@ -35,4 +58,3 @@ ownership:
   default: 0
   GqESxdGhOwgra802: 3
 _key: '!items!Nlsoo8mrrpnijQ1D'
-

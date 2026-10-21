@@ -531,7 +531,9 @@ div.noc.sheet.actor {
                         -webkit-appearance: none;
                         appearance: none;
                         cursor: pointer;
-                        z-index: -1;
+                        // au-dessus de leur bloc, sinon les clics ne les atteignent pas
+                        position: relative;
+                        z-index: 1;
 
 
 
@@ -575,7 +577,8 @@ div.noc.sheet.actor {
                     padding: 6px;
                     box-shadow: -30px 0px 100px black;
                     max-height: 100vh;
-                    overflow: scroll;
+                    overflow-x: hidden;
+                    overflow-y: auto;
                     background: url(../asset/images/fondequipement.webp);
 
 
@@ -632,7 +635,7 @@ div.noc.sheet.actor {
 
                             flex-direction: column;
                             text-align: center;
-                            font-family: 'adler';
+                            font-family: 'Special Elite';
                             font-size: larger;
                             margin: 0;
 
@@ -649,52 +652,6 @@ div.noc.sheet.actor {
                                 font-size: 14px;
                             }
                         }
-                    }
-                }
-
-                .favItems {
-
-
-                    h3 {
-
-                        background-size: 300%;
-                        background-position: center;
-                        padding: 0rem;
-                        width: 100%;
-                        transition: 0.3s;
-                        box-shadow: 0px 0px 30px 15px black;
-                        border-radius: 0 5rem 0.5rem 0;
-
-
-
-                        ul.item-list {
-                            position: relative;
-                            transition: 0.3s;
-                            padding: 0;
-                            top: 0;
-                            margin: 0;
-
-                            li {
-                                position: absolute;
-                                left: -100%
-                            }
-
-                            &:hover {
-                                max-height: 100%;
-                                overflow: hidden;
-                                top: 100%;
-
-
-                            }
-                        }
-
-
-
-
-                    }
-
-                    div.img img {
-                        min-width: 35%
                     }
                 }
             }
@@ -723,7 +680,7 @@ div.noc.sheet.actor {
                         background-position: center;
 
                         h2 {
-                            font-family: adler;
+                            font-family: 'Special Elite';
                             background: none;
                             border: none;
                             text-shadow: 0px 0px 4px rgb(0, 0, 0);
@@ -925,9 +882,6 @@ div.noc.sheet.actor {
                             right: 0;
                             ;
 
-                            .itemIsFav {
-                                color: rgb(0, 187, 0)
-                            }
                         }
 
                         img.needQuantar {
@@ -1071,6 +1025,80 @@ div.noc.sheet.actor {
     }
 
     &.cabale {
+        .cabale-stats {
+            flex: 1;
+            padding: 1%;
+            gap: 8px;
+
+            // domaines : grille de 4 colonnes, sans la roue de la fiche personnage
+            .stats.rouage {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: auto;
+                gap: 8px;
+                padding: 0;
+                line-height: 1em;
+
+                .domaine {
+                    grid-row: auto;
+                    grid-column: auto;
+                    position: relative;
+                    left: unset;
+                    top: unset;
+                    padding-top: 6px;
+
+                    h3 span.domaine-niveau {
+                        top: 0;
+                    }
+                }
+            }
+
+            // ronds des talents et domaines : toujours parfaitement ronds
+            span.talent-niveau,
+            span.domaine-niveau {
+                flex: 0 0 20px;
+                width: 20px;
+                height: 20px;
+                min-width: 20px;
+                line-height: 20px;
+                padding: 0 !important;
+                top: 0 !important;
+                box-sizing: border-box;
+
+                // boutons +/- centrés verticalement sur la valeur
+                span.talent-control,
+                span.domaine-control {
+                    top: 0 !important;
+                    height: 100%;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    gap: 1px;
+                    line-height: 8px;
+                    margin-left: 2px;
+
+                    a {
+                        line-height: 8px;
+                        display: block;
+                    }
+                }
+            }
+
+            // jauges : style des Rouages (sans cadre), sur trois colonnes
+            .rouage-reserves.cabale-jauges {
+                flex: none !important;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px 12px;
+                text-align: center;
+                margin-top: 8px;
+
+                .reserve h4 {
+                    margin: 2px 0;
+                }
+            }
+        }
+
         .members {
             ul.item-list {
                 display: grid;
@@ -1166,5 +1194,1440 @@ div.noc.sheet.actor {
             }
         }
 
+    }
+}
+
+// liste des cabales d'un personnage : une cabale sous l'autre
+div.noc.sheet.actor .liste-cabales {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-wrap: nowrap;
+    width: 100%;
+
+    > * {
+        flex: 0 0 auto;
+        width: 100%;
+    }
+
+    .cabale-entree {
+        margin-bottom: 8px;
+    }
+}
+
+// résumé du personnage : cabales sous leur titre, progression avec boutons
+div.noc.sheet.actor .form-group.bloc-cabales {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    > h3 {
+        width: 100%;
+        flex: 0 0 auto;
+    }
+
+    .liste-cabales h4 {
+        margin: 2px 0;
+        justify-content: space-between;
+
+        span {
+            flex: 1;
+        }
+
+        a {
+            flex: 0 0 auto;
+        }
+    }
+}
+
+div.noc.sheet.actor h3.progression {
+    align-items: center;
+
+    span:first-child {
+        flex: 1;
+    }
+
+    // rond de valeur, comme les talents et domaines
+    span.progression-niveau {
+        position: relative;
+        flex: 0 0 22px;
+        width: 22px;
+        height: 22px;
+        line-height: 22px;
+        margin-right: 18px;
+        border-radius: 50%;
+        border: 1px solid black;
+        background-color: white;
+        color: black;
+        text-shadow: none;
+        text-align: center;
+        font-size: 12px;
+        cursor: pointer;
+
+        // boutons +/- empilés à droite, visibles au survol
+        .progression-controls {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            height: 100%;
+            margin-left: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1px;
+            opacity: 0;
+            transition: opacity 0.2s;
+
+            a {
+                display: block;
+                font-size: 8px;
+                line-height: 8px;
+                padding: 2px;
+                color: white;
+                background-color: #5c5c5c;
+                border-radius: 50%;
+                box-shadow: 2px 3px 5px black inset, -1px -3px 3px black inset;
+            }
+        }
+
+        &:hover .progression-controls {
+            opacity: 1;
+        }
+    }
+}
+
+// résumé du personnage : libellé au-dessus, valeur en dessous
+div.noc.sheet.actor .form-group.bloc-empile {
+    flex-direction: column !important;
+    align-items: stretch !important;
+
+    > div {
+        width: 100%;
+        flex: 0 0 auto !important;
+    }
+
+    .archetype-resume,
+    .theme-resume,
+    .qualite-resume {
+        justify-content: space-between;
+        padding-left: 0.5em;
+
+        flex-wrap: nowrap;
+
+        // le nom tient sur une ligne et ne passe à la ligne que faute de place
+        .item-name {
+            flex: 1 1 auto !important;
+            min-width: 0;
+            white-space: normal;
+            word-break: normal;
+            overflow-wrap: break-word;
+        }
+
+        .item-control {
+            flex: 0 0 auto !important;
+            white-space: nowrap;
+        }
+    }
+}
+
+// Fiche personnage : le contenu suit la taille de la fenêtre
+// (au lieu de garder une hauteur fixe dans une fenêtre agrandie)
+div.noc.sheet.actor.personnage section.window-content {
+    max-height: none !important;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    > form.personnage {
+        max-height: none !important;
+        flex: 1 1 auto;
+        min-height: 0;
+        display: flex;
+        flex-direction: column;
+
+        > nav.sheet-tabs {
+            flex: 0 0 auto;
+        }
+
+        > section.sheet-body {
+            flex: 1 1 auto;
+            min-height: 0;
+            height: auto !important;
+            overflow: hidden;
+
+            > .tab {
+                height: 100%;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+
+            // onglet principal : la roue et le volet de gauche occupent toute la hauteur
+            > .tab.principal {
+                overflow: hidden;
+
+                .resume {
+                    max-height: none !important;
+                    height: 100%;
+                }
+            }
+        }
+    }
+}
+
+// Fiche personnage, onglet Fiche de signalement
+div.noc.sheet.actor.personnage section.window-content > form.personnage > section.sheet-body > div.tab.description {
+    // « display » seulement quand l'onglet est actif, sinon il masquerait les autres onglets
+    &.active {
+        display: flex;
+    }
+
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 10px 10px;
+    overflow: hidden;
+    // la bande noire de l'image de fond, au centre, sert de séparation
+    background-position: 50% 50%;
+
+    // titres de bloc : discrets et alignés à gauche
+    h2 {
+        flex: 0 0 auto;
+        margin: 0 0 3px 0;
+        padding: 0 6px;
+        font-size: 120%;
+        text-align: left;
+        background: none;
+        border: none;
+    }
+
+    // les deux zones : grille de deux colonnes égales
+    .signalement-haut,
+    .signalement-bas {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px 30px; // espace central pour la bande noire
+        padding: 0;
+    }
+
+    .signalement-haut {
+        flex: 0 0 auto;
+    }
+
+    // la zone basse occupe toute la hauteur restante
+    .signalement-bas {
+        flex: 1 1 auto;
+        min-height: 0;
+        grid-template-rows: 100%;
+    }
+
+    // blocs de texte : cadre papier léger
+    .signalement {
+        padding: 0;
+        min-height: 0;
+
+        .form-group {
+            display: flex !important;
+            flex-direction: column !important;
+            flex-wrap: nowrap !important;
+            align-items: stretch !important;
+            justify-content: flex-start !important;
+            margin: 0;
+
+            // titre au-dessus, texte et barre d'édition dessous, depuis la gauche
+            > h2,
+            > .editor,
+            > prose-mirror {
+                width: auto !important;
+                max-width: none !important;
+                align-self: stretch !important;
+                text-align: left;
+            }
+            padding: 4px 0 6px;
+            background: url(../asset/images/fondidentiteconfidentiel.webp);
+            background-position: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+            opacity: 0.9;
+
+            .editor {
+                min-height: 0;
+                margin: 0 6px;
+                width: auto;
+                min-width: 0;
+            }
+        }
+
+        .editeur-court .editor,
+        .editeur-court .editor .editor-content {
+            min-height: 2.6em;
+        }
+
+        .editeur-moyen .editor,
+        .editeur-moyen .editor .editor-content {
+            min-height: 3.9em;
+        }
+    }
+
+    // colonne 1 : Signalement puis Description jusqu'en bas
+    .signalement-bas > .signalement {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        height: 100%;
+
+        .editeur-moyen {
+            flex: 0 0 auto;
+        }
+
+        .editeur-long {
+            flex: 1 1 auto;
+            min-height: 0;
+
+            .editor {
+                flex: 1 1 auto;
+                height: 100%;
+                min-height: 0;
+                max-height: none;
+                overflow-y: auto; // défilement interne si le texte est long
+            }
+        }
+    }
+
+    // colonne 2 : contacts, avec défilement propre
+    .colonne-contacts {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .contacts {
+            margin: 0;
+            padding: 0 4px 4px;
+            box-shadow: none;
+
+            h2 {
+                text-align: center;
+            }
+
+            > .form-group {
+                align-items: center;
+                gap: 6px;
+                padding: 2px 4px;
+
+                h4 {
+                    flex: 0 0 auto;
+                    white-space: nowrap;
+                    font-size: 100%;
+                    margin: 0;
+                }
+
+                .faveurs-totales {
+                    flex: 1 1 auto;
+                    flex-wrap: wrap;
+                    gap: 2px;
+                }
+
+                .faveur {
+                    min-width: 2.2em;
+                    max-width: 2.2em;
+                    min-height: 2.2em;
+                    max-height: 2.2em;
+                }
+
+                #resetFaveurs {
+                    flex: 0 0 auto;
+                    font-size: 1.4em;
+                }
+            }
+
+            .contact {
+                margin-bottom: 6px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+
+                h3 {
+                    align-items: center;
+                    margin: 0;
+                    padding: 2px 6px;
+                    font-size: 110%;
+
+                    > span {
+                        flex: 1 1 auto;
+                    }
+
+                    .faveurList {
+                        flex: 0 1 auto;
+                    }
+
+                    // poubelle tout à droite
+                    .contactControls {
+                        flex: 0 0 auto;
+                        margin-left: auto;
+                        padding-left: 6px;
+                    }
+                }
+
+                > .flexrow {
+                    align-items: flex-start;
+                    padding: 4px 6px;
+                    gap: 8px;
+
+                    img {
+                        flex: 0 0 auto;
+                        max-width: 3.5rem;
+                        max-height: 3.5rem;
+                        margin: 0;
+                    }
+                }
+
+                .empty-contact {
+                    padding: 6px 10px;
+                }
+            }
+        }
+    }
+}
+
+// rond de valeur avec boutons +/- au survol (quantars)
+div.noc.sheet span.compteur-niveau {
+    position: relative;
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    margin: 0 20px 0 8px;
+    border-radius: 50%;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    text-shadow: none;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+
+    .compteur-controls {
+        position: absolute;
+        left: 100%;
+        top: 0;
+        height: 100%;
+        margin-left: 2px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 1px;
+        opacity: 0;
+        transition: opacity 0.2s;
+
+        a {
+            display: block;
+            font-size: 8px;
+            line-height: 8px;
+            padding: 2px;
+            color: white;
+            background-color: #5c5c5c;
+            border-radius: 50%;
+            box-shadow: 2px 3px 5px black inset, -1px -3px 3px black inset;
+        }
+    }
+
+    &:hover .compteur-controls {
+        opacity: 1;
+    }
+}
+
+// Fiche personnage, onglet Inventaire
+div.noc.sheet.actor.personnage section.window-content > form.personnage > section.sheet-body > div.tab.items {
+    padding: 6px 8px;
+
+    h3.quantars-ligne {
+        flex: 0 0 auto;
+        align-items: center;
+        margin: 0 0 8px 0;
+        padding: 4px 8px;
+
+        .quantars-libelle {
+            flex: 0 0 auto;
+        }
+
+        .quantars-images {
+            flex: 1 1 auto;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+    }
+
+    .inventaire-colonnes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        align-items: start;
+
+        .inventaire-colonne {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 0;
+        }
+
+        ul.item-list {
+            margin: 0;
+
+            > h3 {
+                align-items: center;
+                text-transform: uppercase;
+
+                span {
+                    flex: 1 1 auto;
+                }
+
+                a.item-create {
+                    flex: 0 0 auto;
+                    margin-left: 6px;
+                }
+            }
+        }
+    }
+}
+
+// Fiche Rouage : inventaire en trois colonnes
+div.noc.sheet.actor.rouage .inventaire-rouage {
+    flex: 1 1 auto;
+    min-width: 0;
+
+    .inventaire-colonnes {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+        align-items: start;
+
+        .inventaire-colonne {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 0;
+        }
+
+        ul.item-list {
+            margin: 0;
+            padding: 6px;
+
+            > h3 {
+                align-items: center;
+                text-transform: uppercase;
+                font-size: 100%;
+
+                span {
+                    flex: 1 1 auto;
+                }
+
+                a.item-create {
+                    flex: 0 0 auto;
+                    margin-left: 4px;
+                }
+            }
+        }
+    }
+}
+
+// Fiche Rouage : jauges sur trois colonnes au-dessus de l'inventaire
+// (Espoir, Vécu | Blessures, Traque | Noirceur, Trauma)
+div.noc.sheet.actor.rouage .rouage-bas {
+    gap: 8px;
+
+    .rouage-jauges {
+        flex: none !important;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: auto auto;
+        grid-auto-flow: column;
+        gap: 4px 12px;
+        text-align: center;
+
+        .reserve h4 {
+            margin: 2px 0;
+        }
+    }
+
+    .inventaire-rouage {
+        width: 100%;
+    }
+}
+
+// Fiche Créature : Action en colonne 1, jauges en colonne 2
+div.noc.sheet.actor.creature .creature-corps {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+    padding: 8px;
+
+    .creature-action {
+        display: block !important;
+        padding: 0 !important;
+
+        .domaine {
+            width: 100%;
+        }
+    }
+
+    .creature-jauges {
+        flex: none !important;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        text-align: center;
+
+        .reserve h4 {
+            margin: 2px 0;
+        }
+    }
+}
+
+div.noc.sheet.actor.creature .creature-corps .creature-colonne2 {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+
+    .creature-armes ul.item-list {
+        margin: 0;
+        padding: 6px;
+
+        > h3 {
+            align-items: center;
+            text-transform: uppercase;
+
+            span {
+                flex: 1 1 auto;
+            }
+
+            a.item-create {
+                flex: 0 0 auto;
+            }
+        }
+    }
+}
+
+// Fiche Autre : Classe Exo et Énergie Noire, puis même structure que le Rouage
+div.noc.sheet.actor.autre {
+    .autre-ligne {
+        align-items: center;
+        justify-content: space-around;
+        gap: 12px;
+        padding: 4px 8px;
+
+        h3 {
+            flex: 0 0 auto;
+            align-items: center;
+            gap: 4px;
+            margin: 0;
+            background: none;
+        }
+
+        span.compteur-niveau.force {
+            box-shadow: 0 0 6px 2px #8a1c1c;
+        }
+
+        a.energie-auto {
+            flex: 0 0 auto;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+    }
+
+    .rouage-bas {
+        gap: 8px;
+
+        .rouage-jauges {
+            flex: none !important;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: auto auto;
+            grid-auto-flow: column;
+            gap: 4px 12px;
+            text-align: center;
+
+            .reserve h4 {
+                margin: 2px 0;
+            }
+        }
+    }
+
+    .inventaire-rouage {
+        width: 100%;
+
+        .inventaire-colonnes {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            align-items: start;
+
+            .inventaire-colonne {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                min-width: 0;
+            }
+
+            ul.item-list {
+                margin: 0;
+                padding: 6px;
+
+                > h3 {
+                    align-items: center;
+                    text-transform: uppercase;
+                    font-size: 100%;
+
+                    span {
+                        flex: 1 1 auto;
+                    }
+
+                    a.item-create {
+                        flex: 0 0 auto;
+                        margin-left: 4px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Quantars : état bien visible sur les objets qui en ont besoin
+div.noc.sheet.actor {
+    li.item img.needQuantar {
+        cursor: pointer;
+        max-height: 1.6em !important;
+        border-radius: 50% !important;
+        filter: grayscale(1) brightness(0.7) !important;
+        opacity: 0.6;
+        box-shadow: 0 0 0 2px #8a1c1c, 0 0 6px #8a1c1c !important;
+        transition: all 0.2s;
+
+        &.quantarUsed {
+            filter: none !important;
+            opacity: 1;
+            box-shadow: 0 0 0 2px #d2ce01, 0 0 10px 2px #f5e663 !important;
+        }
+
+        &:hover {
+            transform: scale(1.15);
+        }
+    }
+
+    // objet inutilisable faute de quantar : grisé, nom barré
+    li.item.unavalaible {
+        opacity: 0.65;
+
+        .item-name a {
+            text-decoration: line-through;
+            text-decoration-color: #8a1c1c;
+        }
+    }
+}
+
+// Fiches d'objets : compteur aligné dans sa ligne
+div.noc.item.sheet .form-group span.compteur-niveau {
+    flex: 0 0 22px;
+}
+
+// Fiche d'outil : section Arme improvisée
+div.noc.item.sheet {
+    h3.titre-section {
+        margin: 10px 0 4px;
+        padding: 2px 6px;
+        font-size: 120%;
+    }
+
+    .degats-improvises {
+        flex: 0 0 auto;
+        align-items: center;
+        gap: 4px;
+
+        .prefixe {
+            flex: 0 0 auto;
+            font-weight: bold;
+        }
+    }
+
+    .form-group select {
+        flex: 0 0 8em;
+    }
+}
+
+// Fiche d'arme : traits sur deux colonnes
+div.noc.item.sheet .traits-arme {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px 12px;
+    margin: 4px 0 8px;
+
+    .trait-arme {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        cursor: help;
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex: 1 1 auto;
+        }
+
+        input[type="checkbox"] {
+            flex: 0 0 auto;
+        }
+    }
+
+    &.traits-chiffres .trait-arme {
+        justify-content: space-between;
+    }
+}
+
+// Fenêtre de jet d'arme
+.nocDialog .skill-roll-dialog {
+    h2.titre-arme {
+        text-align: center;
+        margin: 4px 0 0;
+    }
+
+    .ligne-grise {
+        color: #6b6b6b;
+        font-style: italic;
+        text-align: center;
+        margin-bottom: 6px;
+    }
+
+    .form-group .ligne-grise {
+        text-align: left;
+        margin: 0 0 0 8px;
+    }
+
+    .libelle-curseur {
+        font-weight: bold;
+    }
+
+    label.case-cible-sol {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 0 0 auto;
+    }
+}
+
+// Fenêtre de jet : vraies cases à cocher (Cible au sol, Espoir, Vécu)
+div.app.window-app.nocDialog .skill-roll-dialog,
+.nocDialog .skill-roll-dialog {
+    #cibleAuSol,
+    #useEspoir,
+    #useVecu {
+        -webkit-appearance: checkbox !important;
+        appearance: auto !important;
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        flex: 0 0 auto;
+        box-shadow: none !important;
+        filter: none !important;
+        transform: none !important;
+        cursor: pointer;
+
+        &::after {
+            content: none !important;
+            display: none !important;
+        }
+    }
+
+    .options-jet {
+        gap: 4px;
+        margin-top: 6px;
+    }
+
+    label.case-option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+
+        &.indisponible {
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .ligne-grise {
+            margin-left: 4px;
+        }
+    }
+}
+
+// Fiche personnage : boutons d'étapes de jeu, barre en bas de l'onglet principal
+div.noc.sheet.actor.personnage section.window-content > form.personnage > section.sheet-body > .tab.principal.active {
+    display: flex;
+    flex-direction: column;
+
+    > .flexrow {
+        flex: 1 1 auto;
+        min-height: 0;
+    }
+
+    > .etapes-jeu {
+        flex: 0 0 auto;
+        gap: 6px;
+        padding: 4px 8px 6px;
+        box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
+
+        button.etape-jeu {
+            flex: 1 1 0;
+            margin: 0;
+            line-height: 2em;
+        }
+    }
+}
+
+// États durables (Fatigue, Bouleversement administratif)
+div.noc.sheet.actor .etats-actifs,
+.panneau-mj .cible-ligne {
+    .etat {
+        display: inline-block;
+        margin: 2px 4px 2px 0;
+        padding: 1px 8px;
+        border-radius: 1em;
+        background: #8a1c1c;
+        color: white;
+        font-size: 0.85em;
+        text-shadow: none;
+        cursor: help;
+    }
+}
+
+// Panneau du MJ
+.panneau-mj {
+    .window-content {
+        padding: 8px;
+    }
+
+    .bloc {
+        margin-bottom: 10px;
+
+        h3 {
+            align-items: center;
+            margin: 0 0 4px;
+            gap: 6px;
+
+            span {
+                flex: 1;
+            }
+
+            a {
+                flex: 0 0 auto;
+            }
+
+            .aide {
+                font-size: 0.7em;
+                font-weight: normal;
+            }
+        }
+    }
+
+    .liste-cibles {
+        max-height: 220px;
+        overflow-y: auto;
+
+        .cible-ligne {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 0;
+
+            img {
+                width: 24px;
+                height: 24px;
+                border: none;
+                object-fit: cover;
+            }
+
+            .nom {
+                font-weight: bold;
+                flex: 0 0 auto;
+            }
+
+            .resume {
+                flex: 1;
+                font-size: 0.85em;
+                color: #6b6b6b;
+            }
+        }
+    }
+
+    label.option {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        margin: 4px 0;
+    }
+
+    .grille-perditions .perdition-ligne {
+        display: grid;
+        grid-template-columns: 1fr 5em 6em 6em;
+        gap: 6px;
+        align-items: center;
+        margin-bottom: 4px;
+
+        button {
+            margin: 0;
+        }
+    }
+
+    .ligne-fiel,
+    .etapes-mj,
+    .lever-etats {
+        align-items: center;
+        gap: 6px;
+        margin-bottom: 4px;
+
+        button {
+            margin: 0;
+        }
+    }
+
+    .ligne-fiel > span {
+        flex: 1 1 auto;
+    }
+
+    .ligne-fiel > button {
+        flex: 0 0 3em;
+    }
+
+    .grille-effets {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4px;
+        margin-bottom: 6px;
+
+        button {
+            margin: 0;
+        }
+    }
+}
+
+// Panneau du MJ : points +/- et niveaux de Menace
+.panneau-mj {
+    .points-ligne {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+
+        .points {
+            min-width: 1.5em;
+            text-align: center;
+        }
+
+        a {
+            cursor: pointer;
+        }
+    }
+
+    .niveaux-menace {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+
+        .niveau-ligne {
+            display: grid;
+            grid-template-columns: 2em 1fr auto auto;
+            gap: 6px;
+            align-items: center;
+
+            .niveau {
+                width: 1.8em;
+                height: 1.8em;
+                line-height: 1.8em;
+                border-radius: 50%;
+                text-align: center;
+                font-weight: bold;
+                background: #5c5c5c;
+                color: white;
+            }
+
+            &.avec-effet {
+                grid-template-columns: 2em 1fr auto;
+
+                .niveau {
+                    background: #8a1c1c;
+                }
+            }
+
+            &.non-atteint {
+                opacity: 0.45;
+            }
+
+            .effet-actif {
+                font-weight: bold;
+                cursor: help;
+            }
+
+            button {
+                margin: 0;
+            }
+        }
+    }
+
+    .aide {
+        font-size: 0.85em;
+        color: #6b6b6b;
+        margin: 4px 0;
+    }
+}
+
+// Bibliothèque des effets de Fiel
+.bibliotheque-fiel {
+    .window-content {
+        padding: 0;
+    }
+
+    .bibliotheque-contenu {
+        display: grid;
+        grid-template-columns: 260px 1fr;
+        grid-template-rows: 1fr auto;
+        height: 100%;
+        min-height: 0;
+    }
+
+    .liste-effets {
+        overflow-y: auto;
+        padding: 6px;
+        border-right: 1px solid rgba(0, 0, 0, 0.3);
+
+        h4 {
+            margin: 8px 0 2px;
+        }
+
+        ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            li {
+                padding: 1px 4px;
+
+                &.actif {
+                    background: rgba(138, 28, 28, 0.25);
+                    font-weight: bold;
+                }
+
+                a {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .edition {
+        overflow-y: auto;
+        padding: 8px 10px;
+
+        .ligne {
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 4px;
+
+            label {
+                flex: 0 0 6em;
+            }
+        }
+
+        textarea {
+            width: 100%;
+            resize: vertical;
+        }
+
+        h4 {
+            align-items: center;
+            margin: 10px 0 4px;
+
+            span {
+                flex: 1;
+            }
+
+            a {
+                flex: 0 0 auto;
+                cursor: pointer;
+            }
+        }
+
+        .ligne-modificateur,
+        .ligne-immediat {
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 3px;
+
+            input[type="number"] {
+                flex: 0 0 4em;
+            }
+
+            a {
+                flex: 0 0 auto;
+                cursor: pointer;
+            }
+
+            .petit {
+                flex: 0 0 auto;
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+        }
+
+        .aggravations label {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .vide {
+            color: #6b6b6b;
+            font-style: italic;
+            margin: 0 0 4px;
+        }
+    }
+
+    .barre {
+        gap: 6px;
+        margin: 6px 0;
+    }
+
+    .pied {
+        grid-column: 1 / 3;
+        gap: 8px;
+        padding: 6px 10px;
+        border-top: 1px solid rgba(0, 0, 0, 0.3);
+
+        .a-enregistrer {
+            box-shadow: 0 0 8px 2px #d2ce01;
+        }
+    }
+}
+
+// Fiche de document administratif
+div.noc.item.sheet.document-administratif {
+    .form-group select.choix-formulaire,
+    .form-group select.large {
+        flex: 1 1 auto;
+    }
+
+    .bilan-document {
+        display: flex;
+        gap: 8px;
+        margin: 6px 0 2px;
+
+        .bilan-valeur {
+            flex: 1 1 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 8px;
+            border: 1px solid #5c5c5c;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.08);
+
+            .bilan-chiffre {
+                font-size: 22px;
+                font-weight: bold;
+                min-width: 1.2em;
+                text-align: center;
+            }
+
+            .bilan-label {
+                font-size: 12px;
+                line-height: 1.1;
+            }
+
+            &.insuffisant {
+                border-color: #8a1c1c;
+                color: #8a1c1c;
+            }
+        }
+    }
+
+    ul.effets-bureau,
+    ul.nuisances {
+        margin: 2px 0 4px;
+        padding-left: 18px;
+        font-size: 12px;
+    }
+
+    p.avertissement-rang {
+        color: #8a1c1c;
+        font-size: 12px;
+        margin: 2px 0;
+    }
+
+    p.obtention,
+    p.regle-generale,
+    span.note-cout {
+        font-size: 11px;
+        opacity: 0.75;
+    }
+
+    span.note-cout {
+        flex: 1 1 auto;
+        text-align: right;
+    }
+
+    p.description-formulaire,
+    p.regle-specifique {
+        font-style: italic;
+        font-size: 12px;
+        margin: 4px 0;
+    }
+
+    .form-group.stacked {
+        flex-direction: column;
+        align-items: stretch;
+
+        .editor {
+            min-height: 90px;
+        }
+    }
+
+    .form-group.case label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        flex: 1 1 auto;
+    }
+
+    .liste-beneficiaires {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+
+        .ligne-beneficiaire {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            input {
+                flex: 1 1 auto;
+            }
+        }
+
+        a.ajouter-beneficiaire {
+            font-size: 12px;
+        }
+    }
+
+    .form-group.beneficiaires {
+        align-items: flex-start;
+    }
+}
+
+// Fenêtre de jet de talent : bonus collaboratif avec +/- et rappel de la règle
+.nocDialog .skill-roll-dialog {
+    .bonus-collaboratif {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+
+        .valeur-collaboratif {
+            flex: 0 0 auto;
+            min-width: 26px;
+            height: 22px;
+            line-height: 22px;
+            border-radius: 50%;
+            border: 1px solid black;
+            background-color: white;
+            color: black;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        a.bouton-collaboratif {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 10px;
+            border-radius: 50%;
+            color: white;
+            background-color: #5c5c5c;
+            cursor: pointer;
+        }
+    }
+
+    p.regle-collaboration {
+        font-size: 11px;
+        font-style: italic;
+        opacity: 0.8;
+        margin: 2px 0 8px;
+    }
+}
+
+// Fiche personnage : bouton pour changer de thème
+div.noc.sheet .theme-resume a.changerTheme {
+    flex: 0 0 auto !important;
+    margin-left: 4px;
+}
+
+// Rouage / Autre : bascule des jauges de perdition 5 <-> 10
+div.noc.sheet .reserve.perdition h4 a.basculerJauges {
+    font-size: 10px;
+    margin-left: 6px;
+    opacity: 0.7;
+    &:hover { opacity: 1; }
+}
+
+// Panneau du MJ : deux onglets
+.panneau-mj {
+    nav.onglets-mj {
+        gap: 4px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #5c5c5c;
+
+        a.onglet-lien {
+            flex: 1 1 0;
+            text-align: center;
+            padding: 4px 6px;
+            border-radius: 4px 4px 0 0;
+            opacity: 0.6;
+            cursor: pointer;
+
+            &.actif {
+                opacity: 1;
+                font-weight: bold;
+                background: rgba(0, 0, 0, 0.12);
+                border: 1px solid #5c5c5c;
+                border-bottom: none;
+            }
+        }
+    }
+
+    div.onglet-mj {
+        display: none;
+
+        &.actif {
+            display: block;
+        }
+    }
+}
+
+// Fiche de rouage : archétype et thème
+div.noc.sheet .archetype-rouage {
+    align-items: center;
+    gap: 6px;
+    padding: 2px 6px;
+    margin: 2px 0 4px;
+    flex: 0 0 auto;
+
+    .libelle {
+        flex: 0 0 auto;
+        font-weight: bold;
+    }
+
+    .item-name {
+        flex: 0 1 auto;
+    }
+
+    a {
+        flex: 0 0 auto;
     }
 }

@@ -35,6 +35,13 @@ export class nocItemSheetOutil extends foundry.appv1.sheets.ItemSheet {
     // Everything below here is only needed if the sheet is editable
     if (!this.isEditable) return;
 
-    // Roll handlers, click handlers, etc. would go here.
+    // boutons +/- génériques : data-champ = chemin de la valeur (minimum 0)
+    html.find("a.compteur-plus").click(ev => this.changerChamp(ev.currentTarget.dataset.champ, 1));
+    html.find("a.compteur-moins").click(ev => this.changerChamp(ev.currentTarget.dataset.champ, -1));
+  }
+
+  async changerChamp(champ, ecart) {
+    const valeur = Math.max(0, (Number(foundry.utils.getProperty(this.item._source, champ)) || 0) + ecart);
+    return this.item.update({ [champ]: valeur });
   }
 }

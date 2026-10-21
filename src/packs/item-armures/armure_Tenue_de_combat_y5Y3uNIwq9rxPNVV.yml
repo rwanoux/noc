@@ -4,8 +4,10 @@ img: systems/noc/asset/default_icons/armure.webp
 system:
   description: <p>Protections légères et coquées</p>
   armure: 1
-  traits: Limité (2)
+  traits: ''
   valeur: 2
+  encombrant: false
+  limite: 2
 effects: []
 flags: {}
 _stats:
@@ -24,4 +26,3 @@ ownership:
   default: 0
   g1hXofeJ7VfDjBe7: 3
 _key: '!items!y5Y3uNIwq9rxPNVV'
-

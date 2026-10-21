@@ -1,3 +1,5 @@
+import { calculerBlessures, ciblesActuelles, messageMJCibles } from "./combat-blessures.mjs";
+import { traitsEnCombat } from "./armes.mjs";
 /* -------------------------------------------- */
 
 /* -------------------------------------------- */
@@ -161,32 +163,60 @@ export class nocUtility {
 
 
   /* -------------------------------------------- */
+  /** Dégâts d'une attaque réussie (arme + effet quantique) et traits à rappeler */
+  static async resoudreAttaque(rollData, actor) {
+    const sys = rollData.arme.system ?? {};
+    // dégâts de l'arme (formule évaluée avec les données de l'attaquant)
+    if (rollData.degatsArme === undefined) {
+      try {
+        const roll = await new Roll(String(sys.degats || 0), actor.getRollData()).evaluate();
+        rollData.degatsArme = roll.total;
+      } catch (e) {
+        console.error("NOC | dégâts de l'arme", e);
+        rollData.degatsArme = 0;
+      }
+    }
+    // effet quantique : X dés de destin (8+ = succès, 10 = dé supplémentaire, 1 = goutte de Fiel)
+    const nbQuantique = sys.traitsArme?.quantique?.actif ? Number(sys.traitsArme.quantique.valeur) || 0 : 0;
+    if (nbQuantique > 0 && !rollData.quantique) {
+      const roll = await new Roll(`${nbQuantique}d10x10cs>=8`).evaluate();
+      await this.showDiceSoNice(roll, game.settings.get("core", "rollMode"));
+      const des = roll.dice.flatMap(d => d.results).map(r => ({ result: r.result, success: !!r.success }));
+      const fiel = des.filter(d => d.result === 1).length;
+      if (fiel > 0) {
+        game.socketManager.launchSocket("gouttePlus", { qt: fiel });
+        ui.compteur.gouttePlus(fiel);
+      }
+      rollData.quantique = { nbDes: nbQuantique, des, succes: roll.total, fiel };
+    }
+    // énergie noire : X points de Blessures supplémentaires (valeur fixe)
+    const en = sys.traitsArme?.energieNoire;
+    rollData.energieNoire = en?.actif ? Number(en.valeur) || 0 : 0;
+    rollData.reduitParLumiere = !!rollData.quantique || rollData.energieNoire > 0;
+    rollData.degatsTotaux = rollData.degatsArme + (rollData.quantique?.succes ?? 0) + rollData.energieNoire;
+    rollData.traitsCombat = traitsEnCombat(sys.traitsArme);
+    // cibles visées : Blessures calculées (et reportées une seule fois)
+    if (!rollData.blessuresAppliquees) {
+      rollData.cibles ??= ciblesActuelles();
+      rollData.blessures = rollData.cibles.length ? calculerBlessures(rollData, rollData.cibles) : null;
+    }
+  }
+
+  /* -------------------------------------------- */
   static async computeFinalResult(rollData) {
     let actor = game.actors.get(rollData.actorId);
 
     rollData.niveauFinal = rollData.talent.niveau + rollData.nbSuccess + ((rollData.useVecu) ? 1 : 0) + rollData.nbBonusCollaboratif
-    if (rollData.niveauFinalRequis) {
+    // un niveau requis de 0 est un vrai niveau requis : la réussite est calculée
+    rollData.aNiveauRequis = rollData.niveauFinalRequis !== undefined && rollData.niveauFinalRequis !== null && rollData.niveauFinalRequis !== "";
+    if (rollData.aNiveauRequis) {
       rollData.margin = Number(rollData.niveauFinal) - Number(rollData.niveauFinalRequis)
       rollData.isReussite = (rollData.margin >= 0)
     }
 
-    // Evaluate damage formula with actor context if weapon attack
-    if (rollData.arme && rollData.arme.system.degats && rollData.isReussite) {
-      try {
-        // Get the actor's roll data for formula evaluation
-        let actorRollData = actor.getRollData();
-        console.log("Actor roll data for damage:", actorRollData);
-        console.log("Damage formula:", rollData.arme.system.degats);
-
-        // Create and evaluate the roll with actor context
-        let damageRoll = new Roll(rollData.arme.system.degats, actorRollData);
-        await damageRoll.evaluate();
-        rollData.damageRoll = damageRoll;
-        console.log("Evaluated damage roll:", damageRoll);
-      } catch (e) {
-        console.error("Error evaluating damage formula:", e);
-        rollData.damageFormula = rollData.arme.system.degats;
-      }
+    // Attaque réussie : dégâts de l'arme, effet quantique, rappel des traits
+    if (rollData.mode === "arme" && rollData.arme && rollData.isReussite) {
+      await this.resoudreAttaque(rollData, actor);
     }
 
     let msg = await this.createChatWithRollMode(rollData.alias, {
@@ -196,7 +226,12 @@ export class nocUtility {
     if (rollData.rollBonus) {
       rollData.rollBonus = foundry.utils.duplicate(rollData.rollBonus);
     }
+    // message au MJ une seule fois par attaque réussie (avec ou sans cible)
+    const aAppliquer = rollData.mode === "arme" && rollData.isReussite && !rollData.blessuresAppliquees;
+    if (aAppliquer) rollData.blessuresAppliquees = true;
     msg.setFlag("world", "rolldata", rollData)
+    // pas de report automatique : le MJ reporte les Blessures (panneau du MJ)
+    if (aAppliquer) await messageMJCibles(rollData);
 
     if (rollData.useEspoir && !rollData.espoirApplied) {
       rollData.espoirApplied = true

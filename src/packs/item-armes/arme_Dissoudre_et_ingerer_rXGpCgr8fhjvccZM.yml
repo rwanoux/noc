@@ -1,0 +1,51 @@
+name: Dissoudre et ingérer
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: '<p>Arme naturelle : Rogue. Dégâts fixes de 3 : le rogue n''a pas de
+    Constitution (niveau 0).</p>'
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 0
+  limite: 0
+  degats: '@talents.action.constitution.niveau + 3'
+  traits: ''
+  munitions:
+    type: ''
+    quantite: 1
+  portee: 0
+  formatV2: true
+  degatsBase: 3
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: false
+    longuePortee: false
+    recurrent: true
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: false
+      valeur: 0
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: rXGpCgr8fhjvccZM
+folder: null
+sort: 10600000
+ownership:
+  default: 0
+_key: '!items!rXGpCgr8fhjvccZM'

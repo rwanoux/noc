@@ -1,4 +1,54 @@
 <form class="{{cssClass}} {{actor.type}} flexcol" autocomplete="off">
+{{!-- liste d'objets d'un type --}}
+		{{#*inline "listeObjets"}}
+			<ul class="item-list">
+				<h3 class="flexrow">
+					<span>{{titre}}</span>
+					<a
+						class="fas fa-add item-create" data-action="itemCreate"
+						data-tooltip="créer : {{titre}}"
+						data-item-type="{{type}}"
+					></a>
+				</h3>
+				{{#each objets as |item index|}}
+					<li
+						class="flexrow item flexcol ability
+							{{#if item.system.needQuantar}}
+							{{#unless item.system.quantar}}
+							unavalaible
+							{{/unless}}
+							{{/if}}"
+						data-item-id="{{item.id}}"
+					>
+						<div class="item-summary flexrow">
+							<div class="img">
+								<img src="{{item.img}}" alt="image de {{item.name}}">
+							</div>
+							<h4 class="item-name">
+								<span>
+									<a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a>
+								</span>
+								{{#if item.system.needQuantar}}
+									<img
+										src="systems/noc/asset/default_icons/quantar.webp"
+										alt
+										class="needQuantar {{#if item.system.quantar}} quantarUsed{{/if}}" data-tooltip="{{#if item.system.quantar}}quantar en place : cliquez pour le libérer{{else}}sans quantar, inutilisable : cliquez pour en placer un{{/if}}"
+									>
+								{{/if}}
+							</h4>
+							<div class="item-control">
+								<a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{item.id}}"></a>
+								<a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{item.id}}"></a>
+							</div>
+						</div>
+						<div class="item-details">
+							<p>{{{item.system.description}}}</p>
+						</div>
+					</li>
+				{{/each}}
+			</ul>
+		{{/inline}}
+
   <section class="sheet-body">
     <header>
       <h1 class="form-group">
@@ -20,6 +70,17 @@
       </div>
 
     </header>
+    {{#each actor.itemTypes.archetype as |archetype|}}
+    <div class="archetype-rouage flexrow">
+      <span class="libelle">Archétype :</span>
+      <span class="item-name">{{archetype.name}}</span>
+      <a class="fas fa-edit item-open" data-action="itemOpen" data-item-id="{{archetype.id}}" data-tooltip="Ouvrir l'archétype"></a>
+      <a class="fas fa-trash item-delete" data-action="itemDelete" data-item-id="{{archetype.id}}" data-tooltip="Retirer l'archétype"></a>
+      <span class="libelle">Thème :</span>
+      <span class="item-name" {{#if @root.themeChoisi}}data-tooltip="{{@root.themeChoisi.detail}}"{{/if}}>{{#if @root.themeChoisi}}{{@root.themeChoisi.nom}}{{else}}—{{/if}}</span>
+      {{#if @root.themesDisponibles}}{{#if @root.editable}}<a class="fas fa-rotate changerTheme" data-tooltip="Changer de thème"></a>{{/if}}{{/if}}
+    </div>
+    {{/each}}
     <div class="tab principal ">
       <div class="stats rouage">
 
@@ -47,7 +108,7 @@
                   fa-add"></a> <a class="fas fa-minus"></a>
               </span>
             </span>
-            <a class="rollable roll-talent" data-action="rollTalent"
+            <a class="rollable roll-talent" data-tooltip="{{niveauTalent talentGroupName talentId talent.niveau}}" data-tooltip-direction="UP" data-action="rollTalent"
               data-talent-id="{{talentId}}"
               data-domaine-id="{{domaineId}}">
               <label for="{{talent.label}}">{{talent.label}}</label>
@@ -60,8 +121,8 @@
         {{/each}}
 
       </div>
-      <div class="flexrow">
-        <div class="rouage-reserves">
+      <div class="flexcol rouage-bas">
+        <div class="rouage-reserves rouage-jauges">
           {{#each actor.system.reserves as |reserve reserveId|}}
           {{#ifnotequal reserveId "singularite"}}
           {{#ifnotequal reserveId "faveurs"}}
@@ -97,10 +158,14 @@
           {{#each actor.system.perditions as |perdition perditionId|}}
           <div class="reserve perdition {{perditionId}}">
             <h4>{{perdition.label}}
-
+              {{#if @root.editable}}
+              <a class="basculerJauges" data-tooltip="Jauges de perdition sur {{#ifequal perdition.max 10}}5{{else}}10{{/ifequal}} (toutes)">
+                <i class="fas fa-arrows-left-right"></i> {{perdition.max}}
+              </a>
+              {{/if}}
             </h4>
 
-            {{#repeat 5}}
+            {{#repeat perdition.max}}
             <input type="checkbox"
               data-reserve-value="{{@index}}"
               data-reserve-property="system.perditions.{{perditionId}}.value"
@@ -116,76 +181,21 @@
           </div>
           {{/each}}
         </div>
-        <div class="items">
+        <div class="items inventaire-rouage">
           <h3>inventaire</h3>
-
-          <ul class="item-types">
-
-            {{#each actor.itemTypes as |group groupIndex|}}
-            {{#ifnotequal groupIndex "archetype"}}
-            {{#ifnotequal groupIndex "thème"}}
-
-            <ul class="item-list">
-              <h3>{{groupIndex}}
-                <a class="fas fa-add item-create" data-action="itemCreate" data-tooltip="créer un
-                  item
-                  :{{groupIndex}}" data-item-type="{{groupIndex}}"></a>
-              </h3>
-              {{#each group as |item index|}}
-              <li class="flexrow item flexcol ability
-                {{#if item.system.needQuantar}}
-                {{#unless item.system.quantar}}
-                unavalaible
-                {{/unless}}
-                {{/if}}"
-                data-item-id="{{item.id}}">
-                <div class="item-summary flexrow">
-                  <div class="img">
-                    <img src="{{item.img}}" alt="image de
-                      {{item.name}}">
-                  </div>
-                  <h4 class="item-name">
-                    <span><a class="roll-item" data-action="rollItem" data-item-id="{{item._id}}">{{item.name}}</a></span>
-                    {{#if item.system.needQuantar}}
-                    <img
-                      src="systems/noc/asset/default_icons/quantar.webp"
-                      alt
-                      class="needQuantar {{#if
-                      item.system.quantar}}
-                      quantarUsed{{/if}}">
-                    {{/if}}
-                  </h4>
-                  <div class="item-control">
-
-                    <a class="fas fa-edit item-open" data-action="itemOpen"
-                      data-item-id="{{item.id}}"></a>
-                    <a class="fas fa-trash item-delete" data-action="itemDelete"
-                      data-item-id="{{item.id}}"></a>
-                    <a class="fas fa-star item-fav
-                      {{#if item.flags.noc.favItem}}
-                      itemIsFav
-                      {{/if}}
-                      "
-                      data-item-id="{{item.id}}"></a>
-                  </div>
-
-                </div>
-                <div class="item-details">
-                  <p>{{{item.system.description}}}</p>
-                  {{#ifequal item.type "outil"}}
-
-                  {{/ifequal}}
-
-                </div>
-
-              </li>
-              {{/each}}
-            </ul>
-
-            {{/ifnotequal}}
-            {{/ifnotequal}}
-            {{/each}}
-          </ul>
+          <div class="inventaire-colonnes">
+            <div class="inventaire-colonne">
+              {{> listeObjets titre="Armes" type="arme" objets=actor.itemTypes.arme}}
+            </div>
+            <div class="inventaire-colonne">
+              {{> listeObjets titre="Armure" type="armure" objets=actor.itemTypes.armure}}
+              {{> listeObjets titre="Doc. admin." type="document administratif" objets=(lookup actor.itemTypes "document administratif")}}
+            </div>
+            <div class="inventaire-colonne">
+              {{> listeObjets titre="Outils" type="outil" objets=actor.itemTypes.outil}}
+              {{> listeObjets titre="Objets usuels" type="objetusuel" objets=actor.itemTypes.objetusuel}}
+            </div>
+          </div>
         </div>
       </div>
     </div>

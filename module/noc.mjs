@@ -1,33 +1,42 @@
 // Import document classes.
 import { nocActor } from "./documents/actor.mjs";
 import { nocItem } from "./documents/item.mjs";
-import { nocCombat } from "./helpers/noc-combat.js";
+import { nocCombat, enregistrerAjoutJetonsCombat } from "./helpers/noc-combat.js";
 
-// Import sheet classes.__ACTORS
-import { nocActorSheetPersonnageV2 as nocActorSheetPersonnage } from "./v2/sheets/actors/actor-sheet-personnage-v2.mjs";
-import { nocActorSheetRouageV2 as nocActorSheetRouage } from "./v2/sheets/actors/actor-sheet-rouage-v2.mjs";
-import { nocActorSheetCabaleV2 as nocActorSheetCabale } from "./v2/sheets/actors/actor-sheet-cabale-v2.mjs";
-import { nocActorSheetAutreV2 as nocActorSheetAutre } from "./v2/sheets/actors/actor-sheet-autre-v2.mjs";
-import { nocActorSheetCreatureV2 as nocActorSheetCreature } from "./v2/sheets/actors/actor-sheet-creature-v2.mjs";
+// Import sheet classes.__ACTORS (fiches V1, en attendant la migration V2)
+import { nocActorSheetPersonnage } from "./sheets/actors/actor-sheet-personnage.mjs";
+import { nocActorSheetRouage } from "./sheets/actors/actor-sheet-rouage.mjs";
+import { nocActorSheetCabale } from "./sheets/actors/actor-sheet-cabale.mjs";
+import { nocActorSheetAutre } from "./sheets/actors/actor-sheet-autre.mjs";
+import { nocActorSheetCreature } from "./sheets/actors/actor-sheet-creature.mjs";
 
 // import items sheet
-import { nocItemSheetArchetypeV2 as nocItemSheetArchetype } from "./v2/sheets/items/item-sheet-archetype-v2.mjs";
-import { nocItemSheetThemeV2 as nocItemSheetTheme } from "./v2/sheets/items/item-sheet-theme-v2.mjs";
-import { nocItemSheetArmeV2 as nocItemSheetArme } from "./v2/sheets/items/item-sheet-arme-v2.mjs";
-import { nocItemSheetOutilV2 as nocItemSheetOutil } from "./v2/sheets/items/item-sheet-outil-v2.mjs";
-import { nocItemSheetObjetUsuelV2 as nocItemSheetObjetUsuel } from "./v2/sheets/items/item-sheet-objetusuel-v2.mjs";
-import { nocItemSheetDocumentAdministratifV2 as nocItemSheetDocumentAdministratif } from "./v2/sheets/items/item-sheet-documentAdministratif-v2.mjs";
-import { nocItemSheetArmureV2 as nocItemSheetArmure } from "./v2/sheets/items/item-sheet-armure-v2.mjs";
+import { nocItemSheetArchetype } from "./sheets/items/item-sheet-archetype.mjs";
+import { nocItemSheetTheme } from "./sheets/items/item-sheet-theme.mjs";
+import { nocItemSheetArme } from "./sheets/items/item-sheet-arme.mjs";
+import { nocItemSheetOutil } from "./sheets/items/item-sheet-outil.mjs";
+import { nocItemSheetObjetUsuel } from "./sheets/items/item-sheet-objetusuel.mjs";
+import { nocItemSheetDocumentAdministratif } from "./sheets/items/item-sheet-documentAdministratif.mjs";
+import { nocItemSheetArmure } from "./sheets/items/item-sheet-armure.mjs";
 
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from "./helpers/templates.mjs";
 import { NOC } from "./helpers/config.mjs";
-import CompteurFiel from "./v2/compteurFiel-v2.mjs";
+import CompteurFiel from "./compteursFiel/compteurFiel.mjs";
 import { registerNocSettings } from "./registerSettings.mjs";
 import { SocketManager } from "./socketManager.mjs";
 import { objetDieu } from "./objectDieu.mjs";
 import { registerHelpers } from './helpers/handlebarHelpers.js';
 import { nocUtility } from './noc-utility.js';
+import { migrerArchetypes } from "./archetypes.mjs";
+import { migrerQualites } from "./qualites.mjs";
+import { migrerCreatures } from "./creatures.mjs";
+import { migrerAutres, migrerJauges } from "./autres.mjs";
+import { migrerArmures } from "./armures.mjs";
+import { migrerArmes } from "./armes.mjs";
+import { migrerJetons, enregistrerJetons, enregistrerStatutMort } from "./jetons.mjs";
+import { enregistrerBoutonPanneau, enregistrerSuiviMenace, ouvrirPanneauMJ } from "./panneau-mj.mjs";
+import { ouvrirBibliothequeFiel } from "./fiel/editeur-bibliotheque.mjs";
 
 
 
@@ -37,6 +46,12 @@ import { nocUtility } from './noc-utility.js';
 /* -------------------------------------------- */
 
 Hooks.once('init', async function () {
+  // Polices du système proposées dans l'éditeur de texte (menu des styles > polices)
+  Object.assign(CONFIG.fontDefinitions, {
+    "Special Elite": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/SpecialElite-Regular.woff"] }] },
+    "The Bold Font": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/theboldfont.ttf"] }] },
+    "Raleway SemiBold": { editor: true, fonts: [{ urls: ["systems/noc/asset/fonts/Raleway-SemiBold.ttf"] }] }
+  });
   game.socketManager = new SocketManager;
 
   // Special NOC settings
@@ -59,8 +74,15 @@ Hooks.once('init', async function () {
   game.noc = {
     nocActor,
     nocItem,
-    rollItemMacro
+    rollItemMacro,
+    panneauMJ: ouvrirPanneauMJ,
+    bibliothequeFiel: ouvrirBibliothequeFiel
   };
+  enregistrerBoutonPanneau();
+  enregistrerSuiviMenace();
+  enregistrerJetons();
+  enregistrerStatutMort();
+  enregistrerAjoutJetonsCombat();
 
   // Add custom constants for configuration.
   CONFIG.NOC = NOC;
@@ -194,6 +216,16 @@ Hooks.on("renderGamePause", (app, html, data, options) => {
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 Hooks.once("ready", async function () {
+  // conversion unique des archétypes/thèmes à l'ancien format (MJ uniquement)
+  await migrerArchetypes();
+  await migrerQualites();
+  await migrerCreatures();
+  await migrerAutres();
+  await migrerArmures();
+  await migrerArmes();
+  await migrerJetons();
+  await migrerJauges();
+
   objetDieu.init();
 
 

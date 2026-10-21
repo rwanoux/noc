@@ -1,0 +1,50 @@
+name: Défenses
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: '<p>Arme naturelle : Sanglier.</p>'
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 0
+  limite: 0
+  degats: '@talents.action.constitution.niveau + 1'
+  traits: ''
+  munitions:
+    type: ''
+    quantite: 1
+  portee: 0
+  formatV2: true
+  degatsBase: 1
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: true
+    longuePortee: false
+    recurrent: false
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: false
+      valeur: 0
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: MFKrUzWjstwuCa4J
+folder: null
+sort: 10200000
+ownership:
+  default: 0
+_key: '!items!MFKrUzWjstwuCa4J'

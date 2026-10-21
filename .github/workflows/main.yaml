@@ -1,62 +1,56 @@
-name: Release Creation
+name: Publication du système
+
+# Se lance quand une « Release » est publiée sur GitHub (tag du type v2.0.0).
+# Elle génère les compendiums et joint au release system.json et system.zip.
 
 on:
   release:
     types: [published]
 
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-      # get part of the tag after the `v`
-      - name: Extract tag version number
-        id: get_version
-        uses: battila7/get-version-action@v2
-
-      # Substitute the Manifest and Download URLs in the module.json
-      - name: Substitute Manifest and Download Links For Versioned Ones
-        id: sub_manifest_link_version
-        uses: microsoft/variable-substitution@v1
+      - uses: actions/setup-node@v4
         with:
-          files: "system.json"
-        env:
-          version: ${{steps.get_version.outputs.version-without-v}}
-          url: https://github.com/${{github.repository}}
-          manifest: https://github.com/${{github.repository}}/releases/latest/download/system.json
-          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/system.zip
-      - name: Install Dependencies
-        run: npm ci
-      
-      # Pull YAML to LDB packs
-      - name: Build Packs
-        run: npm run pullYAMLtoLDB
-        
-      # Create a zip file with all files required by the module to add to the release
-      - run: zip -r ./system.zip system.json template.json asset/ css/ lang/ module/ templates/ packs/
+          node-version: 20
 
-      # Create a release for this specific version
-      - name: Update Release with Files
-        id: create_version_release
+      # version = tag sans le « v » ; liens de manifeste et de téléchargement vers ce dépôt
+      - name: Renseigner system.json
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+          REPO: ${{ github.repository }}
+        run: |
+          VERSION="${TAG#v}"
+          jq --arg v "$VERSION" \
+             --arg url "https://github.com/$REPO" \
+             --arg manifest "https://github.com/$REPO/releases/latest/download/system.json" \
+             --arg download "https://github.com/$REPO/releases/download/$TAG/system.zip" \
+             '.version=$v | .url=$url | .manifest=$manifest | .download=$download' \
+             system.json > system.tmp && mv system.tmp system.json
+          cat system.json | head -20
+
+      - name: Installer les dépendances
+        run: npm ci
+
+      - name: Générer les compendiums
+        run: npm run compendiums
+
+      - name: Créer l'archive
+        run: zip -r ./system.zip system.json template.json LICENSE.txt asset/ css/ lang/ module/ templates/ packs/
+
+      - name: Joindre les fichiers au release
         uses: ncipollo/release-action@v1
         with:
-          allowUpdates: true # Set this to false if you want to prevent updating existing releases
-          name: ${{ github.event.release.name }}
-          draft: ${{ github.event.release.unpublished }}
-          prerelease: ${{ github.event.release.prerelease }}
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          omitNameDuringUpdate: true
+          omitPrereleaseDuringUpdate: true
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: "./system.json, ./system.zip"
           tag: ${{ github.event.release.tag_name }}
-          body: ${{ github.event.release.body }}
-      - name: Deploy Release
-        id: deploy_release
-        uses: fjogeleit/http-request-action@v1
-        with:
-          preventFailureOnNoResponse: 'true' 
-          url: 'https://api.foundryvtt.com/_api/packages/release_version'
-          method: 'POST'
-          contentType: 'application/json'
-          customHeaders: '{"Authorization": "${{ secrets.FVTT_SYSTEM_TOKEN }}"}'
-          data: '{"id": "noc","dry-run":false,"release":{"version":"${{github.event.release.tag_name}}","manifest":"https://github.com/rwanoux/noc/releases/download/${{github.event.release.tag_name}}/system.json","compatibility":{"minimum":"13","verified":"13.351","maximum":"13"}}}'
-      

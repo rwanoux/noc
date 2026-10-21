@@ -16,104 +16,74 @@
   <div class="flexcol">
 
     {{#if (eq mode "arme")}}
-      <h2>
-        <div>
-          <span class>Arme : </span>
-          <span class>{{arme.name}}
-            {{#if arme.system.maitrise}}
-              (Maitrisée)
-            {{else}}
-              (Non-maitrisée, +1)
-            {{/if}}
-          </span>
-        </div>
-        <div>
-          <span class>Combat : </span>
-          <span class>{{talent.niveau}}</span>
-        </div>
-
-      </h2>
+      <h2 class="titre-arme">{{arme.name}}</h2>
+      <div class="ligne-grise">
+        Combat : {{talent.niveau}} — {{#if (eq arme.type "outil")}}Arme improvisée (non maîtrisée et complexe) : +2{{else}}{{#if arme.system.maitrise}}Arme maîtrisée : +0{{else}}{{#if arme.system.traitsArme.complexe}}Arme non maîtrisée et complexe : +2{{else}}Arme non maîtrisée : +1{{/if}}{{/if}}{{/if}}
+      </div>
+      <div class="fexrow form-group">
+        <span>Niveau requis de base : </span>
+        <span>{{niveauBase}}</span>
+      </div>
 
       {{#if arme.system.adistance}}
         <h3>Modificateurs à distance</h3>
-        <h4>distance</h4>
         <div class="fexrow form-group">
-          <span data-display-range="niveauRequis">Portée courte (5m) : 0</span>
-          <input
-            class="noc-slider"
-            id="niveauRequis"
-            value="{{niveauRequis}}"
-            type="range"
-            step="1"
-            min="-1"
-            max="2"
-            list="distanceList"
-          >
-          <datalist id="distanceList">
-            <option value="-1">Bout portant : -1</option>
-            <option value="0">Portée courte (5m) : 0</option>
-            <option value="1">Portée moyenne (10m) : 1</option>
-            <option value="2">Portée longue (20m) : 2</option>
+          <span class="libelle-curseur">Distance : </span>
+          <span data-display-range="modDistance">{{#if longuePortee}}Portée courte (10 m){{else}}Portée courte (5 m){{/if}} : +0</span>
+          <input class="noc-slider" id="modDistance" value="0" type="range" step="1" min="-1" max="2" list="modDistanceList">
+          <datalist id="modDistanceList">
+            <option value="-1">{{#if longuePortee}}Bout portant (4 m ou moins){{else}}Bout portant (2 m ou moins){{/if}} : -1</option>
+            <option value="0">{{#if longuePortee}}Portée courte (10 m){{else}}Portée courte (5 m){{/if}} : +0</option>
+            <option value="1">{{#if longuePortee}}Portée moyenne (20 m){{else}}Portée moyenne (10 m){{/if}} : +1</option>
+            <option value="2">{{#if longuePortee}}Portée longue (40 m){{else}}Portée longue (20 m){{/if}} : +2</option>
           </datalist>
         </div>
-        <h4>couvert</h4>
         <div class="fexrow form-group">
-          <span data-display-range="modCouvert">Aucun couvert (+0)</span>
-          <input
-            class="noc-slider"
-            id="modCouvert"
-            value="{{modCouvert}}"
-            type="range"
-            step="1"
-            min="0"
-            max="2"
-            list="modCouvertList"
-          >
+          <span class="libelle-curseur">Couverture : </span>
+          <span data-display-range="modCouvert">Aucune couverture : +0</span>
+          <input class="noc-slider" id="modCouvert" value="0" type="range" step="1" min="0" max="2" list="modCouvertList">
           <datalist id="modCouvertList">
-            <option value="0">Aucun couvert (+0)</option>
-            <option value="1">Couvert léger (+1)</option>
-            <option value="2">Couvert important (+2)</option>
+            <option value="0">Aucune couverture : +0</option>
+            <option value="1">Couverture légère : +1</option>
+            <option value="2">Couverture importante : +2</option>
           </datalist>
-        </div>
-      {{else}}
-        <div class="fexrow form-group">
-          <span class>Niveau requis : </span>
-          <span class>{{niveauRequis}}</span>
         </div>
       {{/if}}
-      <h3>autres modificateurs</h3>
-      <div class="fexrow form-group">
-        <span class="item-field-label-vlong">Cible au sol ? </span>
-        <span class="item-field-label-medium"><input
-            type="checkbox"
-            id="cibleAuSol"
-            name="cibleAuSol"
-            {{checked cibleAuSol}}
-          /></span>
-      </div>
-      <div class="fexrow form-group">
-        <span class>Modificateurs supplémentaires : </span>
-        <span data-display-range="modSupplement">0</span>
-        <input
-          class="noc-slider"
-          id="modSupplement"
-          value="{{modSupplement}}"
-          type="range"
-          step="1"
-          min="0"
-          max="2"
-          list="modSupplementList"
-        >
-        <datalist id="modSupplementList">
-          <option value="0">0</option>
-          <option value="1">+1</option>
-          <option value="2">+2</option>
-        </datalist>
 
-      </div>
+      <h3>Modificateurs</h3>
+        <div class="fexrow form-group">
+          <span class="libelle-curseur">Visibilité : </span>
+          <span data-display-range="modVisibilite">Pas d'obscurité : +0</span>
+          <input class="noc-slider" id="modVisibilite" value="0" type="range" step="2" min="0" max="4" list="modVisibiliteList">
+          <datalist id="modVisibiliteList">
+            <option value="0">Pas d'obscurité : +0</option>
+            <option value="2">Obscurité partielle : +2</option>
+            <option value="4">Obscurité totale : +4</option>
+          </datalist>
+        </div>
+        <div class="fexrow form-group">
+          <label class="case-cible-sol">
+            <input type="checkbox" id="cibleAuSol" {{checked cibleAuSol}}/>
+            Cible au sol
+          </label>
+          <span class="ligne-grise">{{#if arme.system.adistance}}(Difficulté +1){{else}}(Difficulté -1){{/if}}</span>
+        </div>
+        <div class="fexrow form-group">
+          <span class="libelle-curseur">Modificateurs supplémentaires : </span>
+          <span data-display-range="modSupplement">+0</span>
+          <input class="noc-slider" id="modSupplement" value="0" type="range" step="1" min="-2" max="3" list="modSupplementList">
+          <datalist id="modSupplementList">
+            <option value="-2">-2</option>
+            <option value="-1">-1</option>
+            <option value="0">+0</option>
+            <option value="1">+1</option>
+            <option value="2">+2</option>
+            <option value="3">+3</option>
+          </datalist>
+        </div>
       <h4 class="fexrow form-group niveauFinalRequis">
-        <span class>Niveau final requis : </span>
-        <span class><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
+        <span>Niveau final requis : </span>
+        <span><label id="niveauFinalRequis">{{niveauFinalRequis}}</label></span>
       </h4>
     {{/if}}
 
@@ -123,26 +93,13 @@
         <span class>{{talent.label}} ({{talent.niveau}})</span>
       </h2>
 
-      <div class="fexrow form-group">
-        <span class>Bonus collaboratif : </span>
-        <span data-display-range="nbBonusCollaboratif">0</span>
-        <input
-          class="noc-slider"
-          id="nbBonusCollaboratif"
-          value="{{nbBonusCollaboratif}}"
-          type="range"
-          step="1"
-          min="0"
-          max="10"
-          list="nbBonusCollaboratifList"
-        >
-        <datalist id="nbBonusCollaboratifList">
-          <option value="0">0</option>
-          {{#repeat 10}}
-            <option value="{{add @index 1}}">{{add @index 1}}</option>
-          {{/repeat}}
-        </datalist>
+      <div class="fexrow form-group bonus-collaboratif">
+        <span class="libelle-curseur">Bonus collaboratif : </span>
+        <span class="valeur-collaboratif" id="nbBonusCollaboratif">{{#if nbBonusCollaboratif}}+{{nbBonusCollaboratif}}{{else}}0{{/if}}</span>
+        <a class="bouton-collaboratif" data-ecart="-1" title="Retirer 1"><i class="fas fa-minus"></i></a>
+        <a class="bouton-collaboratif" data-ecart="1" title="Ajouter 1"><i class="fas fa-plus"></i></a>
       </div>
+      <p class="regle-collaboration">Collaboration : quand c'est matériellement possible, un personnage mène l'action et les autres l'assistent, avec les talents que la Loi juge utiles. Le meneur gagne +1 niveau par tranche de 2 niveaux obtenus par ses assistants. Meneur et assistants peuvent provoquer le destin et puiser dans leurs réserves.</p>
     {{/if}}
 
     <div class="fexrow form-group">
@@ -184,13 +141,20 @@
       <div class="fexrow form-group cabale-dice">
         <h4>
           <div class="nbrDes">
-            <span class>Dés de cabale ({{cabaleData.name}}) : </span>
+            {{#ifgt cabales.length 1}}
+              <span class>Dés de cabale
+                <select id="cabaleChoice">
+                  {{#each cabales as |c|}}<option value="{{c.id}}">{{c.name}}</option>{{/each}}
+                </select> : </span>
+            {{else}}
+              <span class>Dés de cabale ({{cabaleData.name}}) : </span>
+            {{/ifgt}}
             <span data-display-range="nbDesCabale">0</span>
             <i class="fa-light fa-dice-d10"></i>
           </div>
           <div>
             <span class>Domaine cabale : </span>
-            <span class>{{cabaleDomaine.label}} ({{cabaleDomaine.value}})</span>
+            <span class="cabale-domaine-texte">{{cabaleDomaine.label}} ({{cabaleDomaine.value}})</span>
           </div>
         </h4>
 
@@ -213,33 +177,17 @@
       </div>
     {{/if}}
 
-    <div class="flexrow">
-      {{#if espoir}}
-        <h5 class="flexrow">
-          <span> Utiliser 1 Point d'Espoir ? (+3
-            dés)?</span>
-
-          <input
-            type="checkbox"
-            id="useEspoir"
-            name="useEspoir"
-            {{checked useEspoir}}
-          />
-        </h5>
-      {{/if}}
-      {{#if vecu}}
-        <h5 class="flexrow">
-          <span> Utiliser 1 Point de Vécu ? (+1
-            niveau
-            de Talent)?</span>
-          <input
-            type="checkbox"
-            id="useVecu"
-            name="useVecu"
-            {{checked useVecu}}
-          />
-        </h5>
-      {{/if}}
+    <div class="flexcol options-jet">
+      <label class="case-option {{#unless espoir}}indisponible{{/unless}}">
+        <input type="checkbox" id="useEspoir" name="useEspoir" {{checked useEspoir}} {{#unless espoir}}disabled{{/unless}}/>
+        <span>Utiliser 1 point d'Espoir (+3 dés)</span>
+        <span class="ligne-grise">({{#if espoir}}{{espoir}}{{else}}0{{/if}} disponible{{#ifgt espoir 1}}s{{/ifgt}})</span>
+      </label>
+      <label class="case-option {{#unless vecu}}indisponible{{/unless}}">
+        <input type="checkbox" id="useVecu" name="useVecu" {{checked useVecu}} {{#unless vecu}}disabled{{/unless}}/>
+        <span>Utiliser 1 point de Vécu (+1 niveau de talent)</span>
+        <span class="ligne-grise">({{#if vecu}}{{vecu}}{{else}}0{{/if}} disponible{{#ifgt vecu 1}}s{{/ifgt}})</span>
+      </label>
     </div>
   </div>
 

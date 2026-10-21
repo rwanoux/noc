@@ -273,6 +273,7 @@
       "signalement": "",
       "notes": "",
       "bloc": "",
+      "cabales": [],
       "cabale": {
         "nom": "",
         "uuid": ""
@@ -509,7 +510,7 @@
       "description": "",
       "classeExo": {
         "label": "classe exo",
-        "value": 1,
+        "value": 7,
         "min": 1,
         "max": 7
       },
@@ -517,7 +518,8 @@
         "label": "énergie noire",
         "value": 1,
         "min": 1,
-        "max": 7
+        "max": 7,
+        "forcee": null
       }
     },
     "configuration": {
@@ -566,6 +568,8 @@
         "base"
       ],
       "talentMajeur": "",
+      "themes": [],
+      "themeChoisi": "",
       "talentsMineurs": {},
       "special": "",
       "affinite": {
@@ -625,7 +629,11 @@
         "niveau": 0
       },
       "effetSpecial": "",
-      "portee": 0
+      "portee": "",
+      "improvisee": {
+        "mode": "contact",
+        "degats": 0
+      }
     },
     "armure": {
       "templates": [
@@ -633,6 +641,8 @@
       ],
       "armure": 0,
       "traits": "",
+      "encombrant": false,
+      "limite": 0,
       "valeur": 0
     },
     "arme": {
@@ -646,6 +656,34 @@
       "limite": 0,
       "degats": "",
       "matrise": false,
+      "maitrise": true,
+      "formatV2": false,
+      "degatsBase": 0,
+      "traitsArme": {
+        "choc": false,
+        "complexe": false,
+        "long": false,
+        "perforant": false,
+        "longuePortee": false,
+        "recurrent": false,
+        "tranchant": false,
+        "contrainte": {
+          "actif": false,
+          "valeur": 0
+        },
+        "energieNoire": {
+          "actif": false,
+          "valeur": 0
+        },
+        "multiple": {
+          "actif": false,
+          "valeur": 0
+        },
+        "quantique": {
+          "actif": false,
+          "valeur": 0
+        }
+      },
       "traits": "",
       "munitions": {
         "type": "",
@@ -657,9 +695,46 @@
         "base"
       ],
       "tempsObtention": 3,
-      "beneficiaires": "",
+      "beneficiaires": [
+        "",
+        ""
+      ],
       "effetsDeBureau": "",
-      "rangNecessaire": 1
+      "rangNecessaire": 1,
+      "formulaire": "autre",
+      "duree": 1,
+      "rangSup": 0,
+      "port": {
+        "objet": "",
+        "bonusX": 0
+      },
+      "acces": {
+        "zone": 1,
+        "motif": "",
+        "nonLimite": false,
+        "sansSurveillance": false
+      },
+      "sortie": {
+        "zone": 3,
+        "duree": "formulaire",
+        "motif": "",
+        "exoneration": false
+      },
+      "requisition": {
+        "mode": "objet",
+        "detail": ""
+      },
+      "mandat": {
+        "sujet": "",
+        "secteur": "",
+        "bonusAutorite": 0,
+        "bonusCitoyens": 0
+      },
+      "signalement": {
+        "cible": "",
+        "bonusStatut": false,
+        "priseRapide": false
+      }
     }
   }
 }

@@ -1,0 +1,50 @@
+name: Rouer de coups
+type: arme
+img: systems/noc/asset/default_icons/arme.webp
+system:
+  description: '<p>Arme naturelle : Amas.</p>'
+  needQuantar: false
+  quantar: false
+  adistance: false
+  valeur: 0
+  limite: 0
+  degats: '@talents.action.constitution.niveau + 2'
+  traits: ''
+  munitions:
+    type: ''
+    quantite: 1
+  portee: 0
+  formatV2: true
+  degatsBase: 2
+  traitsArme:
+    choc: false
+    complexe: false
+    long: false
+    perforant: false
+    longuePortee: false
+    recurrent: false
+    tranchant: false
+    contrainte:
+      actif: false
+      valeur: 0
+    energieNoire:
+      actif: false
+      valeur: 0
+    multiple:
+      actif: true
+      valeur: 2
+    quantique:
+      actif: false
+      valeur: 0
+  maitrise: true
+effects: []
+flags: {}
+_stats:
+  systemId: noc
+  coreVersion: '13.351'
+_id: jBftg5BnOij1BZ5S
+folder: null
+sort: 10500000
+ownership:
+  default: 0
+_key: '!items!jBftg5BnOij1BZ5S'

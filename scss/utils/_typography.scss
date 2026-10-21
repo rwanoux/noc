@@ -1,6 +1,7 @@
+// Special Elite (Astigmatic, licence Apache 2.0 : asset/fonts/SpecialElite-LICENSE.txt)
 @font-face {
-    font-family: "adler";
-    src: url("../asset/fonts/adler.ttf");
+    font-family: "Special Elite";
+    src: url("../asset/fonts/SpecialElite-Regular.woff") format("woff");
 }
 
 @font-face {
@@ -15,7 +16,7 @@
 
 $font-primary: 'raleway',
 sans-serif;
-$font-secondary: 'adler',
+$font-secondary: 'Special Elite',
 sans-serif;
 $font-bold:'bold',
 sans-serif;
@@ -23,7 +24,7 @@ sans-serif;
 :root {
     --font-primary: 'bold',
         sans-serif;
-    --font-secondary: 'adler',
+    --font-secondary: 'Special Elite',
         sans-serif;
 
 }
@@ -113,4 +114,65 @@ body.system-noc {
 
     ;
 
+}
+// Textes rédigés (éditeurs de texte, journaux) : Heading 1 aéré
+body.system-noc {
+    .editor-content h1,
+    .prosemirror h1,
+    .journal-page-content h1 {
+        margin-top: 1em;
+        margin-bottom: 0.6em;
+        padding: 0.15em 0.4em;
+    }
+
+    // même retrait du texte pour les autres niveaux de titre
+    @each $h in h2, h3, h4, h5, h6 {
+        .editor-content #{$h},
+        .prosemirror #{$h},
+        .journal-page-content #{$h} {
+            padding-left: 0.4em;
+            padding-right: 0.4em;
+        }
+    }
+
+    .editor-content > h1:first-child,
+    .prosemirror .editor-content > h1:first-child,
+    .journal-page-content > h1:first-child {
+        margin-top: 0.3em;
+    }
+}
+
+// Journaux : titre de la page centré, sans image de fond
+body.system-noc .journal-page-header {
+    h1, h2, h3, h4 {
+        background: none;
+        text-align: center;
+        padding: 0;
+    }
+}
+
+// Textes rédigés : titres mieux distingués
+// Heading 1 plus grand ; Heading 3 et 4 en Modesto Condensed (police de Foundry), agrandis
+body.system-noc {
+    .editor-content,
+    .prosemirror,
+    .journal-page-content {
+        h1 {
+            font-size: 240%;
+        }
+
+        h3,
+        h4 {
+            font-family: "Modesto Condensed", "bold", sans-serif;
+            letter-spacing: 0.02em;
+        }
+
+        h3 {
+            font-size: 170%;
+        }
+
+        h4 {
+            font-size: 145%;
+        }
+    }
 }
